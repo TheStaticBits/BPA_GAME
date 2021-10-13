@@ -37,9 +37,16 @@ class Level:
             },
             "f": pygame.image.load("res/flag.png").convert_alpha()
         }
-        """
-
-        """
+        
+        0 = 0/1 uses on a ring
+        1 = 1/1
+        2 = 0/2
+        3 = 1/2
+        4 = 2/2
+        5 = 0/3
+        6 = 1/3
+        7 = 2/3
+        8 = 3/3
         some interpreting needs to happen here to know what type of wall needs to be placed
         """
 
