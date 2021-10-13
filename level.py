@@ -7,26 +7,20 @@ class Level:
     
         with open("levels.txt", "r") as file:
             data = file.read()
-        
-        #print(data)
-        
+
         data = data.split("\n[``````]\n") # splits by level
+
+        for level in data:
+            level = level.split("\n```\n") # splits by room
+
+            for room in level:
+                room = room.split("\n") # splits by row 
+
+                for row in room:
+                    row = list(row) # splits by tile
         
-        print(data)
-
-        for item in data:
-            print(item.split("\n```\n"), "    1")
-        
-        data = [item.split("\n```\n") for item in data] # splits by room
-
-        print(data)
-
-        for item in data:
-            print(item.split("\n"))
-
-        data = [item.split("\n") for item in data] # splits by row 
-        self.data = [list(item) for item in data] # splits by tile
         # at this point, data is a list of lists (levels) of lists (rooms) of lists (rows) of lists (tiles)
+        
         """
         self.drawTiles = {
             "w": {
