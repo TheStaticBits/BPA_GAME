@@ -3,7 +3,8 @@ import src.constants as constants
 
 class Window:
     WINDOW_SIZE = (
-        constants.PX_SCALE_FACTOR * constants.TILE_SIZE[0] * constants.SCREEN_TILE_SIZE[0], constants.PX_SCALE_FACTOR * constants.TILE_SIZE[1] * constants.SCREEN_TILE_SIZE[1]
+        constants.PX_SCALE_FACTOR * constants.TILE_SIZE[0] * constants.SCREEN_TILE_SIZE[0], 
+        constants.PX_SCALE_FACTOR * constants.TILE_SIZE[1] * constants.SCREEN_TILE_SIZE[1]
     ) # This is the size of the window
 
     def __init__(self):
@@ -18,11 +19,29 @@ class Window:
         self.clock = pygame.time.Clock()
 
         self.closeWindow = False 
+
+        self.inputs = {
+            "left": False,
+            "right": False,
+            "up": False
+        }
     
-    def updateInputs(self):
+    def update_inputs(self):
+        self.inputs["up"] = False
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.closeWindow = True
+
+            elif event.type == pygame.KEYDOWN:
+
+                if event.key in constants.RIGHT_KEYS:
+                    self.inputs["right"] = True
+                elif event.key in constants.LEFT_KEYS:
+                    self.inputs["left"] = True
+                elif event.key in constants.UP_KEYS:
+                    self.inputs["up"] = True
+                
 
     def flip(self):
         scaledWindow = pygame.transform.scale(self.miniWindow, self.WINDOW_SIZE)
