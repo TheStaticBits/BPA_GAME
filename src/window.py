@@ -34,13 +34,18 @@ class Window:
                 self.closeWindow = True
 
             elif event.type == pygame.KEYDOWN:
-
                 if event.key in constants.RIGHT_KEYS:
                     self.inputs["right"] = True
                 elif event.key in constants.LEFT_KEYS:
                     self.inputs["left"] = True
                 elif event.key in constants.UP_KEYS:
                     self.inputs["up"] = True
+            
+            elif event.type == pygame.KEYUP:
+                if event.key in constants.RIGHT_KEYS:
+                    self.inputs["right"] = False
+                elif event.key in constants.LEFT_KEYS:
+                    self.inputs["left"] = False         
                 
 
     def flip(self):
