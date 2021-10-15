@@ -45,7 +45,7 @@ class Window:
                 if event.key in constants.RIGHT_KEYS:
                     self.inputs["right"] = False
                 elif event.key in constants.LEFT_KEYS:
-                    self.inputs["left"] = False         
+                    self.inputs["left"] = False
                 
 
     def flip(self):
