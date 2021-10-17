@@ -8,9 +8,9 @@ class Level:
         with open("levels.txt", "r") as file:
             data = file.read()
 
-        data = data.split("\n[``````]\n") # splits by level
+        self.data = data.split("\n[``````]\n") # splits by level
 
-        for level in data:
+        for level in self.data:
             level = level.split("\n```\n") # splits by room
 
             for room in level:
@@ -41,14 +41,16 @@ class Level:
         6 = 1/3
         7 = 2/3
         8 = 3/3
+        so the numbers you will put in the levels.txt file to represent an orb are
+        1, 4, 8
         some interpreting needs to happen here to know what type of wall needs to be placed
         """
 
         print(self.data)
 
+    #def interpret_direction(self, tilePosition, ):
 
-
-    def render(self, tileSize, level, activeRoom):
+    def render(self, window, tileSize, level, activeRoom):
         reader = {
             "x": 0,
             "y": 0
@@ -61,6 +63,8 @@ class Level:
                 print(letter)
                 if self.data[level][activeRoom][y][x] != " ":
                     pass
+                if self.data[level][activeRoom][y][x] == "w":
+                    pass # WE NEED AN INTERPRETER HERE!
 
 level = Level(1, 2)
-Level.render(1, 0, 0)
+level.render(1, 0, 0)
