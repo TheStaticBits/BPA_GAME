@@ -48,7 +48,9 @@ class Level:
 
         print(self.data)
 
+
     #def interpret_direction(self, tilePosition, ):
+
 
     def render(self, window, tileSize, level, activeRoom):
         reader = {

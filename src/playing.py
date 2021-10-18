@@ -8,8 +8,10 @@ class Playing(src.scene_base.SceneBase):
 
         self.level = src.saving.check_level()
 
+
     def update(self):
         super().update()
+
     
     def render(self):
         super().render()
