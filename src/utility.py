@@ -20,11 +20,12 @@ def get_position():
     file = get_file()
 
 
+# This function assumes the spritesheet is horizontal
 def load_spritesheet(
         filePath, 
         width # Width of each image
     ): 
-    
+
     image = pygame.image.load(filePath).convert_alpha()
 
     result = []
