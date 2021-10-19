@@ -3,21 +3,20 @@ This game was made for the BPA (Business Professionals of America) Software Engi
 
 Development started in October and will end in January.
 
-## Team members:
- - Connor
-    - A little bit of everything; the "leader"
-    - Artwork
-    - Story Design
+## Programming:
+ - Lead: Matthew
  - Nolan
-    - Programming
-    - Lead Level Design
-    - Artwork
- - Matthew
-    - Lead Programming
-    - Some Artwork
+
+## Artwork:
+ - Lead: shrug
  - Andrew
-    - Lead Story Design
-    - Artwork
+ - Connor
+ - Matthew
+ - Nolan
+
+## Story:
+ - Lead: Andrew
+ - Connor
 
 ## Characters Within the Game:
  - Corlen
