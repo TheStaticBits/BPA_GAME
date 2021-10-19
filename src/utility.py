@@ -1,6 +1,5 @@
 """
-This is the file in which resides the 
-functions which manage the save data.
+This file contains functions for things such as saving and loading, loading spritesheets, and potentially more.
 """
 
 import pygame
