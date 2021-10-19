@@ -26,6 +26,7 @@ class Window:
             "up": False
         }
     
+    
     def update_inputs(self):
         self.inputs["up"] = False
         

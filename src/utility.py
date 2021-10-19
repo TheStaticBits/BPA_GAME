@@ -1,7 +1,18 @@
+"""
+This is the file in which resides the 
+functions which manage the save data.
+"""
+
+def get_file() -> str:
+    with open("save.txt", "r") as file:
+        text = file.read()
+    
+    return text
 
 
-def check_level(self) -> int:
-    return 1
+def get_level() -> int:
+    file = get_file()
 
-def check_position(self):
-    pass
+
+def get_position():
+    file = get_file()
