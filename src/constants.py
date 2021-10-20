@@ -13,3 +13,18 @@ PX_SCALE_FACTOR = 3 # This is the scale factor of everything being rendered to t
 LEFT_KEYS = (pygame.K_LEFT, pygame.K_a)
 RIGHT_KEYS = (pygame.K_RIGHT, pygame.K_d)
 UP_KEYS = (pygame.K_UP, pygame.K_w)
+
+TILE_SET_KEY = {
+    (1, 1, 1,
+     1,    1,
+     1, 1, 1): 0,
+
+    (2, 0, 2,
+     1,    1,
+     1, 1, 1): 1,
+
+    (2, 1, 1,
+     0,    1,
+     2, 1, 1): 2
+     
+}
