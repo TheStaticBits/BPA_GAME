@@ -29,4 +29,4 @@ class Loop:
     
     def render(self):
         if self.scene == "playing":
-            self.playing.render()
+            self.playing.render(self.window.miniWindow)

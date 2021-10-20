@@ -16,10 +16,10 @@ def get_file(filePath) -> str:
 def load_levels() -> list:
     file = get_file("levels.txt")
 
-    file = file.split(constants.LEVEL_SEPARATOR)
+    file = file.split(src.constants.LEVEL_SEPARATOR)
 
     for level in file:
-        level = level.split(constants.ROOM_SEPARATOR)
+        level = level.split(src.constants.ROOM_SEPARATOR)
 
         for room in level:
             room = room.split("\n")
