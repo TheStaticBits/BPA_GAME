@@ -4,19 +4,38 @@ This file contains functions for things such as saving and loading, loading spri
 
 import pygame
 
-def get_file() -> str:
-    with open("save.txt", "r") as file:
+import src.constants
+
+def get_file(filePath) -> str:
+    with open(filePath, "r") as file:
         text = file.read()
     
     return text
 
 
+def load_levels() -> list:
+    file = get_file("levels.txt")
+
+    file = file.split(constants.LEVEL_SEPARATOR)
+
+    for level in file:
+        level = level.split(constants.ROOM_SEPARATOR)
+
+        for room in level:
+            room = room.split("\n")
+
+            for row in room:
+                row = list(row)
+    
+    return file
+
+
 def get_level() -> int:
-    file = get_file()
+    file = get_file("save.txt")
 
 
 def get_position():
-    file = get_file()
+    file = get_file("save.txt")
 
 
 # This function assumes the spritesheet is horizontal
