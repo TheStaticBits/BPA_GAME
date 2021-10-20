@@ -10,6 +10,8 @@ class Loop:
     def __init__(self):
         self.window = src.window.Window()
         self.playing = src.playing.Playing()
+
+        self.scene = "playing"
     
     def run_game(self):
         while not self.window.closeWindow:
@@ -20,8 +22,11 @@ class Loop:
 
     def update(self):
         self.window.update_inputs()
-        self.playing.update()
+
+        if self.scene == "playing":
+            self.playing.update()
     
     
     def render(self):
-        self.playing.render()
+        if self.scene == "playing":
+            self.playing.render()
