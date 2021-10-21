@@ -74,8 +74,11 @@ class Playing(src.scene_base.SceneBase):
                             tileSelected = tileNumber
                             break
                     
-                    window.blit(
-                        self.tileset[tileSelected], 
-                        (x * src.constants.TILE_SIZE[0], 
-                        y * src.constants.TILE_SIZE[1])
-                    )
+                    try:
+                        window.blit(
+                            self.tileset[tileSelected], 
+                            (x * src.constants.TILE_SIZE[0], 
+                            y * src.constants.TILE_SIZE[1])
+                        )
+                    except UnboundLocalError as error:
+                        print("ERROR: Tile type does not exist.")
