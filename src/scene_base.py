@@ -4,12 +4,11 @@ import pygame
 
 class SceneBase:
     def __init__(self):
-        print("Initializing Scene...")
-
+        pass
 
     def update(self):
-        print("Updating Scene...")
+        pass
 
 
     def render(self):
-        print("Rendering Scene...")
+        pass

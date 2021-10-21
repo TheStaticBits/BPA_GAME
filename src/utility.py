@@ -16,18 +16,18 @@ def get_file(filePath) -> str:
 def load_levels() -> list:
     file = get_file("levels.txt")
 
-    file = file.split(src.constants.LEVEL_SEPARATOR)
+    levels = file.split(src.constants.LEVEL_SEPARATOR)
 
-    for level in file:
-        level = level.split(src.constants.ROOM_SEPARATOR)
+    for level in range(len(levels)):
+        levels[level] = levels[level].split(src.constants.ROOM_SEPARATOR)
 
-        for room in level:
-            room = room.split("\n")
+        for room in range(len(levels[level])):
+            levels[level][room] = levels[level][room].split("\n")
 
-            for row in room:
-                row = list(row)
+            for row in range(len(levels[level][room])):
+                levels[level][room][row] = list(levels[level][room][row])
     
-    return file
+    return levels
 
 
 def get_level() -> int:
@@ -50,7 +50,7 @@ def load_spritesheet(
 
     for count in range(image.get_width() // width):
         tempImage = pygame.Surface((width, image.get_height()))
-        tempImage.blit((-count * width, 0))
+        tempImage.blit(image, (-(count * width), 0))
         result.append(tempImage)
     
     return result
