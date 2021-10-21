@@ -2,6 +2,8 @@
 This file includes the class which manages the playing scene, which includes tiles and collisions and generally everything you will interact with while playing the actual game.
 """
 
+from math import floor
+
 import src.scene_base
 import src.utility
 import src.constants
@@ -18,8 +20,19 @@ class Playing(src.scene_base.SceneBase):
         self.tileset = src.utility.load_spritesheet("res/tileset_test.png", 16)
 
 
-    def update(self):
+    def update(self, mousePos, mousePressed):
         super().update()
+
+        tilePos = (
+            floor(mousePos[0] / src.constants.TILE_SIZE[0]),
+            floor(mousePos[1] / src.constants.TILE_SIZE[1])
+        )
+
+        if mousePressed["left"]:
+            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = "w"
+
+        if mousePressed["right"]:
+            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
 
     
     def render(self, window):
