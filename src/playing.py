@@ -27,11 +27,38 @@ class Playing(src.scene_base.SceneBase):
 
         currentRoom = self.levels[self.level][self.room]
         
+        # BEWARE: SPAGHETTI CODE AHEAD
         for y in range(src.constants.SCREEN_TILE_SIZE[1]):
             for x in range(src.constants.SCREEN_TILE_SIZE[0]):
                 tile = currentRoom[y][x]
 
                 if tile == "w":
                     tileSurroundings = (
-                        currentRoom[y - 1][x - 1]
+                        (currentRoom[y - 1][x - 1], currentRoom[y - 1][x], currentRoom[y - 1][x + 1]),
+                        (currentRoom[y][x - 1], currentRoom[y][x], currentRoom[y][x + 1]),
+                        (currentRoom[y + 1][x - 1], currentRoom[y + 1][x], currentRoom[y + 1][x + 1]),
+                    )
+
+                    for tileNumber, tileKey in src.constants.TILESET_KEY.items():
+                        check = True
+                        for y, row in enumerate(tileKey):
+                            for x, tileType in enumerate(row):
+                                tileToTest = tileSurroundings[y][x]
+
+                                if tileType == 1:
+                                    if tileToTest != tile:
+                                        check = False
+
+                                elif tileType == 0:
+                                    if tileToTest != " ":
+                                        check = False
+                        
+                        if check:
+                            tileSelected = tileNumber
+                            break
+                    
+                    window.blit(
+                        self.tileset[tileNumber], 
+                        (x * src.constants.TILE_SIZE[0], 
+                        y * src.constants.TILE_SIZE[1])
                     )
