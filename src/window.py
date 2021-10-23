@@ -68,6 +68,7 @@ class Window:
 
         pygame.display.flip()
 
-        self.clock.tick(src.constants.FPS)
+        # UNCOMMENT THIS AFTER TESTING FPS
+        # self.clock.tick(src.constants.FPS)
 
         self.miniWindow.fill((255, 255, 255))
