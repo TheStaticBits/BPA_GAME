@@ -25,8 +25,8 @@ class Playing(src.scene_base.SceneBase):
 
         self.tileset = src.utility.load_spritesheet("res/tileset_test.png", 16)
 
-        self.tile = pygame.image.load("res/other_tile_test/tile.png")
-        self.edge = pygame.image.load("res/other_tile_test/edge.png")
+        self.tile = pygame.image.load("res/other_tile_test/tile.png").convert()
+        self.edge = pygame.image.load("res/other_tile_test/edge.png").convert()
 
         self.find_player()
 
