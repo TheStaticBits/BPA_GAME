@@ -2,7 +2,7 @@
 This file includes the class which manages the playing scene, which includes tiles and collisions and generally everything you will interact with while playing the actual game.
 """
 
-RENDERING_METHOD = 1 # 0 for the preset method which involves the spritesheet of all tiles, 1 for the newer method
+RENDERING_METHOD = 0 # 0 for the preset method which involves the spritesheet of all tiles, 1 for the newer method
 # This changes how the game renders tiles
 
 import pygame
@@ -41,6 +41,7 @@ class Playing(src.scene_base.SceneBase):
                         x * constants.TILE_SIZE[0],
                         y * constants.TILE_SIZE[1]
                     )
+                    self.levels[self.level][self.room][y][x] = " "
 
         self.player = src.player.Player(playerStart)
 
