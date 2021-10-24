@@ -16,6 +16,11 @@ LEFT_KEYS = (pygame.K_LEFT, pygame.K_a)
 RIGHT_KEYS = (pygame.K_RIGHT, pygame.K_d)
 UP_KEYS = (pygame.K_UP, pygame.K_w)
 
+# Player constants
+JUMP_FORCE = 10
+GRAVITY = 1
+MOVEMENT_SPEED = 2
+
 # This is the key used for the tiles.
 # The number 1 means that there should be a tile,
 # The number 0 means that there shouldn't be a tile,

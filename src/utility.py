@@ -4,7 +4,7 @@ This file contains functions for things such as saving and loading, loading spri
 
 import pygame
 
-import src.constants
+import src.constants as constants
 
 def get_file(filePath) -> str:
     with open(filePath, "r") as file:
@@ -16,10 +16,10 @@ def get_file(filePath) -> str:
 def load_levels() -> list:
     file = get_file("levels.txt")
 
-    levels = file.split(src.constants.LEVEL_SEPARATOR)
+    levels = file.split(constants.LEVEL_SEPARATOR)
 
     for level in range(len(levels)):
-        levels[level] = levels[level].split(src.constants.ROOM_SEPARATOR)
+        levels[level] = levels[level].split(constants.ROOM_SEPARATOR)
 
         for room in range(len(levels[level])):
             levels[level][room] = levels[level][room].split("\n")

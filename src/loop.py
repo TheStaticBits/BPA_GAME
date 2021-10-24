@@ -43,7 +43,7 @@ class Loop:
         self.window.update_inputs()
 
         if self.scene == "playing":
-            self.playing.update(self.window.mousePos, self.window.mousePressed)
+            self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
     
     
     def render(self):
