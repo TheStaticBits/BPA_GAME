@@ -48,8 +48,7 @@ class Playing(src.scene_base.SceneBase):
     def update(self, inputs, mousePos, mousePressed):
         super().update()
 
-        self.player.move(inputs)
-        self.player.collisions(self.levels[self.level][self.room])
+        self.player.update(self.levels[self.level][self.room], inputs)
 
         tilePos = (
             floor(mousePos[0] / constants.TILE_SIZE[0]),

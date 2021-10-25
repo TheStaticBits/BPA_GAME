@@ -29,7 +29,7 @@ class ObjectBase:
                 constants.TILE_SIZE[1]
             )
 
-            if self.rect.colliderect(tempRect):
+            if self.rect.colliderect(tileRect):
                 return tileRect
     
         return False
@@ -59,19 +59,20 @@ class ObjectBase:
 
                 tilePos = (tileX + dirMoved[0], tileY + y)
                 
-                if self.check_tile(room, tilePos):
+                result = self.check_tile(room, tilePos)
+                if result != False:
                     if dirMoved == 1:
-                        self.rect.right = tempRect.left
+                        self.rect.right = result.left
                     else:
-                        self.rect.left = tempRect.right
+                        self.rect.left = result.right
         
         elif dirMoved[1] != 0:
             for x in range(-1, 1):
 
                 tilePos = (tileX + x, tileY + dirMoved[1])
-
-                if self.check_tile(room, tilePos):
+                result = self.check_tile(room, tilePos)
+                if result != False:
                     if dirMoved == 1:
-                        self.rect.top = tempRect.bottom
+                        self.rect.top = result.bottom
                     else:
-                        self.rect.bottom = tempRect.top
+                        self.rect.bottom = result.top

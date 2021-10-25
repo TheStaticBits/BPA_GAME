@@ -36,7 +36,7 @@ class Player(src.object_base.ObjectBase):
 
         dirMoved = (
             inputs["right"] - inputs["left"], 
-            numpy.clip(yVelocity, -1, 1)
+            numpy.clip(self.yVelocity, -1, 1)
         )
         super().update_collisions(room, dirMoved)
             
