@@ -7,6 +7,9 @@ import src.constants as constants
 
 class ObjectBase:
     def __init__(self):
+        # OVERRIDE THIS IN SUBCLASSES
+        self.rect = None
+
         self.collisions = {
             "up": False,
             "down": False,
@@ -57,22 +60,29 @@ class ObjectBase:
         if dirMoved[0] != 0:
             for y in range(-1, 1):
 
-                tilePos = (tileX + dirMoved[0], tileY + y)
+                tilePos = (tileX - dirMoved[0], tileY + y)
                 
                 result = self.check_tile(room, tilePos)
                 if result != False:
                     if dirMoved == 1:
                         self.rect.right = result.left
+                        self.collisions["right"] = True
                     else:
                         self.rect.left = result.right
+                        self.collisions["left"] = True
         
         elif dirMoved[1] != 0:
             for x in range(-1, 1):
 
-                tilePos = (tileX + x, tileY + dirMoved[1])
+                tilePos = (tileX + x, tileY - dirMoved[1])
+
                 result = self.check_tile(room, tilePos)
                 if result != False:
                     if dirMoved == 1:
                         self.rect.top = result.bottom
+                        self.collisions["up"] = True
                     else:
                         self.rect.bottom = result.top
+                        self.collisions["down"] = True
+        
+        print(self.collisions)

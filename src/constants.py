@@ -17,8 +17,8 @@ RIGHT_KEYS = (pygame.K_RIGHT, pygame.K_d)
 UP_KEYS = (pygame.K_UP, pygame.K_w)
 
 # Player constants
-JUMP_FORCE = 12 # Upward force
-GRAVITY = 1 # Downward force
+JUMP_FORCE = 5 # Upward force
+GRAVITY = 0.2 # Downward force
 MOVEMENT_SPEED = 2
 
 # This is the key used for the tiles.
