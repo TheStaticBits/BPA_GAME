@@ -23,11 +23,12 @@ class Player(src.object_base.ObjectBase):
         
         if self.collisions["down"]:
             self.canJump = True
+            self.yVelocity = 0
         
-        if self.canJump:
+        if inputs["up"] and self.canJump:
             self.canJump = False
             # Inputs is 1 or 0, or True or False
-            self.yVelocity = inputs["up"] * constants.JUMP_FORCE
+            self.yVelocity = constants.JUMP_FORCE
 
         elif self.collisions["up"]:
             # If the player hit the ceiling
