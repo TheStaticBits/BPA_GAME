@@ -1,5 +1,4 @@
 import pygame
-import numpy
 
 import src.constants as constants
 import src.object_base
@@ -36,7 +35,7 @@ class Player(src.object_base.ObjectBase):
 
         dirMoved = (
             inputs["right"] - inputs["left"], 
-            numpy.clip(self.yVelocity, -1, 1) # this part is broken
+            1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1)
         )
         
         super().update_collisions(room, dirMoved)

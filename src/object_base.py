@@ -24,7 +24,7 @@ class ObjectBase:
 
     
     def check_tile(self, room, tilePos):
-        if room[tilePos[0]][tilePos[1]] == "w":
+        if room[tilePos[1]][tilePos[0]] == "w":
             tileRect = pygame.Rect(
                 tilePos[0] * constants.TILE_SIZE[0], 
                 tilePos[1] * constants.TILE_SIZE[1],
@@ -57,6 +57,22 @@ class ObjectBase:
         tileX = math.floor(centerX / constants.TILE_SIZE[0])
         tileY = math.floor(centerY / constants.TILE_SIZE[1])
 
+        print(tileX, tileY)
+
+        if dirMoved[1] != 0:
+            for x in range(-1, 1):
+
+                tilePos = (tileX + x, tileY - dirMoved[1])
+
+                result = self.check_tile(room, tilePos)
+                if result != False:
+                    if dirMoved == 1:
+                        self.rect.top = result.bottom
+                        self.collisions["up"] = True
+                    else:
+                        self.rect.bottom = result.top
+                        self.collisions["down"] = True
+
         if dirMoved[0] != 0:
             for y in range(-1, 1):
 
@@ -70,19 +86,3 @@ class ObjectBase:
                     else:
                         self.rect.left = result.right
                         self.collisions["left"] = True
-        
-        elif dirMoved[1] != 0:
-            for x in range(-1, 1):
-
-                tilePos = (tileX + x, tileY - dirMoved[1])
-
-                result = self.check_tile(room, tilePos)
-                if result != False:
-                    if dirMoved == 1:
-                        self.rect.top = result.bottom
-                        self.collisions["up"] = True
-                    else:
-                        self.rect.bottom = result.top
-                        self.collisions["down"] = True
-        
-        print(self.collisions)
