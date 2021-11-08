@@ -61,8 +61,7 @@ class ObjectBase:
         self.collisions["right"] = False
 
         if dirMoved != 0:
-            for y in range(-1, 1):
-
+            for y in range(-1, 2):
                 tilePos = (self.currentTile[0] + dirMoved, self.currentTile[1] + y)
                 
                 result = self.check_tile(room, tilePos)
@@ -81,8 +80,7 @@ class ObjectBase:
         self.collisions["down"] = False
 
         if dirMoved != 0:
-            for x in range(-1, 1):
-
+            for x in range(-1, 2):
                 tilePos = (self.currentTile[0] + x, self.currentTile[1] - dirMoved)
 
                 result = self.check_tile(room, tilePos)
