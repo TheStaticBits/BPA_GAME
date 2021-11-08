@@ -18,9 +18,26 @@ class ObjectBase:
         }
 
         self.yVelocity = 0
+
+        self.currentTile = (0, 0)
+        
     
+    def reset_current_tile(self):
+        # Finds the coordinates of the center of the object
+        centerX = self.rect.x + (self.rect.width / 2)
+        centerY = self.rect.y + (self.rect.height / 2)
+
+        # Finds the tile that the center of the object is on
+        self.currentTile[0] = math.floor(centerX / constants.TILE_SIZE[0])
+        self.currentTile[1] = math.floor(centerY / constants.TILE_SIZE[1])
+
+
     def update_gravity(self):
         self.yVelocity -= constants.GRAVITY
+
+
+    def update_y_pos(self):
+        self.rect.y -= math.ceil(self.yVelocity)
 
     
     def check_tile(self, room, tilePos):
@@ -38,30 +55,15 @@ class ObjectBase:
         return False
 
 
-    def update_collisions(self, room, dirMoved):
-
-        self.rect.y -= math.ceil(self.yVelocity)
-        
+    def update_x_collisions(self, room, dirMoved):
         # Resets the self.collisions dictionary
-        self.collisions = {
-            "up": False,
-            "down": False,
-            "left": False,
-            "right": False
-        }
-
-        # Finds the coordinates of the center of the object
-        centerX = self.rect.x + (self.rect.width / 2)
-        centerY = self.rect.y + (self.rect.height / 2)
-
-        # Finds the tile that the center of the object is on
-        tileX = math.floor(centerX / constants.TILE_SIZE[0])
-        tileY = math.floor(centerY / constants.TILE_SIZE[1])
+        self.collisions["left"] = False
+        self.collisions["right"] = False
 
         if dirMoved[0] != 0:
             for y in range(-1, 1):
 
-                tilePos = (tileX + dirMoved[0], tileY + y)
+                tilePos = (self.currentTile[0] + dirMoved[0], self.currentTile[1] + y)
                 
                 result = self.check_tile(room, tilePos)
                 if result != False:
@@ -71,15 +73,21 @@ class ObjectBase:
                     else:
                         self.rect.left = result.right
                         self.collisions["left"] = True
-        
-        if dirMoved[1] != 0:
+
+    
+    def update_y_collision(self, room, dirMoved):
+        # Resets the self.collisions dictionary
+        self.collisions["up"] = False
+        self.collisions["down"] = False
+
+        if dirMoved != 0:
             for x in range(-1, 1):
 
-                tilePos = (tileX + x, tileY - dirMoved[1])
+                tilePos = (self.currentTile[0] + x, self.currentTile[1] - dirMoved)
 
                 result = self.check_tile(room, tilePos)
                 if result != False:
-                    if dirMoved[1] == 1:
+                    if dirMoved == 1:
                         self.rect.top = result.bottom
                         self.collisions["up"] = True
                     else:

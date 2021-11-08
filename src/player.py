@@ -20,7 +20,11 @@ class Player(src.object_base.ObjectBase):
         # This will result in a 0, a 1, or a -1. The inputs are True or False.
         # For example: If both are True, then it will result in 0, meaning no direction moved.
         self.rect.x += (inputs["right"] - inputs["left"]) * constants.MOVEMENT_SPEED
+
+        super().reset_current_tile()
+        super().update_x_collision(room, inputs["right"] - inputs["left"])
         
+        # Update velocity based on inputs
         if self.collisions["down"]:
             self.canJump = True
             self.yVelocity = 0
@@ -34,13 +38,10 @@ class Player(src.object_base.ObjectBase):
             # If the player hit the ceiling
             self.yVelocity = 0
 
-        dirMoved = (
-            inputs["right"] - inputs["left"], 
-            1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1)
-        )
+        super().update_y_pos()
+        super().reset_current_tile()
+        super().update_y_collision(room, 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1))
         
-        super().update_collisions(room, dirMoved)
-            
 
     def render(self, window):
         pygame.draw.rect(window, (0, 0, 0), self.rect)
