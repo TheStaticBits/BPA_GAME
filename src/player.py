@@ -1,4 +1,5 @@
 import pygame
+import math
 
 import src.constants as constants
 import src.object_base
@@ -37,6 +38,9 @@ class Player(src.object_base.ObjectBase):
         elif self.collisions["up"]:
             # If the player hit the ceiling
             self.yVelocity = 0
+        
+        if math.ceil(self.yVelocity) < 0:
+            self.canJump = False
 
         super().update_y_pos()
         super().reset_current_tile()
