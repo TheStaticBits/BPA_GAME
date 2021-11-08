@@ -19,7 +19,7 @@ class ObjectBase:
 
         self.yVelocity = 0
 
-        self.currentTile = (0, 0)
+        self.currentTile = [0, 0]
         
     
     def reset_current_tile(self):
@@ -55,19 +55,19 @@ class ObjectBase:
         return False
 
 
-    def update_x_collisions(self, room, dirMoved):
+    def update_x_collision(self, room, dirMoved):
         # Resets the self.collisions dictionary
         self.collisions["left"] = False
         self.collisions["right"] = False
 
-        if dirMoved[0] != 0:
+        if dirMoved != 0:
             for y in range(-1, 1):
 
-                tilePos = (self.currentTile[0] + dirMoved[0], self.currentTile[1] + y)
+                tilePos = (self.currentTile[0] + dirMoved, self.currentTile[1] + y)
                 
                 result = self.check_tile(room, tilePos)
                 if result != False:
-                    if dirMoved[0] == 1:
+                    if dirMoved == 1:
                         self.rect.right = result.left
                         self.collisions["right"] = True
                     else:
