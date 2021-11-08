@@ -17,7 +17,7 @@ RIGHT_KEYS = (pygame.K_RIGHT, pygame.K_d)
 UP_KEYS = (pygame.K_UP, pygame.K_w)
 
 # Player constants
-JUMP_FORCE = 3 # Upward force
+JUMP_FORCE = 3.2 # Upward force
 GRAVITY = 0.2 # Downward force
 MOVEMENT_SPEED = 2
 

@@ -2,6 +2,7 @@ import pygame
 import math
 
 import src.constants as constants
+import src.utility as utility
 
 # ANY OBJECT THAT INHERITS FROM OBJECT_BASE MUST CREATE A RECT OBJECT TO USE TEST_COLLISIONS()
 
@@ -41,7 +42,7 @@ class ObjectBase:
 
     
     def check_tile(self, room, tilePos):
-        if room[tilePos[1]][tilePos[0]] == "w":
+        if not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE) or room[tilePos[1]][tilePos[0]] == "w":
             tileRect = pygame.Rect(
                 tilePos[0] * constants.TILE_SIZE[0], 
                 tilePos[1] * constants.TILE_SIZE[1],

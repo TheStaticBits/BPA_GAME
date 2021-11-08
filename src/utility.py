@@ -54,3 +54,11 @@ def load_spritesheet(
         result.append(tempImage)
     
     return result
+
+
+def check_between(
+        vect,
+        min,
+        max
+    ):
+    return vect[0] >= min[0] and vect[0] <= max[0] and vect[1] >= min[1] and vect[1] <= max[1]
