@@ -11,19 +11,19 @@ from math import floor
 
 import src.scene_base
 import src.player
-import src.utility
+import src.utility as utility
 import src.constants as constants
 
 class Playing(src.scene_base.SceneBase):
     def __init__(self):
         super().__init__()
 
-        self.levels = src.utility.load_levels()
+        self.levels = utility.load_levels()
 
         self.level = 0
         self.room = 1
 
-        self.tileset = src.utility.load_spritesheet("res/tileset_test.png", 16)
+        self.tileset = utility.load_spritesheet("res/tileset_test.png", 16)
 
         self.tile = pygame.image.load("res/other_tile_test/tile.png").convert()
         self.edge = pygame.image.load("res/other_tile_test/edge.png").convert()
@@ -125,7 +125,7 @@ class Playing(src.scene_base.SceneBase):
                             for l in range(-1, 2):
                                 
                                 try:
-                                    if currentRoom[y + i][x + l] == " ":
+                                    if utility.check_between((l, i), (0, 0), constants.SCREEN_TILE_SIZE) and currentRoom[y + i][x + l] == " ":
                                         
                                         if i == 0 or l == 0: # If it's an edge
                                             if i == 0: # If it's vertical
@@ -149,5 +149,6 @@ class Playing(src.scene_base.SceneBase):
                                                 (x * constants.TILE_SIZE[0] + ((l + 1) * ((constants.TILE_SIZE[0] - self.edge.get_width()) / 2)),
                                                 y * constants.TILE_SIZE[1] + ((i + 1) * ((constants.TILE_SIZE[1] - self.edge.get_height()) / 2)))
                                             )
+
                                 except IndexError:
-                                    continue
+                                    print(x + l, y + i)
