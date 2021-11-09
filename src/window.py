@@ -8,7 +8,7 @@ class Window:
     ) # This is the size of the window
 
     def __init__(self):
-        self.window = pygame.display.set_mode(self.WINDOW_SIZE)
+        self.window = pygame.display.set_mode(self.WINDOW_SIZE, pygame.DOUBLEBUF)
         self.miniWindow = pygame.Surface((
             self.WINDOW_SIZE[0] / constants.PX_SCALE_FACTOR,
             self.WINDOW_SIZE[1] / constants.PX_SCALE_FACTOR
@@ -68,7 +68,6 @@ class Window:
 
         pygame.display.flip()
 
-        # UNCOMMENT THIS AFTER TESTING FPS
         self.clock.tick(constants.FPS)
 
         self.miniWindow.fill((255, 255, 255))

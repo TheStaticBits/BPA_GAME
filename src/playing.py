@@ -11,22 +11,24 @@ from math import floor
 
 import src.scene_base
 import src.player
-import src.utility
+import src.utility as utility
 import src.constants as constants
 
 class Playing(src.scene_base.SceneBase):
     def __init__(self):
         super().__init__()
 
-        self.levels = src.utility.load_levels()
+        self.levels = utility.load_levels()
 
         self.level = 0
         self.room = 1
 
-        self.tileset = src.utility.load_spritesheet("res/tileset_test.png", 16)
+        self.tileset = utility.load_spritesheet("res/tileset_test.png", 16)
 
         self.tile = pygame.image.load("res/other_tile_test/tile.png").convert()
-        self.edge = pygame.image.load("res/other_tile_test/edge.png").convert()
+        self.corner = pygame.image.load("res/other_tile_test/corner.png").convert()
+        self.edgeUp = pygame.image.load("res/other_tile_test/edge_up.png").convert()
+        self.edgeDown = pygame.image.load("res/other_tile_test/edge_down.png").convert()
 
         self.find_player()
 
@@ -123,31 +125,25 @@ class Playing(src.scene_base.SceneBase):
 
                         for i in range(-1, 2):
                             for l in range(-1, 2):
-                                
-                                try:
-                                    if currentRoom[y + i][x + l] == " ":
-                                        
-                                        if i == 0 or l == 0: # If it's an edge
-                                            if i == 0: # If it's vertical
-                                                for height in range(constants.TILE_SIZE[1] // self.edge.get_height()):
-                                                    window.blit(
-                                                        self.edge,
-                                                        (x * constants.TILE_SIZE[0] + ((l + 1) * ((constants.TILE_SIZE[0] - self.edge.get_height()) / 2)),
-                                                        y * constants.TILE_SIZE[1] + (height * self.edge.get_height()) + ((i) * ((constants.TILE_SIZE[1] - self.edge.get_height()) / 2)))
-                                                    )
-
-                                            else: # If it's horizontal
-                                                for width in range(constants.TILE_SIZE[0] // self.edge.get_width()):
-                                                    window.blit(
-                                                        self.edge,
-                                                        (x * constants.TILE_SIZE[0] + (width * self.edge.get_width()) + ((l) * ((constants.TILE_SIZE[0] - self.edge.get_width()) / 2)),
-                                                        y * constants.TILE_SIZE[1] + ((i + 1) * ((constants.TILE_SIZE[1] - self.edge.get_height()) / 2)))
-                                                    )
-                                        else: # If it's a corner
+                                if utility.check_between((x + l, y + i), (0, 0), constants.SCREEN_TILE_SIZE) and currentRoom[y + i][x + l] == " ":
+                                    
+                                    if i == 0 or l == 0: # If it's an edge
+                                        if i == 0: # If it's vertical
                                             window.blit(
-                                                self.edge,
-                                                (x * constants.TILE_SIZE[0] + ((l + 1) * ((constants.TILE_SIZE[0] - self.edge.get_width()) / 2)),
-                                                y * constants.TILE_SIZE[1] + ((i + 1) * ((constants.TILE_SIZE[1] - self.edge.get_height()) / 2)))
+                                                self.edgeUp,
+                                                (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.edgeUp.get_width()),
+                                                y * constants.TILE_SIZE[1])
                                             )
-                                except IndexError:
-                                    continue
+
+                                        else: # If it's horizontal
+                                            window.blit(
+                                                self.edgeDown,
+                                                (x * constants.TILE_SIZE[0],
+                                                y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.edgeDown.get_height()))
+                                            )
+                                    else: # If it's a corner
+                                        window.blit(
+                                            self.corner,
+                                            (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.corner.get_width()),
+                                            y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.corner.get_height()))
+                                        )

@@ -61,4 +61,4 @@ def check_between(
         min,
         max
     ):
-    return vect[0] >= min[0] and vect[0] <= max[0] and vect[1] >= min[1] and vect[1] <= max[1]
+    return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
