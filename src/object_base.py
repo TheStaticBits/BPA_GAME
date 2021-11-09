@@ -73,6 +73,8 @@ class ObjectBase:
                     else:
                         self.rect.left = result.right
                         self.collisions["left"] = True
+                    
+                    break
 
     
     def update_y_collision(self, room, dirMoved):
@@ -92,3 +94,5 @@ class ObjectBase:
                     else:
                         self.rect.bottom = result.top
                         self.collisions["down"] = True
+                    
+                    break
