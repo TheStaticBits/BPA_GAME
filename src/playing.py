@@ -22,6 +22,9 @@ class Playing(src.scene_base.SceneBase):
 
         self.load_tiles()
         self.setup_player()
+
+        self.background = self.tileKey["w"]["tile"].convert_alpha().copy()
+        self.background.fill((255, 255, 255, 200), None, pygame.BLEND_RGBA_MULT)
     
     
     def load_tiles(self):
@@ -71,8 +74,6 @@ class Playing(src.scene_base.SceneBase):
     def render(self, window):
         super().render()
 
-        self.player.render(window)
-
         currentRoom = self.levels[self.level][self.room]
 
         """   BEWARE: *SPAGHETTI CODE* AHEAD   """
@@ -112,3 +113,12 @@ class Playing(src.scene_base.SceneBase):
                                         (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["corner"].get_width()),
                                         y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["corner"].get_height()))
                                     )
+
+                elif tile == " ":
+                    window.blit(
+                        self.background, 
+                        (x * constants.TILE_SIZE[0], 
+                        y * constants.TILE_SIZE[1])
+                    )
+    
+        self.player.render(window)

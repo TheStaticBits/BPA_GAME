@@ -70,4 +70,4 @@ class Window:
 
         self.clock.tick(constants.FPS)
 
-        self.miniWindow.fill((255, 255, 255))
+        self.miniWindow.fill((0, 0, 0))
