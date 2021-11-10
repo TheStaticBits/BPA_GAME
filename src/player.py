@@ -35,9 +35,10 @@ class Player(src.object_base.ObjectBase):
             # Inputs is 1 or 0, or True or False
             self.yVelocity = constants.JUMP_FORCE
 
+        # If the player hit the ceiling reset y velocity
         elif self.collisions["up"]:
-            # If the player hit the ceiling
-            self.yVelocity = 0
+            if self.yVelocity > 0:
+                self.yVelocity = 0
         
         if math.ceil(self.yVelocity) < 0:
             self.canJump = False
