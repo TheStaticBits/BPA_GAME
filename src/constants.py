@@ -20,3 +20,10 @@ UP_KEYS = (pygame.K_UP, pygame.K_w)
 JUMP_FORCE = 3.2 # Upward force
 GRAVITY = 0.2 # Downward force
 MOVEMENT_SPEED = 2
+
+# Tiles
+# first value indicating the string in the level layout
+# second value indicating the folder name of the tile
+TILE_KEYS = {
+    "w": "other_tile_test"
+}

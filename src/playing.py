@@ -20,15 +20,23 @@ class Playing(src.scene_base.SceneBase):
         self.level = 0
         self.room = 1
 
-        self.tile = pygame.image.load("res/other_tile_test/tile.png").convert()
-        self.corner = pygame.image.load("res/other_tile_test/corner.png").convert()
-        self.edgeUp = pygame.image.load("res/other_tile_test/edge_up.png").convert()
-        self.edgeDown = pygame.image.load("res/other_tile_test/edge_down.png").convert()
+        self.load_tiles()
+        self.setup_player()
+    
+    
+    def load_tiles(self):
+        self.tileKey = {}
 
-        self.find_player()
+        for tileKey in constants.TILE_KEYS:
+            self.tileKey[tileKey] = {
+                "tile": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/tile.png").convert(),
+                "corner": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/corner.png").convert(),
+                "edgeUp": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/edge_up.png").convert(),
+                "edgeDown": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/edge_down.png").convert()
+            }
 
 
-    def find_player(self):
+    def setup_player(self):
         playerStart = (0, 0)
 
         for y, row in enumerate(self.levels[self.level][self.room]):
@@ -41,6 +49,7 @@ class Playing(src.scene_base.SceneBase):
                     self.levels[self.level][self.room][y][x] = " "
 
         self.player = src.player.Player(playerStart)
+
 
     def update(self, inputs, mousePos, mousePressed):
         super().update()
@@ -71,9 +80,9 @@ class Playing(src.scene_base.SceneBase):
             for x in range(constants.SCREEN_TILE_SIZE[0]):
                 tile = currentRoom[y][x]
 
-                if tile == "w":
+                if tile in self.tileKey:
                     window.blit(
-                        self.tile, 
+                        self.tileKey[tile]["tile"], 
                         (x * constants.TILE_SIZE[0], 
                         y * constants.TILE_SIZE[1])
                     )
@@ -85,20 +94,21 @@ class Playing(src.scene_base.SceneBase):
                                 if i == 0 or l == 0: # If it's an edge
                                     if i == 0: # If it's vertical
                                         window.blit(
-                                            self.edgeUp,
-                                            (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.edgeUp.get_width()),
+                                            self.tileKey[tile]["edgeUp"],
+                                            (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["edgeUp"].get_width()),
                                             y * constants.TILE_SIZE[1])
                                         )
 
                                     else: # If it's horizontal
                                         window.blit(
-                                            self.edgeDown,
+                                            self.tileKey[tile]["edgeDown"],
                                             (x * constants.TILE_SIZE[0],
-                                            y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.edgeDown.get_height()))
+                                            y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["edgeDown"].get_height()))
                                         )
+
                                 else: # If it's a corner
                                     window.blit(
-                                        self.corner,
-                                        (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.corner.get_width()),
-                                        y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.corner.get_height()))
+                                        self.tileKey[tile]["corner"],
+                                        (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["corner"].get_width()),
+                                        y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["corner"].get_height()))
                                     )
