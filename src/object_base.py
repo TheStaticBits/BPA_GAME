@@ -42,7 +42,7 @@ class ObjectBase:
 
     
     def check_tile(self, room, tilePos):
-        if not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE) or room[tilePos[1]][tilePos[0]] == "w":
+        if not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE) or room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
             tileRect = pygame.Rect(
                 tilePos[0] * constants.TILE_SIZE[0], 
                 tilePos[1] * constants.TILE_SIZE[1],

@@ -23,7 +23,8 @@ MOVEMENT_SPEED = 2
 
 # Tiles
 # first value indicating the string in the level layout
-# second value indicating the folder name of the tile
+# second value is the folder name of the tile
 TILE_KEYS = {
-    "w": "other_tile_test"
+    "w": "other_tile_test",
+    "c": "crystal"
 }

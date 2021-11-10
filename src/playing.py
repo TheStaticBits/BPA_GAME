@@ -31,8 +31,8 @@ class Playing(src.scene_base.SceneBase):
             self.tileKey[tileKey] = {
                 "tile": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/tile.png").convert(),
                 "corner": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/corner.png").convert(),
-                "edgeUp": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/edge_up.png").convert(),
-                "edgeDown": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/edge_down.png").convert()
+                "vertical": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/vertical.png").convert(),
+                "horizontal": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/horizontal.png").convert()
             }
 
 
@@ -62,7 +62,7 @@ class Playing(src.scene_base.SceneBase):
         )
 
         if mousePressed["left"]:
-            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = "w"
+            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = "c"
 
         if mousePressed["right"]:
             self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
@@ -94,16 +94,16 @@ class Playing(src.scene_base.SceneBase):
                                 if i == 0 or l == 0: # If it's an edge
                                     if i == 0: # If it's vertical
                                         window.blit(
-                                            self.tileKey[tile]["edgeUp"],
-                                            (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["edgeUp"].get_width()),
+                                            self.tileKey[tile]["vertical"],
+                                            (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["vertical"].get_width()),
                                             y * constants.TILE_SIZE[1])
                                         )
 
                                     else: # If it's horizontal
                                         window.blit(
-                                            self.tileKey[tile]["edgeDown"],
+                                            self.tileKey[tile]["horizontal"],
                                             (x * constants.TILE_SIZE[0],
-                                            y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["edgeDown"].get_height()))
+                                            y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["horizontal"].get_height()))
                                         )
 
                                 else: # If it's a corner
