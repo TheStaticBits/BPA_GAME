@@ -2,9 +2,6 @@
 This file includes the class which manages the playing scene, which includes tiles and collisions and generally everything you will interact with while playing the actual game.
 """
 
-RENDERING_METHOD = 1 # 0 for the preset method which involves the spritesheet of all tiles, 1 for the newer method
-# This changes how the game renders tiles
-
 import pygame
 
 from math import floor
@@ -22,8 +19,6 @@ class Playing(src.scene_base.SceneBase):
 
         self.level = 0
         self.room = 1
-
-        self.tileset = utility.load_spritesheet("res/tileset_test.png", 16)
 
         self.tile = pygame.image.load("res/other_tile_test/tile.png").convert()
         self.corner = pygame.image.load("res/other_tile_test/corner.png").convert()
@@ -77,73 +72,33 @@ class Playing(src.scene_base.SceneBase):
                 tile = currentRoom[y][x]
 
                 if tile == "w":
-                    if RENDERING_METHOD == 0:
-                        try:
-                            tileSurroundings = (
-                                (currentRoom[y - 1][x - 1], currentRoom[y - 1][x], currentRoom[y - 1][x + 1]),
-                                (currentRoom[y][x - 1], currentRoom[y][x], currentRoom[y][x + 1]),
-                                (currentRoom[y + 1][x - 1], currentRoom[y + 1][x], currentRoom[y + 1][x + 1]),
-                            )
-                        except IndexError:
-                            #print(x, y)
-                            continue
+                    window.blit(
+                        self.tile, 
+                        (x * constants.TILE_SIZE[0], 
+                        y * constants.TILE_SIZE[1])
+                    )
 
-                        for tileNumber, tileKey in enumerate(constants.TILESET_KEY):
-                            check = True
-                            for i, row in enumerate(tileKey):
-                                for l, tileType in enumerate(row):
-                                    tileToTest = tileSurroundings[i][l]
-
-                                    if tileType == 1:
-                                        if tileToTest != tile:
-                                            check = False
-
-                                    elif tileType == 0:
-                                        if tileToTest != " ":
-                                            check = False
-                            
-                            if check:
-                                tileSelected = tileNumber
-                                break
-                        
-                        try:
-                            window.blit(
-                                self.tileset[tileSelected], 
-                                (x * constants.TILE_SIZE[0], 
-                                y * constants.TILE_SIZE[1])
-                            )
-                        except UnboundLocalError:
-                            print("ERROR: Tile type does not exist.")
-
-
-                    elif RENDERING_METHOD == 1:
-                        window.blit(
-                            self.tile, 
-                            (x * constants.TILE_SIZE[0], 
-                            y * constants.TILE_SIZE[1])
-                        )
-
-                        for i in range(-1, 2):
-                            for l in range(-1, 2):
-                                if utility.check_between((x + l, y + i), (0, 0), constants.SCREEN_TILE_SIZE) and currentRoom[y + i][x + l] == " ":
-                                    
-                                    if i == 0 or l == 0: # If it's an edge
-                                        if i == 0: # If it's vertical
-                                            window.blit(
-                                                self.edgeUp,
-                                                (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.edgeUp.get_width()),
-                                                y * constants.TILE_SIZE[1])
-                                            )
-
-                                        else: # If it's horizontal
-                                            window.blit(
-                                                self.edgeDown,
-                                                (x * constants.TILE_SIZE[0],
-                                                y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.edgeDown.get_height()))
-                                            )
-                                    else: # If it's a corner
+                    for i in range(-1, 2):
+                        for l in range(-1, 2):
+                            if utility.check_between((x + l, y + i), (0, 0), constants.SCREEN_TILE_SIZE) and currentRoom[y + i][x + l] == " ":
+                                
+                                if i == 0 or l == 0: # If it's an edge
+                                    if i == 0: # If it's vertical
                                         window.blit(
-                                            self.corner,
-                                            (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.corner.get_width()),
-                                            y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.corner.get_height()))
+                                            self.edgeUp,
+                                            (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.edgeUp.get_width()),
+                                            y * constants.TILE_SIZE[1])
                                         )
+
+                                    else: # If it's horizontal
+                                        window.blit(
+                                            self.edgeDown,
+                                            (x * constants.TILE_SIZE[0],
+                                            y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.edgeDown.get_height()))
+                                        )
+                                else: # If it's a corner
+                                    window.blit(
+                                        self.corner,
+                                        (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.corner.get_width()),
+                                        y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.corner.get_height()))
+                                    )
