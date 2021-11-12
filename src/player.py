@@ -40,7 +40,7 @@ class Player(src.object_base.ObjectBase):
             if (self.gravityDir == 1 and self.yVelocity > 0) or self.yVelocity < 0:
                 self.yVelocity = 0
         
-        if self.gravityDir == 1 and math.ceil(self.yVelocity) < 0 or math.ceil(self.yVelocity) > 0:
+        if self.gravityDir == 1 and math.ceil(self.yVelocity) < -1 or math.floor(self.yVelocity) > 1:
             self.canJump = False
 
         super().update_y_pos()
@@ -49,6 +49,7 @@ class Player(src.object_base.ObjectBase):
         super().update_y_collision(room, 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1))
 
         super().test_grav_line()
+        print(self.canJump)
         
 
     def render(self, window):
