@@ -1,44 +1,44 @@
- w w w w w w w w w w w  
-w w w w w w w w w w w w 
- w w w w w w w w w w w  
-w w w w w w w w w w w w 
- w w w w w w w w w w w  
-w w w w w w w w w w w w 
- w w w w w w w w w w w  
-w w w w w w w w w w w w 
- w w w w w w w w w w w  
-w w w w w w w w w w w w 
- w w w w w w w w w w w  
-w w w w w w w w w w w w 
- w w w w w w w w w w w  
-                        
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c  
 ||||||||||||||||||||||||
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwww  wwwwwwwwwwwwwwwww
-ww         wwwwwwwwwwwww
-ww  p         wwwwwwwwww
-ww  www    wwwwwwwwwwwww
-ww wwwww   wwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+ccccc  ccccccccccccccccc
+cc         ccccccccccccc
+cc  p         cccccccccc
+cc  ccc    ccccccccccccc
+cc ccccc   ccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
 ------------------------
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc

@@ -120,5 +120,7 @@ class Playing(src.scene_base.SceneBase):
                         (x * constants.TILE_SIZE[0], 
                         y * constants.TILE_SIZE[1])
                     )
+
+        pygame.draw.rect(window, (255, 0, 0), (0, window.get_height() / 2 - 1, window.get_width(), 2))
     
         self.player.render(window)

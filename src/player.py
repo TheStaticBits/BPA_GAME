@@ -8,7 +8,7 @@ class Player(src.object_base.ObjectBase):
     def __init__(self, startPos):
         super().__init__()
 
-        super().rect = pygame.Rect(startPos[0], startPos[1], 16, 16)
+        self.rect = pygame.Rect(startPos[0], startPos[1], 16, 16)
 
         self.yVelocity = 0
 
@@ -26,21 +26,21 @@ class Player(src.object_base.ObjectBase):
         super().update_x_collision(room, inputs["right"] - inputs["left"])
         
         # Update velocity based on inputs
-        if super().gravityDir == 1 and self.collisions["down"] or self.collisions["up"]:
+        if (self.gravityDir == 1 and self.collisions["down"]) or self.collisions["up"]:
             self.canJump = True
             self.yVelocity = 0
         
         if inputs["up"] and self.canJump:
             self.canJump = False
             # Inputs is 1 or 0, or True or False
-            self.yVelocity = constants.JUMP_FORCE * super().gravityDir
+            self.yVelocity = constants.JUMP_FORCE * self.gravityDir
 
         # If the player hit the ceiling reset y velocity
-        elif super().gravityDir == 1 and self.collisions["up"] or self.collisions["down"]:
-            if (super().gravityDir == 1 and self.yVelocity > 0) or self.yVelocity < 0:
+        elif self.gravityDir == 1 and self.collisions["up"] or self.collisions["down"]:
+            if (self.gravityDir == 1 and self.yVelocity > 0) or self.yVelocity < 0:
                 self.yVelocity = 0
         
-        if super().gravityDir == 1 and math.ceil(self.yVelocity) < 0 or math.ceil(self.yVelocity) > 0:
+        if self.gravityDir == 1 and math.ceil(self.yVelocity) < 0 or math.ceil(self.yVelocity) > 0:
             self.canJump = False
 
         super().update_y_pos()

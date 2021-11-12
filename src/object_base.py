@@ -38,11 +38,14 @@ class ObjectBase:
 
 
     def update_gravity(self):
-        self.yVelocity -= constants.GRAVITY
+        self.yVelocity -= constants.GRAVITY * self.gravityDir
 
 
     def update_y_pos(self):
-        self.rect.y -= math.ceil(self.yVelocity)
+        if self.gravityDir == 1:
+            self.rect.y -= math.ceil(self.yVelocity)
+        else:
+            self.rect.y -= math.floor(self.yVelocity)
 
     
     def check_tile(self, room, tilePos):
@@ -103,7 +106,7 @@ class ObjectBase:
     
 
     def test_grav_line(self):
-        if self.rect.y > (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]) / 2:
+        if self.rect.y + (self.rect.height / 2) < (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]) / 2:
             self.gravityDir = -1
             
         else:
