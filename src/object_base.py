@@ -21,6 +21,10 @@ class ObjectBase:
         self.yVelocity = 0
 
         self.currentTile = [0, 0]
+
+        # If this is 1, the gravity is pulling downward
+        # If this is -1, the gravity is pulling upward
+        self.gravityDir = 1
         
     
     def reset_current_tile(self):
@@ -96,3 +100,11 @@ class ObjectBase:
                         self.collisions["down"] = True
                     
                     break
+    
+
+    def test_grav_line(self):
+        if self.rect.y > (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]) / 2:
+            self.gravityDir = -1
+            
+        else:
+            self.gravityDir = 1
