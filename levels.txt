@@ -45,7 +45,7 @@ cccccccccccccccccccccccc
 ||||||||||||||||||||||||
 cccccccccccccccccccccccc
 c              c  cccccc
-c ccccc ccccc  c    c  c
+c ccccccccccc  c    c  c
 c c         c  c  c c  c
 c c         c  c  c    c
 c c         c  c  cccc c
