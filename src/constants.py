@@ -34,3 +34,16 @@ TILE_KEYS = {
     "d": "dirt",
     "b": "blank"
 }
+TRANSPARENT_TILES = [
+    " ",
+    "^", "<", "V", ">"
+]
+
+# Other tiles
+SPIKE_PATH = "res/misc/spike.png"
+SPIKE_ROTATIONS = {
+    "^": 0,
+    "<": 90,
+    "V": 180,
+    ">": 270
+}

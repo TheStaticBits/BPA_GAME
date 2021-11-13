@@ -47,6 +47,11 @@ class Player(src.object_base.ObjectBase):
         
         super().reset_current_tile()
         super().update_y_collision(room, 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1))
+
+        if self.spiked:
+            return False
+        
+        return True
         
 
     def render(self, window):

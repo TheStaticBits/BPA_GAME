@@ -32,10 +32,10 @@ cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
+cccccccccVcccccccccccccc
+cccccccc>    pcccccccccc
+ccccccccc^  <ccccccccccc
+cccccccccc^^cccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc

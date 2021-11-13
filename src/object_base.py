@@ -21,10 +21,13 @@ class ObjectBase:
         self.yVelocity = 0
 
         self.currentTile = [0, 0]
+        self.spiked = False
 
         # If this is 1, the gravity is pulling downward
         # If this is -1, the gravity is pulling upward
         self.gravityDir = None
+
+        self.spikeImage = pygame.image.load(constants.SPIKE_PATH).convert_alpha()
         
     
     def reset_current_tile(self):
@@ -46,7 +49,10 @@ class ObjectBase:
         
     
     def check_tile(self, room, tilePos):
-        if not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE) or room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
+
+        offscreen = not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE)
+
+        if offscreen or room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
             tileRect = pygame.Rect(
                 tilePos[0] * constants.TILE_SIZE[0], 
                 tilePos[1] * constants.TILE_SIZE[1],
@@ -56,6 +62,20 @@ class ObjectBase:
 
             if self.rect.colliderect(tileRect):
                 return tileRect
+
+        elif room[tilePos[1]][tilePos[0]] in constants.SPIKE_ROTATIONS:
+            spike = pygame.transform.rotate(
+                self.spikeImage, 
+                constants.SPIKE_ROTATIONS[room[tilePos[1]][tilePos[0]]]
+            )
+
+            spikeMask = pygame.mask.from_surface(spike)
+            playerMask = pygame.mask.Mask((self.rect.width, self.rect.height), fill=True)
+
+            collided = spikeMask.overlap(playerMask, (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], self.rect.y - tilePos[1] * constants.TILE_SIZE[1]))
+
+            if collided:
+                self.spiked = True
     
         return False
 

@@ -5,7 +5,6 @@ import threading
 import src.window
 import src.playing
 
-
 # Initializing Pygame
 pygame.init()
 
@@ -43,7 +42,8 @@ class Loop:
         self.window.update_inputs()
 
         if self.scene == "playing":
-            self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
+            if not self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed):
+                self.window.closeWindow = True
     
     
     def render(self):

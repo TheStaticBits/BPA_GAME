@@ -18,23 +18,27 @@ class Playing(src.scene_base.SceneBase):
         self.levels = utility.load_levels()
 
         self.level = 1
-        self.room = 1
+        self.room = 0
 
         self.load_tiles()
         self.setup_player()
 
+        # Setting up background tile
         self.background = self.tileKey["w"]["tile"].convert_alpha().copy()
         self.background.fill((255, 255, 255, 200), None, pygame.BLEND_RGBA_MULT)
 
+        # Loading spike tile
+        self.spikeTile = pygame.image.load("res/misc/spike.png").convert_alpha()
+
         # Setup tile drawing surface
         self.tileSurface = pygame.Surface((
-            constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0], 
+            constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0],
             constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]
         ))
         self.draw_tiles(self.tileSurface)
         self.tilesChanged = False
-    
-    
+
+
     def load_tiles(self):
         self.tileKey = {}
 
@@ -65,7 +69,8 @@ class Playing(src.scene_base.SceneBase):
     def update(self, inputs, mousePos, mousePressed):
         super().update()
 
-        self.player.update(self.levels[self.level][self.room], inputs)
+        if not self.player.update(self.levels[self.level][self.room], inputs):
+            return False
 
         tilePos = (
             floor(mousePos[0] / constants.TILE_SIZE[0]),
@@ -79,11 +84,13 @@ class Playing(src.scene_base.SceneBase):
         if mousePressed["right"]:
             self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
             self.tilesChanged = True
-        
+
         if inputs["space"]:
             utility.save_room(self.level, self.room, self.levels[self.level][self.room])
 
-    
+        return True
+
+
     def draw_tiles(self, surface):
         currentRoom = self.levels[self.level][self.room]
 
@@ -94,15 +101,15 @@ class Playing(src.scene_base.SceneBase):
 
                 if tile in self.tileKey:
                     surface.blit(
-                        self.tileKey[tile]["tile"], 
-                        (x * constants.TILE_SIZE[0], 
+                        self.tileKey[tile]["tile"],
+                        (x * constants.TILE_SIZE[0],
                         y * constants.TILE_SIZE[1])
                     )
 
                     for i in range(-1, 2):
                         for l in range(-1, 2):
-                            if utility.check_between((x + l, y + i), (0, 0), constants.SCREEN_TILE_SIZE) and currentRoom[y + i][x + l] == " ":
-                                
+                            if utility.check_between((x + l, y + i), (0, 0), constants.SCREEN_TILE_SIZE) and currentRoom[y + i][x + l] in constants.TRANSPARENT_TILES:
+
                                 if i == 0 or l == 0: # If it's an edge
                                     if i == 0: # If it's vertical
                                         surface.blit(
@@ -125,13 +132,20 @@ class Playing(src.scene_base.SceneBase):
                                         y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["corner"].get_height()))
                                     )
 
-                elif tile == " ":
+                elif tile in constants.TRANSPARENT_TILES:
                     surface.blit(
-                        self.background, 
-                        (x * constants.TILE_SIZE[0], 
+                        self.background,
+                        (x * constants.TILE_SIZE[0],
                         y * constants.TILE_SIZE[1])
                     )
-        
+
+                    if tile in constants.SPIKE_ROTATIONS:
+                        surface.blit(
+                            pygame.transform.rotate(self.spikeTile, constants.SPIKE_ROTATIONS[tile]),
+                            (x * constants.TILE_SIZE[0],
+                            y * constants.TILE_SIZE[1])
+                        )
+
 
     def render(self, window):
         super().render()
@@ -142,9 +156,9 @@ class Playing(src.scene_base.SceneBase):
             self.draw_tiles(self.tileSurface)
             self.tilesChanged = False
         window.blit(self.tileSurface, (0, 0))
-        
+
         # Drawing gravity beam
         pygame.draw.rect(window, (255, 0, 0), (0, window.get_height() / 2 - 1, window.get_width(), 2))
-    
+
         # Drawing player
         self.player.render(window)
