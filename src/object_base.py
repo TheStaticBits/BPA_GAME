@@ -1,5 +1,5 @@
 import pygame
-import math
+from math import floor
 
 import src.constants as constants
 import src.utility as utility
@@ -33,8 +33,8 @@ class ObjectBase:
         centerY = self.rect.y + (self.rect.height / 2)
 
         # Finds the tile that the center of the object is on
-        self.currentTile[0] = math.floor(centerX / constants.TILE_SIZE[0])
-        self.currentTile[1] = math.floor(centerY / constants.TILE_SIZE[1])
+        self.currentTile[0] = floor(centerX / constants.TILE_SIZE[0])
+        self.currentTile[1] = floor(centerY / constants.TILE_SIZE[1])
 
 
     def update_gravity(self):
