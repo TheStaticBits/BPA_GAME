@@ -40,12 +40,8 @@ class ObjectBase:
     def update_gravity(self):
         self.yVelocity -= constants.GRAVITY * self.gravityDir
 
-
     def update_y_pos(self):
-        if self.gravityDir == 1:
-            self.rect.y -= math.ceil(self.yVelocity)
-        else:
-            self.rect.y -= math.floor(self.yVelocity)
+        self.rect.y -= round(self.yVelocity)
 
     
     def check_tile(self, room, tilePos):
