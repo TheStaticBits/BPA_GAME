@@ -10,17 +10,20 @@ Development started in October and will end in January.
 ## Artwork:
  - Lead: shrug
  - Andrew
- - Connor
  - Matthew
  - Nolan
 
 ## Story:
  - Lead: Andrew
- - Connor
+
+## Level Design:
+ - Lead: Nolan
 
 ## Characters Within the Game:
  - Corlen
     - A snarky English dog
     - With a zero dimensional personality
+ - Ellipse
+    - A cat that cannot speak
  - The player
     - An idiot (you)
