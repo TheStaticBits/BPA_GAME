@@ -54,7 +54,7 @@ class Playing(src.scene_base.SceneBase):
     def setup_player(self):
         playerStart = (0, 0)
 
-        for y, row in enumerate(self.levels[self.level][self.room]):
+        for y, row in enumerate(utility.load_levels()[self.level][self.room]):
             for x, tile in enumerate(row):
                 if tile == "p":
                     playerStart = (
