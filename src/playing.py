@@ -18,13 +18,21 @@ class Playing(src.scene_base.SceneBase):
         self.levels = utility.load_levels()
 
         self.level = 0
-        self.room = 1
+        self.room = 0
 
         self.load_tiles()
         self.setup_player()
 
         self.background = self.tileKey["w"]["tile"].convert_alpha().copy()
         self.background.fill((255, 255, 255, 200), None, pygame.BLEND_RGBA_MULT)
+
+        # Setup tile drawing surface
+        self.tileSurface = pygame.Surface((
+            constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0], 
+            constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]
+        ))
+        self.draw_tiles(self.tileSurface)
+        self.tilesChanged = False
     
     
     def load_tiles(self):
@@ -66,14 +74,14 @@ class Playing(src.scene_base.SceneBase):
 
         if mousePressed["left"]:
             self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = "c"
+            self.tilesChanged = True
 
         if mousePressed["right"]:
             self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
+            self.tilesChanged = True
 
     
-    def render(self, window):
-        super().render()
-
+    def draw_tiles(self, surface):
         currentRoom = self.levels[self.level][self.room]
 
         """   BEWARE: *SPAGHETTI CODE* AHEAD   """
@@ -82,7 +90,7 @@ class Playing(src.scene_base.SceneBase):
                 tile = currentRoom[y][x]
 
                 if tile in self.tileKey:
-                    window.blit(
+                    surface.blit(
                         self.tileKey[tile]["tile"], 
                         (x * constants.TILE_SIZE[0], 
                         y * constants.TILE_SIZE[1])
@@ -94,33 +102,46 @@ class Playing(src.scene_base.SceneBase):
                                 
                                 if i == 0 or l == 0: # If it's an edge
                                     if i == 0: # If it's vertical
-                                        window.blit(
+                                        surface.blit(
                                             self.tileKey[tile]["vertical"],
                                             (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["vertical"].get_width()),
                                             y * constants.TILE_SIZE[1])
                                         )
 
                                     else: # If it's horizontal
-                                        window.blit(
+                                        surface.blit(
                                             self.tileKey[tile]["horizontal"],
                                             (x * constants.TILE_SIZE[0],
                                             y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["horizontal"].get_height()))
                                         )
 
                                 else: # If it's a corner
-                                    window.blit(
+                                    surface.blit(
                                         self.tileKey[tile]["corner"],
                                         (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["corner"].get_width()),
                                         y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - self.tileKey[tile]["corner"].get_height()))
                                     )
 
                 elif tile == " ":
-                    window.blit(
+                    surface.blit(
                         self.background, 
                         (x * constants.TILE_SIZE[0], 
                         y * constants.TILE_SIZE[1])
                     )
+        
 
+    def render(self, window):
+        super().render()
+
+        # Drawing tiles
+        if self.tilesChanged:
+            self.tileSurface.fill((0, 0, 0))
+            self.draw_tiles(self.tileSurface)
+            self.tilesChanged = False
+        window.blit(self.tileSurface, (0, 0))
+        
+        # Drawing gravity beam
         pygame.draw.rect(window, (255, 0, 0), (0, window.get_height() / 2 - 1, window.get_width(), 2))
     
+        # Drawing player
         self.player.render(window)
