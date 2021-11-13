@@ -40,7 +40,7 @@ class Player(src.object_base.ObjectBase):
             if (self.gravityDir == 1 and self.yVelocity > 0) or (self.gravityDir == -1 and self.yVelocity < 0):
                 self.yVelocity = 0
         
-        if (self.gravityDir == 1 and round(self.yVelocity) < -1) or (self.gravityDir == -1 and round(self.yVelocity) > 1):
+        if (self.gravityDir == 1 and round(self.yVelocity < -1)) or (self.gravityDir == -1 and round(self.yVelocity > 1)):
             self.canJump = False
 
         super().update_y_pos()

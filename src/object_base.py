@@ -40,9 +40,10 @@ class ObjectBase:
     def update_gravity(self):
         self.yVelocity -= constants.GRAVITY * self.gravityDir
 
+
     def update_y_pos(self):
         self.rect.y -= round(self.yVelocity)
-
+        
     
     def check_tile(self, room, tilePos):
         if not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE) or room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
