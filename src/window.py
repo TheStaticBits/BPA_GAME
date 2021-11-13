@@ -23,7 +23,8 @@ class Window:
         self.inputs = {
             "left": False,
             "right": False,
-            "up": False
+            "up": False,
+            "space": False
         }
         self.mousePos = (0, 0)
         self.mousePressed = {
@@ -34,6 +35,7 @@ class Window:
     
     def update_inputs(self):
         self.inputs["up"] = False
+        self.inputs["space"] = False
 
         self.mousePos = (
             pygame.mouse.get_pos()[0] // constants.PX_SCALE_FACTOR,
@@ -54,6 +56,8 @@ class Window:
                     self.inputs["left"] = True
                 elif event.key in constants.UP_KEYS:
                     self.inputs["up"] = True
+                elif event.key == pygame.K_SPACE:
+                    self.inputs["space"] = True
             
             elif event.type == pygame.KEYUP:
                 if event.key in constants.RIGHT_KEYS:

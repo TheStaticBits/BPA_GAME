@@ -62,3 +62,25 @@ def check_between(
         max
     ):
     return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
+
+
+def save_room(saveLevel, saveRoom, tiles):
+    levels = load_levels()
+    
+    with open("levels.txt", "w") as file:
+        for levelNumber, level in enumerate(levels):
+            if levelNumber != 0:
+                file.write(constants.LEVEL_SEPARATOR)
+            
+            for roomNumber, room in enumerate(level):
+                if roomNumber != 0:
+                    file.write(constants.ROOM_SEPARATOR)
+
+                iterator = tiles if saveLevel == levelNumber and saveRoom == roomNumber else room
+
+                for rowNumber, row in enumerate(iterator):
+                    for tile in row:
+                        file.write(str(tile))
+            
+                    if rowNumber != len(iterator) - 1:
+                        file.write("\n")

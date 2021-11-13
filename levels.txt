@@ -43,14 +43,14 @@ cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 ||||||||||||||||||||||||
-cccccccccccccccccccccccc
+       ccccccccccccccccc
 c              c  cccccc
-c ccccccccccc  c    c  c
+c ccccc ccccc  c    c  c
 c c         c  c  c c  c
 c c         c  c  c    c
 c c         c  c  cccc c
-c c  ccc   ccccc  c  c c
-c c  c c      pc  c  c c
+c c  ccc    cccc  c  c c
+c c  c c       c  c  c c
 c c  c c cc    c  c  c c
 c c  ccc       c  c  c c
 c c    ccccccccc  cccc c

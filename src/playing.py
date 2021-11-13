@@ -17,7 +17,7 @@ class Playing(src.scene_base.SceneBase):
 
         self.levels = utility.load_levels()
 
-        self.level = 0
+        self.level = 1
         self.room = 1
 
         self.load_tiles()
@@ -79,6 +79,9 @@ class Playing(src.scene_base.SceneBase):
         if mousePressed["right"]:
             self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
             self.tilesChanged = True
+        
+        if inputs["space"]:
+            utility.save_room(self.level, self.room, self.levels[self.level][self.room])
 
     
     def draw_tiles(self, surface):
