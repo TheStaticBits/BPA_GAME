@@ -1,5 +1,4 @@
 import pygame
-import math
 
 import src.constants as constants
 import src.object_base
