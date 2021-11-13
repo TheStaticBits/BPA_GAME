@@ -70,7 +70,7 @@ class Playing(src.scene_base.SceneBase):
         super().update()
 
         if not self.player.update(self.levels[self.level][self.room], inputs):
-            return False
+            self.setup_player()
 
         tilePos = (
             floor(mousePos[0] / constants.TILE_SIZE[0]),
@@ -87,8 +87,6 @@ class Playing(src.scene_base.SceneBase):
 
         if inputs["space"]:
             utility.save_room(self.level, self.room, self.levels[self.level][self.room])
-
-        return True
 
 
     def draw_tiles(self, surface):

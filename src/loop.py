@@ -42,8 +42,7 @@ class Loop:
         self.window.update_inputs()
 
         if self.scene == "playing":
-            if not self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed):
-                self.window.closeWindow = True
+            self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
     
     
     def render(self):
