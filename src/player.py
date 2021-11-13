@@ -38,7 +38,7 @@ class Player(src.object_base.ObjectBase):
 
         # If the player hit the ceiling reset y velocity
         elif (self.gravityDir == 1 and self.collisions["up"]) or (self.gravityDir == -1 and self.collisions["down"]):
-            if (self.gravityDir == 1 and self.yVelocity > 0) or self.yVelocity < 0:
+            if (self.gravityDir == 1 and self.yVelocity > 0) or (self.gravityDir == -1 and self.yVelocity < 0):
                 self.yVelocity = 0
         
         if (self.gravityDir == 1 and round(self.yVelocity) < -1) or (self.gravityDir == -1 and round(self.yVelocity) > 1):
