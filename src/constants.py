@@ -36,7 +36,7 @@ TILE_KEYS = {
 }
 TRANSPARENT_TILES = [
     " ",
-    "^", "<", "V", ">"
+    "^", "<", "v", ">"
 ]
 
 # Other tiles
@@ -44,6 +44,6 @@ SPIKE_PATH = "res/misc/spike.png"
 SPIKE_ROTATIONS = {
     "^": 0,
     "<": 90,
-    "V": 180,
+    "v": 180,
     ">": 270
 }
