@@ -36,9 +36,9 @@ c cc   cc   ^^  cc  cc c
 cpcc   cc   cc  cc  cc c
 cccc   cc   cc  cc  cc c
 cccc   cc   cc  cc  cc c
-cccc   VV   cc  cc  cc c
+cccc   vv   cc  cc  cc c
 cccc        cc  cc  cc c
-cccc        cc  VV  cc c
+cccc        cc  vv  cc c
 cccc        cc      cc c
 cccc        cc      cc  
 ||||||||||||||||||||||||
