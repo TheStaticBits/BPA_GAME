@@ -32,5 +32,5 @@ TILE_KEYS = {
     "c": "crystal",
     "s": "star",
     "d": "dirt",
-    "b": "black"
+    "b": "blank"
 }
