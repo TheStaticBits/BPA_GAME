@@ -21,6 +21,9 @@ JUMP_FORCE = 3.2 # Upward force
 GRAVITY = 0.2 # Downward force
 MOVEMENT_SPEED = 2
 
+# temporary, 1 is the default, -1 means it inverses.
+INVERSE_GRAVITY = 1
+
 # Tiles
 # first value indicating the string in the level layout
 # second value is the folder name of the tile

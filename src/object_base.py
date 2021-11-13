@@ -24,7 +24,7 @@ class ObjectBase:
 
         # If this is 1, the gravity is pulling downward
         # If this is -1, the gravity is pulling upward
-        self.gravityDir = -1
+        self.gravityDir = None
         
     
     def reset_current_tile(self):
@@ -107,7 +107,7 @@ class ObjectBase:
 
     def test_grav_line(self):
         if self.rect.y + (self.rect.height / 2) < (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]) / 2:
-            self.gravityDir = 1
+            self.gravityDir = 1 * constants.INVERSE_GRAVITY
             
         else:
-            self.gravityDir = -1
+            self.gravityDir = -1 * constants.INVERSE_GRAVITY
