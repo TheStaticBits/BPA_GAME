@@ -29,6 +29,7 @@ class Window:
         self.mousePos = (0, 0)
         self.mousePressed = {
             "left": False,
+            "center": False,
             "right": False
         }
     
@@ -43,6 +44,7 @@ class Window:
         )
 
         self.mousePressed["left"] = pygame.mouse.get_pressed()[0]
+        self.mousePressed["center"] = pygame.mouse.get_pressed()[1]
         self.mousePressed["right"] = pygame.mouse.get_pressed()[2]
         
         for event in pygame.event.get():

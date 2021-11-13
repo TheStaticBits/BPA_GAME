@@ -38,6 +38,9 @@ class Playing(src.scene_base.SceneBase):
         self.draw_tiles(self.tileSurface)
         self.tilesChanged = False
 
+        # EDITOR CONTROLS:
+        self.placeTile = "c"
+
 
     def load_tiles(self):
         self.tileKey = {}
@@ -98,8 +101,11 @@ class Playing(src.scene_base.SceneBase):
         )
 
         if mousePressed["left"]:
-            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = "c"
+            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = self.placeTile
             self.tilesChanged = True
+        
+        if mousePressed["center"]:
+            self.placeTile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]]
 
         if mousePressed["right"]:
             self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
