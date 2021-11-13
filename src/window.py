@@ -74,6 +74,7 @@ class Window:
 
         pygame.display.flip()
 
-        self.clock.tick(constants.FPS)
+        if constants.CAP_FPS:
+            self.clock.tick(constants.FPS)
 
         self.miniWindow.fill((0, 0, 0))

@@ -1,5 +1,6 @@
 import pygame
 
+CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
 
 TILE_SIZE = (16, 16)
