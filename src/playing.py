@@ -18,7 +18,7 @@ class Playing(src.scene_base.SceneBase):
         self.levels = utility.load_levels()
 
         self.level = 0
-        self.room = 0
+        self.room = 1
 
         self.load_tiles()
         self.setup_player()
