@@ -49,7 +49,6 @@ class Player(src.object_base.ObjectBase):
         super().update_y_collision(room, 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1))
 
         super().test_grav_line()
-        print(self.canJump)
         
 
     def render(self, window):
