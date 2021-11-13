@@ -17,6 +17,10 @@ class Loop:
 
         self.framerate = 0
 
+        # Setting up music
+        pygame.mixer.music.load("res/sound/ThereIsSomethingV2.wav")
+        pygame.mixer.music.set_volume(0.2)
+
 
     def run_framerate(self):
         while True:
@@ -26,8 +30,12 @@ class Loop:
 
 
     def run_game(self):
+        # Starting FPS counter
         framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
         framerate.start()
+
+        # Starting music
+        pygame.mixer.music.play(-1)
 
         while not self.window.closeWindow:
             self.window.flip()
