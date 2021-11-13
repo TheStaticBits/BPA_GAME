@@ -72,7 +72,6 @@ class Playing(src.scene_base.SceneBase):
         playerState = self.player.update(self.levels[self.level][self.room], inputs)
 
         if playerState == "right":
-            print("Moved right!")
             self.room += 1
             if self.room >= len(self.levels[self.level]):
                 self.room = 0
@@ -82,7 +81,6 @@ class Playing(src.scene_base.SceneBase):
             self.tilesChanged = True
 
         elif playerState == "left":
-            print("Moved left!")
             self.room -= 1
             if self.room < 0:
                 self.room = len(self.levels[self.level]) - 1
