@@ -69,7 +69,29 @@ class Playing(src.scene_base.SceneBase):
     def update(self, inputs, mousePos, mousePressed):
         super().update()
 
-        if not self.player.update(self.levels[self.level][self.room], inputs):
+        playerState = self.player.update(self.levels[self.level][self.room], inputs)
+
+        if playerState == "right":
+            print("Moved right!")
+            self.room += 1
+            if self.room >= len(self.levels[self.level]):
+                self.room = 0
+                self.level += 1
+
+            self.setup_player()
+            self.tilesChanged = True
+
+        elif playerState == "left":
+            print("Moved left!")
+            self.room -= 1
+            if self.room < 0:
+                self.room = len(self.levels[self.level]) - 1
+                self.level -= 1
+
+            self.setup_player()
+            self.tilesChanged = True
+
+        elif playerState == "dead":
             self.setup_player()
 
         tilePos = (
