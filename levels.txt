@@ -43,7 +43,7 @@ cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 ||||||||||||||||||||||||
-       ccccccccccccccccc
+cccccccccccccccccccccccc
 c              c  cccccc
 c ccccc ccccc  c    c  c
 c c         c  c  c c  c
