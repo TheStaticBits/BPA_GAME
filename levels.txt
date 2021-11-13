@@ -32,10 +32,10 @@ cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
-cccccccccVcccccccccccccc
-cccccccc>    pcccccccccc
-ccccccccc^  <ccccccccccc
-cccccccccc^^cccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
@@ -43,17 +43,32 @@ cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 ||||||||||||||||||||||||
-cccccccccccccccccccccccc
-c              c  cccccc
-c ccccccccccc  c    c  c
-c c         c  c  c c  c
-c c         c  c  c    c
-c c         c  c  cccc c
-c c  ccc    cccc  c  c c
-c c  c c      pc  c  c c
-c c  c c cc    c  c  c c
-c c  ccc       c  c  c c
-c c    ccccccccc  cccc c
-c c               c    c
-c ccc             c  ccc
-ccccccccccccccccccc     
+wwwwwwwwwwwwwwwwwwwwwwww
+w         ww       wwwww
+w         ww       wwwww
+w         ww       wwwww
+w   www   ww       wwwww
+w p www   ww       wwwww
+wwwwwww   ww   ^^  wwwww
+wwwwwww   vv   ww  wwwww
+wwwwwww        ww    www
+wwwwwww        ww    www
+wwwwwww        ww       
+wwwwwww        ww       
+wwwwwww        ww       
+wwwwwwwwwwwwwwwwwwwwwwww
+||||||||||||||||||||||||
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwww  wwwwww
+wwwwwwwwwwwwwwww       w
+www         wwww  w    w
+www         wwww  w    w
+www         wwww  wwww w
+www  www    wwww  wwww w
+www  www     pww  wwww w
+www  www ww   ww  wwww w
+www    w      ww  wwww w
+www    wwwwwwwww  wwww w
+wwwww             w    w
+wwwww             w  www
+wwwwwwwwwwwwwwwwwww     
