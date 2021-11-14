@@ -3,9 +3,13 @@ This file contains functions for things such as saving and loading, loading spri
 """
 
 import pygame
+import sqlite3
+import os
 
 import src.constants as constants
 
+
+# Gets a file from the filePath
 def get_file(filePath) -> str:
     with open(filePath, "r") as file:
         text = file.read()
@@ -13,6 +17,7 @@ def get_file(filePath) -> str:
     return text
 
 
+# Loads the levels from the levels.txt file
 def load_levels() -> list:
     file = get_file("levels.txt")
 
@@ -30,12 +35,28 @@ def load_levels() -> list:
     return levels
 
 
-def get_level() -> int:
-    file = get_file("save.txt")
+# Saves the room to the levels.txt file
+# This is for editing, will probably NOT be included in the final game
+def save_room(saveLevel, saveRoom, tiles):
+    levels = load_levels()
+    
+    with open("levels.txt", "w") as file:
+        for levelNumber, level in enumerate(levels):
+            if levelNumber != 0:
+                file.write(constants.LEVEL_SEPARATOR)
+            
+            for roomNumber, room in enumerate(level):
+                if roomNumber != 0:
+                    file.write(constants.ROOM_SEPARATOR)
 
+                iterator = tiles if saveLevel == levelNumber and saveRoom == roomNumber else room
 
-def get_position():
-    file = get_file("save.txt")
+                for rowNumber, row in enumerate(iterator):
+                    for tile in row:
+                        file.write(str(tile))
+            
+                    if rowNumber != len(iterator) - 1:
+                        file.write("\n")
 
 
 # This function assumes the spritesheet is horizontal
@@ -63,24 +84,55 @@ def check_between(
     ):
     return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
 
+"""
+DATABASE HANDLING
+"""
+def create_default_database():
+    conn = sqlite3.connect("save.db")
+    c = conn.cursor()
 
-def save_room(saveLevel, saveRoom, tiles):
-    levels = load_levels()
+    c.execute("CREATE TABLE data (var TEXT, value REAL)")
+
+    for key, value in constants.DEFAULT_SAVE.items():
+        c.execute("INSERT INTO data VALUES (?, ?)", 
+                    (key, value))
+
+    conn.commit()
+    conn.close()
+
+
+def load_save() -> dict:
+    if os.path.isfile("save.db"):
+        result = {}
+
+        conn = sqlite3.connect("save.db")
+        c = conn.cursor()
+        
+        data = c.execute("SELECT var, value FROM data").fetchall()
+
+        for obj in data:
+            result[obj[0]] = obj[1]
+
+        conn.close()
+        return result
     
-    with open("levels.txt", "w") as file:
-        for levelNumber, level in enumerate(levels):
-            if levelNumber != 0:
-                file.write(constants.LEVEL_SEPARATOR)
-            
-            for roomNumber, room in enumerate(level):
-                if roomNumber != 0:
-                    file.write(constants.ROOM_SEPARATOR)
+    else:
+        create_default_database()
+        return constants.DEFAULT_SAVE
 
-                iterator = tiles if saveLevel == levelNumber and saveRoom == roomNumber else room
 
-                for rowNumber, row in enumerate(iterator):
-                    for tile in row:
-                        file.write(str(tile))
-            
-                    if rowNumber != len(iterator) - 1:
-                        file.write("\n")
+def modif_save(dict):
+    if os.path.isfile("save.db"):
+        conn = sqlite3.connect("save.db")
+        c = conn.cursor()
+
+        for key, value in dict.items():
+            c.execute("UPDATE data SET value = ? WHERE var = ?", 
+                        (value, key))
+
+        conn.commit()
+        conn.close()
+    
+    else:
+        create_default_database()
+        modif_save(dict)

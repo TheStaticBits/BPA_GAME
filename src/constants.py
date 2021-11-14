@@ -3,7 +3,7 @@ import pygame
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
 
-TILE_SIZE = (16, 16)
+TILE_SIZE = (16, 16) # Size in pixels of the tiles
 SCREEN_TILE_SIZE = (24, 14) # Amount of tiles on the screen by X and Y
 
 # These are the separaters in the levels.txt file.
@@ -24,6 +24,15 @@ MOVEMENT_SPEED = 2
 
 # temporary, 1 is the default, -1 means it inverses.
 INVERSE_GRAVITY = 1
+
+# Default save (for the database)
+DEFAULT_SAVE = {
+    "playerX": -1,
+    "playerY": -1,
+    "playerVelocity": 0,
+    "level": 0,
+    "room": 0,
+}
 
 # Tiles
 # first value indicating the string in the level layout

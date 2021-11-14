@@ -4,6 +4,7 @@ import threading
 
 import src.window
 import src.playing
+import src.utility as utility
 
 # Initializing Pygame
 pygame.init()
@@ -11,7 +12,9 @@ pygame.init()
 class Loop:
     def __init__(self):
         self.window = src.window.Window()
-        self.playing = src.playing.Playing()
+
+        save = utility.load_save()
+        self.playing = src.playing.Playing(save)
 
         self.scene = "playing"
 
@@ -44,6 +47,20 @@ class Loop:
 
             self.update()
             self.render()
+    
+    
+    def save_and_exit(self):
+        # Saves the player's position, level, and room
+        utility.modif_save({
+            "playerX": self.playing.player.rect.x,
+            "playerY": self.playing.player.rect.y,
+            "playerVelocity": self.playing.player.yVelocity,
+            "level": self.playing.level,
+            "room": self.playing.room,
+        }) 
+
+        # Quits Pygame
+        pygame.quit()
 
 
     def update(self):

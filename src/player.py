@@ -4,17 +4,21 @@ import src.constants as constants
 import src.object_base
 
 class Player(src.object_base.ObjectBase):
-    def __init__(self, startPos):
+    def __init__(
+        self, 
+        startPos, 
+        velocity = 0
+        ):
         super().__init__()
 
         self.rect = pygame.Rect(startPos[0], startPos[1], 16, 16)
 
-        self.yVelocity = 0
+        self.yVelocity = velocity
 
         self.canJump = True
     
 
-    def update(self, room, inputs):
+    def update(self, room, inputs) -> str:
         super().test_grav_line()
         super().update_gravity()
 

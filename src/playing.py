@@ -12,16 +12,20 @@ import src.utility as utility
 import src.constants as constants
 
 class Playing(src.scene_base.SceneBase):
-    def __init__(self):
+    def __init__(self, saveData):
         super().__init__()
 
         self.levels = utility.load_levels()
 
-        self.level = 1
-        self.room = 0
+        self.level = int(saveData["level"])
+        self.room = int(saveData["room"])
 
         self.load_tiles()
-        self.setup_player()
+        self.setup_player(
+            saveData["playerX"], 
+            saveData["playerY"],
+            saveData["playerVelocity"]
+        )
 
         # Setting up background tile
         self.background = self.tileKey["w"]["tile"].convert_alpha().copy()
@@ -54,25 +58,47 @@ class Playing(src.scene_base.SceneBase):
             }
 
 
-    def setup_player(self):
-        playerStart = (0, 0)
+    def setup_player(
+        self, 
+        playerX = -1, 
+        playerY = -1,
+        velocity = 0
+        ):
 
-        for y, row in enumerate(utility.load_levels()[self.level][self.room]):
-            for x, tile in enumerate(row):
-                if tile == "p":
-                    playerStart = (
-                        x * constants.TILE_SIZE[0],
-                        y * constants.TILE_SIZE[1]
-                    )
-                    self.levels[self.level][self.room][y][x] = " "
+        if playerX == -1 and playerY == -1:
+            playerStart = (0, 0)
 
-        self.player = src.player.Player(playerStart)
+            for y, row in enumerate(utility.load_levels()[self.level][self.room]):
+                for x, tile in enumerate(row):
+                    if tile == "p":
+                        playerStart = (
+                            x * constants.TILE_SIZE[0],
+                            y * constants.TILE_SIZE[1]
+                        )
+                        self.levels[self.level][self.room][y][x] = " "
+        else:
+            playerStart = (playerX, playerY)
+
+            for row in self.levels[self.level][self.room]:
+                for tile in row:
+                    if tile == "p":
+                        row[row.index("p")] = " "
+                        break
+
+        self.player = src.player.Player(playerStart, velocity)
 
 
-    def update(self, inputs, mousePos, mousePressed):
+    def update(
+        self, 
+        inputs, 
+        mousePos, 
+        mousePressed
+        ):
         super().update()
 
-        """  Updating Player  """
+        """
+        Updating Player
+        """
         playerState = self.player.update(self.levels[self.level][self.room], inputs)
 
         # If the player moved to the far right of the screen
@@ -105,7 +131,9 @@ class Playing(src.scene_base.SceneBase):
             self.tilesChanged = True
 
 
-        """  Mouse Inputs for Editor  """
+        """
+        Mouse Inputs for Editor
+        """
         tilePos = (
             floor(mousePos[0] / constants.TILE_SIZE[0]),
             floor(mousePos[1] / constants.TILE_SIZE[1])
@@ -130,7 +158,9 @@ class Playing(src.scene_base.SceneBase):
     def draw_tiles(self, surface):
         currentRoom = self.levels[self.level][self.room]
 
-        """   BEWARE: *SPAGHETTI CODE* AHEAD   """
+        """
+        BEWARE: *SPAGHETTI CODE* AHEAD
+        """
         for y in range(constants.SCREEN_TILE_SIZE[1]):
             for x in range(constants.SCREEN_TILE_SIZE[0]):
                 tile = currentRoom[y][x]
