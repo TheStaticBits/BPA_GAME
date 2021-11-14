@@ -58,6 +58,36 @@ w          ww     www
 w          ww     www   
 wwwwwwwwwwwww     www   
 ------------------------
+w^><wv              wwww
+wwwww               wwww
+w      www          wwww
+w      www    ww    wwww
+w      www    ww  wwwwww
+wp     www    vv  vvwwww
+wwwww  wwwww        wwww
+wwwww  wwwww        wwww
+w      v   v        wwww
+w                  www  
+w                 www   
+w             wwwwww    
+w^^^^^^^^^^^           w
+wwwwwwwwwwww          ww
+||||||||||||||||||||||||
+w               ww> <ww 
+w               ww> <ww 
+w               ww^^^ww 
+w   ^           wwwwwww 
+wwwww     ^     wwwwwww 
+wwwww     w     v v v v 
+wwwww     w             
+wwwww     w             
+wwwww><>  www   ^ ^ ^ ^ 
+      ww  vwv   wwwwwww 
+      ww   w    wwwwwww 
+           w    wwvvvww 
+wwww       w    ww> <ww 
+wwww       w    ww> <ww 
+||||||||||||||||||||||||
 v^><wp                  
                         
                         
@@ -73,17 +103,3 @@ v^><wp
                         
                         
 ||||||||||||||||||||||||
- ^><wv              wwww
- wwww               wwww
-       www          wwww
-w      www    ww    wwww
-w      www    ww  wwwwww
-w      www    vv  vvwwww
-wwwww  wwwww        wwww
-wwwww  wwwww        wwww
-       v   v        wwww
-                   wwww 
-                  wwww  
-              wwwwwww   
-                        
-                       w
