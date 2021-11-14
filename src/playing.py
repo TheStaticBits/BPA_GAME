@@ -72,8 +72,10 @@ class Playing(src.scene_base.SceneBase):
     def update(self, inputs, mousePos, mousePressed):
         super().update()
 
+        """  Updating Player  """
         playerState = self.player.update(self.levels[self.level][self.room], inputs)
 
+        # If the player moved to the far right of the screen
         if playerState == "right":
             self.room += 1
             
@@ -87,6 +89,7 @@ class Playing(src.scene_base.SceneBase):
 
             self.tilesChanged = True
 
+        # If the player moved to the far left of the screen
         elif playerState == "left":
             if self.room > 0:
                 self.room -= 1
@@ -95,11 +98,14 @@ class Playing(src.scene_base.SceneBase):
 
                 self.tilesChanged = True
 
+        # If the player died
         elif playerState == "dead":
             self.room = 0
             self.setup_player()
             self.tilesChanged = True
 
+
+        """  Mouse Inputs for Editor  """
         tilePos = (
             floor(mousePos[0] / constants.TILE_SIZE[0]),
             floor(mousePos[1] / constants.TILE_SIZE[1])
@@ -115,7 +121,8 @@ class Playing(src.scene_base.SceneBase):
         if mousePressed["right"]:
             self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
             self.tilesChanged = True
-
+        
+        # Other editor inputs
         if inputs["space"]:
             utility.save_room(self.level, self.room, self.levels[self.level][self.room])
 
