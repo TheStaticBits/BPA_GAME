@@ -1,5 +1,7 @@
 import pygame
 
+SAVE_PATH = "save.db" # The save file's path
+
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
 

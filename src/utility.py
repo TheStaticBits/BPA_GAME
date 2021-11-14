@@ -88,7 +88,7 @@ def check_between(
 DATABASE HANDLING
 """
 def create_default_database():
-    conn = sqlite3.connect("save.db")
+    conn = sqlite3.connect(constants.SAVE_PATH)
     c = conn.cursor()
 
     c.execute("CREATE TABLE data (var TEXT, value REAL)")
@@ -102,10 +102,10 @@ def create_default_database():
 
 
 def load_save() -> dict:
-    if os.path.isfile("save.db"):
+    if os.path.isfile(constants.SAVE_PATH):
         result = {}
 
-        conn = sqlite3.connect("save.db")
+        conn = sqlite3.connect(constants.SAVE_PATH)
         c = conn.cursor()
         
         data = c.execute("SELECT var, value FROM data").fetchall()
@@ -121,14 +121,14 @@ def load_save() -> dict:
         return constants.DEFAULT_SAVE
 
 
+# Modifies the save with the corresponding keys and values passed in through the dictionary
 def modif_save(dict):
-    if os.path.isfile("save.db"):
-        conn = sqlite3.connect("save.db")
+    if os.path.isfile(constants.SAVE_PATH):
+        conn = sqlite3.connect(constants.SAVE_PATH)
         c = conn.cursor()
 
         for key, value in dict.items():
-            c.execute("UPDATE data SET value = ? WHERE var = ?", 
-                        (value, key))
+            c.execute("UPDATE data SET value = ? WHERE var = ?", (value, key))
 
         conn.commit()
         conn.close()
