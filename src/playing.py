@@ -88,17 +88,12 @@ class Playing(src.scene_base.SceneBase):
             self.tilesChanged = True
 
         elif playerState == "left":
-            self.room -= 1
+            if self.room > 0:
+                self.room -= 1
 
-            if self.room < 0:
-                self.room = 0
-                self.level -= 1
-                self.setup_player()
-            
-            else:
                 self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1)
 
-            self.tilesChanged = True
+                self.tilesChanged = True
 
         elif playerState == "dead":
             self.room = 0
