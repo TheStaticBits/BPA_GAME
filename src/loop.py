@@ -21,7 +21,7 @@ class Loop:
         self.framerate = 0
 
         # Setting up music
-        pygame.mixer.music.load("res/sound/ThereIsSomethingV2.wav")
+        pygame.mixer.music.load("res/sound/OneLastDayInParadiseV2.wav")
         pygame.mixer.music.set_volume(0.2)
 
 
