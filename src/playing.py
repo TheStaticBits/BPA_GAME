@@ -83,15 +83,8 @@ class Playing(src.scene_base.SceneBase):
                             x * constants.TILE_SIZE[0],
                             y * constants.TILE_SIZE[1]
                         )
-                        self.levels[self.level][self.room][y][x] = " "
         else:
             playerStart = (playerX, playerY)
-
-            for row in self.levels[self.level][self.room]:
-                for tile in row:
-                    if tile == "p":
-                        row[row.index("p")] = " "
-                        break
 
         self.player = src.player.Player(playerStart, velocity)
 

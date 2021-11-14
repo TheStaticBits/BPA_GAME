@@ -52,6 +52,7 @@ TILE_KEYS = {
 # Wall tiles will not connect to these tiles
 TRANSPARENT_TILES = (
     " ",
+    "p",
     "^", "<", "v", ">"
 )
 
