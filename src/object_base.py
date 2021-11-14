@@ -72,8 +72,8 @@ class ObjectBase:
             spikeMask = pygame.mask.from_surface(spike)
             playerMask = pygame.mask.Mask((self.rect.width, self.rect.height), fill=True)
 
-            collided = playerMask.overlap(
-                spikeMask, 
+            collided = spikeMask.overlap(
+                playerMask, 
                 (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], 
                 self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
             )
@@ -91,18 +91,19 @@ class ObjectBase:
 
         if dirMoved != 0:
             for y in range(-1, 2):
-                tilePos = (self.currentTile[0] + dirMoved, self.currentTile[1] + y)
-                
-                result = self.check_tile(room, tilePos)
-                if result != False:
-                    if dirMoved == 1:
-                        self.rect.right = result.left
-                        self.collisions["right"] = True
-                    else:
-                        self.rect.left = result.right
-                        self.collisions["left"] = True
+                for x in range(0, 2):
+                    tilePos = (self.currentTile[0] + x * dirMoved, self.currentTile[1] + y)
                     
-                    break
+                    result = self.check_tile(room, tilePos)
+                    if result != False:
+                        if dirMoved == 1:
+                            self.rect.right = result.left
+                            self.collisions["right"] = True
+                        else:
+                            self.rect.left = result.right
+                            self.collisions["left"] = True
+                        
+                        break
 
     
     def update_y_collision(self, room, dirMoved):
@@ -111,19 +112,20 @@ class ObjectBase:
         self.collisions["down"] = False
 
         if dirMoved != 0:
-            for x in range(-1, 2):
-                tilePos = (self.currentTile[0] + x, self.currentTile[1] - dirMoved)
+            for y in range(0, 2):
+                for x in range(-1, 2):
+                    tilePos = (self.currentTile[0] + x, self.currentTile[1] - y * dirMoved)
 
-                result = self.check_tile(room, tilePos)
-                if result != False:
-                    if dirMoved == 1:
-                        self.rect.top = result.bottom
-                        self.collisions["up"] = True
-                    else:
-                        self.rect.bottom = result.top
-                        self.collisions["down"] = True
-                    
-                    break
+                    result = self.check_tile(room, tilePos)
+                    if result != False:
+                        if dirMoved == 1:
+                            self.rect.top = result.bottom
+                            self.collisions["up"] = True
+                        else:
+                            self.rect.bottom = result.top
+                            self.collisions["down"] = True
+                        
+                        break
     
 
     def test_grav_line(self):
