@@ -44,7 +44,8 @@ TILE_KEYS = {
     "c": "crystal",
     "s": "star",
     "d": "dirt",
-    "b": "blank"
+    "b": "blank",
+    "e": "darkness"
 }
 
 # These tiles are the ones which are not solid
