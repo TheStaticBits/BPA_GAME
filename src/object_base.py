@@ -72,7 +72,11 @@ class ObjectBase:
             spikeMask = pygame.mask.from_surface(spike)
             playerMask = pygame.mask.Mask((self.rect.width, self.rect.height), fill=True)
 
-            collided = spikeMask.overlap(playerMask, (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], self.rect.y - tilePos[1] * constants.TILE_SIZE[1]))
+            collided = playerMask.overlap(
+                spikeMask, 
+                (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], 
+                self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
+            )
 
             if collided:
                 self.spiked = True
