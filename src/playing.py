@@ -10,6 +10,7 @@ import src.scene_base
 import src.player
 import src.utility as utility
 import src.constants as constants
+import src.animation
 
 class Playing(src.scene_base.SceneBase):
     def __init__(self, saveData):
@@ -41,6 +42,13 @@ class Playing(src.scene_base.SceneBase):
         ))
         self.draw_tiles(self.tileSurface)
         self.tilesChanged = False
+
+        # Setting up gravity beam animation
+        self.gravityBeam = src.animation.Animation(
+            constants.GRAV_BEAM_PATH, 
+            constants.GRAV_BEAM_WIDTH, 
+            constants.GRAV_BEAM_DELAY
+        )
 
         # EDITOR CONTROLS:
         self.placeTile = "c"
@@ -129,6 +137,10 @@ class Playing(src.scene_base.SceneBase):
             self.room = 0
             self.setup_player()
             self.tilesChanged = True
+
+        
+        # Gravity beam update
+        self.gravityBeam.update()
 
 
         """
@@ -224,7 +236,17 @@ class Playing(src.scene_base.SceneBase):
         window.blit(self.tileSurface, (0, 0))
 
         # Drawing gravity beam
-        pygame.draw.rect(window, (255, 0, 0), (0, window.get_height() / 2 - 1, window.get_width(), 2))
+        for x in range(
+            (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]) 
+            // constants.GRAV_BEAM_WIDTH
+            ):
+            self.gravityBeam.render(
+                window, 
+                (
+                    x * constants.GRAV_BEAM_WIDTH, 
+                    (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1] / 2) - (self.gravityBeam.images[0].get_height() / 2) # Centers the beam
+                )
+            )
 
         # Drawing player
         self.player.render(window)
