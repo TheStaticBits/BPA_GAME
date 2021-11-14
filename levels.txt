@@ -28,21 +28,6 @@ cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 cccccccccccccccccccccccc
 ------------------------
-cccccccccccccccccccccccc
-c      cc       cc     c
-c      cc       cc     c
-c      cc       cc  ^^ c
-c cc   cc   ^^  cc  cc c
-cpcc   cc   cc  cc  cc c
-cccc   cc   cc  cc  cc c
-cccc   cc   cc  cc  cc c
-cccc   vv   cc  cc  cc c
-cccc        cc  cc  cc c
-cccc        cc  vv  cc c
-cccc        cc      cc c
-cccc        cc      cc  
-cccccccccccccccccccccccc
-||||||||||||||||||||||||
 wwwwwwwwwwwwwwwwwwwwwwww
 w         ww       wwwww
 w         ww       wwwww
@@ -68,14 +53,14 @@ www                ww  w
 www  ^^   ^^   ^^  ww  w
 www  ww   ww   ww  ww  w
 www  ww   ww   ww      w
-p    ww   ww   ww      w
+     ww   ww   ww      w
      ww   ww   ww      w
      ww^^^ww^^^ww      w
 wwwwwwwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
 v^><wwwwwwwwwwwwwwwwwwww
                wwwwwwwww
-p              ww      w
+               ww      w
 w          ww  ww      w
 ww         ww  ww      w
 www     ^  ww  ww      w
@@ -108,7 +93,7 @@ v^><wp
        www          wwww
 w      www    ww    wwww
 w      www    ww  wwwwww
-w p    www    vv  vvwwww
+w      www    vv  vvwwww
 wwwww  wwwww        wwww
 wwwww  wwwww        wwww
        v   v        wwww

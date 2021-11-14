@@ -35,10 +35,14 @@ TILE_KEYS = {
     "d": "dirt",
     "b": "blank"
 }
-TRANSPARENT_TILES = [
+
+# These tiles are the ones which are not solid
+# A background tile is drawn behind these tiles
+# Wall tiles will not connect to these tiles
+TRANSPARENT_TILES = (
     " ",
     "^", "<", "v", ">"
-]
+)
 
 # Other tiles
 SPIKE_PATH = "res/misc/spike.png"

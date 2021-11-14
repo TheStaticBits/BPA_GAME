@@ -18,7 +18,7 @@ class Playing(src.scene_base.SceneBase):
         self.levels = utility.load_levels()
 
         self.level = 1
-        self.room = 1
+        self.room = 0
 
         self.load_tiles()
         self.setup_player()
@@ -76,24 +76,34 @@ class Playing(src.scene_base.SceneBase):
 
         if playerState == "right":
             self.room += 1
+            
             if self.room >= len(self.levels[self.level]):
                 self.room = 0
                 self.level += 1
+                self.setup_player()
+            
+            else:
+                self.player.rect.x -= constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1)
 
-            self.setup_player()
             self.tilesChanged = True
 
         elif playerState == "left":
             self.room -= 1
-            if self.room < 0:
-                self.room = len(self.levels[self.level]) - 1
-                self.level -= 1
 
-            self.setup_player()
+            if self.room < 0:
+                self.room = 0
+                self.level -= 1
+                self.setup_player()
+            
+            else:
+                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1)
+
             self.tilesChanged = True
 
         elif playerState == "dead":
+            self.room = 0
             self.setup_player()
+            self.tilesChanged = True
 
         tilePos = (
             floor(mousePos[0] / constants.TILE_SIZE[0]),
