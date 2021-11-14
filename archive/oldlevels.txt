@@ -1,0 +1,45 @@
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c 
+ c c c c c c c c c c c c
+c c c c c c c c c c c c  
+||||||||||||||||||||||||
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+ccccc  ccccccccccccccccc
+cc         ccccccccccccc
+cc  p         cccccccccc
+cc  ccc    ccccccccccccc
+cc ccccc   ccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+cccccccccccccccccccccccc
+------------------------
+cccccccccccccccccccccccc
+c      cc       cc     c
+c      cc       cc     c
+c      cc       cc  ^^ c
+c cc   cc   ^^  cc  cc c
+cpcc   cc   cc  cc  cc c
+cccc   cc   cc  cc  cc c
+cccc   cc   cc  cc  cc c
+cccc   vv   cc  cc  cc c
+cccc        cc  cc  cc c
+cccc        cc  vv  cc c
+cccc        cc      cc c
+cccc        cc      cc  
+cccccccccccccccccccccccc
+||||||||||||||||||||||||

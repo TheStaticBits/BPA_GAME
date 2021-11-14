@@ -1,41 +1,26 @@
- c c c c c c c c c c c c
-c c c c c c c c c c c c 
- c c c c c c c c c c c c
-c c c c c c c c c c c c 
- c c c c c c c c c c c c
-c c c c c c c c c c c c 
- c c c c c c c c c c c c
-c c c c c c c c c c c c 
- c c c c c c c c c c c c
-c c c c c c c c c c c c 
- c c c c c c c c c c c c
-c c c c c c c c c c c c 
- c c c c c c c c c c c c
-c c c c c c c c c c c c  
+wwwwwwwwwwwwwwwwwwwwwwww
+w         wwwww        w
+w         wwwww        w
+w         wwwww         
+w   www   wwwww   www   
+w p www   wwwww   www   
+wwwwwww   wwwww   wwwwww
+wwwwwww   wwwww   wwwwww
+wwwwwww   wwwww   wwwwww
+wwwwwww   wwwww   wwwwww
+wwwwwww           wwwwww
+wwwwwww           wwwwww
+wwwwwww           wwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-ccccc  ccccccccccccccccc
-cc         ccccccccccccc
-cc  p         cccccccccc
-cc  ccc    ccccccccccccc
-cc ccccc   ccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-cccccccccccccccccccccccc
-------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         ww       wwwww
 w         ww       wwwww
-w         ww       wwwww
-w   www   ww       wwwww
-w p www   ww       wwwww
-wwwwwww   ww   ^^  wwwww
-wwwwwww   vv   ww  wwwww
+          ww       wwwww
+    www   ww       wwwww
+    www   ww       wwwww
+wwwwwww   vv       wwwww
+wwwwwww        ^^  wwwww
 wwwwwww        ww    www
 wwwwwww        ww    www
 wwwwwww        ww       
@@ -50,8 +35,8 @@ wwwwwwwwwwwwwwwwwwwww
 www                ww  w
 www                ww  w
 www                ww  w
+www                ww  w
 www  ^^   ^^   ^^  ww  w
-www  ww   ww   ww  ww  w
 www  ww   ww   ww      w
      ww   ww   ww      w
      ww   ww   ww      w
