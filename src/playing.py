@@ -3,6 +3,7 @@ This file includes the class which manages the playing scene, which includes til
 """
 
 import pygame
+import os
 
 from math import floor
 
@@ -35,6 +36,9 @@ class Playing(src.scene_base.SceneBase):
         # Loading spike tile
         self.spikeTile = pygame.image.load("res/misc/spike.png").convert_alpha()
 
+        # If the tile being checked is on the screen and transparent, used when drawing edges to the screen
+        self.check_tile = lambda room, x, y: utility.check_between((x, y), (0, 0), constants.SCREEN_TILE_SIZE) and room[y][x] in constants.TRANSPARENT_TILES 
+
         # Setup tile drawing surface
         self.tileSurface = pygame.Surface((
             constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0],
@@ -63,6 +67,12 @@ class Playing(src.scene_base.SceneBase):
                 "corner": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/corner.png").convert_alpha(),
                 "edge": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/edge.png").convert_alpha(),
             }
+
+            if os.path.isfile(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png"):
+                self.tileKey[tileKey]["inverse_corner"] = pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png").convert_alpha()
+            
+            else:
+                self.tileKey[tileKey]["inverse_corner"] = self.tileKey[tileKey]["corner"]
 
 
     def setup_player(
@@ -169,52 +179,76 @@ class Playing(src.scene_base.SceneBase):
             for x in range(constants.SCREEN_TILE_SIZE[0]):
                 tile = currentRoom[y][x]
 
-                if tile in self.tileKey:
+                if tile in self.tileKey: # If it is a solid block
                     surface.blit(
                         self.tileKey[tile]["tile"],
                         (x * constants.TILE_SIZE[0],
                         y * constants.TILE_SIZE[1])
                     )
 
-                    for i in range(-1, 2):
-                        for l in range(-1, 2):
-                            if utility.check_between((x + l, y + i), (0, 0), constants.SCREEN_TILE_SIZE) and currentRoom[y + i][x + l] in constants.TRANSPARENT_TILES: # If the tile being checked in relation to the tile being rendered is on the screen and transparent
+                    """  RENDERING EDGES  """
+                    for offset in range(-1, 2):
+                        # VERTICAL EDGES
+                        if self.check_tile(currentRoom, x + offset, y): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
-                                if i == 0 and l != 0: # If it's vertical
-                                    image = pygame.transform.rotate(
-                                        self.tileKey[tile]["edge"], 
-                                        0 if l == -1 else 180
-                                    )
+                            image = pygame.transform.rotate(
+                                self.tileKey[tile]["edge"], 
+                                0 if offset == -1 else 180
+                            )
 
-                                    surface.blit(
-                                        image,
-                                        (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - image.get_width()),
-                                        y * constants.TILE_SIZE[1])
-                                    )
+                            surface.blit(
+                                image,
+                                (x * constants.TILE_SIZE[0] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_width()),
+                                y * constants.TILE_SIZE[1])
+                            )
 
-                                elif l == 0 and i != 0: # If it's horizontal
-                                    image = pygame.transform.rotate(
-                                        self.tileKey[tile]["edge"], 
-                                        270 if i == -1 else 90
-                                    )
+                        # HORIZONTAL EDGES
+                        if self.check_tile(currentRoom, x, y + offset): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
-                                    surface.blit(
-                                        image,
-                                        (x * constants.TILE_SIZE[0],
-                                        y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - image.get_height()))
-                                    )
+                            image = pygame.transform.rotate(
+                                self.tileKey[tile]["edge"], 
+                                270 if offset == -1 else 90
+                            )
 
-                                else: # If it's a corner
-                                    image = pygame.transform.rotate(
-                                        self.tileKey[tile]["corner"], 
-                                        -90 if (i, l) == (-1, 1) else (45 * (i + 1) + 45 * (l + 1)) # Finds the degree of rotation based on the position of the corner
-                                    )
+                            surface.blit(
+                                image,
+                                (x * constants.TILE_SIZE[0],
+                                y * constants.TILE_SIZE[1] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_height()))
+                            )
+                    
+                    # Rendering corners happens ontop of the edges, which is why it takes place after the edges
+                    """  RENDERING CORNERS  """
+                    for offset in range(-1, 2):
+                        for offset2 in range(-1, 2):
 
-                                    surface.blit(
-                                        image,
-                                        (x * constants.TILE_SIZE[0] + (0 if l == -1 else constants.TILE_SIZE[0] - image.get_width()),
-                                        y * constants.TILE_SIZE[1] + (0 if i == -1 else constants.TILE_SIZE[0] - image.get_height()))
-                                    )
+                            if (
+                                offset != 0 and offset2 != 0 and 
+                                utility.check_between((x + offset2, y + offset), (0, 0), constants.SCREEN_TILE_SIZE)
+                                ):
+                                    edgeT1 = currentRoom[y + offset][x] in constants.TRANSPARENT_TILES
+                                    edgeT2 = currentRoom[y][x + offset2] in constants.TRANSPARENT_TILES
+                                    corner = currentRoom[y + offset][x + offset2] in constants.TRANSPARENT_TILES
+
+                                    check1 = (edgeT1 and edgeT2)
+                                    check2 = (not edgeT1 and not edgeT2 and corner)
+
+                                    if check1:
+                                        selectedImage = self.tileKey[tile]["corner"]
+
+                                    elif check2:
+                                        selectedImage = self.tileKey[tile]["inverse_corner"]
+                                    
+                                    if check1 or check2:
+                                        image = pygame.transform.rotate(
+                                            selectedImage, 
+                                            -90 if (offset, offset2) == (-1, 1) else (45 * (offset + 1) + 45 * (offset2 + 1)) # Finds the degree of rotation based on the position of the corner
+                                        )
+
+                                        surface.blit(
+                                            image,
+                                            (x * constants.TILE_SIZE[0] + (0 if offset2 == -1 else constants.TILE_SIZE[0] - image.get_width()),
+                                            y * constants.TILE_SIZE[1] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_height()))
+                                        )
 
                 elif tile in constants.TRANSPARENT_TILES:
                     surface.blit(
