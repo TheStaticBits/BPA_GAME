@@ -5,8 +5,6 @@ This file includes the class which manages the playing scene, which includes til
 import pygame
 import os
 
-from math import floor
-
 import src.scene_base
 import src.player
 import src.utility as utility
@@ -17,12 +15,17 @@ class Playing(src.scene_base.SceneBase):
     def __init__(self, saveData):
         super().__init__()
 
+        # Loading levels from levels.txt
         self.levels = utility.load_levels()
 
+        # Setting level and room based off of save data from save.db
         self.level = int(saveData["level"])
         self.room = int(saveData["room"])
 
+        # Loads the tile images from the list in constants.py
         self.load_tiles()
+
+        # Setting up the player based on the save data
         self.setup_player(
             saveData["playerX"], 
             saveData["playerY"],
@@ -55,26 +58,30 @@ class Playing(src.scene_base.SceneBase):
         )
 
         # EDITOR CONTROLS:
-        self.placeTile = "c"
+        self.placeTile = "c" # Tile to be placed when you click
 
 
     def load_tiles(self):
+        # Creating a dictionary
+        # Keys are the letter used to represent the tile
         self.tileKey = {}
 
         for tileKey in constants.TILE_KEYS:
+            # Setting the key to another dictionary with the individual parts of the tile image
             self.tileKey[tileKey] = {
                 "tile": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/tile.png").convert_alpha(),
                 "corner": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/corner.png").convert_alpha(),
                 "edge": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/edge.png").convert_alpha(),
             }
 
-            if os.path.isfile(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png"):
-                self.tileKey[tileKey]["inverse_corner"] = pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png").convert_alpha()
+            if os.path.isfile(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png"): # If there is an inverse_corner image for the tile
+                self.tileKey[tileKey]["inverse_corner"] = pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png").convert_alpha() # Load the inverse corner
             
-            else:
-                self.tileKey[tileKey]["inverse_corner"] = self.tileKey[tileKey]["corner"]
+            else: # If there isn't an inverse_corner needed
+                self.tileKey[tileKey]["inverse_corner"] = self.tileKey[tileKey]["corner"] # Sets the inverse_corner to the normal corner
 
 
+    # Sets up the player, given a position or using the level to find the starting position
     def setup_player(
         self, 
         playerX = -1, 
@@ -82,91 +89,101 @@ class Playing(src.scene_base.SceneBase):
         velocity = 0
         ):
 
+        # If there was no data passed in, set the position to the tile "p" in the level
         if playerX == -1 and playerY == -1:
             playerStart = (0, 0)
 
-            for y, row in enumerate(utility.load_levels()[self.level][self.room]):
+            # Iterating through the rows in the room
+            for y, row in enumerate(self.levels[self.level][self.room]):
+                # Iterating through the individual letters in the row
                 for x, tile in enumerate(row):
                     if tile == "p":
+                        # Setting the player's starting based on the position of the "p" tile
                         playerStart = (
                             x * constants.TILE_SIZE[0],
                             y * constants.TILE_SIZE[1]
                         )
-        else:
-            playerStart = (playerX, playerY)
+        else: # If there was a position supplied
+            playerStart = (playerX, playerY) # Setting the player's start to the given position
 
-        self.player = src.player.Player(playerStart, velocity)
+        self.player = src.player.Player(playerStart, velocity) # Creating the player object based on the position found/given
 
 
     def update(
         self, 
-        inputs, 
-        mousePos, 
-        mousePressed
+        inputs, # Dictionary of keys pressed
+        mousePos, # Position of the mouse
+        mousePressed # Which mouse buttons were pressed
         ):
         super().update()
 
         """
         Updating Player
         """
-        playerState = self.player.update(self.levels[self.level][self.room], inputs)
+        playerState = self.player.update(self.levels[self.level][self.room], inputs) # Updating the player with the inputs
 
         # If the player moved to the far right of the screen
         if playerState == "right":
             self.room += 1
             
+            # If the room number has hit the end of the level
             if self.room >= len(self.levels[self.level]):
+                # Resetting the room number and incrementing the level number
                 self.room = 0
                 self.level += 1
+                # Resetting the player
                 self.setup_player()
             
             else:
-                self.player.rect.x -= constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1)
+                self.player.rect.x -= constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1) # Moving the player to the complete other side of the room
 
-            self.tilesChanged = True
+            self.tilesChanged = True # This will make the renderer rerender the tiles in the render function
 
         # If the player moved to the far left of the screen
         elif playerState == "left":
-            if self.room > 0:
+            if self.room > 0: # If it isn't the start of a level
                 self.room -= 1
 
-                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1)
+                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1) # Moving the player to the opposite side of the screen
 
-                self.tilesChanged = True
+                self.tilesChanged = True # Rerendering the tiles
 
         # If the player died
         elif playerState == "dead":
-            self.room = 0
-            self.setup_player()
-            self.tilesChanged = True
+            self.room = 0 # Resetting the room number
+            self.setup_player() # Resetting the player
+            self.tilesChanged = True # Rerendering the tiles
 
         
-        # Gravity beam update
+        # Gravity beam animation update
         self.gravityBeam.update()
 
 
         """
         Mouse Inputs for Editor
         """
+        # The position of the tile that the mouse is hovering over
         tilePos = (
-            floor(mousePos[0] / constants.TILE_SIZE[0]),
-            floor(mousePos[1] / constants.TILE_SIZE[1])
+            mousePos[0] // constants.TILE_SIZE[0],
+            mousePos[1] // constants.TILE_SIZE[1]
         )
 
-        if mousePressed["left"]:
-            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = self.placeTile
-            self.tilesChanged = True
+        if mousePressed["left"]: # If left clicked
+            # Sets the tile the mouse is hovering over to the placeTile
+            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = self.placeTile # placeTile is the tile to be placed
+            self.tilesChanged = True # Sets the tiles to be rerendered, since they changed
         
-        if mousePressed["center"]:
-            self.placeTile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]]
+        if mousePressed["center"]: # If center clicked
+            self.placeTile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]] # Changing the placeTile to the one the mouse is hovering over
 
-        if mousePressed["right"]:
+        if mousePressed["right"]: # If right clicked
+            # Sets the tile the mouse is hovering over to air
             self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
-            self.tilesChanged = True
+            self.tilesChanged = True # Sets the tiles to be rerendered
         
         # Other editor inputs
         if inputs["space"]:
-            utility.save_room(self.level, self.room, self.levels[self.level][self.room])
+            utility.save_room(self.level, self.room, self.levels[self.level][self.room]) # Saves the room to the levels.txt file
 
 
     def draw_tiles(self, surface):
