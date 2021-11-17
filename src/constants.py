@@ -36,7 +36,7 @@ DEFAULT_SAVE = {
     "room": 0,
 }
 
-# Tiles
+# Solid Tiles
 # first value indicating the string in the level layout
 # second value is the folder name of the tile
 TILE_KEYS = {

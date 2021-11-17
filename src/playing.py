@@ -186,17 +186,19 @@ class Playing(src.scene_base.SceneBase):
             utility.save_room(self.level, self.room, self.levels[self.level][self.room]) # Saves the room to the levels.txt file
 
 
+    # This function renders the tiles onto a given surface
     def draw_tiles(self, surface):
-        currentRoom = self.levels[self.level][self.room]
+        currentRoom = self.levels[self.level][self.room] # For convenience
 
         """
-        BEWARE: *SPAGHETTI CODE* AHEAD
+        BEWARE: SPAGHETTI CODE AHEAD
         """
-        for y in range(constants.SCREEN_TILE_SIZE[1]):
-            for x in range(constants.SCREEN_TILE_SIZE[0]):
-                tile = currentRoom[y][x]
+        # Iterating through all of the tiles in the current room
+        for y, row in enumerate(currentRoom): 
+            for x, tile in enumerate(row):
 
                 if tile in self.tileKey: # If it is a solid block
+                    # Drawing the tile at the position
                     surface.blit(
                         self.tileKey[tile]["tile"],
                         (x * constants.TILE_SIZE[0],
@@ -204,10 +206,13 @@ class Playing(src.scene_base.SceneBase):
                     )
 
                     """  RENDERING EDGES  """
+                    # Offset is the direction in which the program is checking in relation to the tile being drawn
                     for offset in range(-1, 2):
                         # VERTICAL EDGES
                         if self.check_tile(currentRoom, x + offset, y): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
+                            # Creates the image of the edge with a rotation based on which direction the offset is checking. 
+                            # These are the vertical edges.
                             image = pygame.transform.rotate(
                                 self.tileKey[tile]["edge"], 
                                 0 if offset == -1 else 180
@@ -215,13 +220,15 @@ class Playing(src.scene_base.SceneBase):
 
                             surface.blit(
                                 image,
-                                (x * constants.TILE_SIZE[0] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_width()),
+                                (x * constants.TILE_SIZE[0] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_width()), # Finds the X coordinates of the vertical edge based on the direction being checked
                                 y * constants.TILE_SIZE[1])
                             )
 
                         # HORIZONTAL EDGES
                         if self.check_tile(currentRoom, x, y + offset): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
+                            # Creates an image with a rotation based on the direction the program is checking. 
+                            # These are the horizontal edges.
                             image = pygame.transform.rotate(
                                 self.tileKey[tile]["edge"], 
                                 270 if offset == -1 else 90
@@ -230,32 +237,36 @@ class Playing(src.scene_base.SceneBase):
                             surface.blit(
                                 image,
                                 (x * constants.TILE_SIZE[0],
-                                y * constants.TILE_SIZE[1] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_height()))
+                                y * constants.TILE_SIZE[1] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_height())) # Finds the Y position of the horizontal edge
                             )
                     
-                    # Rendering corners happens ontop of the edges, which is why it takes place after the edges
+                    # Corners have to be drawn ontop of the edges
+
                     """  RENDERING CORNERS  """
+                    # This goes through all the tiles surrounding the tile
                     for offset in range(-1, 2):
                         for offset2 in range(-1, 2):
 
                             if (
+                                # If the tile being checked is a corner and not an edge
                                 offset != 0 and offset2 != 0 and 
+                                # If the tile the corner is facing is on the screen
                                 utility.check_between((x + offset2, y + offset), (0, 0), constants.SCREEN_TILE_SIZE)
                                 ):
-                                    edgeT1 = currentRoom[y + offset][x] in constants.TRANSPARENT_TILES
-                                    edgeT2 = currentRoom[y][x + offset2] in constants.TRANSPARENT_TILES
-                                    corner = currentRoom[y + offset][x + offset2] in constants.TRANSPARENT_TILES
+                                    # These are for checks
+                                    edgeT1 = currentRoom[y + offset][x] in constants.TRANSPARENT_TILES # If the edge in one direction of the corner is transparent
+                                    edgeT2 = currentRoom[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge in the other direction of the corner is transparent
+                                    corner = currentRoom[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner is transparent
 
-                                    check1 = (edgeT1 and edgeT2)
-                                    check2 = (not edgeT1 and not edgeT2 and corner)
+                                    selectedImage = None
 
-                                    if check1:
+                                    if edgeT1 and edgeT2:  # If both edges are transparent
                                         selectedImage = self.tileKey[tile]["corner"]
 
-                                    elif check2:
+                                    elif not edgeT1 and not edgeT2 and corner: # If both edges are not transparent and the corner is
                                         selectedImage = self.tileKey[tile]["inverse_corner"]
                                     
-                                    if check1 or check2:
+                                    if selectedimage != None:
                                         image = pygame.transform.rotate(
                                             selectedImage, 
                                             -90 if (offset, offset2) == (-1, 1) else (45 * (offset + 1) + 45 * (offset2 + 1)) # Finds the degree of rotation based on the position of the corner
@@ -263,18 +274,24 @@ class Playing(src.scene_base.SceneBase):
 
                                         surface.blit(
                                             image,
-                                            (x * constants.TILE_SIZE[0] + (0 if offset2 == -1 else constants.TILE_SIZE[0] - image.get_width()),
-                                            y * constants.TILE_SIZE[1] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_height()))
+                                            (x * constants.TILE_SIZE[0] + (0 if offset2 == -1 else constants.TILE_SIZE[0] - image.get_width()), # Finds the X position of the corner image
+                                            y * constants.TILE_SIZE[1] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_height())) # Finds the y position of the corner image
                                         )
 
-                elif tile in constants.TRANSPARENT_TILES:
+                elif tile in constants.TRANSPARENT_TILES: # If the tile is transparent
+                    # Transparent tiles also draw the background behind them, and may have special properties.
+
+                    # Drawing the background tile
                     surface.blit(
                         self.background,
                         (x * constants.TILE_SIZE[0],
                         y * constants.TILE_SIZE[1])
                     )
 
+                    # If the tile is a spike
                     if tile in constants.SPIKE_ROTATIONS:
+                        # Draw the spike with rotation based on the tile
+                        # For example, a tile which is a greater than sign (>) will be a spike rotated to face the right.
                         surface.blit(
                             pygame.transform.rotate(self.spikeTile, constants.SPIKE_ROTATIONS[tile]),
                             (x * constants.TILE_SIZE[0],
@@ -282,27 +299,29 @@ class Playing(src.scene_base.SceneBase):
                         )
 
 
+    # Renders everything to the screen
     def render(self, window):
         super().render()
 
-        # Drawing tiles
-        if self.tilesChanged:
+        if self.tilesChanged: # If the tiles have changed, rerender them
             self.tileSurface.fill((0, 0, 0))
             self.draw_tiles(self.tileSurface)
             self.tilesChanged = False
+        
+        # Drawing tiles
         window.blit(self.tileSurface, (0, 0))
 
         # Drawing gravity beam
         for x in range(
             (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]) 
             // constants.GRAV_BEAM_WIDTH
-            ):
+            ): # Goes through the center of the screen
+
+            # Draws the gravity beam
             self.gravityBeam.render(
                 window, 
-                (
-                    x * constants.GRAV_BEAM_WIDTH, 
-                    (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1] / 2) - (self.gravityBeam.images[0].get_height() / 2) # Centers the beam
-                )
+                (x * constants.GRAV_BEAM_WIDTH, 
+                (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1] / 2) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
             )
 
         # Drawing player
