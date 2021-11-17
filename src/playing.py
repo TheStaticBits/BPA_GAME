@@ -190,9 +190,7 @@ class Playing(src.scene_base.SceneBase):
     def draw_tiles(self, surface):
         currentRoom = self.levels[self.level][self.room] # For convenience
 
-        """
-        BEWARE: SPAGHETTI CODE AHEAD
-        """
+        """  BEWARE: SPAGHETTI CODE AHEAD  """ # Maybe I should clean this up a bit...
         # Iterating through all of the tiles in the current room
         for y, row in enumerate(currentRoom): 
             for x, tile in enumerate(row):
