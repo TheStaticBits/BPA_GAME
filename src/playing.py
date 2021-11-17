@@ -264,7 +264,7 @@ class Playing(src.scene_base.SceneBase):
                                     elif not edgeT1 and not edgeT2 and corner: # If both edges are not transparent and the corner is
                                         selectedImage = self.tileKey[tile]["inverse_corner"]
                                     
-                                    if selectedimage != None:
+                                    if selectedImage != None:
                                         image = pygame.transform.rotate(
                                             selectedImage, 
                                             -90 if (offset, offset2) == (-1, 1) else (45 * (offset + 1) + 45 * (offset2 + 1)) # Finds the degree of rotation based on the position of the corner
