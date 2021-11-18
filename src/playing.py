@@ -13,7 +13,7 @@ import src.animation
 
 class Playing(src.scene_base.SceneBase):
     def __init__(self, saveData):
-        super().__init__()
+        super().__init__(__name__)
 
         # Loading levels from levels.txt
         self.levels = utility.load_levels()

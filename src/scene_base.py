@@ -1,14 +1,24 @@
 import pygame
-
-# So, this could be used for error handling, which is something that all scenes have the need for.
+import logging
 
 class SceneBase:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.logger = logging.getLogger(name)
+        self.logger.setLevel(logging.DEBUG)
+
+        formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
+
+        handler = logging.FileHandler("events.log")
+        handler.setFormatter(formatter)
+
+        self.logger.addHandler(handler)
+
+        self.logger.info("Initiating Scene...")
+
 
     def update(self):
-        pass
+        self.logger.info("Updating Scene...")
 
 
     def render(self):
-        pass
+        self.logger.info("Rendering Scene...")
