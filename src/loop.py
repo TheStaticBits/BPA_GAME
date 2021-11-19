@@ -36,7 +36,7 @@ class Loop(src.scene_base.SceneBase):
 
             except pygame.error:
                 # If there wasn't an audio device found, 
-                print("Audio output device not found.")
+                print("ERROR: Audio output device not found.")
                 self.logger.warning("Audio output device not found.")
         
         except:
