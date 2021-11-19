@@ -14,7 +14,7 @@ pygame.init()
 
 class Loop(src.scene_base.SceneBase):
     def __init__(self):
-        super().init(__name__)
+        super().__init__(__name__)
 
         try:
             self.window = src.window.Window()
@@ -30,8 +30,8 @@ class Loop(src.scene_base.SceneBase):
             pygame.mixer.music.load("res/sound/OneLastDayInParadiseV2.wav")
             pygame.mixer.music.set_volume(0.2)
         
-        except Exception as error:
-            err = traceback.format_exception(error)
+        except:
+            err = traceback.format_exc()
             print(err)
             self.logger.critical(err)
 
@@ -60,8 +60,8 @@ class Loop(src.scene_base.SceneBase):
                 self.update()
                 self.render()
         
-        except Exception as error:
-            err = traceback.format_exception(error)
+        except:
+            err = traceback.format_exc()
             print(err)
             self.logger.critical(err)
     

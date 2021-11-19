@@ -6,7 +6,7 @@ class SceneBase:
         self.logger = logging.getLogger(name)
         self.logger.setLevel(logging.DEBUG)
 
-        formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
+        formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(name)s:%(message)s')
 
         handler = logging.FileHandler("events.log")
         handler.setFormatter(formatter)
