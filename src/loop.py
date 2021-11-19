@@ -16,19 +16,28 @@ class Loop(src.scene_base.SceneBase):
     def __init__(self):
         super().__init__(__name__)
 
+        self.scene = "playing"
+        self.framerate = 0
+
         try:
             self.window = src.window.Window()
 
             save = utility.load_save()
             self.playing = src.playing.Playing(save)
 
-            self.scene = "playing"
+            
+            try:
+                # Setting up music
+                pygame.mixer.music.load("res/sound/OneLastDayInParadiseV2.wav")
+                pygame.mixer.music.set_volume(0.2)
+                
+                # Starting music
+                pygame.mixer.music.play(-1)
 
-            self.framerate = 0
-
-            # Setting up music
-            pygame.mixer.music.load("res/sound/OneLastDayInParadiseV2.wav")
-            pygame.mixer.music.set_volume(0.2)
+            except pygame.error:
+                # If there wasn't an audio device found, 
+                print("Audio output device not found.")
+                self.logger.warning("Audio output device not found.")
         
         except:
             err = traceback.format_exc()
@@ -48,11 +57,12 @@ class Loop(src.scene_base.SceneBase):
         framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
         framerate.start()
 
-        # Starting music
-        pygame.mixer.music.play(-1)
-
         try:
             while not self.window.closeWindow:
+                # Clearing the events.log file
+                with open("events.log", "w"):
+                    pass
+
                 self.window.flip()
 
                 self.framerate += 1
