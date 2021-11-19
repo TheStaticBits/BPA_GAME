@@ -59,7 +59,9 @@ class Loop(src.scene_base.SceneBase):
 
                 self.update()
                 self.render()
-        
+
+            self.save_and_exit()
+
         except:
             err = traceback.format_exc()
             print(err)
