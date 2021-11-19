@@ -1,28 +1,39 @@
 import pygame
+import logging
+import traceback
 from time import sleep
 import threading
 
 import src.window
 import src.playing
 import src.utility as utility
+import src.scene_base
 
 # Initializing Pygame
 pygame.init()
 
-class Loop:
+class Loop(src.scene_base.SceneBase):
     def __init__(self):
-        self.window = src.window.Window()
+        super().init(__name__)
 
-        save = utility.load_save()
-        self.playing = src.playing.Playing(save)
+        try:
+            self.window = src.window.Window()
 
-        self.scene = "playing"
+            save = utility.load_save()
+            self.playing = src.playing.Playing(save)
 
-        self.framerate = 0
+            self.scene = "playing"
 
-        # Setting up music
-        pygame.mixer.music.load("res/sound/OneLastDayInParadiseV2.wav")
-        pygame.mixer.music.set_volume(0.2)
+            self.framerate = 0
+
+            # Setting up music
+            pygame.mixer.music.load("res/sound/OneLastDayInParadiseV2.wav")
+            pygame.mixer.music.set_volume(0.2)
+        
+        except Exception as error:
+            err = traceback.format_exception(error)
+            print(err)
+            self.logger.critical(err)
 
 
     def run_framerate(self):
@@ -40,13 +51,19 @@ class Loop:
         # Starting music
         pygame.mixer.music.play(-1)
 
-        while not self.window.closeWindow:
-            self.window.flip()
+        try:
+            while not self.window.closeWindow:
+                self.window.flip()
 
-            self.framerate += 1
+                self.framerate += 1
 
-            self.update()
-            self.render()
+                self.update()
+                self.render()
+        
+        except Exception as error:
+            err = traceback.format_exception(error)
+            print(err)
+            self.logger.critical(err)
     
     
     def save_and_exit(self):
@@ -64,6 +81,8 @@ class Loop:
 
 
     def update(self):
+        super().update()
+
         self.window.update_inputs()
 
         if self.scene == "playing":
@@ -71,5 +90,7 @@ class Loop:
     
     
     def render(self):
+        super().render()
+
         if self.scene == "playing":
             self.playing.render(self.window.miniWindow)
