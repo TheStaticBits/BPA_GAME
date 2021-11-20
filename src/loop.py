@@ -25,7 +25,6 @@ class Loop(src.scene_base.SceneBase):
 
             save = utility.load_save()
             self.playing = src.playing.Playing(save)
-
             
             try:
                 # Setting up music
@@ -43,7 +42,10 @@ class Loop(src.scene_base.SceneBase):
         except:
             err = traceback.format_exc()
             print(err)
+            self.logger.critical("ERROR WHILE STARTING UP: ")
             self.logger.critical(err)
+
+            utility.error_box(err)
 
 
     def run_framerate(self):
@@ -76,7 +78,10 @@ class Loop(src.scene_base.SceneBase):
         except:
             err = traceback.format_exc()
             print(err)
+            self.logger.critical("ERROR WHILE PLAYING: ")
             self.logger.critical(err)
+
+            utility.error_box(err)
     
     
     def save_and_exit(self):

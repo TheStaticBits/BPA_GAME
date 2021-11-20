@@ -5,6 +5,8 @@ This file contains functions for things such as saving and loading, loading spri
 import pygame
 import sqlite3
 import os
+import win32api
+import smtplib, ssl
 
 import src.constants as constants
 
@@ -166,3 +168,32 @@ def modif_save(dict):
     else: # If the save file doesn't exist
         create_default_database() # Create a default database
         modif_save(dict) # Call this function to modify the changes
+
+
+# This is the error box which pops up when there is an error
+def error_box(error):
+    result = win32api.MessageBox(
+        None, 
+        f"""Game crashed. See saves/events.log for more information.
+
+Error:
+----------------------
+{error}----------------------
+
+Would you like to report this crash?""", 
+        "ERROR", 
+        1
+    ) # Generates a popup box with the error
+
+    if result: # If the user wants to report the crash
+        with open(constants.EVENT_LOG_PATH, "r") as file: # Opens the file
+            contents = file.read() # Grabs the contents of the file
+        
+        contents = "Subject: Another error\n\n" + contents
+
+        connection = ssl.create_default_context() # Creating a connection
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", context=connection) as s: # Connecting to the server
+            s.login("reporterofcrashes@gmail.com", "reportthosecrashes") # Logs in (yes the password is here)
+
+            s.sendmail("reporterofcrashes@gmail.com", "reporterofcrashes@gmail.com", contents) # Sends the email

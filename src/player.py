@@ -62,7 +62,7 @@ class Player(src.object_base.ObjectBase):
 
         if self.spiked:
             return "dead"
-        
+
         return "alive"
         
 
