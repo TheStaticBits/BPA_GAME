@@ -1,4 +1,5 @@
 import pygame
+import os
 
 SAVE_PATH = os.path.join("saves", "save.db") # The save file's path
 EVENT_LOG_PATH = os.path.join("saves", "events.log") # The event log's path
