@@ -172,6 +172,8 @@ def modif_save(dict):
 
 # This is the error box which pops up when there is an error
 def error_box(error):
+    pygame.quit() # Closes window
+    
     result = win32api.MessageBox(
         None, 
         f"""Game crashed. See saves/events.log for more information.
