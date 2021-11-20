@@ -8,6 +8,7 @@ import src.window
 import src.playing
 import src.utility as utility
 import src.scene_base
+import src.constants as constants
 
 # Initializing Pygame
 pygame.init()
@@ -60,7 +61,7 @@ class Loop(src.scene_base.SceneBase):
         try:
             while not self.window.closeWindow:
                 # Clearing the events.log file
-                with open("events.log", "w"):
+                with open(constants.EVENT_LOG_PATH, "w"):
                     pass
 
                 self.window.flip()
@@ -79,6 +80,8 @@ class Loop(src.scene_base.SceneBase):
     
     
     def save_and_exit(self):
+        self.logger.info("Saving game state...")
+
         # Saves the player's position, level, and room
         utility.modif_save({
             "playerX": self.playing.player.rect.x,
@@ -88,6 +91,8 @@ class Loop(src.scene_base.SceneBase):
             "room": self.playing.room,
         }) 
 
+        self.logger.info("Exiting Pygame...")
+        
         # Quits Pygame
         pygame.quit()
 

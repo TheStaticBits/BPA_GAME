@@ -9,7 +9,7 @@ class SceneBase:
         self.logger = logging.getLogger(name)
         self.logger.setLevel(logging.DEBUG)
 
-        formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(name)s:%(message)s')
+        formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s - %(message)s")
 
         # If the folder that the event log is in does not exist, create it
         if not os.path.exists(constants.EVENT_LOG_PATH.split("/")[0]):
