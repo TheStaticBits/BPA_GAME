@@ -12,8 +12,8 @@ class SceneBase:
         formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s - %(message)s")
 
         # If the folder that the event log is in does not exist, create it
-        if not os.path.exists(constants.EVENT_LOG_PATH.split("/")[0]):
-            os.makedirs(constants.EVENT_LOG_PATH.split("/")[0])
+        if not os.path.exists(constants.EVENT_LOG_PATH.split(os.path.sep)[0]):
+            os.makedirs(constants.EVENT_LOG_PATH.split(os.path.sep)[0])
 
         handler = logging.FileHandler(constants.EVENT_LOG_PATH)
         handler.setFormatter(formatter)

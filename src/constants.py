@@ -1,7 +1,7 @@
 import pygame
 
-SAVE_PATH = "saves/save.db" # The save file's path
-EVENT_LOG_PATH = "saves/events.log" # The event log's path
+SAVE_PATH = os.path.join("saves", "save.db") # The save file's path
+EVENT_LOG_PATH = os.path.join("saves", "events.log") # The event log's path
 
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
@@ -60,7 +60,7 @@ TRANSPARENT_TILES = (
 )
 
 # Other tiles
-SPIKE_PATH = "res/misc/spike.png"
+SPIKE_PATH = os.path.join("res, misc, spike.png")
 SPIKE_ROTATIONS = {
     "^": 0,
     "<": 90,
@@ -69,6 +69,6 @@ SPIKE_ROTATIONS = {
 }
 
 # Gravity beam path
-GRAV_BEAM_PATH = "res/misc/grav_beam.png"
+GRAV_BEAM_PATH = os.path.join("res", "misc", "grav_beam.png")
 GRAV_BEAM_DELAY = 2 # Delay between each frame of the beam
 GRAV_BEAM_WIDTH = 8 # Width of the beam
