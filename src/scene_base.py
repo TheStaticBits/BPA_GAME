@@ -1,5 +1,8 @@
 import pygame
 import logging
+import os
+
+import src.constants as constants
 
 class SceneBase:
     def __init__(self, name):
@@ -8,7 +11,11 @@ class SceneBase:
 
         formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(name)s:%(message)s')
 
-        handler = logging.FileHandler("events.log")
+        # If the folder that the event log is in does not exist, create it
+        if not os.path.exists(constants.EVENT_LOG_PATH.split("/")[0]):
+            os.makedirs(constants.EVENT_LOG_PATH.split("/")[0])
+
+        handler = logging.FileHandler(constants.EVENT_LOG_PATH)
         handler.setFormatter(formatter)
 
         self.logger.addHandler(handler)

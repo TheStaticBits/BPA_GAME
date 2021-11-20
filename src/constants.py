@@ -1,6 +1,7 @@
 import pygame
 
-SAVE_PATH = "save.db" # The save file's path
+SAVE_PATH = "saves/save.db" # The save file's path
+EVENT_LOG_PATH = "saves/events.log" # The event log's path
 
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
