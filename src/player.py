@@ -50,7 +50,7 @@ class Player(src.object_base.ObjectBase):
         super().update_y_pos()
         
         super().reset_current_tile()
-        super().update_y_collision(room, 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1))
+        super().update_y_collision(room)
 
         if self.collisions["right"]:
             if self.rect.x / constants.TILE_SIZE[0] == constants.SCREEN_TILE_SIZE[0] - 1:

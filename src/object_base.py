@@ -106,10 +106,12 @@ class ObjectBase:
                         break
 
     
-    def update_y_collision(self, room, dirMoved):
+    def update_y_collision(self, room):
         # Resets the self.collisions dictionary
         self.collisions["up"] = False
         self.collisions["down"] = False
+
+        dirMoved = 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1)
 
         if dirMoved != 0:
             for y in range(0, 2):
