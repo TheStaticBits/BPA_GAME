@@ -85,11 +85,13 @@ def load_spritesheet(
     # Iterates through a range which is the amount of images in the spritesheet
     for count in range(image.get_width() // width):
         tempImage = pygame.Surface((width, image.get_height())) # Creates an image the size of one frame
+        tempImage.fill((33, 22, 11)) # Fills the image with a color which will probably not be used in images
         tempImage.blit(
             image, 
             (-(count * width), # This moves the spritesheet back enough so that the only frame in the image is the individual frame being saved
             0)
         )
+        tempImage.set_colorkey((33, 22, 11)) # Sets the colorkey
         result.append(tempImage)
     
     return result

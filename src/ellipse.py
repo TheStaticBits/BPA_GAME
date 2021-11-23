@@ -5,8 +5,8 @@ import src.constants as constants
 import src.animation
 
 class Ellipse(src.object_base.ObjectBase):
-    def __init__(self, startPos, velocity = 0):
-        super().__init__(__name__)
+    def __init__(self, startPos, room, level, velocity = 0):
+        super().__init__()
 
         self.rect = pygame.Rect(startPos[0], startPos[1], 16, 16)
 
@@ -15,25 +15,33 @@ class Ellipse(src.object_base.ObjectBase):
 
         self.playingAnimation = self.idleAnim
 
+        self.yVelocity = velocity
+
+        self.room = room
+        self.level = level
+
     
-    def update(self, room, inputs):
-        super().test_grav_line()
-        super().update_gravity()
+    def update(self, currentRoom, currentLevel, room):
+        if currentRoom == self.room and currentLevel == self.level:
+            super().test_grav_line()
+            super().update_gravity()
 
-        # Movement here
+            # Movement here
 
-        super().reset_current_tile()
-        super().update_x_collision(room, 0)
+            super().reset_current_tile()
+            super().update_x_collision(room, 0)
 
-        super().update_y_pos()
+            if self.collisions["down"]:
+                self.yVelocity = 0
 
-        super().reset_current_tile()
-        super().update_y_collision(room)
+            super().update_y_pos()
 
-        self.playingAnimation.update()
+            super().reset_current_tile()
+            super().update_y_collision(room)
+
+            self.playingAnimation.update()
     
 
-    def render(self, window):
-        super().render(window)
-
-        self.playingAnimation.render(window, self.rect.x, self.rect.y)
+    def render(self, currentRoom, currentLevel, window):
+        if currentRoom == self.room and currentLevel == self.level:
+            self.playingAnimation.render(window, (self.rect.x, self.rect.y))

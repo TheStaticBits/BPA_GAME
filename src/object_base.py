@@ -8,8 +8,7 @@ import src.utility as utility
 
 class ObjectBase:
     def __init__(self):
-        # OVERRIDE THIS IN SUBCLASSES
-        self.rect = None
+        self.rect = None # OVERRIDE THIS IN SUBCLASSES
 
         self.collisions = {
             "up": False,
