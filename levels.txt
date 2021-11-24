@@ -51,12 +51,12 @@ ww         ww  ww      w
 www     ^  ww  ww      w
 wwwwwwwww  ww       ^  w
 wwwwwwwww  ww     www   
-wvvwww  v  ww  wwwwww   
-w  www     ww  wwwwww   
-w          ww  v  www   
-w          ww     www   
-w          ww     www   
-wwwwwwwwwwwww     www   
+wvvvwww    ww  wwwwww   
+w   www    ww  wwwwww   
+w          ww  v  www  w
+w          ww     www  w
+w          ww     wwwwww
+wwwwwwwwwwwww     wwwwww
 ------------------------
 w^><wv              wwww
 wwwww               wwww
@@ -66,7 +66,7 @@ w      www    ww  wwwwww
 wp     www    vv  vvwwww
 wwwww  wwwww        wwww
 wwwww  wwwww        wwww
-w      v   v        wwww
+w      v            wwww
 w                  www  
 w                 www   
 w             wwwwww    
@@ -77,23 +77,23 @@ v^><wwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwvvvwwwwwwwwvvwwwwww
-wwwww   wwwvvvvv  wwwwww
+wwwwwvvwwwwwwwwwvvwwwwww
+wwwww  wwwwwvvvv  wwwwww
 wwwww             wwwwww
 wwwww                www
-wwwww      ^^^^^     www
-           wwwww        
-           wwwww        
-         ^^wwwww        
-ww      wwwwwwww     www
-ww      wwwwwwww     www
+wwwww       ^^^^     www
+            wwww        
+            wwww        
+          ^^wwww        
+ww       wwwwwww     www
+ww       wwwwwww     www
 ||||||||||||||||||||||||
 w               ww> <ww 
 w               ww> <ww 
 w               ww^^^ww 
 w   ^           wwwwwww 
-wwwww     ^     wwwwwww 
-wwwww     w     v v v v 
+wwwww           wwwwwww 
+wwwww     ^     v v v v 
 wwwww     w             
 wwwww     w             
 wwwww><>  www   ^ ^ ^ ^ 
