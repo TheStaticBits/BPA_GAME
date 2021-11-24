@@ -27,7 +27,7 @@ class Player(src.object_base.ObjectBase):
         self.rect.x += (inputs["right"] - inputs["left"]) * constants.MOVEMENT_SPEED
 
         super().reset_current_tile()
-        super().update_x_collision(room, inputs["right"] - inputs["left"])
+        specialTiles = super().update_x_collision(room, inputs["right"] - inputs["left"])
         
         # Update velocity based on inputs
         if (self.gravityDir == 1 and self.collisions["down"]) or (self.gravityDir == -1 and self.collisions["up"]):
@@ -50,7 +50,13 @@ class Player(src.object_base.ObjectBase):
         super().update_y_pos()
         
         super().reset_current_tile()
-        super().update_y_collision(room)
+        specialTiles.append(tile for tile in super().update_y_collision(room))
+
+        # Handle special tiles
+        for tile in specialTiles:
+            if tile == "j":
+                if inputs["up"]:
+                    self.yVelocity = constants.JUMP_FORCE * self.gravityDir
 
         if self.collisions["right"]:
             if self.rect.x / constants.TILE_SIZE[0] == constants.SCREEN_TILE_SIZE[0] - 1:
@@ -59,9 +65,6 @@ class Player(src.object_base.ObjectBase):
         elif self.collisions["left"]:
             if self.rect.x == 0:
                 return "left"
-
-        if self.spiked:
-            return "dead"
 
         return "alive"
         

@@ -8,7 +8,8 @@ import src.utility as utility
 
 class ObjectBase:
     def __init__(self):
-        self.rect = None # OVERRIDE THIS IN SUBCLASSES
+        # OVERRIDE THIS IN SUBCLASSES
+        self.rect = None
 
         self.collisions = {
             "up": False,
@@ -51,7 +52,9 @@ class ObjectBase:
 
         offscreen = not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE)
 
-        if offscreen or room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
+        tile = room[tilePos[1]][tilePos[0]]
+
+        if offscreen or tile in constants.TILE_KEYS:
             tileRect = pygame.Rect(
                 tilePos[0] * constants.TILE_SIZE[0], 
                 tilePos[1] * constants.TILE_SIZE[1],
@@ -60,41 +63,47 @@ class ObjectBase:
             )
 
             if self.rect.colliderect(tileRect):
-                return tileRect
+                return True, tileRect
 
-        elif room[tilePos[1]][tilePos[0]] in constants.SPIKE_ROTATIONS:
-            spike = pygame.transform.rotate(
-                self.spikeImage, 
-                constants.SPIKE_ROTATIONS[room[tilePos[1]][tilePos[0]]]
-            )
+        elif tile in constants.SPECIAL_TILES:
+            if tile in constants.SPIKE_ROTATIONS:
+                image = pygame.transform.rotate(
+                    self.spikeImage, 
+                    constants.SPIKE_ROTATIONS[tile]
+                )
+            
+            else:
+                image = pygame.image.load(constants.SPECIAL_TILE_IMAGE_PATHS[tile])).convert_alpha()
 
-            spikeMask = pygame.mask.from_surface(spike)
+            mask = pygame.mask.from_surface(image)
             playerMask = pygame.mask.Mask((self.rect.width, self.rect.height), fill=True)
 
             collided = spikeMask.overlap(
-                playerMask, 
+                mask, 
                 (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], 
                 self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
             )
 
             if collided:
-                self.spiked = True
+                return False, tile
     
-        return False
+        return False, False
 
 
-    def update_x_collision(self, room, dirMoved):
+    def update_x_collision(self, room, dirMoved) -> list:
         # Resets the self.collisions dictionary
         self.collisions["left"] = False
         self.collisions["right"] = False
+
+        specialTiles = []
 
         if dirMoved != 0:
             for y in range(-1, 2):
                 for x in range(0, 2):
                     tilePos = (self.currentTile[0] + x * dirMoved, self.currentTile[1] + y)
                     
-                    result = self.check_tile(room, tilePos)
-                    if result != False:
+                    isSolid, result = self.check_tile(room, tilePos)
+                    if isSolid:
                         if dirMoved == 1:
                             self.rect.right = result.left
                             self.collisions["right"] = True
@@ -103,6 +112,11 @@ class ObjectBase:
                             self.collisions["left"] = True
                         
                         break
+                    
+                    elif result != False:
+                        specialTiles.append(result)
+        
+        return specialTiles
 
     
     def update_y_collision(self, room):
@@ -112,13 +126,15 @@ class ObjectBase:
 
         dirMoved = 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1)
 
+        specialTiles = []
+
         if dirMoved != 0:
             for y in range(0, 2):
                 for x in range(-1, 2):
                     tilePos = (self.currentTile[0] + x, self.currentTile[1] - y * dirMoved)
 
-                    result = self.check_tile(room, tilePos)
-                    if result != False:
+                    isSolid, result = self.check_tile(room, tilePos)
+                    if isSolid:
                         if dirMoved == 1:
                             self.rect.top = result.bottom
                             self.collisions["up"] = True
@@ -127,6 +143,11 @@ class ObjectBase:
                             self.collisions["down"] = True
                         
                         break
+                    
+                    elif result != False:
+                        specialTiles.append(result)
+        
+        return specialTiles
     
 
     def test_grav_line(self):

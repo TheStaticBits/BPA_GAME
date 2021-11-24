@@ -56,9 +56,20 @@ TILE_KEYS = {
 # A background tile is drawn behind these tiles
 # Wall tiles will not connect to these tiles
 TRANSPARENT_TILES = (
-    " ",
-    "p",
-    "^", "<", "v", ">"
+    " ", # Air tile
+    "p", # Player start tile
+    "^", "<", "v", ">", # Spikes
+    "j" # Jump orb
+)
+
+# Tiles that have special actions
+# They are handled by the individual entities
+SPECIAL_TILES = (
+    "^", "<", "v", ">", # Spikes
+    "j" # Jump orb
+)
+SPECIAL_TILE_IMAGE_PATHS = (
+    # "j": # ADD the IMAGE
 )
 
 # Other tiles
