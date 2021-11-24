@@ -52,9 +52,7 @@ class ObjectBase:
 
         offscreen = not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE)
 
-        tile = room[tilePos[1]][tilePos[0]]
-
-        if offscreen or tile in constants.TILE_KEYS:
+        if offscreen or room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
             tileRect = pygame.Rect(
                 tilePos[0] * constants.TILE_SIZE[0], 
                 tilePos[1] * constants.TILE_SIZE[1],
@@ -65,7 +63,9 @@ class ObjectBase:
             if self.rect.colliderect(tileRect):
                 return True, tileRect
 
-        elif tile in constants.SPECIAL_TILES:
+        elif not offscreen and room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
+            tile = room[tilePos[1]][tilePos[0]]
+
             if tile in constants.SPIKE_ROTATIONS:
                 image = pygame.transform.rotate(
                     self.spikeImage, 
@@ -78,7 +78,7 @@ class ObjectBase:
             mask = pygame.mask.from_surface(image)
             playerMask = pygame.mask.Mask((self.rect.width, self.rect.height), fill=True)
 
-            collided = spikeMask.overlap(
+            collided = playerMask.overlap(
                 mask, 
                 (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], 
                 self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
