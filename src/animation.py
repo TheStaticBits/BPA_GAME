@@ -5,16 +5,18 @@ import src.utility as utility
 class Animation:
     def __init__(
         self, 
-        path, # Path of the image
-        width, # Width of one frame
         delay, # Delay between frames
+        path = None, # Path of the image
+        width = None # Width of one frame
         ):
-        self.images = utility.load_spritesheet(path, width)
+        if path != None:
+            self.images = utility.load_spritesheet(path, width)
+
+        self.delay = delay
 
         self.timer = 0
         self.frame = 0
 
-        self.delay = delay
     
     def update(self) -> bool:
         self.timer += 1
@@ -29,5 +31,12 @@ class Animation:
 
         return True
     
+
     def render(self, window, position):
         window.blit(self.images[self.frame], position)
+    
+
+    def copy(self) -> "Animation":
+        obj = Animation(self.delay)
+        obj.images = self.images
+        return obj

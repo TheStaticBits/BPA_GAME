@@ -53,15 +53,19 @@ class Playing(src.scene_base.SceneBase):
         self.draw_tiles(self.tileSurface)
         self.tilesChanged = False
 
+        # Loading tile animations
+        self.load_tile_anims()
+        self.setup_room_tile_anims()
+
         # Setting up gravity beam animation
         self.gravityBeam = src.animation.Animation(
+            constants.GRAV_BEAM_DELAY,
             constants.GRAV_BEAM_PATH, 
-            constants.GRAV_BEAM_WIDTH, 
-            constants.GRAV_BEAM_DELAY
+            constants.GRAV_BEAM_WIDTH
         )
 
         # EDITOR CONTROLS:
-        self.placeTile = "c" # Tile to be placed when you click
+        self.placeTile = "j" # Tile to be placed when you click
 
 
     def load_tiles(self):
@@ -82,6 +86,40 @@ class Playing(src.scene_base.SceneBase):
             
             else: # If there isn't an inverse_corner needed
                 self.tileKey[tileKey]["inverse_corner"] = self.tileKey[tileKey]["corner"] # Sets the inverse_corner to the normal corner
+
+
+    # This loads all of the tile's animations
+    def load_tile_anims(self):
+        self.tileAnims = {}
+
+        for tile, anims in constants.TILES_WITH_ANIMATIONS.items():
+            self.tileAnims[tile] = {}
+            
+            for animName, animPath in anims.items():
+                self.tileAnims[tile][animName] = src.animation.Animation(
+                    10,
+                    animPath, 
+                    constants.TILE_SIZE[0] 
+                )
+
+
+    def setup_room_tile_anims(self):
+        currentRoom = self.levels[self.level][self.room] # For convenience
+
+        self.individualTileAnims = {} # A dictionary of all INDIVIDUAL tile's animation objects
+
+        # Iterating through all of the tiles in the current room
+        for y, row in enumerate(currentRoom):
+            for x, tile in enumerate(row):
+
+                if tile in constants.TILES_WITH_ANIMATIONS:
+                    # If the tile has an animation
+                    self.individualTileAnims[(x, y)] = ("default", self.tileAnims[tile]["default"].copy())
+
+
+    def render_tiles_with_anims(self, window):
+        for tilePos, anim in self.individualTileAnims.items():
+            anim[1].render(window, (tilePos[0] * constants.TILE_SIZE[0], tilePos[1] * constants.TILE_SIZE[1]))
 
 
     # Sets up the player, given a position or using the level to find the starting position
@@ -164,6 +202,16 @@ class Playing(src.scene_base.SceneBase):
         # Ellipse update
         self.ellipse.update(self.room, self.level, self.levels[self.level][self.room])
 
+        # Updating all individual tile's animations
+        for i in self.individualTileAnims.values():
+            tileAnimName, tileAnim = i
+            
+            result = tileAnim.update()
+            
+            if not result: # If the animation finished playing
+                if tileAnimName != "default":
+                    self.individualTileAnims[tileAnimName] = self.individualTileAnims["default"]
+
 
         """  Mouse Inputs for Editor  """
         # The position of the tile that the mouse is hovering over
@@ -173,17 +221,19 @@ class Playing(src.scene_base.SceneBase):
         )
 
         if mousePressed["left"]: # If left clicked
-            # Sets the tile the mouse is hovering over to the placeTile
-            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = self.placeTile # placeTile is the tile to be placed
-            self.tilesChanged = True # Sets the tiles to be rerendered, since they changed
+            if self.levels[self.level][self.room][tilePos[1]][tilePos[0]] != self.placeTile:
+                # Sets the tile the mouse is hovering over to the placeTile
+                self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = self.placeTile # placeTile is the tile to be placed
+                self.tilesChanged = True # Sets the tiles to be rerendered, since they changed
         
         if mousePressed["center"]: # If center clicked
             self.placeTile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]] # Changing the placeTile to the one the mouse is hovering over
 
         if mousePressed["right"]: # If right clicked
-            # Sets the tile the mouse is hovering over to air
-            self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
-            self.tilesChanged = True # Sets the tiles to be rerendered
+            if self.levels[self.level][self.room][tilePos[1]][tilePos[0]] != " ":
+                # Sets the tile the mouse is hovering over to air
+                self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
+                self.tilesChanged = True # Sets the tiles to be rerendered
         
         # Other editor inputs
         if inputs["space"]:
@@ -308,10 +358,16 @@ class Playing(src.scene_base.SceneBase):
         if self.tilesChanged: # If the tiles have changed, rerender them
             self.tileSurface.fill((0, 0, 0))
             self.draw_tiles(self.tileSurface)
+            
             self.tilesChanged = False
+
+            self.setup_room_tile_anims()
         
         # Drawing tiles
         window.blit(self.tileSurface, (0, 0))
+
+        # Drawing tiles with animations
+        self.render_tiles_with_anims(window)
 
         # Drawing gravity beam
         for x in range(

@@ -73,7 +73,8 @@ class ObjectBase:
                 )
             
             else:
-                image = pygame.image.load(constants.SPECIAL_TILE_IMAGE_PATHS[tile]).convert_alpha()
+                image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
+                image.set_colorkey((255, 255, 255))
 
             mask = pygame.mask.from_surface(image)
             playerMask = pygame.mask.Mask((self.rect.width, self.rect.height), fill=True)

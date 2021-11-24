@@ -68,9 +68,13 @@ SPECIAL_TILES = (
     "^", "<", "v", ">", # Spikes
     "j" # Jump orb
 )
-SPECIAL_TILE_IMAGE_PATHS = (
-    # "j": # ADD the IMAGE
-)
+TILES_WITH_ANIMATIONS = {
+    "j": {
+        "default": "res/misc/jump_orb/idle.png",
+        "struck": "res/misc/jump_orb/struck.png",
+        "mask": "res/misc/jump_orb/mask.png" # Used for pixel perfect collision
+    }
+}
 
 # Other tiles
 SPIKE_PATH = "res/misc/spike.png"

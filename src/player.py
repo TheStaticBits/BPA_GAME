@@ -50,7 +50,10 @@ class Player(src.object_base.ObjectBase):
         super().update_y_pos()
         
         super().reset_current_tile()
-        specialTiles.append(tile for tile in super().update_y_collision(room))
+        
+        result = super().update_y_collision(room)
+        for tile in result:
+            specialTiles.append(tile)
 
         # Handle special tiles
         for tile in specialTiles:

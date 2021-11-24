@@ -8,10 +8,10 @@ class Ellipse(src.object_base.ObjectBase):
     def __init__(self, startPos, room, level, velocity = 0):
         super().__init__()
 
-        self.rect = pygame.Rect(startPos[0], startPos[1], 16, 16)
+        self.rect = pygame.Rect(32, 32, 16, 16)
 
-        self.walkingAnim = src.animation.Animation("res/characters/ellipse/walking.png", 16, 10)
-        self.idleAnim = src.animation.Animation("res/characters/ellipse/idle.png", 16, 10)
+        self.walkingAnim = src.animation.Animation(10, "res/characters/ellipse/walking.png", 16)
+        self.idleAnim = src.animation.Animation(20, "res/characters/ellipse/idle.png", 16)
 
         self.playingAnimation = self.idleAnim
 
