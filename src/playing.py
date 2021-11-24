@@ -7,6 +7,7 @@ import os
 
 import src.scene_base
 import src.player
+import src.ellipse
 import src.utility as utility
 import src.constants as constants
 import src.animation
@@ -31,6 +32,8 @@ class Playing(src.scene_base.SceneBase):
             saveData["playerY"],
             saveData["playerVelocity"]
         )
+
+        self.ellipse = src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level)
 
         # Setting up background tile
         self.background = self.tileKey["w"]["tile"].convert_alpha().copy()
@@ -158,10 +161,11 @@ class Playing(src.scene_base.SceneBase):
         # Gravity beam animation update
         self.gravityBeam.update()
 
+        # Ellipse update
+        self.ellipse.update(self.room, self.level, self.levels[self.level][self.room])
 
-        """
-        Mouse Inputs for Editor
-        """
+
+        """  Mouse Inputs for Editor  """
         # The position of the tile that the mouse is hovering over
         tilePos = (
             mousePos[0] // constants.TILE_SIZE[0],
@@ -321,6 +325,9 @@ class Playing(src.scene_base.SceneBase):
                 (x * constants.GRAV_BEAM_WIDTH, 
                 (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1] / 2) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
             )
+
+        # Drawing Ellipse
+        self.ellipse.render(self.room, self.level, window)
 
         # Drawing player
         self.player.render(window)
