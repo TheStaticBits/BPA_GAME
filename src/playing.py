@@ -125,13 +125,13 @@ class Playing(src.scene_base.SceneBase):
 
     def render_tiles_with_anims(self, window):
         # individualTileAnims is layed out like this:
-        #     (x, y): (animName, animationObject)
+        #     (x, y): (animationName, animationObject)
 
         for tilePos, anim in self.individualTileAnims.items():
             frame = anim[1].get_frame()
 
             flip = tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS
-            
+
             if self.gravityDir == -1:
                 flip = not flip
             
