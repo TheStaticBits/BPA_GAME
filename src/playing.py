@@ -64,6 +64,12 @@ class Playing(src.scene_base.SceneBase):
             constants.GRAV_BEAM_WIDTH
         )
 
+        # Gravity line pull direction
+        # Each entity still has its own pull direction for if it's below or above the line.
+        # 1 is normal gravity (pull towards the line)
+        # -1 is reverse gravity (pull away from the line)
+        self.gravityDir = 1
+
         # EDITOR CONTROLS:
         self.placeTile = "g" # Tile to be placed when you click
 
@@ -168,7 +174,7 @@ class Playing(src.scene_base.SceneBase):
         """
         Updating Player
         """
-        playerState = self.player.update(self.levels[self.level][self.room], inputs) # Updating the player with the inputs
+        playerState = self.player.update(self.levels[self.level][self.room], inputs, self.gravityDir) # Updating the player with the inputs
 
         # If the player moved to the far right of the screen
         if playerState == "right":
@@ -206,12 +212,15 @@ class Playing(src.scene_base.SceneBase):
         # Play the "struck" animation for the tile
         elif playerState != "alive":
             self.individualTileAnims[playerState[1]] = ("struck", self.tileAnims[playerState[0]]["struck"].copy())
+
+            if playerState[0] == "g": # Gravity orb
+                self.gravityDir *= -1 # Changing the gravity direction
         
         # Gravity beam animation update
         self.gravityBeam.update()
 
         # Ellipse update
-        self.ellipse.update(self.room, self.level, self.levels[self.level][self.room])
+        self.ellipse.update(self.room, self.level, self.levels[self.level][self.room], self.gravityDir)
 
         # Updating all individual tile's animations
         for tilePos, i in self.individualTileAnims.items():

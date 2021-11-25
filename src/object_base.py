@@ -150,9 +150,9 @@ class ObjectBase:
         return specialTiles
     
 
-    def test_grav_line(self):
+    def test_grav_line(self, globalGravity):
         if self.rect.y + (self.rect.height / 2) < (constants.GRAV_BEAM_TILE_Y_POS * constants.TILE_SIZE[1]):
-            self.gravityDir = 1 * constants.INVERSE_GRAVITY
+            self.gravityDir = 1 * globalGravity
             
         else:
-            self.gravityDir = -1 * constants.INVERSE_GRAVITY
+            self.gravityDir = -1 * globalGravity

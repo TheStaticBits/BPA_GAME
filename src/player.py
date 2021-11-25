@@ -38,11 +38,17 @@ class Player(src.object_base.ObjectBase):
             self.animations[self.currentAnim].reset()
     
 
-    def update(self, room, inputs) -> str:
-        self.animations[self.currentAnim].update()
-        self.image = self.animations[self.currentAnim].get_frame()
+    def update(
+        self, 
+        room, # List of tiles in the current room
+        inputs, # Input dictionary
+        globalGravity # The gravity of the world
+        ) -> str:
 
-        super().test_grav_line()
+        self.animations[self.currentAnim].update()
+        self.image = self.animations[self.currentAnim].get_frame() # Used during collision testing
+
+        super().test_grav_line(globalGravity)
         super().update_gravity()
 
         # This will result in a 0, a 1, or a -1. The inputs are True or False.

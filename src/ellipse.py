@@ -21,12 +21,19 @@ class Ellipse(src.object_base.ObjectBase):
         self.level = level
 
     
-    def update(self, currentRoom, currentLevel, room):
+    def update(
+        self, 
+        currentRoom, # Current room number 
+        currentLevel, # Current level number
+        room, # List of tiles in the current room
+        globalGravity
+        ):
+
         if currentRoom == self.room and currentLevel == self.level:
             self.playingAnimation.update()
             self.image = self.playingAnimation.get_frame()
 
-            super().test_grav_line()
+            super().test_grav_line(globalGravity)
             super().update_gravity()
 
             # Movement here
