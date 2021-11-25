@@ -134,17 +134,32 @@ dddddddddddd^^^^^^^ddddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
 v^><ddddddd       dddddd
-dddddd    v          vdd
-            j ^       dd
-              dd      dd
-     j        dd      dd
-         dd   dddd    dd
-dd      ^dd   dddd    dd
-dd      ddd   dddd    dd
-dd      ddd   dd      dd
-dd      ddd   dd     ^dd
+dddddd    v         vddd
+            j ^      d  
+              dd     d  
+     j        dd     d  
+         dd   dddd   ddd
+dd       dd   dddd   ddd
+dd      ^dd   dddd   ddd
+dd      ddd   dd     ddd
+dd      ddd   dd    ^ddd
 dd      ddd   dd j ddddd
 dd      ddd   dd        
 dd^^^^^^ddd   dd        
 ddddddddddd   dd        
+||||||||||||||||||||||||
+v^><wddddddddddddddddddd
+ddddddddddddddddddd     
+           dd    dd     
+           dd    dd     
+                      dd
+ddddd>    dd j  dd j  dd
+ddddd>    dd   ^dd    dd
+ddddd>   <dd   ddd    dd
+ddddd>   <dd   ddd    dd
+ddddd    <dd   ddd    dd
+ddddd    <dd^^^ddd      
+          dddddddd      
+          dddddddd      
+          dddddddddddddd
 ||||||||||||||||||||||||
