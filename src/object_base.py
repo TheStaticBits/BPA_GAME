@@ -21,7 +21,6 @@ class ObjectBase:
         self.yVelocity = 0
 
         self.currentTile = [0, 0]
-        self.spiked = False
 
         # If this is 1, the gravity is pulling downward
         # If this is -1, the gravity is pulling upward
