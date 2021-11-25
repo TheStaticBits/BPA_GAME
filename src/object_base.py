@@ -90,12 +90,12 @@ class ObjectBase:
         return False, False
 
 
-    def update_x_collision(self, room, dirMoved) -> list:
+    def update_x_collision(self, room, dirMoved) -> dict:
         # Resets the self.collisions dictionary
         self.collisions["left"] = False
         self.collisions["right"] = False
 
-        specialTiles = []
+        specialTiles = {}
 
         if dirMoved != 0:
             for y in range(-1, 2):
@@ -114,19 +114,19 @@ class ObjectBase:
                         break
                     
                     elif result != False:
-                        specialTiles.append(result)
+                        specialTiles[result] = tilePos
         
         return specialTiles
 
     
-    def update_y_collision(self, room):
+    def update_y_collision(self, room) -> dict:
         # Resets the self.collisions dictionary
         self.collisions["up"] = False
         self.collisions["down"] = False
 
         dirMoved = 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1)
 
-        specialTiles = []
+        specialTiles = {}
 
         if dirMoved != 0:
             for y in range(0, 2):
@@ -145,7 +145,7 @@ class ObjectBase:
                         break
                     
                     elif result != False:
-                        specialTiles.append(result)
+                        specialTiles[result] = tilePos
         
         return specialTiles
     

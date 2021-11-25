@@ -118,6 +118,9 @@ class Playing(src.scene_base.SceneBase):
 
 
     def render_tiles_with_anims(self, window):
+        # individualTileAnims is layed out like this:
+        #     (x, y): (animName, animationObject)
+
         for tilePos, anim in self.individualTileAnims.items():
             anim[1].render(window, (tilePos[0] * constants.TILE_SIZE[0], tilePos[1] * constants.TILE_SIZE[1]))
 
@@ -194,7 +197,11 @@ class Playing(src.scene_base.SceneBase):
             self.room = 0 # Resetting the room number
             self.setup_player() # Resetting the player
             self.tilesChanged = True # Rerendering the tiles
-
+        
+        # If the return result was of a tile
+        # Play the "struck" animation for the tile
+        elif playerState != "alive":
+            self.individualTileAnims[playerState[1]] = ("struck", self.tileAnims[playerState[0]]["struck"].copy())
         
         # Gravity beam animation update
         self.gravityBeam.update()
@@ -203,14 +210,17 @@ class Playing(src.scene_base.SceneBase):
         self.ellipse.update(self.room, self.level, self.levels[self.level][self.room])
 
         # Updating all individual tile's animations
-        for i in self.individualTileAnims.values():
+        for tilePos, i in self.individualTileAnims.items():
             tileAnimName, tileAnim = i
             
             result = tileAnim.update()
             
             if not result: # If the animation finished playing
                 if tileAnimName != "default":
-                    self.individualTileAnims[tileAnimName] = self.individualTileAnims["default"]
+                    self.individualTileAnims[tilePos] = (
+                        "default", 
+                        self.tileAnims[self.levels[self.level][self.room][tilePos[1]][tilePos[0]]]["default"]
+                    )
 
 
         """  Mouse Inputs for Editor  """
