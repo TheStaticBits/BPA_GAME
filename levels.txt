@@ -62,12 +62,12 @@ w^><wv              wwww
 wwwww               wwww
 w      www          wwww
 w      www    ww    wwww
-w      www    ww  wwwwww
-wp     www    vv  vvwwww
-wwwww  wwwww        wwww
-wwwww  wwwww        wwww
-w      v            wwww
-w                  www  
+w      www    ww    wwww
+wp     www    vv  wwwwww
+wwwww  wwwww      wwwwww
+wwwww  wwwww      wwwwww
+w      v          wwwwww
+w                 wwww  
 w                 www   
 w             wwwwww    
 w^^^^^^^^^^^           w
@@ -117,4 +117,34 @@ v^><wel        w    wwww
   wwwwwwww     w  wwwwww
   wwwwwwww     w  wwwwww
   wwwwwwww     w  wwwwww
+------------------------
+v^><jddddddddddddddddddd
+dddddddddddddddddddddddd
+d            ddddd      
+d             ddd       
+d              d        
+dp      j      v        
+ddddd              ddddd
+ddddd              ddddd
+ddddd^^^^^^^       ddddd
+dddddddddddd       ddddd
+dddddddddddd       ddddd
+dddddddddddd       ddddd
+dddddddddddd^^^^^^^ddddd
+dddddddddddddddddddddddd
+||||||||||||||||||||||||
+v^><wp                  
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 ||||||||||||||||||||||||
