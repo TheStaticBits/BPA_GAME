@@ -219,7 +219,7 @@ class Playing(src.scene_base.SceneBase):
                 if tileAnimName != "default":
                     self.individualTileAnims[tilePos] = (
                         "default", 
-                        self.tileAnims[self.levels[self.level][self.room][tilePos[1]][tilePos[0]]]["default"]
+                        self.tileAnims[self.levels[self.level][self.room][tilePos[1]][tilePos[0]]]["default"].copy()
                     )
 
 
