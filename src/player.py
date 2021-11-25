@@ -92,10 +92,15 @@ class Player(src.object_base.ObjectBase):
             if tile == "j":
                 if inputs["up"]:
                     self.yVelocity = constants.JUMP_FORCE * self.gravityDir
-                    return ("j", position)
+                    return (tile, position)
             
             elif tile in constants.SPIKE_ROTATIONS:
                 return "dead"
+            
+            else:
+                if inputs["up"]:
+                    return (tile, position)
+
 
         if self.collisions["right"]:
             if self.rect.x == constants.TILE_SIZE[0] * constants.SCREEN_TILE_SIZE[0] - constants.PLAYER_WIDTH:

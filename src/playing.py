@@ -65,7 +65,7 @@ class Playing(src.scene_base.SceneBase):
         )
 
         # EDITOR CONTROLS:
-        self.placeTile = "j" # Tile to be placed when you click
+        self.placeTile = "g" # Tile to be placed when you click
 
 
     def load_tiles(self):

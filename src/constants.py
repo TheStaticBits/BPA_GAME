@@ -59,15 +59,18 @@ TRANSPARENT_TILES = (
     " ", # Air tile
     "p", # Player start tile
     "^", "<", "v", ">", # Spikes
-    "j" # Jump orb
+    "j", # Jump orb
+    "g"
 )
 
 # Tiles that have special actions
 # They are handled by the individual entities
 SPECIAL_TILES = (
     "^", "<", "v", ">", # Spikes
-    "j" # Jump orb
+    "j", # Jump orb
+    "g" # Gravity orb
 )
+
 TILES_WITH_ANIMATIONS = {
     "j": {
         "animations": {
@@ -81,7 +84,22 @@ TILES_WITH_ANIMATIONS = {
             }
         },
 
-        "mask": "res/misc/jump_orb/mask.png", # Used for pixel perfect collision
+        "mask": "res/misc/jump_orb/mask.png" # Used for pixel perfect collision
+    },
+
+    "g": {
+        "animations": {
+            "default": {
+                "path": "res/misc/gravity_orb/idle.png",
+                "delay": 10
+            },
+            "struck": {
+                "path": "res/misc/gravity_orb/struck.png",
+                "delay": 5
+            }
+        },
+
+        "mask": "res/misc/gravity_orb/mask.png"
     }
 }
 
