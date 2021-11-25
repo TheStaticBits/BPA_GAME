@@ -92,7 +92,7 @@ PLAYER_ANIMATIONS = {
     },
     "walk": {
         "path": "res/characters/player/walk.png",
-        "delay": 10
+        "delay": 7
     }
 }
 PLAYER_WIDTH = 8
