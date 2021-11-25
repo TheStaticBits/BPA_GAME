@@ -151,7 +151,7 @@ class ObjectBase:
     
 
     def test_grav_line(self):
-        if self.rect.y + (self.rect.height / 2) < (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]) / 2:
+        if self.rect.y + (self.rect.height / 2) < (constants.GRAV_BEAM_TILE_Y_POS * constants.TILE_SIZE[1]):
             self.gravityDir = 1 * constants.INVERSE_GRAVITY
             
         else:

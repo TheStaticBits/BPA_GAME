@@ -110,3 +110,5 @@ SPIKE_ROTATIONS = {
 GRAV_BEAM_PATH = "res/misc/grav_beam.png"
 GRAV_BEAM_DELAY = 2 # Delay between each frame of the beam
 GRAV_BEAM_WIDTH = 8 # Width of the beam
+
+GRAV_BEAM_TILE_Y_POS = SCREEN_TILE_SIZE[1] / 2

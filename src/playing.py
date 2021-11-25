@@ -122,7 +122,11 @@ class Playing(src.scene_base.SceneBase):
         #     (x, y): (animName, animationObject)
 
         for tilePos, anim in self.individualTileAnims.items():
-            anim[1].render(window, (tilePos[0] * constants.TILE_SIZE[0], tilePos[1] * constants.TILE_SIZE[1]))
+            frame = anim[1].get_frame()
+            
+            frame = pygame.transform.flip(frame, False, tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS) # Flipping the frame
+
+            window.blit(frame, (tilePos[0] * constants.TILE_SIZE[0], tilePos[1] * constants.TILE_SIZE[1]))
 
 
     # Sets up the player, given a position or using the level to find the starting position
@@ -389,7 +393,7 @@ class Playing(src.scene_base.SceneBase):
             self.gravityBeam.render(
                 window, 
                 (x * constants.GRAV_BEAM_WIDTH, 
-                (constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1] / 2) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
+                (constants.GRAV_BEAM_TILE_Y_POS * constants.TILE_SIZE[1]) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
             )
 
         # Drawing Ellipse
