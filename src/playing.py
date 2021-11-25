@@ -207,6 +207,7 @@ class Playing(src.scene_base.SceneBase):
             self.room = 0 # Resetting the room number
             self.setup_player() # Resetting the player
             self.tilesChanged = True # Rerendering the tiles
+            self.gravityDir = 1 # Resetting gravity
         
         # If the return result was of a tile
         # Play the "struck" animation for the tile
