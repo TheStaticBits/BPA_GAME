@@ -58,20 +58,20 @@ w          ww     www  w
 w          ww     wwwwww
 wwwwwwwwwwwww     wwwwww
 ------------------------
-w^><wv              wwww
-wwwww               wwww
-w      www          wwww
-w      www    ww    wwww
-w      www    ww    wwww
-wp     www    vv  wwwwww
-wwwww  wwwww      wwwwww
-wwwww  wwwww      wwwwww
-w      v          wwwwww
-w                 wwww  
-w                 www   
-w             wwwwww    
-w^^^^^^^^^^^           w
-wwwwwwwwwwww          ww
+w^><wwwww            www
+wwwwwwwww            www
+w     www            www
+w     www            www
+w     wwwww          www
+wp    wwwww  ww    wwwww
+wwww  wwwww  ww>  <wwwww
+wwww  wwwww  ww>  <wwwww
+w     v      ww>  <wwwww
+w            ww>  <ww   
+w            wwwwwwww   
+w                       
+w^^^^^^^^^^            w
+wwwwwwwwwww            w
 ||||||||||||||||||||||||
 v^><wwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
@@ -95,8 +95,8 @@ w   ^           wwwwwww
 wwwww           wwwwwww 
 wwwww     ^     v v v v 
 wwwww     w             
-wwwww     w             
-wwwww><>  www   ^ ^ ^ ^ 
+wwwww^^   w             
+wwwwwwww  www   ^ ^ ^ ^ 
       ww  vwv   wwwwwww 
       ww   w    wwwwwww 
            w    wwvvvww 
@@ -106,11 +106,11 @@ wwww       w    ww> <ww
 v^><wel        w    wwww
                w    wwww
                w        
-      ww^ww   ^w^       
-      wwvww   www       
-     www      v v   wwww
-     www            wwww
-  wwwwww          wwwwww
+      ww ww   ^w^       
+      ww^ww   www       
+     wwww     v v   wwww
+     wwww           wwww
+  wwwwwww         wwwwww
   wwwwwwww    ^ ^ wwwwww
   wwwwwwww    www wwwwww
   wwwwwwww    vwv wwwwww
@@ -133,18 +133,18 @@ dddddddddddd       ddddd
 dddddddddddd^^^^^^^ddddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-v^><wp                  
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+v^><ddddddd       dddddd
+dddddd    v          vdd
+            j ^       dd
+              dd      dd
+     j        dd      dd
+         dd   dddd    dd
+dd      ^dd   dddd    dd
+dd      ddd   dddd    dd
+dd      ddd   dd      dd
+dd      ddd   dd     ^dd
+dd      ddd   dd j ddddd
+dd      ddd   dd        
+dd^^^^^^ddd   dd        
+ddddddddddd   dd        
 ||||||||||||||||||||||||
