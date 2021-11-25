@@ -198,6 +198,6 @@ Would you like to report this crash?""",
         connection = ssl.create_default_context() # Creating a connection
 
         with smtplib.SMTP_SSL("smtp.gmail.com", context=connection) as s: # Connecting to the server
-            s.login("reporterofcrashes@gmail.com", "reportthosecrashes") # Logs in (yes the password is here)
+            s.login("reporterofcrashes@gmail.com", "reportthosecrashes")
 
             s.sendmail("reporterofcrashes@gmail.com", "reporterofcrashes@gmail.com", contents) # Sends the email
