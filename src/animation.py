@@ -35,8 +35,16 @@ class Animation:
     def render(self, window, position):
         window.blit(self.images[self.frame], position)
     
+    
+    def get_frame(self):
+        return self.images[self.frame]
+    
 
     def copy(self) -> "Animation":
         obj = Animation(self.delay)
         obj.images = self.images
         return obj
+    
+    def reset(self):
+        self.frame = 0
+        self.timer = 0

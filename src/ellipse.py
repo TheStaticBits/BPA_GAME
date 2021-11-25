@@ -23,6 +23,9 @@ class Ellipse(src.object_base.ObjectBase):
     
     def update(self, currentRoom, currentLevel, room):
         if currentRoom == self.room and currentLevel == self.level:
+            self.playingAnimation.update()
+            self.image = self.playingAnimation.get_frame()
+
             super().test_grav_line()
             super().update_gravity()
 
@@ -38,8 +41,6 @@ class Ellipse(src.object_base.ObjectBase):
 
             super().reset_current_tile()
             super().update_y_collision(room)
-
-            self.playingAnimation.update()
     
 
     def render(self, currentRoom, currentLevel, window):

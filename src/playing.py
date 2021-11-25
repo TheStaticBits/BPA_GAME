@@ -95,10 +95,10 @@ class Playing(src.scene_base.SceneBase):
         for tile, anims in constants.TILES_WITH_ANIMATIONS.items():
             self.tileAnims[tile] = {}
             
-            for animName, animPath in anims.items():
+            for animName, data in anims["animations"].items():
                 self.tileAnims[tile][animName] = src.animation.Animation(
-                    10,
-                    animPath, 
+                    data["delay"],
+                    data["path"], 
                     constants.TILE_SIZE[0] 
                 )
 
@@ -179,7 +179,7 @@ class Playing(src.scene_base.SceneBase):
                 self.setup_player()
             
             else:
-                self.player.rect.x -= constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1) # Moving the player to the complete other side of the room
+                self.player.rect.x -= (constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) - constants.PLAYER_WIDTH) # Moving the player to the complete other side of the room
 
             self.tilesChanged = True # This will make the renderer rerender the tiles in the render function
 
@@ -188,7 +188,7 @@ class Playing(src.scene_base.SceneBase):
             if self.room > 0: # If it isn't the start of a level
                 self.room -= 1
 
-                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0] - 1) # Moving the player to the opposite side of the screen
+                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) - constants.PLAYER_WIDTH # Moving the player to the opposite side of the screen
 
                 self.tilesChanged = True # Rerendering the tiles
 

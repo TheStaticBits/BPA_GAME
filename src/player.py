@@ -2,6 +2,7 @@ import pygame
 
 import src.constants as constants
 import src.object_base
+import src.animation
 
 class Player(src.object_base.ObjectBase):
     def __init__(
@@ -11,23 +12,54 @@ class Player(src.object_base.ObjectBase):
         ):
         super().__init__()
 
-        self.rect = pygame.Rect(startPos[0], startPos[1], 16, 16)
-
         self.yVelocity = velocity
 
         self.canJump = True
+
+        self.animations = {}
+        for name, data in constants.PLAYER_ANIMATIONS.items():
+            self.animations[name] = src.animation.Animation(
+                data["delay"],
+                data["path"],
+                constants.PLAYER_WIDTH
+            )
+        
+        self.currentAnim = "idle"
+
+        # Used for collisions and keeping track of position
+        self.rect = pygame.Rect(startPos[0], startPos[1], constants.PLAYER_WIDTH, constants.TILE_SIZE[1])
+
+        self.dirMoved = 0
+    
+
+    def switch_anim(self, newAnim):
+        if self.currentAnim != newAnim:
+            self.currentAnim = newAnim
+            self.animations[self.currentAnim].reset()
     
 
     def update(self, room, inputs) -> str:
+        self.animations[self.currentAnim].update()
+        self.image = self.animations[self.currentAnim].get_frame()
+
         super().test_grav_line()
         super().update_gravity()
 
         # This will result in a 0, a 1, or a -1. The inputs are True or False.
         # For example: If both are True, then it will result in 0, meaning no direction moved.
-        self.rect.x += (inputs["right"] - inputs["left"]) * constants.MOVEMENT_SPEED
+        self.dirMoved = inputs["right"] - inputs["left"]
+
+        self.rect.x += self.dirMoved * constants.MOVEMENT_SPEED
 
         super().reset_current_tile()
-        specialTiles = super().update_x_collision(room, inputs["right"] - inputs["left"])
+        specialTiles = super().update_x_collision(room, self.dirMoved)
+
+        if self.dirMoved != 0:
+            self.switch_anim("walk")
+
+        else:
+            self.switch_anim("idle")
+
         
         # Update velocity based on inputs
         if (self.gravityDir == 1 and self.collisions["down"]) or (self.gravityDir == -1 and self.collisions["up"]):
@@ -66,7 +98,7 @@ class Player(src.object_base.ObjectBase):
                 return "dead"
 
         if self.collisions["right"]:
-            if self.rect.x / constants.TILE_SIZE[0] == constants.SCREEN_TILE_SIZE[0] - 1:
+            if self.rect.x == constants.TILE_SIZE[0] * constants.SCREEN_TILE_SIZE[0] - constants.PLAYER_WIDTH:
                 return "right"
         
         elif self.collisions["left"]:
@@ -77,4 +109,8 @@ class Player(src.object_base.ObjectBase):
         
 
     def render(self, window):
-        pygame.draw.rect(window, (0, 0, 0), self.rect)
+        frame = self.animations[self.currentAnim].get_frame()
+
+        frame = pygame.transform.flip(frame, self.dirMoved == -1, self.gravityDir == -1)
+
+        window.blit(frame, (self.rect.x, self.rect.y))

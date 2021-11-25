@@ -76,7 +76,7 @@ class ObjectBase:
                 image.set_colorkey((255, 255, 255))
 
             objMask = pygame.mask.from_surface(image)
-            playerMask = pygame.mask.Mask((self.rect.width, self.rect.height), fill=True)
+            playerMask = pygame.mask.from_surface(self.image) # self.images REQUIRED FOR CHILD CLASSES
 
             collided = objMask.overlap(
                 playerMask, 

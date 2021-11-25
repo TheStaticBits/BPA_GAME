@@ -70,11 +70,32 @@ SPECIAL_TILES = (
 )
 TILES_WITH_ANIMATIONS = {
     "j": {
-        "default": "res/misc/jump_orb/idle.png",
-        "struck": "res/misc/jump_orb/struck.png",
-        "mask": "res/misc/jump_orb/mask.png" # Used for pixel perfect collision
+        "animations": {
+            "default": {
+                "path": "res/misc/jump_orb/idle.png",
+                "delay": 10
+            },
+            "struck": {
+                "path": "res/misc/jump_orb/struck.png",
+                "delay": 5
+            }
+        },
+
+        "mask": "res/misc/jump_orb/mask.png", # Used for pixel perfect collision
     }
 }
+
+PLAYER_ANIMATIONS = {
+    "idle": {
+        "path": "res/characters/player/idle.png",
+        "delay": 25
+    },
+    "walk": {
+        "path": "res/characters/player/walk.png",
+        "delay": 10
+    }
+}
+PLAYER_WIDTH = 8
 
 # Other tiles
 SPIKE_PATH = "res/misc/spike.png"
@@ -85,7 +106,7 @@ SPIKE_ROTATIONS = {
     ">": 270
 }
 
-# Gravity beam path
+# Gravity beam data
 GRAV_BEAM_PATH = "res/misc/grav_beam.png"
 GRAV_BEAM_DELAY = 2 # Delay between each frame of the beam
 GRAV_BEAM_WIDTH = 8 # Width of the beam
