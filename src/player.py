@@ -50,7 +50,7 @@ class Player(src.object_base.ObjectBase):
         super().update_y_pos()
         
         super().reset_current_tile()
-        
+
         result = super().update_y_collision(room)
         for tile in result:
             specialTiles.append(tile)
@@ -60,6 +60,9 @@ class Player(src.object_base.ObjectBase):
             if tile == "j":
                 if inputs["up"]:
                     self.yVelocity = constants.JUMP_FORCE * self.gravityDir
+            
+            elif tile in constants.SPIKE_ROTATIONS:
+                return "dead"
 
         if self.collisions["right"]:
             if self.rect.x / constants.TILE_SIZE[0] == constants.SCREEN_TILE_SIZE[0] - 1:
