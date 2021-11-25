@@ -129,8 +129,13 @@ class Playing(src.scene_base.SceneBase):
 
         for tilePos, anim in self.individualTileAnims.items():
             frame = anim[1].get_frame()
+
+            flip = tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS
             
-            frame = pygame.transform.flip(frame, False, tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS) # Flipping the frame
+            if self.gravityDir == -1:
+                flip = not flip
+            
+            frame = pygame.transform.flip(frame, False, flip) # Flipping the frame
 
             window.blit(frame, (tilePos[0] * constants.TILE_SIZE[0], tilePos[1] * constants.TILE_SIZE[1]))
 
