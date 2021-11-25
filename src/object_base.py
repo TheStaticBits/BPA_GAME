@@ -75,11 +75,11 @@ class ObjectBase:
                 image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
                 image.set_colorkey((255, 255, 255))
 
-            mask = pygame.mask.from_surface(image)
+            objMask = pygame.mask.from_surface(image)
             playerMask = pygame.mask.Mask((self.rect.width, self.rect.height), fill=True)
 
-            collided = playerMask.overlap(
-                mask, 
+            collided = objMask.overlap(
+                playerMask, 
                 (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], 
                 self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
             )
