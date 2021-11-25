@@ -39,7 +39,7 @@ class Loop(src.scene_base.SceneBase):
                 print("ERROR: Audio output device not found.")
                 self.logger.warning("Audio output device not found.")
         
-        except:
+        except Exception:
             err = traceback.format_exc()
             print(err)
             self.logger.critical("ERROR WHILE STARTING UP: ")
@@ -75,7 +75,7 @@ class Loop(src.scene_base.SceneBase):
 
             self.save_and_exit()
 
-        except:
+        except Exception:
             err = traceback.format_exc()
             print(err)
             self.logger.critical("ERROR WHILE PLAYING: ")
