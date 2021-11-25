@@ -157,8 +157,8 @@ ddddd>    dd j  dd j  dd
 ddddd>    dd   ^dd    dd
 ddddd>   <dd   ddd    dd
 ddddd>   <dd   ddd    dd
-ddddd    <dd   ddd    dd
-ddddd    <dd^^^ddd^^^^dd
+ddddd    <dd   ddd^^^^dd
+ddddd    <dd^^^ddddddddd
           dddddddddddddd
           dddddddddddddd
           dddddddddddddd
@@ -177,4 +177,34 @@ ddvv            vdv
 vv               d      
                  d      
                  d      
+------------------------
+v^><wddddddddddddddddddd
+ddddddddd               
+ddddddddd               
+d     <dd               
+d     <dd  j j j j  dddd
+dp    <dd           dddd
+ddd    dd           dddd
+ddd    dd  ^^^^^^^  dddd
+ddd    dd  ddddddd  dddd
+ddd    dd  ddddddd  v  d
+ddd        ddddddd     d
+ddd        ddddddd     d
+ddd        ddddddd     d
+ddd        ddddddddddddd
+||||||||||||||||||||||||
+v^><wp                  
+                        
+                        
+                        
+dd                      
+dd                      
+dd                      
+dd                      
+dd                      
+dd                      
+dd                      
+dd                      
+dd                      
+dd                      
 ||||||||||||||||||||||||
