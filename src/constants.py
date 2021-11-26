@@ -42,7 +42,7 @@ DEFAULT_SAVE = {
 # second value is the folder name of the tile
 TILE_KEYS = {
     "w": "default",
-    "c": "crystal",
+    "o": "crystal",
     "s": "star",
     "d": "dirt",
     "b": "blank",
@@ -58,7 +58,8 @@ TRANSPARENT_TILES = (
     "p", # Player start tile
     "^", "<", "v", ">", # Spikes
     "j", # Jump orb
-    "g"
+    "g",
+    "c"
 )
 
 # Tiles that have special actions
@@ -66,15 +67,17 @@ TRANSPARENT_TILES = (
 SPECIAL_TILES = (
     "^", "<", "v", ">", # Spikes
     "j", # Jump orb
-    "g" # Gravity orb
+    "g", # Gravity orb
+    "c"
 )
 
+# These tiles have animations
 TILES_WITH_ANIMATIONS = {
-    "j": {
+    "j": { # Jump orbs
         "animations": {
             "default": {
                 "path": "res/misc/jump_orb/idle.png",
-                "delay": 10
+                "delay": 10 # Delay between frames
             },
             "struck": {
                 "path": "res/misc/jump_orb/struck.png",
@@ -85,7 +88,7 @@ TILES_WITH_ANIMATIONS = {
         "mask": "res/misc/jump_orb/mask.png" # Used for pixel perfect collision
     },
 
-    "g": {
+    "g": { # Gravity orbs
         "animations": {
             "default": {
                 "path": "res/misc/gravity_orb/idle.png",
@@ -98,6 +101,21 @@ TILES_WITH_ANIMATIONS = {
         },
 
         "mask": "res/misc/gravity_orb/mask.png"
+    },
+
+    "c": { # Crystals
+        "animations": {
+            "default": {
+                "path": "res/misc/crystal/idle.png",
+                "delay": 5
+            },
+            "struck": {
+                "path": "res/misc/crystal/collected.png",
+                "delay": 10
+            }
+        },
+
+        "mask": "res/misc/crystal/mask.png"
     }
 }
 
