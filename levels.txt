@@ -18,8 +18,8 @@ w         ww       wwwww
 w         ww       wwwww
           ww       wwwww
     www   ww       wwwww
-    www   ww       wwwww
-wwwwwww   vv       wwwww
+    www   vv       wwwww
+wwwwwww            wwwww
 wwwwwww        ^^  wwwww
 wwwwwww        ww    www
 wwwwwww        ww    www
@@ -64,10 +64,10 @@ w     www           wwww
 w     www           wwww
 w     wwwww         wwww
 wp    wwwww  www   wwwww
-wwww  wwwww  ww>   <wwww
+wwww  wwwww  www   wwwww
 wwww  wwwww  ww>   <wwww
 w     v      ww>   <wwww
-w            ww> c <w   
+w            ww>   <w   
 w            wwwwwwww   
 w                       
 w^^^^^^^^^^            w
@@ -85,8 +85,8 @@ wwwww       ^^^^     www
             wwww        
             wwww        
           ^^wwww        
-ww       wwwwwww     www
-ww       wwwwwww     www
+ww        wwwwww     www
+ww        wwwwww     www
 ||||||||||||||||||||||||
 w               ww> <ww 
 w               ww> <ww 
@@ -199,8 +199,8 @@ dddddddddddddddddddd><^v
    ddv      dddddd      
 d  dd       dddddd      
 d       dd  vddddv  dddd
-dddd    dd   vddv   dddd
-dddd    dd    vv    dddd
+dddd    dd   vvvv   dddd
+dddd    dd          dddd
 dddd j  dd  j    j  dddd
 dddd    dd          dddd
 dddd    dd              
@@ -209,7 +209,7 @@ dddd    dd^        ^dddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
 v^><djgddd              
-    dddddd              
+      dddd              
       dd                
       vv            dddd
                     dddd
@@ -218,7 +218,7 @@ ddd^^     ddddd     dddd
 ddddd     ddddd     dddd
 ddddd     dd        dddd
 ddddd     dd    j   dddd
-    d     dd        dddd
+    d     dd      j dddd
   c d     dd        dddd
 d   d^^^^^dd        dddd
 dddddddddddd        dddd
@@ -268,33 +268,33 @@ dd  dd j dd   <ddd   ddd
     dd         ddd   ddd
     dd        <ddd   ddd
 ||||||||||||||||||||||||
-     p                  
-                        
-dd                      
+     pdd         dd   dd
+      dd         dd   dd
+dd    dd                
 dd                      
 dddd                    
-vddd^^^^                
-^ddddddd                
->ddddddd                
-<                       
-                        
-                        
-                        
-                        
-                        
+vddd       ^^   ddd   dd
+^ddddddd   dd   ddd   dd
+>ddddddd   dd   ddd   dd
+<ddd   v   vv   ddd   dd
+dddd            ddd   dd
+dddd   j        ddd   dd
+dddd                  dd
+dddd                  dd
+dddd                  dd
 ||||||||||||||||||||||||
-v^><wp                  
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+     p             ddddd
+                   ddddd
+                   ddddd
+  dd  dd  dd  dd   dd   
+  dd><dd><dd><dd   dd   
+dddd          vv   v    
+dd                      
+dd                    dd
+dddd          ^^   ^^^dd
+^ddddddddd  dddd   ddddd
+vddddddddd  dddd   ddddd
+>dvvvvvvvv         ddddd
+<d                 ddddd
+dd                 ddddd
 ||||||||||||||||||||||||
