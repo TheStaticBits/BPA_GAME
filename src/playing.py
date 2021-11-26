@@ -71,7 +71,7 @@ class Playing(src.scene_base.SceneBase):
         self.gravityDir = 1
 
         # EDITOR CONTROLS:
-        self.placeTile = "g" # Tile to be placed when you click
+        self.placeTile = "c" # Tile to be placed when you click
 
 
     def load_tiles(self):
@@ -217,10 +217,11 @@ class Playing(src.scene_base.SceneBase):
         # If the return result was of a tile
         # Play the "struck" animation for the tile
         elif playerState != "alive":
-            self.individualTileAnims[playerState[1]] = ("struck", self.tileAnims[playerState[0]]["struck"].copy())
+            if self.individualTileAnims[playerState[1]][0] != "struck":
+                self.individualTileAnims[playerState[1]] = ("struck", self.tileAnims[playerState[0]]["struck"].copy())
 
-            if playerState[0] == "g": # Gravity orb
-                self.gravityDir *= -1 # Changing the gravity direction
+                if playerState[0] == "g": # Gravity orb
+                    self.gravityDir *= -1 # Changing the gravity direction
         
         # Gravity beam animation update
         self.gravityBeam.update()
@@ -229,6 +230,7 @@ class Playing(src.scene_base.SceneBase):
         self.ellipse.update(self.room, self.level, self.levels[self.level][self.room], self.gravityDir)
 
         # Updating all individual tile's animations
+        removeTiles = [] # List of tiles to remove from the individualTileAnims dictionary
         for tilePos, i in self.individualTileAnims.items():
             tileAnimName, tileAnim = i
             
@@ -236,10 +238,20 @@ class Playing(src.scene_base.SceneBase):
             
             if not result: # If the animation finished playing
                 if tileAnimName != "default":
-                    self.individualTileAnims[tilePos] = (
-                        "default", 
-                        self.tileAnims[self.levels[self.level][self.room][tilePos[1]][tilePos[0]]]["default"].copy()
-                    )
+                    tile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]]
+
+                    if tile != "c":
+                        self.individualTileAnims[tilePos] = (
+                            "default", 
+                            self.tileAnims[self.levels[self.level][self.room][tilePos[1]][tilePos[0]]]["default"].copy()
+                        )
+                    
+                    else:
+                        self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
+                        removeTiles.append(tilePos)
+        
+        for tilePos in removeTiles:
+            del self.individualTileAnims[tilePos]
 
 
         """  Mouse Inputs for Editor  """
