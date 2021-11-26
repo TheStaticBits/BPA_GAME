@@ -221,7 +221,6 @@ class Playing(src.scene_base.SceneBase):
                 self.room = 0
                 self.level += 1
                 
-
                 # Resetting the player
                 self.setup_player()
             
