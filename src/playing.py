@@ -84,12 +84,11 @@ class Playing(src.scene_base.SceneBase):
         # It basically goes through and removes all crystals that have already been collected.
         for levelNum, collected in enumerate(self.crystals):
             if collected:
-                for level in self.levels[levelNum]:
-                    for room in level:
-                        for y, row in enumerate(room):
-                            for x, tile in enumerate(row):
-                                if tile == "c":
-                                    level[y][x] = " "
+                for roomNum, room in enumerate(self.levels[levelNum]):
+                    for y, row in enumerate(room):
+                        for x, tile in enumerate(row):
+                            if tile == "c":
+                                self.levels[levelNum][roomNum][y][x] = " "
 
 
     def load_tiles(self):
@@ -138,15 +137,16 @@ class Playing(src.scene_base.SceneBase):
 
                 if tile in constants.TILES_WITH_ANIMATIONS:
                     # If the tile has an animation
-                    self.individualTileAnims[(x, y)] = ("default", self.tileAnims[tile]["default"].copy())
+                    self.individualTileAnims[(x, y)] = {
+                        "tile": tile, 
+                        "animationName": "default", 
+                        "animationObject": self.tileAnims[tile]["default"].copy()
+                    }
 
 
     def render_tiles_with_anims(self, window):
-        # individualTileAnims is layed out like this:
-        #     (x, y): (animationName, animationObject)
-
         for tilePos, anim in self.individualTileAnims.items():
-            frame = anim[1].get_frame()
+            frame = anim["animationObject"].get_frame()
 
             flip = tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS
 
@@ -181,6 +181,7 @@ class Playing(src.scene_base.SceneBase):
                             x * constants.TILE_SIZE[0],
                             y * constants.TILE_SIZE[1]
                         )
+
         else: # If there was a position supplied
             playerStart = (playerX, playerY) # Setting the player's start to the given position
 
@@ -236,11 +237,17 @@ class Playing(src.scene_base.SceneBase):
         # If the return result was of a tile
         # Play the "struck" animation for the tile
         elif playerState != "alive":
-            if self.individualTileAnims[playerState[1]][0] != "struck":
-                self.individualTileAnims[playerState[1]] = ("struck", self.tileAnims[playerState[0]]["struck"].copy())
+            if self.individualTileAnims[playerState[1]]["animationName"] != "struck":
+                self.individualTileAnims[playerState[1]]["animationName"] = "struck"
+                self.individualTileAnims[playerState[1]]["animationObject"] = self.tileAnims[playerState[0]]["struck"].copy()
 
                 if playerState[0] == "g": # Gravity orb
                     self.gravityDir *= -1 # Changing the gravity direction
+                
+                elif playerState[0] == "c":
+                    self.levels[self.level][self.room][playerState[1][1]][playerState[1][0]] = " " # Removing the tile
+                    
+                    self.crystals[self.level] = 1
         
         # Gravity beam animation update
         self.gravityBeam.update()
@@ -250,26 +257,17 @@ class Playing(src.scene_base.SceneBase):
 
         # Updating all individual tile's animations
         removeTiles = [] # List of tiles to remove from the individualTileAnims dictionary
-        for tilePos, i in self.individualTileAnims.items():
-            tileAnimName, tileAnim = i
-            
-            result = tileAnim.update()
+        for tilePos, anim in self.individualTileAnims.items():
+            result = anim["animationObject"].update()
             
             if not result: # If the animation finished playing
-                if tileAnimName != "default":
-                    tile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]]
-
-                    if tile != "c":
-                        self.individualTileAnims[tilePos] = (
-                            "default", 
-                            self.tileAnims[self.levels[self.level][self.room][tilePos[1]][tilePos[0]]]["default"].copy()
-                        )
+                if anim["animationName"] != "default":
+                    if anim["tile"] != "c":
+                        self.individualTileAnims[tilePos]["animationObject"] = self.tileAnims[anim["animationName"]]["default"].copy()
+                        self.individualTileAnims[tilePos]["animationName"] = "default"
                     
                     else:
-                        self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
                         removeTiles.append(tilePos)
-
-                        self.crystals[self.level] = 1
         
         for tilePos in removeTiles:
             del self.individualTileAnims[tilePos]
