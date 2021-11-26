@@ -80,7 +80,7 @@ TILES_WITH_ANIMATIONS = {
             },
             "struck": {
                 "path": "res/misc/jump_orb/struck.png",
-                "delay": 5
+                "delay": 10
             }
         },
 
@@ -91,11 +91,11 @@ TILES_WITH_ANIMATIONS = {
         "animations": {
             "default": {
                 "path": "res/misc/gravity_orb/idle.png",
-                "delay": 10
+                "delay": 5
             },
             "struck": {
                 "path": "res/misc/gravity_orb/struck.png",
-                "delay": 5
+                "delay": 10
             }
         },
 
