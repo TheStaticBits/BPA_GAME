@@ -91,9 +91,11 @@ class Loop(src.scene_base.SceneBase):
         utility.modif_save({
             "playerX": self.playing.player.rect.x,
             "playerY": self.playing.player.rect.y,
-            "playerVelocity": self.playing.player.yVelocity,
+            "playerYVelocity": self.playing.player.yVelocity,
+            "playerXVelocity": self.playing.player.xVelocity,
             "level": self.playing.level,
             "room": self.playing.room,
+            "crystals": "".join([str(x) for x in self.playing.crystals])
         }) 
 
         self.logger.info("Exiting Pygame...")

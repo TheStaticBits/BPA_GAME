@@ -8,11 +8,13 @@ class Player(src.object_base.ObjectBase):
     def __init__(
         self, 
         startPos, 
-        velocity = 0
+        yVelocity = 0,
+        xVelocity = 0
         ):
         super().__init__()
 
-        self.yVelocity = velocity
+        self.yVelocity = yVelocity
+        self.xVelocity = xVelocity
 
         self.canJump = True
 
@@ -30,8 +32,6 @@ class Player(src.object_base.ObjectBase):
         self.rect = pygame.Rect(startPos[0], startPos[1], constants.PLAYER_WIDTH, constants.TILE_SIZE[1])
 
         self.dirMoved = 0
-
-        self.xVelocity = 0
     
 
     def switch_anim(self, newAnim):

@@ -115,7 +115,7 @@ def create_default_database():
 
     # Creates a table in the database
     # Var is the name of the item being stored
-    c.execute("CREATE TABLE data (var TEXT, value REAL)")
+    c.execute("CREATE TABLE data (var TEXT, value TEXT)")
 
     # Sets up the default table with the default save
     for key, value in constants.DEFAULT_SAVE.items():
