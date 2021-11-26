@@ -263,7 +263,7 @@ class Playing(src.scene_base.SceneBase):
             if not result: # If the animation finished playing
                 if anim["animationName"] != "default":
                     if anim["tile"] != "c":
-                        self.individualTileAnims[tilePos]["animationObject"] = self.tileAnims[anim["animationName"]]["default"].copy()
+                        self.individualTileAnims[tilePos]["animationObject"] = self.tileAnims[anim["tile"]]["default"].copy()
                         self.individualTileAnims[tilePos]["animationName"] = "default"
                     
                     else:
