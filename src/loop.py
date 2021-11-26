@@ -19,6 +19,7 @@ class Loop(src.scene_base.SceneBase):
 
         self.scene = "playing"
         self.framerate = 0
+        self.error = False
 
         try:
             self.window = src.window.Window()
@@ -47,6 +48,8 @@ class Loop(src.scene_base.SceneBase):
 
             utility.error_box(err)
 
+            self.error = True
+
 
     def run_framerate(self):
         while True:
@@ -56,32 +59,33 @@ class Loop(src.scene_base.SceneBase):
 
 
     def run_game(self):
-        # Starting FPS counter
-        framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
-        framerate.start()
+        if not self.error:
+            # Starting FPS counter
+            framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
+            framerate.start()
 
-        try:
-            while not self.window.closeWindow:
-                # Clearing the events.log file
-                with open(constants.EVENT_LOG_PATH, "w"):
-                    pass
+            try:
+                while not self.window.closeWindow:
+                    # Clearing the events.log file
+                    with open(constants.EVENT_LOG_PATH, "w"):
+                        pass
 
-                self.window.flip()
+                    self.window.flip()
 
-                self.framerate += 1
+                    self.framerate += 1
 
-                self.update()
-                self.render()
+                    self.update()
+                    self.render()
 
-            self.save_and_exit()
+                self.save_and_exit()
 
-        except Exception:
-            err = traceback.format_exc()
-            print(err)
-            self.logger.critical("ERROR WHILE PLAYING: ")
-            self.logger.critical(err)
+            except Exception:
+                err = traceback.format_exc()
+                print(err)
+                self.logger.critical("ERROR WHILE PLAYING: ")
+                self.logger.critical(err)
 
-            utility.error_box(err)
+                utility.error_box(err)
     
     
     def save_and_exit(self):
