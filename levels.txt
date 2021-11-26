@@ -32,15 +32,15 @@ v^><wwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwww   
 wwwwwwwwwwwwwwwwwwwww   
 wwwwwwwwwwwwwwwwwwwww   
-www             wwwww  w
-www             wwwww  w
-www             wwwww  w
-www             wwwww  w
-www  ^^    ^^   wwwww  w
-www  ww    ww          w
-     ww    ww          w
-     ww    ww          w
-     ww^^^^ww^^        w
+www              wwww  w
+www              wwww  w
+www              wwww  w
+www              wwww  w
+www   ^^    ^^   wwww  w
+www   ww    ww         w
+      ww    ww         w
+      ww    ww         w
+      ww^^^^ww^        w
 wwwwwwwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
 v^><wwwwwwwwwwwwwwwwwwww
@@ -241,36 +241,36 @@ dddd     dd      ddd
 d   jg              dddd
 d                   dddd
 d                   dddd
-dp      ^   ^   ^   dddd
-dddd  j d   d   dddddddd
+dp    j ^   ^   ^   dddd
+dddd    d   d   dddddddd
 dddd    d   d   dddddddd
 dddd^^^^d   d   dddddddd
 <dddddddd   d   dddddddd
 >dddddvvv   d   dddddddd
 ^ddddd      d   dddddddd
 v           d   v       
-d c         d           
+d           d           
 d           d           
 ddddddddd   d           
 ||||||||||||||||||||||||
-v^><wp                  
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+v^><wp   dd    ddd      
+dd       dd    ddd      
+dd       dd    ddd   ddd
+dddddd   dd    ddd j ddd
+dddddd   dd    ddd   ddd
+dd       dd        j ddd
+dd       dd          ddd
+dd  dd   dd     dd   ddd
+dd  dd   dd     dd   ddd
+dd  dd j dd   <ddd   ddd
+    dd         ddd   ddd
+    dd        <ddd   ddd
+    dd         ddd   ddd
+    dd        <ddd   ddd
 ||||||||||||||||||||||||
 v^><wp                  
                         
-                        
+d                       
                         
                         
                         
