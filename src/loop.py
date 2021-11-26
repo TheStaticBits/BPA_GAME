@@ -19,6 +19,7 @@ class Loop(src.scene_base.SceneBase):
 
         self.scene = "playing"
         self.framerate = 0
+        self.error = False
 
         try:
             self.window = src.window.Window()
