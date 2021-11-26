@@ -107,7 +107,7 @@ TILES_WITH_ANIMATIONS = {
         "animations": {
             "default": {
                 "path": "res/misc/crystal/idle.png",
-                "delay": 5
+                "delay": 8
             },
             "struck": {
                 "path": "res/misc/crystal/collected.png",
