@@ -53,21 +53,21 @@ wwwwwwwww  ww       ^  w
 wwwwwwwww  ww     www   
 wvvvwww    ww  wwwwww   
 w   www    ww  wwwwww   
-w          ww  v  www  w
+w          ww  v cwww  w
 w          ww     www  w
 w          ww     wwwwww
 wwwwwwwwwwwww     wwwwww
 ------------------------
-w^><wwwww            www
-wwwwwwwww            www
-w     www            www
-w     www            www
-w     wwwww          www
-wp    wwwww  ww    wwwww
-wwww  wwwww  ww>  <wwwww
-wwww  wwwww  ww>  <wwwww
-w     v      ww>  <wwwww
-w            ww>  <ww   
+w^><wwwww           wwww
+wwwwwwwww           wwww
+w     www           wwww
+w     www           wwww
+w     wwwww         wwww
+wp    wwwww  www   wwwww
+wwww  wwwww  ww>   <wwww
+wwww  wwwww  ww>   <wwww
+w     v      ww>   <wwww
+w            ww> c <w   
 w            wwwwwwww   
 w                       
 w^^^^^^^^^^            w
@@ -137,7 +137,7 @@ v^><ddddddd       dddddd
 dddddd    v         vddd
             j ^      d  
               dd     d  
-     j        dd     d  
+     j        dd     dc 
          dd   dddd   ddd
 dd       dd   dddd   ddd
 dd      ^dd   dddd   ddd
@@ -208,33 +208,33 @@ dddd    dd
 dddd    dd^        ^dddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-v^><djg                 
+v^><djgddd              
+    dddddd              
       dd                
-      dd                
-      vv                
-                        
-ddd                     
-ddd^^                   
-ddddd                   
-ddddd                   
-ddddd                   
-    d                   
-    d                   
-d   d                   
-ddddd                   
+      vv            dddd
+                    dddd
+ddd       ^   ^     dddd
+ddd^^     ddddd     dddd
+ddddd     ddddd     dddd
+ddddd     dd        dddd
+ddddd     dd    j   dddd
+    d     dd        dddd
+  c d     dd        dddd
+d   d^^^^^dd        dddd
+dddddddddddd        dddd
 ||||||||||||||||||||||||
-v^><djg                 
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+v^><dd       dd   g   dd
+    dd       dd       dd
+    dd   dd  dd       dd
+dd  dd   dd  dd   j   dd
+dd     j dd  dd       dd
+dddd     dd  dd       dd
+dddd     dd  vv  ^^^  dd
+dddd     dd      ddd  dd
+dddd     dd      ddd  dd
+dddd     dd      ddd    
+dddd     dd      ddd    
+dddd   j dd      ddd    
+dddd     dd      ddd    
+dddd     dd      ddd    
 ||||||||||||||||||||||||
