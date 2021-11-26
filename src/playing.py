@@ -25,6 +25,8 @@ class Playing(src.scene_base.SceneBase):
 
         self.crystals = [int(x) for x in list(saveData["crystals"])] # Converting the saved string to a list of ints
 
+        self.currentCrystal = False # If the crystal in the current level has been collected
+
         self.remove_collected_crystals() # Removing crystals that are already collected from the levels
 
         # Loads the tile images from the list in constants.py
@@ -158,6 +160,10 @@ class Playing(src.scene_base.SceneBase):
             window.blit(frame, (tilePos[0] * constants.TILE_SIZE[0], tilePos[1] * constants.TILE_SIZE[1]))
 
 
+    def reset_crystal_in_level(self):
+        self.levels[self.level] = utility.load_levels()[self.level]
+
+
     # Sets up the player, given a position or using the level to find the starting position
     def setup_player(
         self, 
@@ -207,9 +213,14 @@ class Playing(src.scene_base.SceneBase):
             
             # If the room number has hit the end of the level
             if self.room >= len(self.levels[self.level]):
+                if self.currentCrystal:
+                    self.crystals[self.level] = 1
+                    self.currentCrystal = False
+                
                 # Resetting the room number and incrementing the level number
                 self.room = 0
                 self.level += 1
+                
                 # Resetting the player
                 self.setup_player()
             
@@ -233,6 +244,11 @@ class Playing(src.scene_base.SceneBase):
             self.setup_player() # Resetting the player
             self.tilesChanged = True # Rerendering the tiles
             self.gravityDir = 1 # Resetting gravity
+
+            # Resetting crystal
+            if self.currentCrystal:
+                self.reset_crystal_in_level()
+                self.currentCrystal = False
         
         # If the return result was of a tile
         # Play the "struck" animation for the tile
@@ -246,8 +262,9 @@ class Playing(src.scene_base.SceneBase):
                 
                 elif playerState[0] == "c":
                     self.levels[self.level][self.room][playerState[1][1]][playerState[1][0]] = " " # Removing the tile
-                    
-                    self.crystals[self.level] = 1
+
+                    if not self.crystals[self.level]:
+                        self.currentCrystal = True
         
         # Gravity beam animation update
         self.gravityBeam.update()
