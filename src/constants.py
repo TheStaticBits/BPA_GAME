@@ -32,9 +32,11 @@ SPEED_UP_SPEED = 0.3 # How quickly the player accelerates/decelerates
 DEFAULT_SAVE = {
     "playerX": -1,
     "playerY": -1,
-    "playerVelocity": 0,
+    "playerYVelocity": 0,
+    "playerXVelocity": 0,
     "level": 0,
     "room": 0,
+    "crystals": "00000000000000000"
 }
 
 # Solid Tiles

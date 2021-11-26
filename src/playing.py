@@ -19,18 +19,23 @@ class Playing(src.scene_base.SceneBase):
         # Loading levels from levels.txt
         self.levels = utility.load_levels()
 
-        # Setting level and room based off of save data from save.db
+        # Setting data based off of save data from save.db
         self.level = int(saveData["level"])
         self.room = int(saveData["room"])
+
+        self.crystals = [int(x) for x in list(saveData["crystals"])] # Converting the saved string to a list of ints
+
+        self.remove_collected_crystals() # Removing crystals that are already collected from the levels
 
         # Loads the tile images from the list in constants.py
         self.load_tiles()
 
         # Setting up the player based on the save data
         self.setup_player(
-            saveData["playerX"], 
-            saveData["playerY"],
-            saveData["playerVelocity"]
+            float(saveData["playerX"]), 
+            float(saveData["playerY"]),
+            float(saveData["playerYVelocity"]),
+            float(saveData["playerXVelocity"]),
         )
 
         self.ellipse = src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level)
@@ -72,6 +77,19 @@ class Playing(src.scene_base.SceneBase):
 
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
+
+
+    def remove_collected_crystals(self):
+        # This is just an amazing tower of for and if statements.
+        # It basically goes through and removes all crystals that have already been collected.
+        for levelNum, collected in enumerate(self.crystals):
+            if collected:
+                for level in self.levels[levelNum]:
+                    for room in level:
+                        for y, row in enumerate(room):
+                            for x, tile in enumerate(row):
+                                if tile == "c":
+                                    level[y][x] = " "
 
 
     def load_tiles(self):
@@ -145,7 +163,8 @@ class Playing(src.scene_base.SceneBase):
         self, 
         playerX = -1, 
         playerY = -1,
-        velocity = 0
+        yVelocity = 0,
+        xVelocity = 0
         ):
 
         # If there was no data passed in, set the position to the tile "p" in the level
@@ -165,7 +184,7 @@ class Playing(src.scene_base.SceneBase):
         else: # If there was a position supplied
             playerStart = (playerX, playerY) # Setting the player's start to the given position
 
-        self.player = src.player.Player(playerStart, velocity) # Creating the player object based on the position found/given
+        self.player = src.player.Player(playerStart, yVelocity, xVelocity) # Creating the player object based on the position found/given
 
 
     def update(
@@ -249,6 +268,8 @@ class Playing(src.scene_base.SceneBase):
                     else:
                         self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
                         removeTiles.append(tilePos)
+
+                        self.crystals[self.level] = 1
         
         for tilePos in removeTiles:
             del self.individualTileAnims[tilePos]
