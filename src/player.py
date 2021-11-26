@@ -30,6 +30,8 @@ class Player(src.object_base.ObjectBase):
         self.rect = pygame.Rect(startPos[0], startPos[1], constants.PLAYER_WIDTH, constants.TILE_SIZE[1])
 
         self.dirMoved = 0
+
+        self.xVelocity = 0
     
 
     def switch_anim(self, newAnim):
@@ -55,10 +57,33 @@ class Player(src.object_base.ObjectBase):
         # For example: If both are True, then it will result in 0, meaning no direction moved.
         self.dirMoved = inputs["right"] - inputs["left"]
 
-        self.rect.x += self.dirMoved * constants.MOVEMENT_SPEED
+        # If the player moved
+        if self.dirMoved != 0:
+            self.xVelocity += self.dirMoved * constants.SPEED_UP_SPEED
+
+            # Clamping the xVelocity to the max speed in both directions (negative and positive)
+            self.xVelocity = max(self.xVelocity, -constants.MAX_SPEED)
+            self.xVelocity = min(self.xVelocity, constants.MAX_SPEED)
+
+            if self.collisions["left"] or self.collisions["right"]: # If the player hit a wall, left or right
+                self.xVelocity = 0
+
+        else: # If the player did not move
+            if round(self.xVelocity) != 0:
+                # Moves the xVelocity towards 0
+                self.xVelocity += (self.xVelocity < 0) * constants.SPEED_UP_SPEED + (self.xVelocity > 0) * -constants.SPEED_UP_SPEED
+
+            else:
+                self.xVelocity = 0
+        
+        # Applying the xVelocity to the player's position
+        self.rect.x += round(self.xVelocity)
 
         super().reset_current_tile()
-        specialTiles = super().update_x_collision(room, self.dirMoved)
+        specialTiles = super().update_x_collision(
+            room, 
+            1 if self.xVelocity > 0 else (0 if self.xVelocity == 0 else -1)
+        )
 
         if self.dirMoved != 0:
             self.switch_anim("walk")

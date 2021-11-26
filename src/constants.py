@@ -25,7 +25,8 @@ UP_KEYS = (pygame.K_UP, pygame.K_w)
 # Player constants
 JUMP_FORCE = 3.6 # Upward force
 GRAVITY = 0.2 # Downward force
-MOVEMENT_SPEED = 2
+MAX_SPEED = 2 # Maximum left/right speed
+SPEED_UP_SPEED = 0.2 # Speed up speed
 
 # temporary, 1 is the default, -1 means it inverses.
 INVERSE_GRAVITY = 1
