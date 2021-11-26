@@ -78,46 +78,46 @@ TILES_WITH_ANIMATIONS = {
     "j": { # Jump orbs
         "animations": {
             "default": {
-                "path": "res/misc/jump_orb/idle.png",
+                "path": "res/tiles/animated/jump_orb/idle.png",
                 "delay": 10 # Delay between frames
             },
             "struck": {
-                "path": "res/misc/jump_orb/struck.png",
+                "path": "res/tiles/animated/jump_orb/struck.png",
                 "delay": 10
             }
         },
 
-        "mask": "res/misc/jump_orb/mask.png" # Used for pixel perfect collision
+        "mask": "res/tiles/animated/jump_orb/mask.png" # Used for pixel perfect collision
     },
 
     "g": { # Gravity orbs
         "animations": {
             "default": {
-                "path": "res/misc/gravity_orb/idle.png",
+                "path": "res/tiles/animated/gravity_orb/idle.png",
                 "delay": 5
             },
             "struck": {
-                "path": "res/misc/gravity_orb/struck.png",
+                "path": "res/tiles/animated/gravity_orb/struck.png",
                 "delay": 10
             }
         },
 
-        "mask": "res/misc/gravity_orb/mask.png"
+        "mask": "res/tiles/animated/gravity_orb/mask.png"
     },
 
     "c": { # Crystals
         "animations": {
             "default": {
-                "path": "res/misc/crystal/idle.png",
+                "path": "res/tiles/animated/crystal/idle.png",
                 "delay": 8
             },
             "struck": {
-                "path": "res/misc/crystal/collected.png",
+                "path": "res/tiles/animated/crystal/collected.png",
                 "delay": 10
             }
         },
 
-        "mask": "res/misc/crystal/mask.png"
+        "mask": "res/tiles/animated/crystal/mask.png"
     }
 }
 

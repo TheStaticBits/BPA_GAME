@@ -81,18 +81,6 @@ class Playing(src.scene_base.SceneBase):
         self.placeTile = "c" # Tile to be placed when you click
 
 
-    def remove_collected_crystals(self):
-        # This is just an amazing tower of for and if statements.
-        # It basically goes through and removes all crystals that have already been collected.
-        for levelNum, collected in enumerate(self.crystals):
-            if collected:
-                for roomNum, room in enumerate(self.levels[levelNum]):
-                    for y, row in enumerate(room):
-                        for x, tile in enumerate(row):
-                            if tile == "c":
-                                self.levels[levelNum][roomNum][y][x] = " "
-
-
     def load_tiles(self):
         # Creating a dictionary
         # Keys are the letter used to represent the tile
@@ -101,9 +89,9 @@ class Playing(src.scene_base.SceneBase):
         for tileKey in constants.TILE_KEYS:
             # Setting the key to another dictionary with the individual parts of the tile image
             self.tileKey[tileKey] = {
-                "tile": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/tile.png").convert_alpha(),
-                "corner": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/corner.png").convert_alpha(),
-                "edge": pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/edge.png").convert_alpha(),
+                "tile": pygame.image.load(f"res/tiles/solid/{constants.TILE_KEYS[tileKey]}/tile.png").convert_alpha(),
+                "corner": pygame.image.load(f"res/tiles/solid/{constants.TILE_KEYS[tileKey]}/corner.png").convert_alpha(),
+                "edge": pygame.image.load(f"res/tiles/solid/{constants.TILE_KEYS[tileKey]}/edge.png").convert_alpha(),
             }
 
             if os.path.isfile(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png"): # If there is an inverse_corner image for the tile
@@ -158,6 +146,18 @@ class Playing(src.scene_base.SceneBase):
             frame = pygame.transform.flip(frame, False, flip) # Flipping the frame
 
             window.blit(frame, (tilePos[0] * constants.TILE_SIZE[0], tilePos[1] * constants.TILE_SIZE[1]))
+
+
+    def remove_collected_crystals(self):
+        # This is just an amazing tower of for and if statements.
+        # It basically goes through and removes all crystals that have already been collected.
+        for levelNum, collected in enumerate(self.crystals):
+            if collected:
+                for roomNum, room in enumerate(self.levels[levelNum]):
+                    for y, row in enumerate(room):
+                        for x, tile in enumerate(row):
+                            if tile == "c":
+                                self.levels[levelNum][roomNum][y][x] = " "
 
 
     def reset_crystal_in_level(self):
