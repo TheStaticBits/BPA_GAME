@@ -26,7 +26,7 @@ UP_KEYS = (pygame.K_UP, pygame.K_w)
 JUMP_FORCE = 3.6 # Upward force
 GRAVITY = 0.2 # Downward force
 MAX_SPEED = 2 # Maximum left/right speed
-SPEED_UP_SPEED = 0.2 # How quickly the player accelerates/decelerates
+SPEED_UP_SPEED = 0.3 # How quickly the player accelerates/decelerates
 
 # Default save (for the database)
 DEFAULT_SAVE = {
