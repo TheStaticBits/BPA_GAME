@@ -28,9 +28,6 @@ GRAVITY = 0.2 # Downward force
 MAX_SPEED = 2 # Maximum left/right speed
 SPEED_UP_SPEED = 0.2 # How quickly the player accelerates/decelerates
 
-# temporary, 1 is the default, -1 means it inverses.
-INVERSE_GRAVITY = 1
-
 # Default save (for the database)
 DEFAULT_SAVE = {
     "playerX": -1,
