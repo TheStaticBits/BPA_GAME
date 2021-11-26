@@ -237,4 +237,64 @@ dddd     dd      ddd
 dddd   j dd      ddd    
 dddd     dd      ddd    
 dddd     dd      ddd    
+------------------------
+d   jg              dddd
+d                   dddd
+d                   dddd
+dp      ^   ^   ^   dddd
+dddd  j d   d   dddddddd
+dddd    d   d   dddddddd
+dddd^^^^d   d   dddddddd
+<dddddddd   d   dddddddd
+>dddddvvv   d   dddddddd
+^ddddd      d   dddddddd
+v           d   v       
+d c         d           
+d           d           
+ddddddddd   d           
+||||||||||||||||||||||||
+v^><wp                  
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><wp                  
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><wp                  
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 ||||||||||||||||||||||||
