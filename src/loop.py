@@ -9,6 +9,7 @@ import src.playing
 import src.utility as utility
 import src.scene_base
 import src.constants as constants
+import src.tile_renderer
 
 # Initializing Pygame
 pygame.init()
@@ -25,7 +26,10 @@ class Loop(src.scene_base.SceneBase):
             self.window = src.window.Window()
 
             save = utility.load_save()
-            self.playing = src.playing.Playing(save)
+
+            self.tileRenderer = src.tile_renderer.TileRenderer()
+
+            self.playing = src.playing.Playing(save, self.tileRenderer)
             
             try:
                 # Setting up music
