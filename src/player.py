@@ -35,12 +35,16 @@ class Player(src.object_base.ObjectBase):
         self, 
         room, # List of tiles in the current room
         inputs, # Input dictionary
-        globalGravity # The gravity of the world
+        globalGravity = None, # The gravity of the world
         ) -> str:
 
         super().update_animation()
 
-        super().test_grav_line(globalGravity)
+        if not (globalGravity is None):
+            super().test_grav_line(globalGravity)
+        else:
+            self.gravityDir = 1 # Setting it to normal gravity
+        
         super().update_gravity()
 
         # This will result in a 0, a 1, or a -1. The inputs are True or False.

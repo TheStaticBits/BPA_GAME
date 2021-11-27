@@ -129,7 +129,7 @@ class Loop(src.scene_base.SceneBase):
                 self.scene = "cutscene"
         
         if self.scene == "cutscene":
-            result = self.cutscene.update()
+            result = self.cutscene.update(self.window.inputs)
             if result == False:
                 self.scene = "playing"
                 self.playing.reload_tiles()

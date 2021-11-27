@@ -3,22 +3,27 @@
         "beforeLevel": 0,
         "cutsceneLevel": 0,
         "start": {
-            "player": [0, 0],
+            "player": [16, 16],
             "ellipse": [0, 0]
         },
 
         "time_commands": {
-            "20": ["player", "walk", "right"],
-            "30": ["ellipse", "teleport", [16, 100]],
-            "50": ["ellipse", "walk", "right"],
-            "70": ["run", "testPX"],
-            "100": ["end"]
+            "20": [["player", "walk", "right"]],
+            "30": [["ellipse", "teleport", [16, 100]]],
+            "50": [["ellipse", "walk", "right"]],
+            "70": [["run", "testPX"]],
+            "90": [
+                ["player", "walk", "still"],
+                ["player", "controlled"]
+            ],
+            "200": [["player", "noncontrolled"]],
+            "300": [["end"]]
         },
         "conditionals": {
             "testPX": ["player", "x", "> 50"]
         },
         "cond_commands":{
-            "testPX": ["ellipse", "walk", "right"]
+            "testPX": [["ellipse", "walk", "right"]]
         }
     }
 }

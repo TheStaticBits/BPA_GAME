@@ -44,6 +44,8 @@ class Cutscenes(src.scene_base.SceneBase):
             constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]
         ))
 
+        self.playerControlled = False
+
         self.tileRenderer.draw_tiles(self.level[self.room], self.tiles)
         self.tileRenderer.setup_room_tile_anims(self.level[self.room])
 
@@ -53,22 +55,30 @@ class Cutscenes(src.scene_base.SceneBase):
         self.activeConditionals = []
 
     
-    def interpret_command(self, command):
+    def interpret_commands(self, commands):
         # Interprets a command in the form of [character, command, argument]
         # For example, ["ellipse", "walk", "right"]
-        if command[0] in self.objects:
-            if command[1] == "walk":
-                self.objects[command[0]]["movement"] = command[2]
+        for command in commands:
+            if command[0] in self.objects:
+                if command[1] == "walk":
+                    self.objects[command[0]]["movement"] = command[2]
 
-            elif command[1] == "teleport":
-                self.objects[command[0]]["obj"].rect.x = command[2][0]
-                self.objects[command[0]]["obj"].rect.y = command[2][1]
-        
-        elif command[0] == "run": # Runs a conditional
-            self.runningConditionals.append(command[1])
-        
-        elif command[0] == "end":
-            return "end"
+                elif command[1] == "teleport":
+                    self.objects[command[0]]["obj"].rect.x = command[2][0]
+                    self.objects[command[0]]["obj"].rect.y = command[2][1]
+                
+                elif command[1] == "controlled":
+                    self.playerControlled = True
+                
+                elif command[1] == "noncontrolled":
+                    self.playerControlled = False
+
+            
+            elif command[0] == "run": # Runs a conditional
+                self.runningConditionals.append(command[1])
+            
+            elif command[0] == "end":
+                return "end"
 
 
     def run_conditional(self, condName, conditional):
@@ -85,15 +95,15 @@ class Cutscenes(src.scene_base.SceneBase):
             self.activeConditionals.append(condName)
 
 
-    def update(self):
+    def update(self, inputs):
         super().update()
 
         self.timer += 1
 
         # Interpretting and running timed commands
-        for time, command in self.cutsceneData["time_commands"].items():
+        for time, commands in self.cutsceneData["time_commands"].items():
             if self.timer == int(time):
-                result = self.interpret_command(command)
+                result = self.interpret_commands(commands)
                 if result == "end":
                     return False
         
@@ -102,10 +112,10 @@ class Cutscenes(src.scene_base.SceneBase):
             self.run_conditional(condName, self.cutsceneData["conditionals"][condName])
         
         # Checking and running commands that are dependent on conditionals
-        for conditional, command in self.cutsceneData["cond_commands"].items():
+        for conditional, commands in self.cutsceneData["cond_commands"].items():
             if conditional in self.activeConditionals:
                 self.activeConditionals.remove(conditional)
-                result = self.interpret_command(command)
+                result = self.interpret_commands(commands)
                 if result == "end":
                     return False
         
@@ -113,6 +123,10 @@ class Cutscenes(src.scene_base.SceneBase):
         for obj in self.objects:
             object = self.objects[obj]["obj"]
             movement = self.objects[obj]["movement"]
+
+            if obj == "player":
+                if self.playerControlled:
+                    object.update(self.level[self.room], inputs)
 
             if movement != "still":
                 object.switch_anim("walk")
