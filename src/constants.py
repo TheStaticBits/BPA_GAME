@@ -3,6 +3,8 @@ import pygame
 SAVE_PATH = "saves/save.db" # The save file's path
 EVENT_LOG_PATH = "saves/events.log" # The event log's path
 
+LEVELS_PATH = "data/levels.txt"
+
 FONT_PATH = "res/font/pixelated/pixelated.ttf" # The font's path
 
 CAP_FPS = True # True/False to cap FPS

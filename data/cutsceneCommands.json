@@ -1,0 +1,13 @@
+{
+    "start": {
+        "beforeLevel": 0,
+        "cutsceneLevel": 0,
+        "playerStart": [0, 0],
+        "commands": [
+            {
+                "ellipseMove": "right",
+                "time": 2.5
+            }
+        ]
+    }
+}

@@ -21,7 +21,7 @@ def get_file(filePath) -> str:
 
 # Loads the levels from the levels.txt file
 def load_levels() -> list:
-    file = get_file("levels.txt")
+    file = get_file(constants.LEVEL_PATH)
 
     # Splits the string into a list of levels
     levels = file.split(constants.LEVEL_SEPARATOR)
@@ -50,7 +50,7 @@ def save_room(
     ):
     levels = load_levels()
     
-    with open("levels.txt", "w") as file:
+    with open(constants.LEVEL_PATH, "w") as file:
         # Iterating through the levels
         for levelNumber, level in enumerate(levels):
             if levelNumber != 0: # If the level is not the first level
