@@ -247,7 +247,7 @@ class Playing(src.scene_base.SceneBase):
         super().render()
 
         if self.tilesChanged: # If the tiles have changed, rerender them
-            self.restart_tiles()
+            self.reload_tiles()
 
             self.tilesChanged = False
         
