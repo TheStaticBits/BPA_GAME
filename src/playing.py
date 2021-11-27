@@ -37,6 +37,7 @@ class Playing(src.scene_base.SceneBase):
             float(saveData["playerY"]),
             float(saveData["playerYVelocity"]),
             float(saveData["playerXVelocity"]),
+            True
         )
 
         self.ellipse = src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level)
@@ -74,11 +75,16 @@ class Playing(src.scene_base.SceneBase):
         # It basically goes through and removes all crystals that have already been collected.
         for levelNum, collected in enumerate(self.crystals):
             if collected:
+                done = False
                 for roomNum, room in enumerate(self.levels[levelNum]):
                     for y, row in enumerate(room):
                         for x, tile in enumerate(row):
                             if tile == "c":
                                 self.levels[levelNum][roomNum][y][x] = " "
+                                done = True
+                                break
+                        if done: break
+                    if done: break
 
 
     def reset_crystal_in_level(self):
@@ -91,7 +97,8 @@ class Playing(src.scene_base.SceneBase):
         playerX = -1, 
         playerY = -1,
         yVelocity = 0,
-        xVelocity = 0
+        xVelocity = 0,
+        new = False
         ):
 
         # If there was no data passed in, set the position to the tile "p" in the level
@@ -112,7 +119,11 @@ class Playing(src.scene_base.SceneBase):
         else: # If there was a position supplied
             playerStart = (playerX, playerY) # Setting the player's start to the given position
 
-        self.player = src.player.Player(playerStart, yVelocity, xVelocity) # Creating the player object based on the position found/given
+        if new:
+            self.player = src.player.Player(playerStart, yVelocity, xVelocity) # Creating the player object based on the position found/given
+        
+        else:
+            self.player.reset(playerStart, yVelocity, xVelocity) # Resetting the player's position and velocity
 
 
     def update(

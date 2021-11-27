@@ -65,8 +65,7 @@ class ObjectBase:
         elif not offscreen and room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
             tile = room[tilePos[1]][tilePos[0]]
 
-            if not tile in self.cachedMasks:
-
+            if not (tile in self.cachedMasks):
                 if tile in constants.SPIKE_ROTATIONS: # If it's a spike
                     image = pygame.transform.rotate(
                         pygame.image.load(constants.SPIKE_PATH).convert_alpha(), 

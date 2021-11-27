@@ -34,6 +34,13 @@ class Player(src.object_base.ObjectBase):
         self.dirMoved = 0
     
 
+    def reset(self, pos, yVelocity, xVelocity):
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
+        self.yVelocity = yVelocity
+        self.xVelocity = xVelocity
+    
+
     def switch_anim(self, newAnim):
         if self.currentAnim != newAnim:
             self.currentAnim = newAnim
