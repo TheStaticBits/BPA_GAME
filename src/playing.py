@@ -19,7 +19,9 @@ class Playing(src.scene_base.SceneBase):
         self.tileRenderer = tileRenderer
 
         # Loading levels from levels.txt
-        self.levels = utility.load_levels()
+        self.levels = utility.load_levels(constants.LEVELS_PATH)
+
+        self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
 
         # Setting data based off of save data from save.db
         self.level = int(saveData["level"])
@@ -47,9 +49,8 @@ class Playing(src.scene_base.SceneBase):
             constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0],
             constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]
         ))
-
-        self.tileRenderer.draw_tiles(self.levels, self.level, self.room, self.tileSurface)
-        self.tileRenderer.setup_room_tile_anims(self.levels, self.level, self.room)
+        
+        self.reload_tiles() # Drawing the tiles onto the tile surface
         
         self.tilesChanged = False
 
@@ -68,6 +69,12 @@ class Playing(src.scene_base.SceneBase):
 
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
+
+    
+    def reload_tiles(self):
+        self.tileSurface.fill((0, 0, 0))
+        self.tileRenderer.draw_tiles(self.levels[self.level][self.room], self.tileSurface)
+        self.tileRenderer.setup_room_tile_anims(self.levels[self.level][self.room])
 
 
     def remove_collected_crystals(self):
@@ -88,7 +95,7 @@ class Playing(src.scene_base.SceneBase):
 
 
     def reset_crystal_in_level(self):
-        self.levels[self.level] = utility.load_levels()[self.level]
+        self.levels[self.level] = utility.load_levels(constants.LEVELS_PATH)[self.level]
 
 
     # Sets up the player, given a position or using the level to find the starting position
@@ -155,6 +162,10 @@ class Playing(src.scene_base.SceneBase):
                 
                 # Resetting the player
                 self.setup_player()
+
+                for name, data in self.cutsceneData.items():
+                    if self.level == data["beforeLevel"]:
+                        return name # Switches to the cutscene
             
             else:
                 self.player.rect.x -= (constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) - constants.PLAYER_WIDTH) # Moving the player to the complete other side of the room
@@ -236,12 +247,9 @@ class Playing(src.scene_base.SceneBase):
         super().render()
 
         if self.tilesChanged: # If the tiles have changed, rerender them
-            self.tileSurface.fill((0, 0, 0))
-            self.tileRenderer.draw_tiles(self.levels, self.level, self.room, self.tileSurface)
-            
-            self.tilesChanged = False
+            self.restart_tiles()
 
-            self.tileRenderer.setup_room_tile_anims(self.levels, self.level, self.room)
+            self.tilesChanged = False
         
         # Drawing tiles
         window.blit(self.tileSurface, (0, 0))

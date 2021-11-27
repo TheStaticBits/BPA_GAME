@@ -1,0 +1,24 @@
+{
+    "start": {
+        "beforeLevel": 0,
+        "cutsceneLevel": 0,
+        "start": {
+            "player": [0, 0],
+            "ellipse": [0, 0]
+        },
+
+        "time_commands": {
+            "20": ["player", "walk", "right"],
+            "30": ["ellipse", "teleport", [16, 100]],
+            "50": ["ellipse", "walk", "right"],
+            "70": ["run", "testPX"],
+            "100": ["end"]
+        },
+        "conditionals": {
+            "testPX": ["player", "x", "> 50"]
+        },
+        "cond_commands":{
+            "testPX": ["ellipse", "walk", "right"]
+        }
+    }
+}

@@ -1,5 +1,5 @@
 """
-This file contains functions for things such as saving and loading, loading spritesheets, and potentially more.
+This file contains functions for things such as saving and loading, loading spritesheets, and more.
 """
 
 import pygame
@@ -7,6 +7,7 @@ import sqlite3
 import os
 import win32api
 import smtplib, ssl
+import json
 
 import src.constants as constants
 
@@ -19,9 +20,9 @@ def get_file(filePath) -> str:
     return text
 
 
-# Loads the levels from the levels.txt file
-def load_levels() -> list:
-    file = get_file(constants.LEVELS_PATH)
+# Loads the levels from a given path
+def load_levels(levelPath) -> list:
+    file = get_file(levelPath)
 
     # Splits the string into a list of levels
     levels = file.split(constants.LEVEL_SEPARATOR)
@@ -95,6 +96,11 @@ def load_spritesheet(
         result.append(tempImage)
     
     return result
+
+
+def load_json(filePath) -> dict:
+    with open(filePath, "r") as file:
+        return json.load(file)
 
 
 def check_between(

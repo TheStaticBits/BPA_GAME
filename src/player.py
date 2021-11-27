@@ -11,25 +11,15 @@ class Player(src.object_base.ObjectBase):
         yVelocity = 0,
         xVelocity = 0
         ):
-        super().__init__()
+        super().__init__(constants.PLAYER_ANIMATIONS, constants.PLAYER_WIDTH)
+        
+        # Used for collisions and keeping track of position
+        self.rect = pygame.Rect(startPos[0], startPos[1], constants.PLAYER_WIDTH, constants.TILE_SIZE[1])
 
         self.yVelocity = yVelocity
         self.xVelocity = xVelocity
 
         self.canJump = True
-
-        self.animations = {}
-        for name, data in constants.PLAYER_ANIMATIONS.items():
-            self.animations[name] = src.animation.Animation(
-                data["delay"],
-                data["path"],
-                constants.PLAYER_WIDTH
-            )
-        
-        self.currentAnim = "idle"
-
-        # Used for collisions and keeping track of position
-        self.rect = pygame.Rect(startPos[0], startPos[1], constants.PLAYER_WIDTH, constants.TILE_SIZE[1])
 
         self.dirMoved = 0
     
@@ -41,12 +31,6 @@ class Player(src.object_base.ObjectBase):
         self.xVelocity = xVelocity
     
 
-    def switch_anim(self, newAnim):
-        if self.currentAnim != newAnim:
-            self.currentAnim = newAnim
-            self.animations[self.currentAnim].reset()
-    
-
     def update(
         self, 
         room, # List of tiles in the current room
@@ -54,8 +38,7 @@ class Player(src.object_base.ObjectBase):
         globalGravity # The gravity of the world
         ) -> str:
 
-        self.animations[self.currentAnim].update()
-        self.image = self.animations[self.currentAnim].get_frame() # Used during collision testing
+        super().update_animation()
 
         super().test_grav_line(globalGravity)
         super().update_gravity()
@@ -152,11 +135,3 @@ class Player(src.object_base.ObjectBase):
                 return "left"
 
         return "alive"
-        
-
-    def render(self, window):
-        frame = self.animations[self.currentAnim].get_frame()
-
-        frame = pygame.transform.flip(frame, self.dirMoved == -1, self.gravityDir == -1)
-
-        window.blit(frame, (self.rect.x, self.rect.y))

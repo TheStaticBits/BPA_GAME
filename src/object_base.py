@@ -3,11 +3,13 @@ from math import floor
 
 import src.constants as constants
 import src.utility as utility
+import src.animation
 
 # ANY OBJECT THAT INHERITS FROM OBJECT_BASE MUST CREATE A RECT OBJECT TO USE TEST_COLLISIONS()
 
 class ObjectBase:
-    def __init__(self):
+    def __init__(self, animationData, width):
+
         # OVERRIDE THIS IN SUBCLASSES
         self.rect = None
 
@@ -28,7 +30,24 @@ class ObjectBase:
 
         self.cachedMasks = {}
         
+        self.currentAnim = "idle"
+        self.animations = {}
+        for name, data in animationData.items():
+            self.animations[name] = src.animation.Animation(
+                data["delay"],
+                data["path"],
+                width
+            )
+        
+        self.facing = 1
+        
     
+    def switch_anim(self, newAnim):
+        if self.currentAnim != newAnim:
+            self.currentAnim = newAnim
+            self.animations[self.currentAnim].reset()
+    
+
     def reset_current_tile(self):
         # Finds the coordinates of the center of the object
         centerX = self.rect.x + (self.rect.width / 2)
@@ -45,6 +64,10 @@ class ObjectBase:
 
     def update_y_pos(self):
         self.rect.y -= round(self.yVelocity)
+
+    
+    def update_animation(self):
+        self.animations[self.currentAnim].update()
         
     
     def check_tile(self, room, tilePos):
@@ -79,7 +102,7 @@ class ObjectBase:
                 objMask = pygame.mask.from_surface(image)
                 self.cachedMasks[tile] = objMask
 
-            playerImage = pygame.transform.flip(self.image, False, self.gravityDir == -1) # self.images REQUIRED FOR CHILD CLASSES
+            playerImage = pygame.transform.flip(self.animations[self.currentAnim].get_frame(), False, self.gravityDir == -1) # self.images REQUIRED FOR CHILD CLASSES
             playerMask = pygame.mask.from_surface(playerImage)
 
             collided = self.cachedMasks[tile].overlap(
@@ -100,6 +123,8 @@ class ObjectBase:
         self.collisions["right"] = False
 
         specialTiles = {}
+
+        self.facing = dirMoved
 
         if dirMoved != 0:
             for y in range(-1, 2):
@@ -160,3 +185,11 @@ class ObjectBase:
             
         else:
             self.gravityDir = -1 * globalGravity
+    
+
+    def render(self, window):
+        frame = self.animations[self.currentAnim].get_frame()
+
+        frame = pygame.transform.flip(frame, self.facing == -1, self.gravityDir == -1)
+
+        window.blit(frame, (self.rect.x, self.rect.y))

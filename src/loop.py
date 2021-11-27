@@ -10,6 +10,7 @@ import src.utility as utility
 import src.scene_base
 import src.constants as constants
 import src.tile_renderer
+import src.cutscenes
 
 # Initializing Pygame
 pygame.init()
@@ -18,7 +19,7 @@ class Loop(src.scene_base.SceneBase):
     def __init__(self):
         super().__init__(__name__)
 
-        self.scene = "playing"
+        self.scene = "cutscene"
         self.framerate = 0
         self.error = False
 
@@ -30,6 +31,9 @@ class Loop(src.scene_base.SceneBase):
             self.tileRenderer = src.tile_renderer.TileRenderer()
 
             self.playing = src.playing.Playing(save, self.tileRenderer)
+
+            self.cutscene = src.cutscenes.Cutscenes(self.tileRenderer)
+            self.cutscene.setup("start")
             
             try:
                 # Setting up music
@@ -118,7 +122,17 @@ class Loop(src.scene_base.SceneBase):
         self.window.update_inputs()
 
         if self.scene == "playing":
-            self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
+            result = self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
+            
+            if result != None:
+                self.cutscene.setup(result)
+                self.scene = "cutscene"
+        
+        if self.scene == "cutscene":
+            result = self.cutscene.update()
+            if result == False:
+                self.scene = "playing"
+                self.playing.reload_tiles()
     
     
     def render(self):
@@ -126,3 +140,6 @@ class Loop(src.scene_base.SceneBase):
 
         if self.scene == "playing":
             self.playing.render(self.window.miniWindow)
+        
+        elif self.scene == "cutscene":
+            self.cutscene.render(self.window.miniWindow)

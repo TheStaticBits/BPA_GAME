@@ -1,9 +1,14 @@
 import pygame
 
-SAVE_PATH = "saves/save.db" # The save file's path
-EVENT_LOG_PATH = "saves/events.log" # The event log's path
+SAVE_PATH = "saves/save.db"
+EVENT_LOG_PATH = "saves/events.log"
 
-FONT_PATH = "res/font/pixelated/pixelated.ttf" # The font's path
+FONT_PATH = "res/font/pixelated/pixelated.ttf"
+
+LEVELS_PATH = "data/levels.txt"
+
+CUTSCENE_DATA_PATH = "data/cutscenes.json"
+CUTSCENE_LEVELS_PATH = "data/cutscene_levels.txt"
 
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
@@ -14,8 +19,6 @@ SCREEN_TILE_SIZE = (24, 14) # Amount of tiles on the screen by X and Y
 # These are the separaters in the levels.txt file.
 LEVEL_SEPARATOR = "\n------------------------\n"
 ROOM_SEPARATOR = "\n||||||||||||||||||||||||\n"
-
-LEVELS_PATH = "data/levels.txt"
 
 PX_SCALE_FACTOR = 3 # This is the scale factor of everything being rendered to the screen
 
@@ -134,6 +137,17 @@ PLAYER_ANIMATIONS = {
     }
 }
 PLAYER_WIDTH = 8
+
+ELLIPSE_ANIMATIONS = {
+    "idle": {
+        "path": "res/characters/ellipse/idle.png",
+        "delay": 25
+    },
+    "walk": {
+        "path": "res/characters/ellipse/walking.png",
+        "delay": 7
+    }
+}
 
 # Other tiles
 SPIKE_PATH = "res/misc/spike.png"

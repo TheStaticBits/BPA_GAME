@@ -60,13 +60,11 @@ class TileRenderer:
                 )
 
 
-    def setup_room_tile_anims(self, levels, levelNum, roomNum):
-        currentRoom = levels[levelNum][roomNum] # For convenience
-
+    def setup_room_tile_anims(self, room):
         self.individualTileAnims = {} # A dictionary of all INDIVIDUAL tile's animation objects
 
         # Iterating through all of the tiles in the current room
-        for y, row in enumerate(currentRoom):
+        for y, row in enumerate(room):
             for x, tile in enumerate(row):
 
                 if tile in constants.TILES_WITH_ANIMATIONS:
@@ -124,12 +122,10 @@ class TileRenderer:
 
 
     # This function renders the SOLID tiles onto a given surface
-    def draw_tiles(self, levels, levelNum, roomNum, surface) -> "pygame.Surface":
-        currentRoom = levels[levelNum][roomNum] # For convenience
-
+    def draw_tiles(self, room, surface):
         """  BEWARE: SPAGHETTI CODE AHEAD  """ # Maybe I should clean this up a bit...
         # Iterating through all of the tiles in the current room
-        for y, row in enumerate(currentRoom): 
+        for y, row in enumerate(room): 
             for x, tile in enumerate(row):
 
                 if tile in self.tileKey: # If it is a solid block
@@ -144,7 +140,7 @@ class TileRenderer:
                     # Offset is the direction in which the program is checking in relation to the tile being drawn
                     for offset in range(-1, 2):
                         # VERTICAL EDGES
-                        if self.check_tile(currentRoom, x + offset, y): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
+                        if self.check_tile(room, x + offset, y): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
                             # Creates the image of the edge with a rotation based on which direction the offset is checking. 
                             # These are the vertical edges.
@@ -160,7 +156,7 @@ class TileRenderer:
                             )
 
                         # HORIZONTAL EDGES
-                        if self.check_tile(currentRoom, x, y + offset): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
+                        if self.check_tile(room, x, y + offset): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
                             # Creates an image with a rotation based on the direction the program is checking. 
                             # These are the horizontal edges.
@@ -189,9 +185,9 @@ class TileRenderer:
                                 utility.check_between((x + offset2, y + offset), (0, 0), constants.SCREEN_TILE_SIZE)
                                 ):
                                     # These are for checks
-                                    edgeT1 = currentRoom[y + offset][x] in constants.TRANSPARENT_TILES # If the edge in one direction of the corner is transparent
-                                    edgeT2 = currentRoom[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge in the other direction of the corner is transparent
-                                    corner = currentRoom[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner is transparent
+                                    edgeT1 = room[y + offset][x] in constants.TRANSPARENT_TILES # If the edge in one direction of the corner is transparent
+                                    edgeT2 = room[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge in the other direction of the corner is transparent
+                                    corner = room[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner is transparent
 
                                     selectedImage = None
 
