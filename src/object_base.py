@@ -26,7 +26,7 @@ class ObjectBase:
         # If this is -1, the gravity is pulling upward
         self.gravityDir = None
 
-        self.spikeImage = pygame.image.load(constants.SPIKE_PATH).convert_alpha()
+        self.cachedMasks = {}
         
     
     def reset_current_tile(self):
@@ -65,22 +65,25 @@ class ObjectBase:
         elif not offscreen and room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
             tile = room[tilePos[1]][tilePos[0]]
 
-            if tile in constants.SPIKE_ROTATIONS:
-                image = pygame.transform.rotate(
-                    self.spikeImage, 
-                    constants.SPIKE_ROTATIONS[tile]
-                )
-            
-            else:
-                image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
-                image.set_colorkey((255, 255, 255))
+            if not tile in self.cachedMasks:
+
+                if tile in constants.SPIKE_ROTATIONS: # If it's a spike
+                    image = pygame.transform.rotate(
+                        pygame.image.load(constants.SPIKE_PATH).convert_alpha(), 
+                        constants.SPIKE_ROTATIONS[tile]
+                    )
                 
-            objMask = pygame.mask.from_surface(image)
+                else:
+                    image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
+                    image.set_colorkey((255, 255, 255))
+                
+                objMask = pygame.mask.from_surface(image)
+                self.cachedMasks[tile] = objMask
 
             playerImage = pygame.transform.flip(self.image, False, self.gravityDir == -1) # self.images REQUIRED FOR CHILD CLASSES
             playerMask = pygame.mask.from_surface(playerImage)
 
-            collided = objMask.overlap(
+            collided = self.cachedMasks[tile].overlap(
                 playerMask, 
                 (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], 
                 self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
