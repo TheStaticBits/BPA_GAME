@@ -239,7 +239,7 @@ class Playing(src.scene_base.SceneBase):
         
         # Other editor inputs
         if inputs["space"]:
-            utility.save_room(self.level, self.room, self.levels[self.level][self.room]) # Saves the room to the levels.txt file
+            utility.save_room(self.level, self.room, self.levels[self.level][self.room], constants.LEVELS_PATH) # Saves the room to the levels.txt file
 
 
     # Renders everything to the screen
