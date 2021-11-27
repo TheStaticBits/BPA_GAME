@@ -5,6 +5,7 @@ This renderer
 import pygame
 import os
 
+import src.animation
 import src.constants as constants
 import src.utility as utility
 
@@ -14,10 +15,14 @@ class TileRenderer:
         self.load_tile_anims()
 
         # Loading spike tile
-        self.spikeTile = pygame.image.load(constants.TILE_PATH).convert_alpha()
+        self.spikeTile = pygame.image.load(constants.SPIKE_PATH).convert_alpha()
 
         # If the tile being checked is on the screen and transparent, used when drawing edges to the screen
         self.check_tile = lambda room, x, y: utility.check_between((x, y), (0, 0), constants.SCREEN_TILE_SIZE) and room[y][x] in constants.TRANSPARENT_TILES 
+        
+        # Setting up background tile
+        self.background = self.tileKey["w"]["tile"].convert_alpha().copy()
+        self.background.fill((255, 255, 255, 200), None, pygame.BLEND_RGBA_MULT)
     
 
     def load_tiles(self):
@@ -73,13 +78,13 @@ class TileRenderer:
                     }
 
 
-    def render_tiles_with_anims(self, window):
+    def render_tiles_with_anims(self, window, gravityDir):
         for tilePos, anim in self.individualTileAnims.items():
             frame = anim["animationObject"].get_frame()
 
             flip = tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS
 
-            if self.gravityDir == -1:
+            if gravityDir == -1:
                 flip = not flip
             
             frame = pygame.transform.flip(frame, False, flip) # Flipping the frame
@@ -107,10 +112,10 @@ class TileRenderer:
             del self.individualTileAnims[tilePos]
 
 
-    def change_tile_anim(self, pos, animationName) -> bool:
+    def change_tile_anim(self, tile, pos, animationName) -> bool:
         if self.individualTileAnims[pos]["animationName"] != animationName:
-            self.individualTileAnims[playerState[1]]["animationName"] = "struck"
-            self.individualTileAnims[playerState[1]]["animationObject"] = self.tileAnims[playerState[0]]["struck"].copy()
+            self.individualTileAnims[pos]["animationName"] = "struck"
+            self.individualTileAnims[pos]["animationObject"] = self.tileAnims[tile]["struck"].copy()
 
             return True
 

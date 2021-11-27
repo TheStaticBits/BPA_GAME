@@ -31,9 +31,6 @@ class Playing(src.scene_base.SceneBase):
 
         self.remove_collected_crystals() # Removing crystals that are already collected from the levels
 
-        # Loads the tile images from the list in constants.py
-        self.load_tiles()
-
         # Setting up the player based on the save data
         self.setup_player(
             float(saveData["playerX"]), 
@@ -44,21 +41,16 @@ class Playing(src.scene_base.SceneBase):
 
         self.ellipse = src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level)
 
-        # Setting up background tile
-        self.background = self.tileKey["w"]["tile"].convert_alpha().copy()
-        self.background.fill((255, 255, 255, 200), None, pygame.BLEND_RGBA_MULT)
-
         # Setup tile drawing surface
         self.tileSurface = pygame.Surface((
             constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0],
             constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]
         ))
-        self.tileRenderer.draw_tiles(self.tileSurface)
-        self.tilesChanged = False
 
-        # Loading tile animations
-        self.load_tile_anims()
-        self.setup_room_tile_anims()
+        self.tileRenderer.draw_tiles(self.levels, self.level, self.room, self.tileSurface)
+        self.tileRenderer.setup_room_tile_anims(self.levels, self.level, self.room)
+        
+        self.tilesChanged = False
 
         # Setting up gravity beam animation
         self.gravityBeam = src.animation.Animation(
@@ -182,7 +174,7 @@ class Playing(src.scene_base.SceneBase):
         # If the return result was of a tile
         # Play the "struck" animation for the tile
         elif playerState != "alive":
-            if self.tileRenderer.change_tile_anim(playerState[1], "struck"):
+            if self.tileRenderer.change_tile_anim(playerState[0], playerState[1], "struck"):
                 if playerState[0] == "g": # Gravity orb
                     self.gravityDir *= -1 # Changing the gravity direction
                 
@@ -198,7 +190,7 @@ class Playing(src.scene_base.SceneBase):
         # Ellipse update
         self.ellipse.update(self.room, self.level, self.levels[self.level][self.room], self.gravityDir)
 
-        self.tileRenderer.update_tile_anims()
+        self.tileRenderer.update_tiles_with_anims()
 
 
         """  Mouse Inputs for Editor  """
@@ -244,7 +236,7 @@ class Playing(src.scene_base.SceneBase):
         window.blit(self.tileSurface, (0, 0))
 
         # Drawing tiles with animations
-        self.render_tiles_with_anims(window)
+        self.tileRenderer.render_tiles_with_anims(window, self.gravityDir)
 
         # Drawing gravity beam
         for x in range(
