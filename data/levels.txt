@@ -1,3 +1,7 @@
+background = s
+music = Belloq
+text = 
+------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w
 w         wwwww        w
@@ -57,6 +61,10 @@ w          ww  v cwww  w
 w          ww     www  w
 w          ww     wwwwww
 wwwwwwwwwwwww     wwwwww
+------------------------
+background = w
+music = Belloq
+text = 
 ------------------------
 w^><wwwww           wwww
 wwwwwwwww           wwww
@@ -118,6 +126,10 @@ v^><wel        w    wwww
   wwwwwwww     w  wwwwww
   wwwwwwww     w  wwwwww
 ------------------------
+background = w
+music = Belloq
+text = 
+------------------------
 v^><jddddddddddddddddddd
 dddddddddddddddddddddddd
 d            ddddd      
@@ -177,6 +189,10 @@ ddvv            vdv
 vv               d      
                  d      
                  d      
+------------------------
+background = w
+music = Belloq
+text = 
 ------------------------
 v^><wddddddddddddddddddd
 ddddddddd               
@@ -238,6 +254,10 @@ dddd   j dd      ddd
 dddd     dd      ddd    
 dddd     dd      ddd    
 ------------------------
+background = w
+music = Belloq
+text = 
+------------------------
 d   j               dddd
 d                   dddd
 d                   dddd
@@ -297,6 +317,10 @@ vddddddddd  dddd   ddddd
 >dvvvvvvvv         ddddd
 <d                 ddddd
 dd                 ddddd
+------------------------
+background = w
+music = Belloq
+text = 
 ------------------------
 dddddddddddddddddddddddd
 dvvv         ddddddddddd
@@ -358,63 +382,66 @@ v^><dcjg
                         
                         
 ------------------------
-v^><dcjg                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-v^><dcjg                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-v^><dcjg                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-v^><dcjg                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+background = w
+music = Belloq
+text = 
 ------------------------
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        

@@ -19,10 +19,6 @@ class TileRenderer:
 
         # If the tile being checked is on the screen and transparent, used when drawing edges to the screen
         self.check_tile = lambda room, x, y: utility.check_between((x, y), (0, 0), constants.SCREEN_TILE_SIZE) and room[y][x] in constants.TRANSPARENT_TILES 
-        
-        # Setting up background tile
-        self.background = self.tileKey["w"]["tile"].convert_alpha().copy()
-        self.background.fill((255, 255, 255, 200), None, pygame.BLEND_RGBA_MULT)
     
 
     def load_tiles(self):
@@ -122,7 +118,11 @@ class TileRenderer:
 
 
     # This function renders the SOLID tiles onto a given surface
-    def draw_tiles(self, room, surface):
+    def draw_tiles(self, room, surface, backgroundTile):
+        # Setting up background tile
+        backgroundTile = self.tileKey[backgroundTile]["tile"].copy()
+        backgroundTile.fill((255, 255, 255, 200), None, pygame.BLEND_RGBA_MULT)
+
         """  BEWARE: SPAGHETTI CODE AHEAD  """ # Maybe I should clean this up a bit...
         # Iterating through all of the tiles in the current room
         for y, row in enumerate(room): 
@@ -214,7 +214,7 @@ class TileRenderer:
 
                     # Drawing the background tile
                     surface.blit(
-                        self.background,
+                        backgroundTile,
                         (x * constants.TILE_SIZE[0],
                         y * constants.TILE_SIZE[1])
                     )

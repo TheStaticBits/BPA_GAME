@@ -19,7 +19,7 @@ class Playing(src.scene_base.SceneBase):
         self.tileRenderer = tileRenderer
 
         # Loading levels from levels.txt
-        self.levels = utility.load_levels(constants.LEVELS_PATH)
+        self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
 
         self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
 
@@ -45,7 +45,7 @@ class Playing(src.scene_base.SceneBase):
             float(saveData["playerY"]),
             float(saveData["playerYVelocity"]),
             float(saveData["playerXVelocity"]),
-            True
+            new = True
         )
 
         self.ellipse = src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level)
@@ -73,7 +73,11 @@ class Playing(src.scene_base.SceneBase):
     
     def reload_tiles(self):
         self.tileSurface.fill((0, 0, 0))
-        self.tileRenderer.draw_tiles(self.levels[self.level][self.room], self.tileSurface)
+        self.tileRenderer.draw_tiles(
+            self.levels[self.level][self.room], 
+            self.tileSurface, 
+            self.levelData[self.level]["background"]
+        )
         self.tileRenderer.setup_room_tile_anims(self.levels[self.level][self.room])
 
 

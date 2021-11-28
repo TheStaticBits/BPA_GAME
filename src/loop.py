@@ -99,7 +99,7 @@ class Loop(src.scene_base.SceneBase):
     def save_and_exit(self):
         self.logger.info("Saving game state...")
 
-        # Saves the player's position, level, and room
+        # Saves the game's data
         utility.modif_save({
             "playerX": self.playing.player.rect.x,
             "playerY": self.playing.player.rect.y,

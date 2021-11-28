@@ -20,6 +20,9 @@ SCREEN_TILE_SIZE = (24, 14) # Amount of tiles on the screen by X and Y
 LEVEL_SEPARATOR = "\n------------------------\n"
 ROOM_SEPARATOR = "\n||||||||||||||||||||||||\n"
 
+# The assignment of leveldata
+ASSIGNMENT_SEPARATOR = " = "
+
 PX_SCALE_FACTOR = 3 # This is the scale factor of everything being rendered to the screen
 
 # These are the keys which will trigger the movement of the player.

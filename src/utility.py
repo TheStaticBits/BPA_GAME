@@ -24,22 +24,44 @@ def get_file(filePath) -> str:
 def load_levels(levelPath) -> list:
     file = get_file(levelPath)
 
+    levelData = []
+
     # Splits the string into a list of levels
     levels = file.split(constants.LEVEL_SEPARATOR)
+
+    returnLevels = [] # Levels to be returned
 
     for level in range(len(levels)):
         # Splits the levels into lists of rooms
         levels[level] = levels[level].split(constants.ROOM_SEPARATOR)
+        
+        if level % 2 == 0: # If the level index is even, this means this is data, not a level
+            # Takes something like:
+            # background = g
+            # music = yes
+            # And turns it into a dictionary
 
-        for room in range(len(levels[level])):
-            # Splits the rooms into lists of rows
-            levels[level][room] = levels[level][room].split("\n")
+            levelData.append({})
 
-            for row in range(len(levels[level][room])):
-                # Splits the row into individual characters, the tiles
-                levels[level][room][row] = list(levels[level][room][row])
+            allDat = levels[level][0]
+            allDat = allDat.split("\n")
+
+            for dataBit in allDat:
+                dataBit = dataBit.split(constants.ASSIGNMENT_SEPARATOR)
+                levelData[int(level / 2)][dataBit[0]] = dataBit[1]
+
+        else:
+            for room in range(len(levels[level])):
+                # Splits the rooms into lists of rows
+                levels[level][room] = levels[level][room].split("\n")
+
+                for row in range(len(levels[level][room])):
+                    # Splits the row into individual characters, the tiles
+                    levels[level][room][row] = list(levels[level][room][row])
+            
+            returnLevels.append(levels[level])
     
-    return levels
+    return returnLevels, levelData
 
 
 # Saves the room to the levels.txt file
@@ -50,13 +72,19 @@ def save_room(
     tiles, # The list of tiles that the room is being changed to
     filePath
     ):
-    levels = load_levels(filePath)
+    levels, levelData = load_levels(filePath)
     
     with open(constants.LEVELS_PATH, "w") as file:
         # Iterating through the levels
         for levelNumber, level in enumerate(levels):
             if levelNumber != 0: # If the level is not the first level
                 file.write(constants.LEVEL_SEPARATOR) # Write level separator to the file
+
+            # Writing the level data
+            for key, value in levelData[levelNumber].items():
+                file.write(key + constants.ASSIGNMENT_SEPARATOR + value + "\n")
+            
+            file.write(constants.ROOM_SEPARATOR)
             
             for roomNumber, room in enumerate(level):
                 if roomNumber != 0: # If it isn't the first room

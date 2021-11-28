@@ -31,11 +31,11 @@ class Cutscenes(src.scene_base.SceneBase):
             
             elif name == "ellipse":
                 self.objects[name] = {
-                    "obj": src.ellipse.Ellipse(position, 0, 0),
+                    "obj": src.ellipse.Ellipse(position, 0, 0), # Since each cutscene is one level, the level number doesn't matter
                     "movement": "still"
                 }
 
-        levels = utility.load_levels(constants.CUTSCENE_LEVELS_PATH)
+        levels, self.levelData = utility.load_levels(constants.CUTSCENE_LEVELS_PATH)
         self.level = levels[self.cutsceneData["cutsceneLevel"]]
 
         self.room = 0
@@ -63,7 +63,11 @@ class Cutscenes(src.scene_base.SceneBase):
     
     def rerender_tiles(self):
         self.tiles.fill((0, 0, 0))
-        self.tileRenderer.draw_tiles(self.level[self.room], self.tiles)
+        self.tileRenderer.draw_tiles(
+            self.level[self.room], 
+            self.tiles, 
+            self.levelData[self.cutsceneData["cutsceneLevel"]]["background"]    
+        )
         self.tileRenderer.setup_room_tile_anims(self.level[self.room])
 
 
