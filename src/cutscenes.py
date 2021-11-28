@@ -1,4 +1,5 @@
 import pygame
+import math
 
 import src.scene_base
 import src.player
@@ -49,6 +50,12 @@ class Cutscenes(src.scene_base.SceneBase):
         self.tileRenderer.draw_tiles(self.level[self.room], self.tiles)
         self.tileRenderer.setup_room_tile_anims(self.level[self.room])
 
+        self.text = ""
+        self.showText = False
+        self.textObject = pygame.font.Font(constants.FONT_PATH, 15)
+        self.textPos = [0, 0]
+        self.textWavX = 0
+
         # Variables for running commands for cutscenes
         self.timer = 0
         self.runningConditionals = []
@@ -58,6 +65,8 @@ class Cutscenes(src.scene_base.SceneBase):
     def interpret_commands(self, commands):
         # Interprets a command in the form of [character, command, argument]
         # For example, ["ellipse", "walk", "right"]
+        # And other formats
+        # Look inside data/cutscenes.json for more examples
         for command in commands:
             if command[0] in self.objects:
                 if command[1] == "walk":
@@ -73,6 +82,17 @@ class Cutscenes(src.scene_base.SceneBase):
                 elif command[1] == "noncontrolled":
                     self.playerControlled = False
 
+            elif command[0] == "text":
+
+                if command[1] == "display":
+                    self.showText = True
+                elif command[1] == "hide":
+                    self.showText = False
+                
+                elif command[1] == "change":
+                    self.text = command[2]
+                elif command[1] == "move":
+                    self.textPos = command[2] 
             
             elif command[0] == "run": # Runs a conditional
                 self.runningConditionals.append(command[1])
@@ -155,3 +175,11 @@ class Cutscenes(src.scene_base.SceneBase):
         for obj in self.objects:
             if obj != "player":
                 self.objects[obj]["obj"].render(self.room, 0, window)
+        
+        if self.showText:
+            self.textWavX += 0.05
+
+            renderText = self.textObject.render(self.text, False, (0, 0, 0))
+            textYOffset = math.sin(self.textWavX) * 5
+
+            window.blit(renderText, (self.textPos[0], self.textPos[1] + textYOffset))

@@ -12,11 +12,17 @@
             "30": [["ellipse", "teleport", [16, 100]]],
             "50": [["ellipse", "walk", "right"]],
             "70": [["run", "testPX"]],
+            "80": [
+                ["text", "change", "HALLO THERE MR. PERSON"],
+                ["text", "move", [100, 100]],
+                ["text", "display"]
+            ],
             "90": [
                 ["player", "walk", "still"],
                 ["player", "controlled"]
             ],
             "200": [["player", "noncontrolled"]],
+            "280": [["text", "hide"]],
             "300": [["end"]]
         },
         "conditionals": {
