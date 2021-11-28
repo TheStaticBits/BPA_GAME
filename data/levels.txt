@@ -1,7 +1,6 @@
 background = w
 music = ThereIsSomethingV2
-text 0 = [Insert tutorial here]
-text 1 = [Insert another tutorial here]
+text 0 = Use W or UP to jump
 ------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w

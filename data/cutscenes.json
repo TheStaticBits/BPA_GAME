@@ -11,6 +11,9 @@
                 "player controlled",
                 "player jump not",
                 "ellipse face left",
+                "text move 80 20",
+                "text change Use W and D or LEFT and RIGHT to move",
+                "text display",
                 "run testMoved"
             ]
         },
@@ -23,7 +26,6 @@
                 "player face right",
                 "text change I am here to warn you...",
                 "text move 190 120",
-                "text display",
                 "delay 110 step2"
             ],
             "step2": [
