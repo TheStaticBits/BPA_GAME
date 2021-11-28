@@ -73,6 +73,12 @@ class Playing(src.scene_base.SceneBase):
         self.placeTile = "c" # Tile to be placed when you click
 
     
+    def check_for_cutscene(self):
+        for name, data in self.cutsceneData.items():
+            if self.level == data["beforeLevel"]:
+                return name
+
+    
     def load_room(self):
         self.tileSurface.fill((0, 0, 0))
         self.tileRenderer.draw_tiles(
@@ -180,9 +186,9 @@ class Playing(src.scene_base.SceneBase):
                 # Resetting the player
                 self.setup_player()
 
-                for name, data in self.cutsceneData.items():
-                    if self.level == data["beforeLevel"]:
-                        return name # Switches to the cutscene
+                check = self.check_for_cutscene()
+                if check != None:
+                    return check # Switches to the cutscene
             
             else:
                 self.player.rect.x -= (constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) - constants.PLAYER_WIDTH) # Moving the player to the complete other side of the room
