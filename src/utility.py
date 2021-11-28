@@ -140,6 +140,22 @@ def check_between(
     return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
 
 
+def play_music(musicName) -> bool: # Successful or not
+    try:
+        # Setting up music
+        pygame.mixer.music.load(f"{constants.MUSIC_FOLDER}/{musicName}.wav")
+        pygame.mixer.music.set_volume(0.2)
+        
+        # Starting music
+        pygame.mixer.music.play(-1)
+
+    except pygame.error:
+        # If there wasn't an audio device found, 
+        return False
+
+    return True
+
+
 """
 DATABASE HANDLING
 """

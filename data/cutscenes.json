@@ -20,6 +20,7 @@
         "cond_commands":{
             "testMoved": [
                 "player uncontrolled",
+                "player face right",
                 "text change I am here to warn you...",
                 "text move 190 120",
                 "text display",

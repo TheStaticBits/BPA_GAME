@@ -37,6 +37,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
         levels, self.levelData = utility.load_levels(constants.CUTSCENE_LEVELS_PATH)
         self.level = levels[self.cutsceneData["cutsceneLevel"]]
+        utility.play_music(self.levelData[self.cutsceneData["cutsceneLevel"]]["music"])
 
         self.room = 0
 

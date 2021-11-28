@@ -56,9 +56,11 @@ class Playing(src.scene_base.SceneBase):
             constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]
         ))
         
-        self.reload_tiles() # Drawing the tiles onto the tile surface
+        self.load_room() # Drawing the tiles onto the tile surface
         
         self.tilesChanged = False
+
+        self.playingSong = ""
 
         # Setting up gravity beam animation
         self.gravityBeam = src.animation.Animation(
@@ -71,7 +73,7 @@ class Playing(src.scene_base.SceneBase):
         self.placeTile = "c" # Tile to be placed when you click
 
     
-    def reload_tiles(self):
+    def load_room(self):
         self.tileSurface.fill((0, 0, 0))
         self.tileRenderer.draw_tiles(
             self.levels[self.level][self.room], 
@@ -79,6 +81,10 @@ class Playing(src.scene_base.SceneBase):
             self.levelData[self.level]["background"]
         )
         self.tileRenderer.setup_room_tile_anims(self.levels[self.level][self.room])
+
+
+    def start_music(self):
+        utility.play_music(self.levelData[self.level]["music"])
 
 
     def remove_collected_crystals(self):
@@ -165,6 +171,10 @@ class Playing(src.scene_base.SceneBase):
                 # Resetting the room number and incrementing the level number
                 self.room = 0
                 self.level += 1
+                
+                if self.levelData[self.level] != self.playingSong:
+                    utility.play_music(self.levelData[self.level]["music"])
+                    self.playingSong = self.levelData[self.level]["music"]
                 
                 # Resetting the player
                 self.setup_player()
@@ -253,7 +263,7 @@ class Playing(src.scene_base.SceneBase):
         super().render()
 
         if self.tilesChanged: # If the tiles have changed, rerender them
-            self.reload_tiles()
+            self.load_room()
 
             self.tilesChanged = False
         

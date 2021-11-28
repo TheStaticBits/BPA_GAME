@@ -10,6 +10,8 @@ LEVELS_PATH = "data/levels.txt"
 CUTSCENE_DATA_PATH = "data/cutscenes.json"
 CUTSCENE_LEVELS_PATH = "data/cutscene_levels.txt"
 
+MUSIC_FOLDER = "res/sound"
+
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
 

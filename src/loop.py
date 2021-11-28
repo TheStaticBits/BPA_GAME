@@ -34,19 +34,6 @@ class Loop(src.scene_base.SceneBase):
 
             self.cutscene = src.cutscenes.Cutscenes(self.tileRenderer)
             self.cutscene.setup("start")
-            
-            try:
-                # Setting up music
-                pygame.mixer.music.load("res/sound/ThereIsSomethingV2.wav")
-                pygame.mixer.music.set_volume(0.2)
-                
-                # Starting music
-                pygame.mixer.music.play(-1)
-
-            except pygame.error:
-                # If there wasn't an audio device found, 
-                print("ERROR: Audio output device not found.")
-                self.logger.warning("Audio output device not found.")
         
         except Exception:
             err = traceback.format_exc()
@@ -133,7 +120,8 @@ class Loop(src.scene_base.SceneBase):
             result = self.cutscene.update(self.window.inputs)
             if result == False:
                 self.scene = "playing"
-                self.playing.reload_tiles()
+                self.playing.load_room()
+                self.playing.start_music()
     
     
     def render(self):
