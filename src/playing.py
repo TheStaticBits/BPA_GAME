@@ -3,6 +3,7 @@ This file includes the class which manages the playing scene, which includes til
 """
 
 import pygame
+import math
 import os
 
 import src.scene_base
@@ -38,6 +39,9 @@ class Playing(src.scene_base.SceneBase):
         self.currentCrystal = False # If the crystal in the current level has been collected
 
         self.remove_collected_crystals() # Removing crystals that are already collected from the levels
+
+        self.font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Setting up the font
+        self.get_text() # Getting the text for the current room
 
         # Setting up the player based on the save data
         self.setup_player(
@@ -92,7 +96,21 @@ class Playing(src.scene_base.SceneBase):
     def start_music(self):
         utility.play_music(self.levelData[self.level]["music"])
         self.playingSong = self.levelData[self.level]["music"]
+    
+    
+    def get_text(self):
+        self.text = None
+        self.textWavX = 0
 
+        try:
+            if self.levelData[self.level][f"text {self.room}"] != "":
+                self.text = self.levelData[self.level][f"text {self.room}"]
+                self.textSurface = self.font.render(self.text, False, (255, 255, 255))
+                
+                self.fontX = (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]) / 2 - self.textSurface.get_width() / 2
+
+        except KeyError: # If that room doesn't have text 
+            pass
 
     def remove_collected_crystals(self):
         # This is just an amazing tower of for and if statements.
@@ -168,6 +186,8 @@ class Playing(src.scene_base.SceneBase):
         # If the player moved to the far right of the screen
         if playerState == "right":
             self.room += 1
+
+            self.get_text() # Getting the text for the current room (if there is any)
             
             # If the room number has hit the end of the level
             if self.room >= len(self.levels[self.level]):
@@ -298,3 +318,15 @@ class Playing(src.scene_base.SceneBase):
 
         # Drawing player
         self.player.render(window)
+
+        self.textWavX += 0.05
+        
+        # Drawing text if there is any in the room
+        if self.text != None:
+            window.blit(
+                self.textSurface, 
+                (
+                    self.fontX, 
+                    50 + math.sin(self.textWavX) * 5
+                )
+            )

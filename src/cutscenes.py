@@ -64,7 +64,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
         self.text = ""
         self.showText = False
-        self.textObject = pygame.font.Font(constants.FONT_PATH, 10)
+        self.textObject = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
         self.textPos = [0, 0]
         self.textWavX = 0
 

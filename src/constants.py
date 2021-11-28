@@ -4,6 +4,7 @@ SAVE_PATH = "saves/save.db"
 EVENT_LOG_PATH = "saves/events.log"
 
 FONT_PATH = "res/font/pixelated/pixelated.ttf"
+FONT_SIZE = 10
 
 LEVELS_PATH = "data/levels.txt"
 

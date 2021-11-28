@@ -36,7 +36,7 @@ class Loop(src.scene_base.SceneBase):
 
             check = self.playing.check_for_cutscene()
 
-            if check != None:
+            if check != None and self.playing.room == 0:
                 self.cutscene.setup(check)
                 self.scene = "cutscene"
         
