@@ -85,6 +85,7 @@ class Playing(src.scene_base.SceneBase):
 
     def start_music(self):
         utility.play_music(self.levelData[self.level]["music"])
+        self.playingSong = self.levelData[self.level]["music"]
 
 
     def remove_collected_crystals(self):
@@ -172,7 +173,7 @@ class Playing(src.scene_base.SceneBase):
                 self.room = 0
                 self.level += 1
                 
-                if self.levelData[self.level] != self.playingSong:
+                if self.levelData[self.level]["music"] != self.playingSong:
                     utility.play_music(self.levelData[self.level]["music"])
                     self.playingSong = self.levelData[self.level]["music"]
                 
