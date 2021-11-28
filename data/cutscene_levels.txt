@@ -21,17 +21,17 @@ background = w
 music = Corlen
 text = 
 ------------------------
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
-w                      w
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 wwwwwwwwwwwwwwwwwwwwwwww

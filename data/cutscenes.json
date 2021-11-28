@@ -54,7 +54,7 @@
         },
 
         "time_commands": {
-            "0": "player controlled"
+            "0": ["player controlled"]
         },
         "conditionals": {
             "testPX": "player x > 50"
