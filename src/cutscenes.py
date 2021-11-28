@@ -47,8 +47,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
         self.playerControlled = False
 
-        self.tileRenderer.draw_tiles(self.level[self.room], self.tiles)
-        self.tileRenderer.setup_room_tile_anims(self.level[self.room])
+        self.rerender_tiles()
 
         self.text = ""
         self.showText = False
@@ -62,6 +61,12 @@ class Cutscenes(src.scene_base.SceneBase):
         self.activeConditionals = []
 
     
+    def rerender_tiles(self):
+        self.tiles.fill((0, 0, 0))
+        self.tileRenderer.draw_tiles(self.level[self.room], self.tiles)
+        self.tileRenderer.setup_room_tile_anims(self.level[self.room])
+
+
     def interpret_commands(self, commands):
         # Interprets a command in the form of [character, command, argument]
         # For example, ["ellipse", "walk", "right"]
@@ -146,7 +151,23 @@ class Cutscenes(src.scene_base.SceneBase):
 
             if obj == "player":
                 if self.playerControlled:
-                    object.update(self.level[self.room], inputs)
+                    result = object.update(self.level[self.room], inputs)
+
+                    if result == "right":
+                        try:
+                            object.rect.x = 0
+                            self.room += 1
+                            self.rerender_tiles()
+
+                        except IndexError:
+                            # Once the player has reached the end of the level, the cutscene ends
+                            return False
+                    
+                    elif result == "left":
+                        if self.room > 0:
+                            self.room -= 1
+                            self.rerender_tiles()
+
 
             if movement != "still":
                 object.switch_anim("walk")
@@ -154,10 +175,35 @@ class Cutscenes(src.scene_base.SceneBase):
                 if movement == "right":
                     object.rect.x += constants.MAX_SPEED
                     object.facing = 1
+                    
+                    if object.rect.x >= (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]):
+                        if obj == "player":
+                            try:
+                                object.rect.x = 0
+                                self.room += 1
+                                self.rerender_tiles()
+
+                            except IndexError:
+                                return False
+                        
+                        else:
+                            object.rect.x = 0
+                            object.room += 1
 
                 if movement == "left":
                     object.rect.x -= constants.MAX_SPEED
                     object.facing = -1
+
+                    if object.rect.x <= 0:
+                        if obj == "player":
+                            if self.room > 0:
+                                self.room -= 1
+                                self.rerender_tiles()
+                        
+                        else:
+                            object.rect.x = (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]) - object.rect.width
+                            object.room -= 1
+
 
             else:
                 object.switch_anim("idle")
