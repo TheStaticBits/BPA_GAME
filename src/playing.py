@@ -99,7 +99,9 @@ class Playing(src.scene_base.SceneBase):
 
 
     def reset_crystal_in_level(self):
-        self.levels[self.level] = utility.load_levels(constants.LEVELS_PATH)[self.level]
+        levels = utility.load_levels(constants.LEVELS_PATH)[0]
+
+        self.levels[self.level] = levels[self.level]
 
 
     # Sets up the player, given a position or using the level to find the starting position

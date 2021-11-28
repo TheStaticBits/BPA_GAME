@@ -46,6 +46,7 @@ class Cutscenes(src.scene_base.SceneBase):
         ))
 
         self.playerControlled = False
+        self.playerCanJump = True
 
         self.rerender_tiles()
 
@@ -59,6 +60,7 @@ class Cutscenes(src.scene_base.SceneBase):
         self.timer = 0
         self.runningConditionals = []
         self.activeConditionals = []
+        self.delays = {}
 
     
     def rerender_tiles(self):
@@ -82,6 +84,12 @@ class Cutscenes(src.scene_base.SceneBase):
             if comm[0] in self.objects:
                 if comm[1] == "walk":
                     self.objects[comm[0]]["movement"] = comm[2]
+                
+                elif comm[1] == "face":
+                    if comm[2] == "right":
+                        self.objects[comm[0]]["obj"].facing = 1
+                    else:
+                        self.objects[comm[0]]["obj"].facing = -1
 
                 elif comm[1] == "teleport":
                     self.objects[comm[0]]["obj"].rect.x = int(comm[2])
@@ -90,8 +98,15 @@ class Cutscenes(src.scene_base.SceneBase):
                 elif comm[1] == "controlled":
                     self.playerControlled = True
                 
-                elif comm[1] == "noncontrolled":
+                elif comm[1] == "uncontrolled":
                     self.playerControlled = False
+                    self.objects["player"]["obj"].xVelocity = 0
+                
+                elif comm[1] == "jump":
+                    if comm[2] == "can":
+                        self.playerCanJump = True
+                    else:
+                        self.playerCanJump = False
 
             elif comm[0] == "text":
 
@@ -107,6 +122,9 @@ class Cutscenes(src.scene_base.SceneBase):
             
             elif comm[0] == "run": # Runs a conditional
                 self.runningConditionals.append(comm[1])
+            
+            elif comm[0] == "delay": # Starts a delay
+                self.delays[comm[2]] = int(comm[1])
             
             elif comm[0] == "end":
                 return "end"
@@ -128,12 +146,13 @@ class Cutscenes(src.scene_base.SceneBase):
         
         if check:
             self.activeConditionals.append(condName)
+            return True
+
+        return False
 
 
     def update(self, inputs):
         super().update()
-
-        self.timer += 1
 
         # Interpretting and running timed commands
         for time, commands in self.cutsceneData["time_commands"].items():
@@ -144,15 +163,26 @@ class Cutscenes(src.scene_base.SceneBase):
         
         # Running conditionals
         for condName in self.runningConditionals:
-            self.run_conditional(condName, self.cutsceneData["conditionals"][condName])
+            if self.run_conditional(condName, self.cutsceneData["conditionals"][condName]):
+                self.runningConditionals.remove(condName)
         
         # Checking and running commands that are dependent on conditionals
         for conditional, commands in self.cutsceneData["cond_commands"].items():
             if conditional in self.activeConditionals:
                 self.activeConditionals.remove(conditional)
+
                 result = self.interpret_commands(commands)
                 if result == "end":
                     return False
+        
+        # Updating delays
+        for delayName in list(self.delays):
+            if self.delays[delayName] == 0:
+                del self.delays[delayName]
+                self.interpret_commands(self.cutsceneData["cond_commands"][delayName])
+
+            else:
+                self.delays[delayName] -= 1
         
         # Moving objects
         for obj in self.objects:
@@ -161,6 +191,9 @@ class Cutscenes(src.scene_base.SceneBase):
 
             if obj == "player":
                 if self.playerControlled:
+                    if not self.playerCanJump:
+                        inputs["up"] = False
+
                     result = object.update(self.level[self.room], inputs)
 
                     if result == "right":
@@ -177,6 +210,8 @@ class Cutscenes(src.scene_base.SceneBase):
                         if self.room > 0:
                             self.room -= 1
                             self.rerender_tiles()
+                    
+                    continue
 
 
             if movement != "still":
@@ -219,6 +254,8 @@ class Cutscenes(src.scene_base.SceneBase):
                 object.switch_anim("idle")
             
             object.update_animation()
+            
+        self.timer += 1
 
 
     def render(self, window):

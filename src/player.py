@@ -79,12 +79,6 @@ class Player(src.object_base.ObjectBase):
             1 if self.xVelocity > 0 else (0 if self.xVelocity == 0 else -1)
         )
 
-        if self.dirMoved != 0:
-            self.switch_anim("walk")
-
-        else:
-            self.switch_anim("idle")
-
         
         # Update velocity based on inputs
         if (self.gravityDir == 1 and self.collisions["down"]) or (self.gravityDir == -1 and self.collisions["up"]):

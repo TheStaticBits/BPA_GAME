@@ -3,6 +3,50 @@
         "beforeLevel": 0,
         "cutsceneLevel": 0,
         "start": {
+            "player": [64, 144],
+            "ellipse": [256, 144]
+        },
+        "time_commands": {
+            "0": [
+                "player controlled",
+                "player jump not",
+                "ellipse face left",
+                "run testMoved"
+            ]
+        },
+        "conditionals": {
+            "testMoved": "player x >= 120"
+        },
+        "cond_commands":{
+            "testMoved": [
+                "player uncontrolled",
+                "text change I am here to warn you...",
+                "text move 190 120",
+                "text display",
+                "delay 110 step2"
+            ],
+            "step2": [
+                "text hide",
+                "delay 30 step3"
+            ],
+            "step3": [
+                "text change The Belloq are coming...",
+                "text display",
+                "delay 110 step4"
+            ],
+            "step4": [
+                "text hide",
+                "ellipse walk right",
+                "player controlled",
+                "player jump can"
+            ]
+        }
+    },
+
+    "example": {
+        "beforeLevel": 0,
+        "cutsceneLevel": 0,
+        "start": {
             "player": [16, 16],
             "ellipse": [0, 0]
         },

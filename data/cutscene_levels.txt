@@ -1,33 +1,18 @@
-background = s
+background = b
 music = Belloq
 text = 
 ------------------------
 ssssssssssssssssssssssss
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                       
 ssssssssssssssssssssssss
-||||||||||||||||||||||||
 ssssssssssssssssssssssss
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                      s
-s                       
-                        
+ssssssssssssssssssssssss
+ss                      
+ss                      
+ss                      
+ss                      
+ss                      
+ss                      
+ssssssssssssssssssssssss
+ssssssssssssssssssssssss
+ssssssssssssssssssssssss
 ssssssssssssssssssssssss

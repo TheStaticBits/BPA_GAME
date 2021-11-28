@@ -127,6 +127,8 @@ class ObjectBase:
         self.facing = dirMoved
 
         if dirMoved != 0:
+            self.switch_anim("walk")
+
             for y in range(-1, 2):
                 for x in range(0, 2):
                     tilePos = (self.currentTile[0] + x * dirMoved, self.currentTile[1] + y)
@@ -144,6 +146,9 @@ class ObjectBase:
                     
                     elif result != False:
                         specialTiles[result] = tilePos
+        
+        else:
+            self.switch_anim("idle")
         
         return specialTiles
 
