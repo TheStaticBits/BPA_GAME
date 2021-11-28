@@ -6,6 +6,7 @@ import src.player
 import src.ellipse
 import src.utility as utility
 import src.constants as constants
+import src.animation
 
 class Cutscenes(src.scene_base.SceneBase):
     def __init__(self, tileRenderer):
@@ -38,6 +39,16 @@ class Cutscenes(src.scene_base.SceneBase):
         levels, self.levelData = utility.load_levels(constants.CUTSCENE_LEVELS_PATH)
         self.level = levels[self.cutsceneData["cutsceneLevel"]]
         utility.play_music(self.levelData[self.cutsceneData["cutsceneLevel"]]["music"])
+
+        if "backgroundAnim" in self.cutsceneData:
+            self.backgroundAnim = src.animation.Animation(
+                10, 
+                self.cutsceneData["backgroundAnim"],
+                constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]
+            )
+        
+        else:
+            self.backgroundAnim = None
 
         self.room = 0
 
@@ -155,6 +166,9 @@ class Cutscenes(src.scene_base.SceneBase):
     def update(self, inputs):
         super().update()
 
+        if self.backgroundAnim != None:
+            self.backgroundAnim.update()
+
         # Interpretting and running timed commands
         for time, commands in self.cutsceneData["time_commands"].items():
             if self.timer == int(time):
@@ -263,6 +277,9 @@ class Cutscenes(src.scene_base.SceneBase):
         super().render()
 
         window.blit(self.tiles, (0, 0))
+
+        if self.backgroundAnim != None:
+            self.backgroundAnim.render(window, (0, 0))
         
         self.objects["player"]["obj"].render(window)
 

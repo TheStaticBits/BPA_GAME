@@ -44,6 +44,26 @@
         }
     },
 
+    "corlen's_house": {
+        "beforeLevel": 2,
+        "cutsceneLevel": 1,
+        "backgroundAnim": "res/cutscenes/corlen's_house.png",
+        "start": {
+            "player": [16, 16],
+            "ellipse": [0, 0]
+        },
+
+        "time_commands": {
+            "0": ["player controlled"]
+        },
+        "conditionals": {
+            "testPX": "player x > 50"
+        },
+        "cond_commands":{
+            "testPX": ["ellipse walk right"]
+        }
+    },
+
     "example": {
         "beforeLevel": 0,
         "cutsceneLevel": 0,

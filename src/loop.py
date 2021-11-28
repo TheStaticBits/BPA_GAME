@@ -19,7 +19,7 @@ class Loop(src.scene_base.SceneBase):
     def __init__(self):
         super().__init__(__name__)
 
-        self.scene = "cutscene"
+        self.scene = "playing"
         self.framerate = 0
         self.error = False
 
@@ -33,7 +33,12 @@ class Loop(src.scene_base.SceneBase):
             self.playing = src.playing.Playing(save, self.tileRenderer)
 
             self.cutscene = src.cutscenes.Cutscenes(self.tileRenderer)
-            self.cutscene.setup("start")
+
+            check = self.playing.check_for_cutscene()
+
+            if check != None:
+                self.cutscene.setup(check)
+                self.scene = "cutscene"
         
         except Exception:
             err = traceback.format_exc()

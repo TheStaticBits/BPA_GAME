@@ -1,23 +1,27 @@
 # BPA Adventure Game
 This game was made for the BPA (Business Professionals of America) Software Engineering Team competition.
 
-Development started in October and will end in January.
+Development started in October of 2021 and will end in January of 2022.
 
 ## Programming:
  - Lead: Matthew
  - Nolan
 
 ## Artwork:
- - Lead: shrug
- - Andrew
- - Matthew
+ - Lead: Andrew
  - Nolan
+ - Matthew
+
+## Music/Audio Design:
+ - Lead: Andrew
+ - Nolan
+ - Matthew
 
 ## Story:
- - Lead: Andrew
+ - Andrew
 
 ## Level Design:
- - Lead: Nolan
+ - Nolan
 
 ## Characters Within the Game:
  - Corlen
