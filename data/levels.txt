@@ -1,7 +1,8 @@
 background = w
 music = ThereIsSomethingV2
 text = 
-------------------------
+
+||||||||||||||||||||||||
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w
 w         wwwww        w
@@ -65,7 +66,8 @@ wwwwwwwwwwwww     wwwwww
 background = w
 music = ThereIsSomethingV2
 text = 
-------------------------
+
+||||||||||||||||||||||||
 w^><wwwww           wwww
 wwwwwwwww           wwww
 w     www           wwww
@@ -129,7 +131,8 @@ v^><wel        w    wwww
 background = d
 music = DeepBelow
 text = 
-------------------------
+
+||||||||||||||||||||||||
 v^><jddddddddddddddddddd
 dddddddddddddddddddddddd
 d            ddddd      
@@ -193,7 +196,8 @@ vv               d
 background = d
 music = DeepBelow
 text = 
-------------------------
+
+||||||||||||||||||||||||
 v^><wddddddddddddddddddd
 ddddddddd               
 ddddddddd               
@@ -201,9 +205,9 @@ d     <dd
 d     <dd  j j j j  dddd
 dp    <dd           dddd
 ddd    dd           dddd
+ddd    dd           dddd
 ddd    dd    ^^^    dddd
-ddd    dd  ^^ddd^^  dddd
-ddd    dd  ddddddd  v  d
+ddd    dd  ^^ddd^^  v  d
 ddd        ddddddd     d
 ddd        ddddddd     d
 ddd        ddddddd     d
@@ -257,7 +261,8 @@ dddd     dd      ddd
 background = d
 music = DeepBelow
 text = 
-------------------------
+
+||||||||||||||||||||||||
 d   j               dddd
 d                   dddd
 d                   dddd
@@ -321,7 +326,8 @@ dd                 ddddd
 background = d
 music = DeepBelow
 text = 
-------------------------
+
+||||||||||||||||||||||||
 dddddddddddddddddddddddd
 dvvv         ddddddddddd
 d            ddddd      
@@ -385,7 +391,8 @@ v^><dcjg
 background = d
 music = DeepBelow
 text = 
-------------------------
+
+||||||||||||||||||||||||
 v^><dcjg                
                         
                         
