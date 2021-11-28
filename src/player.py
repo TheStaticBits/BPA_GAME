@@ -119,7 +119,7 @@ class Player(src.object_base.ObjectBase):
                     self.yVelocity = constants.JUMP_FORCE * self.gravityDir
                     return (tile, position)
                 
-            elif tile == "c" or tile == "g":
+            elif tile == "c":
                 return (tile, position)
             
             elif tile in constants.SPIKE_ROTATIONS:
