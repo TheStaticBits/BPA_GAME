@@ -121,7 +121,7 @@ class TileRenderer:
     def draw_tiles(self, room, surface, backgroundTile):
         # Setting up background tile
         backgroundTile = self.tileKey[backgroundTile]["tile"].copy()
-        backgroundTile.fill((255, 255, 255, 200), None, pygame.BLEND_RGBA_MULT)
+        backgroundTile.fill((255, 255, 255, 150), None, pygame.BLEND_RGBA_MULT)
 
         """  BEWARE: SPAGHETTI CODE AHEAD  """ # Maybe I should clean this up a bit...
         # Iterating through all of the tiles in the current room
