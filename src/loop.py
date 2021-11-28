@@ -105,6 +105,7 @@ class Loop(src.scene_base.SceneBase):
             "playerY": self.playing.player.rect.y,
             "playerYVelocity": self.playing.player.yVelocity,
             "playerXVelocity": self.playing.player.xVelocity,
+            "globalGravity": self.playing.gravityDir,
             "level": self.playing.level,
             "room": self.playing.room,
             "crystals": "".join([str(x) for x in self.playing.crystals])

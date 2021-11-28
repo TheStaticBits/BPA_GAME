@@ -27,6 +27,12 @@ class Playing(src.scene_base.SceneBase):
         self.level = int(saveData["level"])
         self.room = int(saveData["room"])
 
+        # Gravity line pull direction
+        # Each entity still has its own pull direction for if it's below or above the line.
+        # 1 is normal gravity (pull towards the line)
+        # -1 is reverse gravity (pull away from the line)
+        self.gravityDir = int(saveData["globalGravity"])
+
         self.crystals = [int(x) for x in list(saveData["crystals"])] # Converting the saved string to a list of ints
 
         self.currentCrystal = False # If the crystal in the current level has been collected
@@ -60,12 +66,6 @@ class Playing(src.scene_base.SceneBase):
             constants.GRAV_BEAM_PATH, 
             constants.GRAV_BEAM_WIDTH
         )
-
-        # Gravity line pull direction
-        # Each entity still has its own pull direction for if it's below or above the line.
-        # 1 is normal gravity (pull towards the line)
-        # -1 is reverse gravity (pull away from the line)
-        self.gravityDir = 1
 
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
