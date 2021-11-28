@@ -51,7 +51,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
         self.text = ""
         self.showText = False
-        self.textObject = pygame.font.Font(constants.FONT_PATH, 15)
+        self.textObject = pygame.font.Font(constants.FONT_PATH, 10)
         self.textPos = [0, 0]
         self.textWavX = 0
 
@@ -73,48 +73,54 @@ class Cutscenes(src.scene_base.SceneBase):
         # And other formats
         # Look inside data/cutscenes.json for more examples
         for command in commands:
-            if command[0] in self.objects:
-                if command[1] == "walk":
-                    self.objects[command[0]]["movement"] = command[2]
+            comm = command.split(" ")
 
-                elif command[1] == "teleport":
-                    self.objects[command[0]]["obj"].rect.x = command[2][0]
-                    self.objects[command[0]]["obj"].rect.y = command[2][1]
+            if comm[0] in self.objects:
+                if comm[1] == "walk":
+                    self.objects[comm[0]]["movement"] = comm[2]
+
+                elif comm[1] == "teleport":
+                    self.objects[comm[0]]["obj"].rect.x = int(comm[2])
+                    self.objects[comm[0]]["obj"].rect.y = int(comm[3])
                 
-                elif command[1] == "controlled":
+                elif comm[1] == "controlled":
                     self.playerControlled = True
                 
-                elif command[1] == "noncontrolled":
+                elif comm[1] == "noncontrolled":
                     self.playerControlled = False
 
-            elif command[0] == "text":
+            elif comm[0] == "text":
 
-                if command[1] == "display":
+                if comm[1] == "display":
                     self.showText = True
-                elif command[1] == "hide":
+                elif comm[1] == "hide":
                     self.showText = False
                 
-                elif command[1] == "change":
-                    self.text = command[2]
-                elif command[1] == "move":
-                    self.textPos = command[2] 
+                elif comm[1] == "change":
+                    self.text = " ".join(comm[2:])
+                elif comm[1] == "move":
+                    self.textPos = (int(comm[2]), int(comm[3])) 
             
-            elif command[0] == "run": # Runs a conditional
-                self.runningConditionals.append(command[1])
+            elif comm[0] == "run": # Runs a conditional
+                self.runningConditionals.append(comm[1])
             
-            elif command[0] == "end":
+            elif comm[0] == "end":
                 return "end"
 
 
     def run_conditional(self, condName, conditional):
-        checking = self.objects[conditional[0]]["obj"]
+        cond = conditional.split(" ")
 
-        if conditional[1] == "x":
+        checking = self.objects[cond[0]]["obj"]
+
+        if cond[1] == "x":
             checking = checking.rect.x
-        elif conditional[1] == "y":
+        elif cond[1] == "y":
             checking = checking.rect.y
+        
+        command = "".join(cond[2:])
 
-        check = eval(f"{checking} {conditional[2]}")
+        check = eval(f"{checking} {command}")
         
         if check:
             self.activeConditionals.append(condName)
@@ -225,7 +231,7 @@ class Cutscenes(src.scene_base.SceneBase):
         if self.showText:
             self.textWavX += 0.05
 
-            renderText = self.textObject.render(self.text, False, (0, 0, 0))
+            renderText = self.textObject.render(self.text, False, (255, 255, 255))
             textYOffset = math.sin(self.textWavX) * 5
 
             window.blit(renderText, (self.textPos[0], self.textPos[1] + textYOffset))
