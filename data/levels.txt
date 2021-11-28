@@ -185,8 +185,8 @@ d     <dd
 d     <dd  j j j j  dddd
 dp    <dd           dddd
 ddd    dd           dddd
-ddd    dd  ^^^^^^^  dddd
-ddd    dd  ddddddd  dddd
+ddd    dd    ^^^    dddd
+ddd    dd  ^^ddd^^  dddd
 ddd    dd  ddddddd  v  d
 ddd        ddddddd     d
 ddd        ddddddd     d
@@ -210,8 +210,8 @@ dddddddddddddddddddddddd
 ||||||||||||||||||||||||
 v^><djgddd              
       dddd              
-      dd                
-      vv            dddd
+      vv                
+                    dddd
                     dddd
 ddd       ^   ^     dddd
 ddd^^     ddddd     dddd
@@ -223,22 +223,22 @@ ddddd     dd    j   dddd
 d   d^^^^^dd        dddd
 dddddddddddd        dddd
 ||||||||||||||||||||||||
-v^><dd       dd   g   dd
+    dd       dd       dd
     dd       dd       dd
     dd   dd  dd       dd
 dd  dd   dd  dd   j   dd
 dd     j dd  dd       dd
 dddd     dd  dd       dd
-dddd     dd  vv  ^^^  dd
-dddd     dd      ddd  dd
-dddd     dd      ddd  dd
-dddd     dd      ddd    
+dd^d     dd  vv  ^^^  dd
+ddvd     dd      ddd  dd
+dd<d     dd      ddd  dd
+dd>d     dd      ddd    
 dddd     dd      ddd    
 dddd   j dd      ddd    
 dddd     dd      ddd    
 dddd     dd      ddd    
 ------------------------
-d   jg              dddd
+d   j               dddd
 d                   dddd
 d                   dddd
 dp    j ^   ^   ^   dddd
@@ -297,4 +297,124 @@ vddddddddd  dddd   ddddd
 >dvvvvvvvv         ddddd
 <d                 ddddd
 dd                 ddddd
+------------------------
+dddddddddddddddddddddddd
+dvvv         ddddddddddd
+d            ddddd      
+d    g        dddd      
+d             dddd      
+dp     ^^^^     dd   ddd
+ddddddddddd     dd   ddd
+ddddddddddd     dd   ddd
+>cjdddd       dddd   ddd
+<dddddd       dddd   ddd
+^dddddd              ddd
+vdddddd            g ddd
+ddddddd              ddd
+dddddddddddddddddddddddd
 ||||||||||||||||||||||||
+v^><dcjgddd             
+ddddddddddd             
+                        
+      <dd           dd  
+      <dd           dd  
+dddd  ddddd  dddd   dddd
+dddd  ddddd  dddd   dddd
+d              dd   dddd
+d              dd   dddd
+d              dd   dddd
+dg             dd g dddd
+d                      d
+d                      d
+dddddddddddddddddddddddd
+||||||||||||||||||||||||
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+------------------------
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+v^><dcjg                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+------------------------
