@@ -47,9 +47,10 @@ def load_levels(levelPath) -> list:
 def save_room(
     saveLevel, # Level number of the room being saved
     saveRoom, # Room number of the room being saved
-    tiles # The list of tiles that the room is being changed to
+    tiles, # The list of tiles that the room is being changed to
+    filePath
     ):
-    levels = load_levels()
+    levels = load_levels(filePath)
     
     with open(constants.LEVELS_PATH, "w") as file:
         # Iterating through the levels
