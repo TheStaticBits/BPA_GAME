@@ -84,6 +84,7 @@ class Playing(src.scene_base.SceneBase):
 
     
     def load_room(self):
+        self.get_text()
         self.tileSurface.fill((0, 0, 0))
         self.tileRenderer.draw_tiles(
             self.levels[self.level][self.room], 
@@ -186,8 +187,6 @@ class Playing(src.scene_base.SceneBase):
         # If the player moved to the far right of the screen
         if playerState == "right":
             self.room += 1
-
-            self.get_text() # Getting the text for the current room (if there is any)
             
             # If the room number has hit the end of the level
             if self.room >= len(self.levels[self.level]):
@@ -219,8 +218,6 @@ class Playing(src.scene_base.SceneBase):
         elif playerState == "left":
             if self.room > 0: # If it isn't the start of a level
                 self.room -= 1
-                
-                self.get_text() # Getting the text for the current room (if there is any)
 
                 self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) - constants.PLAYER_WIDTH # Moving the player to the opposite side of the screen
 
@@ -230,7 +227,7 @@ class Playing(src.scene_base.SceneBase):
         elif playerState == "dead":
             self.room = 0 # Resetting the room number
             self.setup_player() # Resetting the player
-            self.tilesChanged = True # Rerendering the tiles
+            self.tilesChanged = True # Rerenders
             self.gravityDir = 1 # Resetting gravity
 
             # Resetting crystal

@@ -50,6 +50,7 @@ class Player(src.object_base.ObjectBase):
         # This will result in a 0, a 1, or a -1. The inputs are True or False.
         # For example: If both are True, then it will result in 0, meaning no direction moved.
         self.dirMoved = inputs["right"] - inputs["left"]
+        self.facing = self.dirMoved # For rendering
 
         # If the player moved
         if self.dirMoved != 0:
@@ -78,6 +79,12 @@ class Player(src.object_base.ObjectBase):
             room, 
             1 if self.xVelocity > 0 else (0 if self.xVelocity == 0 else -1)
         )
+
+        if self.dirMoved == 0:
+            self.switch_anim("idle")
+            
+        else:
+            self.switch_anim("walk")
 
         
         # Update velocity based on inputs

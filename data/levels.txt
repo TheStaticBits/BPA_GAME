@@ -1,7 +1,7 @@
 background = w
 music = ThereIsSomethingV2
-text 0 = HELLLOOOOOOOOOOOOO
-text 1 = Jump to yes because yes
+text 0 = [Insert tutorial here]
+text 1 = [Insert another tutorial here]
 ------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w
