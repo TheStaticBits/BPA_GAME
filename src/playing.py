@@ -219,6 +219,8 @@ class Playing(src.scene_base.SceneBase):
         elif playerState == "left":
             if self.room > 0: # If it isn't the start of a level
                 self.room -= 1
+                
+                self.get_text() # Getting the text for the current room (if there is any)
 
                 self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) - constants.PLAYER_WIDTH # Moving the player to the opposite side of the screen
 

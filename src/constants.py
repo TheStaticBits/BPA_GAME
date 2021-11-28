@@ -3,8 +3,8 @@ import pygame
 SAVE_PATH = "saves/save.db"
 EVENT_LOG_PATH = "saves/events.log"
 
-FONT_PATH = "res/font/pixelated/pixelated.ttf"
-FONT_SIZE = 10
+FONT_PATH = "res/font/monogram.ttf"
+FONT_SIZE = 15
 
 LEVELS_PATH = "data/levels.txt"
 
