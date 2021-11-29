@@ -39,6 +39,9 @@ class Loop(src.scene_base.SceneBase):
             if check != None and self.playing.room == 0:
                 self.cutscene.setup(check)
                 self.scene = "cutscene"
+            
+            else:
+                self.playing.start_music()
         
         except Exception:
             err = traceback.format_exc()
@@ -86,27 +89,6 @@ class Loop(src.scene_base.SceneBase):
                 self.logger.critical(err)
 
                 utility.error_box(err)
-    
-    
-    def save_and_exit(self):
-        self.logger.info("Saving game state...")
-
-        # Saves the game's data
-        utility.modif_save({
-            "playerX": self.playing.player.rect.x,
-            "playerY": self.playing.player.rect.y,
-            "playerYVelocity": self.playing.player.yVelocity,
-            "playerXVelocity": self.playing.player.xVelocity,
-            "globalGravity": self.playing.gravityDir,
-            "level": self.playing.level,
-            "room": self.playing.room,
-            "crystals": "".join([str(x) for x in self.playing.crystals])
-        }) 
-
-        self.logger.info("Exiting Pygame...")
-        
-        # Quits Pygame
-        pygame.quit()
 
 
     def update(self):
@@ -137,3 +119,24 @@ class Loop(src.scene_base.SceneBase):
         
         elif self.scene == "cutscene":
             self.cutscene.render(self.window.miniWindow)
+    
+
+    def save_and_exit(self):
+        self.logger.info("Saving game state...")
+
+        # Saves the game's data
+        utility.modif_save({
+            "playerX": self.playing.player.rect.x,
+            "playerY": self.playing.player.rect.y,
+            "playerYVelocity": self.playing.player.yVelocity,
+            "playerXVelocity": self.playing.player.xVelocity,
+            "globalGravity": self.playing.gravityDir,
+            "level": self.playing.level,
+            "room": self.playing.room,
+            "crystals": "".join([str(x) for x in self.playing.crystals])
+        }) 
+
+        self.logger.info("Exiting Pygame...")
+        
+        # Quits Pygame
+        pygame.quit()
