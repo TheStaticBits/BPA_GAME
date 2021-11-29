@@ -153,7 +153,7 @@ class Cutscenes(src.scene_base.SceneBase):
         cond = conditional.split(" ")
 
         # If the command is asking for the data of an entity
-        if len(conditional) == 3:
+        if len(cond) == 4:
             checking = self.objects[cond[0]]["obj"]
 
             if cond[1] == "x":
@@ -166,9 +166,9 @@ class Cutscenes(src.scene_base.SceneBase):
             check = eval(f"{checking} {command}")
         
         # if the command is asking for a single variable
-        elif len(conditional) == 2:
-            if conditional[0] == "room":
-                check = eval(f"{self.room} {conditional[1]}")
+        elif len(cond) == 3:
+            if cond[0] == "room":
+                check = eval(f"{self.room} {cond[1]}")
         
         if check:
             self.activeConditionals.append(condName)
