@@ -73,6 +73,8 @@ class Playing(src.scene_base.SceneBase):
             constants.GRAV_BEAM_WIDTH
         )
 
+        self.playerPositions = [] # List of player positions for Corlen and Ellipse to follow
+
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
 
@@ -251,10 +253,21 @@ class Playing(src.scene_base.SceneBase):
         # Gravity beam animation update
         self.gravityBeam.update()
 
+        if self.playerPositions == [] or self.playerPositions[0] != (self.player.rect.x, self.player.rect.y): # If the player moved
+            self.playerPositions.insert(0, (self.player.rect.x, self.player.rect.y)) # inserts at the front of the list
+            
+            if len(self.playerPositions) > constants.ELLIPSE_FOLLOW_DISTANCE + 1:
+                self.playerPositions.pop(-1)
+
         # Ellipse update
-        self.ellipse.update(self.room, self.level, self.levels[self.level][self.room], self.gravityDir)
+        self.ellipse.update(
+            self.levels[self.level][self.room], 
+            self.playerPositions,
+            self.gravityDir
+        )
 
         self.tileRenderer.update_tiles_with_anims()
+
 
 
         """  Mouse Inputs for Editor  """
@@ -313,7 +326,7 @@ class Playing(src.scene_base.SceneBase):
             )
 
         # Drawing Ellipse
-        self.ellipse.render(self.room, self.level, window)
+        self.ellipse.render_without_room(window)
 
         # Drawing player
         self.player.render(window)

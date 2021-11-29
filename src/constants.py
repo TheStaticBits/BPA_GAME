@@ -39,6 +39,9 @@ GRAVITY = 0.2 # Downward force
 MAX_SPEED = 2 # Maximum left/right speed
 SPEED_UP_SPEED = 0.3 # How quickly the player accelerates/decelerates
 
+CORLEN_FOLLOW_DISTANCE = 5 # How far behind Corlen is from the player
+ELLIPSE_FOLLOW_DISTANCE = 10 # How far behind Ellipse is from the player
+
 # Default save (for the database)
 DEFAULT_SAVE = {
     "playerX": -1,
@@ -148,10 +151,21 @@ PLAYER_WIDTH = 8
 ELLIPSE_ANIMATIONS = {
     "idle": {
         "path": "res/characters/ellipse/idle.png",
-        "delay": 25
+        "delay": 20
     },
     "walk": {
         "path": "res/characters/ellipse/walking.png",
+        "delay": 7
+    }
+}
+
+CORLEN_ANIMATIONS = {
+    "idle": {
+        "path": "res/characters/corlen/idle.png",
+        "delay": 27
+    },
+    "walk": {
+        "path": "res/characters/corlen/walking.png",
         "delay": 7
     }
 }
