@@ -39,8 +39,9 @@ GRAVITY = 0.2 # Downward force
 MAX_SPEED = 2 # Maximum left/right speed
 SPEED_UP_SPEED = 0.3 # How quickly the player accelerates/decelerates
 
-CORLEN_FOLLOW_DISTANCE = 5 # How far behind Corlen is from the player
+CORLEN_FOLLOW_DISTANCE = 20 # How far behind Corlen is from the player
 ELLIPSE_FOLLOW_DISTANCE = 10 # How far behind Ellipse is from the player
+MAX_FOLLOW_DISTANCE = 20
 
 # Default save (for the database)
 DEFAULT_SAVE = {

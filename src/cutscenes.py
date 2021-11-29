@@ -4,6 +4,7 @@ import math
 import src.scene_base
 import src.player
 import src.ellipse
+import src.corlen
 import src.utility as utility
 import src.constants as constants
 import src.animation
@@ -33,6 +34,12 @@ class Cutscenes(src.scene_base.SceneBase):
             elif name == "ellipse":
                 self.objects[name] = {
                     "obj": src.ellipse.Ellipse(position, 0, 0), # Since each cutscene is one level, the level number doesn't matter
+                    "movement": "still"
+                }
+            
+            elif name == "corlen":
+                self.objects[name] = {
+                    "obj": src.corlen.Corlen(position, 0, 0),
                     "movement": "still"
                 }
 
@@ -204,29 +211,28 @@ class Cutscenes(src.scene_base.SceneBase):
             object = self.objects[obj]["obj"]
             movement = self.objects[obj]["movement"]
 
-            if obj == "player":
-                if self.playerControlled:
-                    if not self.playerCanJump:
-                        inputs["up"] = False
+            if obj == "player" and self.playerControlled:
+                if not self.playerCanJump:
+                    inputs["up"] = False
 
-                    result = object.update(self.level[self.room], inputs)
+                result = object.update(self.level[self.room], inputs)
 
-                    if result == "right":
-                        try:
-                            object.rect.x = 0
-                            self.room += 1
-                            self.rerender_tiles()
+                if result == "right":
+                    try:
+                        object.rect.x = 0
+                        self.room += 1
+                        self.rerender_tiles()
 
-                        except IndexError:
-                            # Once the player has reached the end of the level, the cutscene ends
-                            return False
-                    
-                    elif result == "left":
-                        if self.room > 0:
-                            self.room -= 1
-                            self.rerender_tiles()
-                    
-                    continue
+                    except IndexError:
+                        # Once the player has reached the end of the level, the cutscene ends
+                        return False
+                
+                elif result == "left":
+                    if self.room > 0:
+                        self.room -= 1
+                        self.rerender_tiles()
+                
+                continue
 
 
             if movement != "still":

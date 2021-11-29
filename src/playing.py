@@ -9,6 +9,7 @@ import os
 import src.scene_base
 import src.player
 import src.ellipse
+import src.corlen
 import src.utility as utility
 import src.constants as constants
 import src.animation
@@ -53,6 +54,7 @@ class Playing(src.scene_base.SceneBase):
         )
 
         self.ellipse = src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level)
+        self.corlen = src.corlen.Corlen((self.player.rect.y, self.player.rect.x), self.room, self.level)
 
         # Setup tile drawing surface
         self.tileSurface = pygame.Surface((
@@ -208,6 +210,7 @@ class Playing(src.scene_base.SceneBase):
                 self.setup_player()
 
                 self.ellipse.rect.x, self.ellipse.rect.y = self.player.rect.x, self.player.rect.y
+                self.corlen.rect.x, self.corlen.rect.y = self.player.rect.x, self.player.rect.y
 
                 self.playerPositions = []
 
@@ -218,7 +221,8 @@ class Playing(src.scene_base.SceneBase):
             else:
                 self.player.rect.x = 0 # Moving the player to the complete other side of the room
                 
-                self.ellipse.rect.x  # Moving Ellipse to the complete other side of the room
+                self.ellipse.rect.x -= (constants.SCREEN_TILE_SIZE[0] + constants.TILE_SIZE[0])  # Moving Ellipse to the complete other side of the room
+                self.corlen.rect.x -= (constants.SCREEN_TILE_SIZE[0] + constants.TILE_SIZE[0])  # Moving Corlen to the complete other side of the room
 
             self.tilesChanged = True # This will make the renderer rerender the tiles in the render function
 
@@ -262,11 +266,17 @@ class Playing(src.scene_base.SceneBase):
         if self.playerPositions == [] or self.playerPositions[0] != (self.player.rect.x, self.player.rect.y): # If the player moved
             self.playerPositions.insert(0, (self.player.rect.x, self.player.rect.y)) # inserts at the front of the list
             
-            if len(self.playerPositions) > constants.ELLIPSE_FOLLOW_DISTANCE + 1:
+            if len(self.playerPositions) > constants.MAX_FOLLOW_DISTANCE + 1:
                 self.playerPositions.pop(-1)
 
         # Ellipse update
         self.ellipse.update(
+            self.levels[self.level][self.room], 
+            self.playerPositions,
+            self.gravityDir
+        )
+        # Corlen update
+        self.corlen.update(
             self.levels[self.level][self.room], 
             self.playerPositions,
             self.gravityDir
@@ -333,6 +343,9 @@ class Playing(src.scene_base.SceneBase):
 
         # Drawing Ellipse
         self.ellipse.render_without_room(window)
+
+        # Drawing Corlen
+        self.corlen.render_without_room(window)
 
         # Drawing player
         self.player.render(window)
