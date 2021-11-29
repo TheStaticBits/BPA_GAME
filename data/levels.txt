@@ -1,8 +1,8 @@
+
 background = w
 music = ThereIsSomethingV2
 text 0 = Use W or UP to jump
-
-||||||||||||||||||||||||
+------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w
 w         wwwww        w
@@ -63,10 +63,10 @@ w          ww     www  w
 w          ww     wwwwww
 wwwwwwwwwwwww     wwwwww
 ------------------------
+
 background = w
 music = ThereIsSomethingV2
-
-||||||||||||||||||||||||
+------------------------
 w^><wwwww           wwww
 wwwwwwwww           wwww
 w     www           wwww
@@ -127,10 +127,10 @@ v^><wel        w    wwww
   wwwwwwww     w  wwwwww
   wwwwwwww     w  wwwwww
 ------------------------
+
 background = d
 music = DeepBelow
-
-||||||||||||||||||||||||
+------------------------
 v^><jddddddddddddddddddd
 dddddddddddddddddddddddd
 d            ddddd      
@@ -191,10 +191,10 @@ vv               d
                  d      
                  d      
 ------------------------
+
 background = d
 music = DeepBelow
-
-||||||||||||||||||||||||
+------------------------
 v^><wddddddddddddddddddd
 ddddddddd               
 ddddddddd               
@@ -255,10 +255,10 @@ dddd   j dd      ddd
 dddd     dd      ddd    
 dddd     dd      ddd    
 ------------------------
+
 background = d
 music = DeepBelow
-
-||||||||||||||||||||||||
+------------------------
 d   j               dddd
 d                   dddd
 d                   dddd
@@ -319,10 +319,10 @@ vddddddddd  dddd   ddddd
 <d                 ddddd
 dd                 ddddd
 ------------------------
+
 background = d
 music = DeepBelow
-
-||||||||||||||||||||||||
+------------------------
 dddddddddddddddddddddddd
 dvvv         ddddddddddd
 d            ddddd      
@@ -353,17 +353,17 @@ d                      d
 d                      d
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-v^><dddddddddddddddddddd
-dddddddd      dddddddddd
-dddddddd      dddddddddd
-dddddddd       ddddddddd
-dd        dd   ddddddddd
-dd        dd     vv     
-     g    dd            
-    ddddddddd           
-ddddddddddddd        ^^^
-dddddddddddddddddddddddd
-dddddddddddddddddddddddd
+v^><dg           ddddddd
+ddddd            ddddddd
+ddddd            ddddddd
+           ddd   ddddddd
+           ddd g ddddddd
+           ddd   vv     
+           ddd          
+  dddd     ddd          
+  dddd     ddd       ^^^
+  dddd  g  ddddddddddddd
+dddddd     ddddddddddddd
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 ddddddddddddddjddddddddd
@@ -383,10 +383,10 @@ v^><dcjg
                         
                         
 ------------------------
+
 background = d
 music = DeepBelow
-
-||||||||||||||||||||||||
+------------------------
 v^><dcjg                
                         
                         

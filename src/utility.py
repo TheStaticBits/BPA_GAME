@@ -82,9 +82,9 @@ def save_room(
 
             # Writing the level data
             for key, value in levelData[levelNumber].items():
-                file.write(key + constants.ASSIGNMENT_SEPARATOR + value + "\n")
+                file.write("\n" + key + constants.ASSIGNMENT_SEPARATOR + value)
             
-            file.write(constants.ROOM_SEPARATOR)
+            file.write(constants.LEVEL_SEPARATOR)
             
             for roomNumber, room in enumerate(level):
                 if roomNumber != 0: # If it isn't the first room
