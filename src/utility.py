@@ -47,8 +47,9 @@ def load_levels(levelPath) -> list:
             allDat = allDat.split("\n")
 
             for dataBit in allDat:
-                dataBit = dataBit.split(constants.ASSIGNMENT_SEPARATOR)
-                levelData[int(level / 2)][dataBit[0]] = dataBit[1]
+                if dataBit != "":
+                    dataBit = dataBit.split(constants.ASSIGNMENT_SEPARATOR)
+                    levelData[int(level / 2)][dataBit[0]] = dataBit[1]
 
         else:
             for room in range(len(levels[level])):
