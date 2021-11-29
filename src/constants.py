@@ -18,6 +18,12 @@ FPS = 60 # Frame rate of the screen
 
 TILE_SIZE = (16, 16) # Size in pixels of the tiles
 SCREEN_TILE_SIZE = (24, 14) # Amount of tiles on the screen by X and Y
+SCREEN_SIZE = (
+    SCREEN_TILE_SIZE[0] * TILE_SIZE[0], 
+    SCREEN_TILE_SIZE[1] * TILE_SIZE[1]
+) # Size of the screen in pixels, not including scale factor
+
+PX_SCALE_FACTOR = 3 # This is the scale factor of everything being rendered to the screen
 
 # These are the separaters in the levels.txt file.
 LEVEL_SEPARATOR = "\n------------------------\n"
@@ -25,8 +31,6 @@ ROOM_SEPARATOR = "\n||||||||||||||||||||||||\n"
 
 # The assignment of leveldata
 ASSIGNMENT_SEPARATOR = " = "
-
-PX_SCALE_FACTOR = 3 # This is the scale factor of everything being rendered to the screen
 
 # These are the keys which will trigger the movement of the player.
 LEFT_KEYS = (pygame.K_LEFT, pygame.K_a)
@@ -41,7 +45,7 @@ SPEED_UP_SPEED = 0.3 # How quickly the player accelerates/decelerates
 
 CORLEN_FOLLOW_DISTANCE = 10 # How far behind Corlen is from the player
 ELLIPSE_FOLLOW_DISTANCE = 20 # How far behind Ellipse is from the player
-MAX_FOLLOW_DISTANCE = 20
+MAX_FOLLOW_DISTANCE = 20 # Player positions stored
 
 # Default save (for the database)
 DEFAULT_SAVE = {

@@ -24,17 +24,28 @@ class Ellipse(src.object_base.ObjectBase):
         self.followContinueFrames = 0
 
     
+    def check_below(self, room): # Check if Ellipse is on a platform
+        super().update_gravity() # Adds gravity to yVelocity
+        super().update_y_collision(room) # Uses yVelocity and checks if there is a tile below
+
+        ret = self.yVelocity == 0 # Return value
+        self.yVelocity = 0 # Reset yVelocity
+        
+        return ret # Return the return value
+
+    
     def update(
         self, 
-        room, # List of tiles in the current room
+        levels, # List of all levels
         playerPositions,
+        playerLevelAndRoom,
         playerMoved, # If the player has moved
         globalGravity
         ):
         if len(playerPositions) > constants.ELLIPSE_FOLLOW_DISTANCE: 
             if not playerMoved: 
                 if self.followContinueFrames < constants.ELLIPSE_FOLLOW_DISTANCE:
-                    if self.rect.y != playerPositions[0][1]: # If Ellipse needs to update its y position (because of gravity)
+                    if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level][self.room]): # If Ellipse needs to update its y position (because of gravity) or it isn't on a platform
                         self.followContinueFrames += 1
                 
             else:
@@ -59,9 +70,11 @@ class Ellipse(src.object_base.ObjectBase):
 
             super().reset_current_tile()
             super().update_x_collision(
-                room, 
+                levels[self.level][self.room], 
                 dirMoved
             )
+
+            self.level, self.room = playerLevelAndRoom[constants.ELLIPSE_FOLLOW_DISTANCE - self.followContinueFrames] # Setting level and room
 
             self.rect.y = playerPositions[constants.ELLIPSE_FOLLOW_DISTANCE - self.followContinueFrames][1]
             
@@ -69,7 +82,3 @@ class Ellipse(src.object_base.ObjectBase):
     def render(self, currentRoom, currentLevel, window):
         if currentRoom == self.room and currentLevel == self.level:
             super().render(window)
-    
-
-    def render_without_room(self, window):
-        super().render(window)

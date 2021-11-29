@@ -51,7 +51,7 @@ class Cutscenes(src.scene_base.SceneBase):
             self.backgroundAnim = src.animation.Animation(
                 10, 
                 self.cutsceneData["backgroundAnim"]["path"],
-                constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]
+                constants.SCREEN_SIZE[0]
             )
         
         else:
@@ -60,8 +60,8 @@ class Cutscenes(src.scene_base.SceneBase):
         self.room = 0
 
         self.tiles = pygame.Surface((
-            constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0], 
-            constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]
+            constants.SCREEN_SIZE[0], 
+            constants.SCREEN_SIZE[1]
         ))
 
         self.playerControlled = False
@@ -250,7 +250,7 @@ class Cutscenes(src.scene_base.SceneBase):
                     object.rect.x += constants.MAX_SPEED
                     object.facing = 1
                     
-                    if object.rect.x >= (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]):
+                    if object.rect.x >= (constants.SCREEN_SIZE[0]):
                         if obj == "player":
                             try:
                                 object.rect.x = 0
@@ -275,7 +275,7 @@ class Cutscenes(src.scene_base.SceneBase):
                                 self.rerender_tiles()
                         
                         else:
-                            object.rect.x = (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]) - object.rect.width
+                            object.rect.x = (constants.SCREEN_SIZE[0]) - object.rect.width
                             object.room -= 1
 
 

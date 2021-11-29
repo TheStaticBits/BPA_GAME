@@ -3,8 +3,8 @@ import src.constants as constants
 
 class Window:
     WINDOW_SIZE = (
-        constants.PX_SCALE_FACTOR * constants.TILE_SIZE[0] * constants.SCREEN_TILE_SIZE[0], 
-        constants.PX_SCALE_FACTOR * constants.TILE_SIZE[1] * constants.SCREEN_TILE_SIZE[1]
+        constants.PX_SCALE_FACTOR * constants.SCREEN_SIZE[0],
+        constants.PX_SCALE_FACTOR * constants.SCREEN_SIZE[1]
     ) # This is the size of the window
 
     def __init__(self):

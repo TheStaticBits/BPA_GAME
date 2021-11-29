@@ -58,8 +58,8 @@ class Playing(src.scene_base.SceneBase):
 
         # Setup tile drawing surface
         self.tileSurface = pygame.Surface((
-            constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0],
-            constants.SCREEN_TILE_SIZE[1] * constants.TILE_SIZE[1]
+            constants.SCREEN_SIZE[0],
+            constants.SCREEN_SIZE[1]
         ))
         
         self.load_room() # Drawing the tiles onto the tile surface
@@ -76,6 +76,7 @@ class Playing(src.scene_base.SceneBase):
         )
 
         self.playerPositions = [] # List of player positions for Corlen and Ellipse to follow
+        self.playerLevelAndRoom = [] # List of the level and room the player is in at what frame
 
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
@@ -99,6 +100,7 @@ class Playing(src.scene_base.SceneBase):
 
 
     def start_music(self):
+        print("music")
         utility.play_music(self.levelData[self.level]["music"])
         self.playingSong = self.levelData[self.level]["music"]
     
@@ -112,7 +114,7 @@ class Playing(src.scene_base.SceneBase):
                 self.text = self.levelData[self.level][f"text {self.room}"]
                 self.textSurface = self.font.render(self.text, False, (255, 255, 255))
                 
-                self.fontX = (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]) / 2 - self.textSurface.get_width() / 2
+                self.fontX = (constants.SCREEN_SIZE[0]) / 2 - self.textSurface.get_width() / 2
 
         except KeyError: # If that room doesn't have text 
             pass
@@ -213,6 +215,7 @@ class Playing(src.scene_base.SceneBase):
                 self.corlen.rect.x, self.corlen.rect.y = self.player.rect.x, self.player.rect.y
 
                 self.playerPositions = []
+                self.playerLevelAndRoom = []
 
                 check = self.check_for_cutscene()
                 if check != None:
@@ -220,9 +223,6 @@ class Playing(src.scene_base.SceneBase):
             
             else:
                 self.player.rect.x = 0 # Moving the player to the complete other side of the room
-                
-                self.ellipse.rect.x -= (constants.SCREEN_TILE_SIZE[0] + constants.TILE_SIZE[0])  # Moving Ellipse to the complete other side of the room
-                self.corlen.rect.x -= (constants.SCREEN_TILE_SIZE[0] + constants.TILE_SIZE[0])  # Moving Corlen to the complete other side of the room
 
             self.tilesChanged = True # This will make the renderer rerender the tiles in the render function
 
@@ -267,24 +267,28 @@ class Playing(src.scene_base.SceneBase):
             playerMoved = True
 
             self.playerPositions.insert(0, (self.player.rect.x, self.player.rect.y)) # inserts at the front of the list
+            self.playerLevelAndRoom.insert(0, (self.level, self.room))
             
             if len(self.playerPositions) > constants.MAX_FOLLOW_DISTANCE + 1:
                 self.playerPositions.pop(-1)
+                self.playerLevelAndRoom.pop(-1)
         
         else:
             playerMoved = False
 
         # Ellipse update
         self.ellipse.update(
-            self.levels[self.level][self.room], 
+            self.levels, 
             self.playerPositions,
+            self.playerLevelAndRoom,
             playerMoved,
             self.gravityDir
         )
         # Corlen update
         self.corlen.update(
-            self.levels[self.level][self.room], 
+            self.levels, 
             self.playerPositions,
+            self.playerLevelAndRoom,
             playerMoved,
             self.gravityDir
         )
@@ -337,7 +341,7 @@ class Playing(src.scene_base.SceneBase):
 
         # Drawing gravity beam
         for x in range(
-            (constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]) 
+            (constants.SCREEN_SIZE[0]) 
             // constants.GRAV_BEAM_WIDTH
             ): # Goes through the center of the screen
 
@@ -348,11 +352,9 @@ class Playing(src.scene_base.SceneBase):
                 (constants.GRAV_BEAM_TILE_Y_POS * constants.TILE_SIZE[1]) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
             )
 
-        # Drawing Ellipse
-        self.ellipse.render_without_room(window)
-
-        # Drawing Corlen
-        self.corlen.render_without_room(window)
+        # Drawing Ellipse and Corlen
+        self.ellipse.render(self.room, self.level, window)
+        self.corlen.render(self.room, self.level, window)
 
         # Drawing player
         self.player.render(window)

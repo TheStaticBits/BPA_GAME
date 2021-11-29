@@ -22,19 +22,30 @@ class Corlen(src.object_base.ObjectBase):
         self.yVelocity = velocity
 
         self.followContinueFrames = 0
+    
+
+    def check_below(self, room): # Check if Corlen is on a platform
+        super().update_gravity() # Adds gravity to yVelocity
+        super().update_y_collision(room) # Uses yVelocity and checks if there is a tile below
+
+        ret = self.yVelocity == 0 # Return value
+        self.yVelocity = 0 # Reset yVelocity
+        
+        return ret # Return the return value
 
     
     def update(
         self, 
-        room, # List of tiles in the current room
+        levels, # List of all levels
         playerPositions,
+        playerLevelAndRoom,
         playerMoved, # If the player has moved
         globalGravity
         ):
         if len(playerPositions) > constants.CORLEN_FOLLOW_DISTANCE: 
             if not playerMoved: 
                 if self.followContinueFrames < constants.CORLEN_FOLLOW_DISTANCE:
-                    if self.rect.y != playerPositions[0][1]: # If Corlen needs to update his y position
+                    if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level][self.room]): # If Corlen needs to update his y position (because of gravity) or if he isn't on a platform
                         self.followContinueFrames += 1
                 
             else:
@@ -59,9 +70,11 @@ class Corlen(src.object_base.ObjectBase):
 
             super().reset_current_tile()
             super().update_x_collision(
-                room, 
+                levels[self.level][self.room], 
                 dirMoved
             )
+
+            self.level, self.room = playerLevelAndRoom[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames] # Setting level and room
 
             self.rect.y = playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames][1]
             
