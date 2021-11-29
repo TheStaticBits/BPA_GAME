@@ -51,18 +51,33 @@
         "cutsceneLevel": 1,
         "backgroundAnim": "res/cutscenes/corlen's_house.png",
         "start": {
-            "player": [16, 16],
-            "ellipse": [0, 0]
+            "player": [-16, 192],
+            "ellipse": [-16, -16],
+            "corlen": {"pos": [192, 192], "room": 1}
         },
 
         "time_commands": {
-            "0": ["player controlled"]
+            "0": [
+                "player noncontrolled",
+                "player move right",
+                "corlen face right"
+            ],
+            "50": [
+                "player move still",
+                "corlen face left",
+                "text change !",
+                "text move 192 180",
+                "text display",
+                "delay 20 corlenStop"
+            ]
         },
         "conditionals": {
-            "testPX": "player x > 50"
+            
         },
         "cond_commands":{
-            "testPX": ["ellipse walk right"]
+            "colenStop": [
+                "text change [insert weirdo]"
+            ]
         }
     },
 
