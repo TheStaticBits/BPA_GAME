@@ -34,7 +34,6 @@ class Ellipse(src.object_base.ObjectBase):
             if playerPositions[constants.ELLIPSE_FOLLOW_DISTANCE - self.followContinueFrames] == (self.rect.x, self.rect.y): # If the position the player moved to and the position of Ellipse are the same, meaning the player hasn't moved
                 if self.followContinueFrames != constants.ELLIPSE_FOLLOW_DISTANCE:
                     if playerPositions[constants.ELLIPSE_FOLLOW_DISTANCE - self.followContinueFrames - 1][1] != self.rect.y: # If Ellipse needs to update its y position (because of gravity)
-                        print("stage 3")
                         self.followContinueFrames += 1
                 
             else:
@@ -53,7 +52,7 @@ class Ellipse(src.object_base.ObjectBase):
             if dirMoved != 0:
                 self.facing = dirMoved
 
-            if self.facing == 0:
+            if dirMoved == 0:
                 self.switch_anim("idle")
             
             else:

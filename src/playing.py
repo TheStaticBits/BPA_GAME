@@ -207,12 +207,18 @@ class Playing(src.scene_base.SceneBase):
                 # Resetting the player
                 self.setup_player()
 
+                self.ellipse.rect.x, self.ellipse.rect.y = self.player.rect.x, self.player.rect.y
+
+                self.playerPositions = []
+
                 check = self.check_for_cutscene()
                 if check != None:
                     return check # Switches to the cutscene
             
             else:
-                self.player.rect.x -= (constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) - constants.PLAYER_WIDTH) # Moving the player to the complete other side of the room
+                self.player.rect.x = 0 # Moving the player to the complete other side of the room
+                
+                self.ellipse.rect.x  # Moving Ellipse to the complete other side of the room
 
             self.tilesChanged = True # This will make the renderer rerender the tiles in the render function
 
