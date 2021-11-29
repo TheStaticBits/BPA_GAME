@@ -3,8 +3,8 @@
         "beforeLevel": 0,
         "cutsceneLevel": 0,
         "start": {
-            "player": [64, 144],
-            "ellipse": [256, 144]
+            "player": {"pos": [64, 144]},
+            "ellipse": {"pos": [256, 144], "room": 0}
         },
         "time_commands": {
             "0": [
@@ -49,10 +49,10 @@
     "corlen's_house": {
         "beforeLevel": 2,
         "cutsceneLevel": 1,
-        "backgroundAnim": "res/cutscenes/corlen's_house.png",
+        "backgroundAnim": {"path": "res/cutscenes/corlen's_house.png", "room": 1},
         "start": {
-            "player": [-16, 192],
-            "ellipse": [-16, -16],
+            "player": {"pos": [-16, 192]},
+            "ellipse": {"pos": [-16, -16], "room": 0},
             "corlen": {"pos": [192, 192], "room": 1}
         },
 
@@ -75,8 +75,9 @@
             
         },
         "cond_commands":{
-            "colenStop": [
-                "text change [insert weirdo]"
+            "corlenStop": [
+                "text change [insert weirdo]",
+                "player controlled"
             ]
         }
     },

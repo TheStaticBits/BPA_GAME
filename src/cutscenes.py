@@ -27,19 +27,19 @@ class Cutscenes(src.scene_base.SceneBase):
         for name, position in self.cutsceneData["start"].items():
             if name == "player":
                 self.objects[name] = {
-                    "obj": src.player.Player(position),
+                    "obj": src.player.Player(position["pos"]),
                     "movement": "still"
                 }
             
             elif name == "ellipse":
                 self.objects[name] = {
-                    "obj": src.ellipse.Ellipse(position, 0, 0), # Since each cutscene is one level, the level number doesn't matter
+                    "obj": src.ellipse.Ellipse(position["pos"], position["room"], 0), # Since each cutscene is one level, the level number doesn't matter
                     "movement": "still"
                 }
             
             elif name == "corlen":
                 self.objects[name] = {
-                    "obj": src.corlen.Corlen(position, 0, 0),
+                    "obj": src.corlen.Corlen(position["pos"], position["room"], 0),
                     "movement": "still"
                 }
 
@@ -50,7 +50,7 @@ class Cutscenes(src.scene_base.SceneBase):
         if "backgroundAnim" in self.cutsceneData:
             self.backgroundAnim = src.animation.Animation(
                 10, 
-                self.cutsceneData["backgroundAnim"],
+                self.cutsceneData["backgroundAnim"]["path"],
                 constants.SCREEN_TILE_SIZE[0] * constants.TILE_SIZE[0]
             )
         
@@ -152,16 +152,23 @@ class Cutscenes(src.scene_base.SceneBase):
     def run_conditional(self, condName, conditional):
         cond = conditional.split(" ")
 
-        checking = self.objects[cond[0]]["obj"]
+        # If the command is asking for the data of an entity
+        if len(conditional) == 3:
+            checking = self.objects[cond[0]]["obj"]
 
-        if cond[1] == "x":
-            checking = checking.rect.x
-        elif cond[1] == "y":
-            checking = checking.rect.y
+            if cond[1] == "x":
+                checking = checking.rect.x
+            elif cond[1] == "y":
+                checking = checking.rect.y
+            
+            command = "".join(cond[2:])
+
+            check = eval(f"{checking} {command}")
         
-        command = "".join(cond[2:])
-
-        check = eval(f"{checking} {command}")
+        # if the command is asking for a single variable
+        elif len(conditional) == 2:
+            if conditional[0] == "room":
+                check = eval(f"{self.room} {conditional[1]}")
         
         if check:
             self.activeConditionals.append(condName)
@@ -174,7 +181,8 @@ class Cutscenes(src.scene_base.SceneBase):
         super().update()
 
         if self.backgroundAnim != None:
-            self.backgroundAnim.update()
+            if self.room == self.cutsceneData["backgroundAnim"]["room"]:
+                self.backgroundAnim.update()
 
         # Interpretting and running timed commands
         for time, commands in self.cutsceneData["time_commands"].items():
@@ -285,7 +293,8 @@ class Cutscenes(src.scene_base.SceneBase):
         window.blit(self.tiles, (0, 0))
 
         if self.backgroundAnim != None:
-            self.backgroundAnim.render(window, (0, 0))
+            if self.room == self.cutsceneData["backgroundAnim"]["room"]:
+                self.backgroundAnim.render(window, (0, 0))
         
         self.objects["player"]["obj"].render(window)
 
