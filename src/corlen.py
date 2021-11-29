@@ -28,12 +28,13 @@ class Corlen(src.object_base.ObjectBase):
         self, 
         room, # List of tiles in the current room
         playerPositions,
+        playerMoved, # If the player has moved
         globalGravity
         ):
         if len(playerPositions) > constants.CORLEN_FOLLOW_DISTANCE: 
-            if playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames] == (self.rect.x, self.rect.y): # If the position the player hasn't moved
+            if not playerMoved: 
                 if self.followContinueFrames != constants.CORLEN_FOLLOW_DISTANCE:
-                    if playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames - 1][1] != self.rect.y: # If Corlen needs to update his y position so he doesn't freeze in midair if the player stops moving
+                    if playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames - 1][1] != self.rect.y: # If Corlen needs to update his y position (because of gravity)
                         self.followContinueFrames += 1
                 
             else:
@@ -43,7 +44,7 @@ class Corlen(src.object_base.ObjectBase):
             self.test_grav_line(globalGravity)
             self.update_animation()
 
-            xMoved = (playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames][0] - self.rect.x)
+            xMoved = (playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames][0] - self.rect.x - (constants.PLAYER_WIDTH // 2))
             
             self.rect.x += xMoved
 
@@ -51,12 +52,10 @@ class Corlen(src.object_base.ObjectBase):
 
             if dirMoved != 0:
                 self.facing = dirMoved
-
-            if dirMoved == 0:
-                self.switch_anim("idle")
+                self.switch_anim("walk")
             
             else:
-                self.switch_anim("walk")
+                self.switch_anim("idle")
 
             super().reset_current_tile()
             super().update_x_collision(
@@ -64,9 +63,8 @@ class Corlen(src.object_base.ObjectBase):
                 dirMoved
             )
 
-            self.rect.y += playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames][1] - self.rect.y
-
-            super().reset_current_tile()
+            self.rect.y = playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames][1]
+            
             
 
     def render(self, currentRoom, currentLevel, window):

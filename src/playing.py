@@ -264,21 +264,28 @@ class Playing(src.scene_base.SceneBase):
         self.gravityBeam.update()
 
         if self.playerPositions == [] or self.playerPositions[0] != (self.player.rect.x, self.player.rect.y): # If the player moved
+            playerMoved = True
+
             self.playerPositions.insert(0, (self.player.rect.x, self.player.rect.y)) # inserts at the front of the list
             
             if len(self.playerPositions) > constants.MAX_FOLLOW_DISTANCE + 1:
                 self.playerPositions.pop(-1)
+        
+        else:
+            playerMoved = False
 
         # Ellipse update
         self.ellipse.update(
             self.levels[self.level][self.room], 
             self.playerPositions,
+            playerMoved,
             self.gravityDir
         )
         # Corlen update
         self.corlen.update(
             self.levels[self.level][self.room], 
             self.playerPositions,
+            playerMoved,
             self.gravityDir
         )
 
