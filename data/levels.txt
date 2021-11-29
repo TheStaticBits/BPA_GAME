@@ -353,17 +353,17 @@ d                      d
 d                      d
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-v^><dg           ddddddd
-ddddd            ddddddd
-ddddd            ddddddd
-           ddd   ddddddd
-           ddd g ddddddd
-           ddd   vv     
-           ddd          
-  dddd     ddd          
-  dddd     ddd       ^^^
-  dddd  g  ddddddddddddd
-dddddd     ddddddddddddd
+v^><dddddddddddddddddddd
+dddddddd      dddddddddd
+dddddddd      dddddddddd
+dddddddd       ddddddddd
+dd        dd   ddddddddd
+dd        dd     vv     
+     g    dd            
+    ddddddddd           
+ddddddddddddd        ^^^
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 ddddddddddddddjddddddddd
