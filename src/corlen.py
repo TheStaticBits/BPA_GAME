@@ -33,8 +33,8 @@ class Corlen(src.object_base.ObjectBase):
         ):
         if len(playerPositions) > constants.CORLEN_FOLLOW_DISTANCE: 
             if not playerMoved: 
-                if self.followContinueFrames != constants.CORLEN_FOLLOW_DISTANCE:
-                    if playerPositions[constants.CORLEN_FOLLOW_DISTANCE - self.followContinueFrames - 1][1] != self.rect.y: # If Corlen needs to update his y position (because of gravity)
+                if self.followContinueFrames < constants.CORLEN_FOLLOW_DISTANCE:
+                    if self.rect.y != playerPositions[0][1]: # If Corlen needs to update his y position
                         self.followContinueFrames += 1
                 
             else:

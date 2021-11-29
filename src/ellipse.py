@@ -33,8 +33,8 @@ class Ellipse(src.object_base.ObjectBase):
         ):
         if len(playerPositions) > constants.ELLIPSE_FOLLOW_DISTANCE: 
             if not playerMoved: 
-                if self.followContinueFrames != constants.ELLIPSE_FOLLOW_DISTANCE:
-                    if playerPositions[constants.ELLIPSE_FOLLOW_DISTANCE - self.followContinueFrames - 1][1] != self.rect.y: # If Ellipse needs to update its y position (because of gravity)
+                if self.followContinueFrames < constants.ELLIPSE_FOLLOW_DISTANCE:
+                    if self.rect.y != playerPositions[0][1]: # If Ellipse needs to update its y position (because of gravity)
                         self.followContinueFrames += 1
                 
             else:
