@@ -74,7 +74,6 @@ class FollowObject(src.object_base.ObjectBase):
 
             if dirMoved != 0:
                 self.facing = dirMoved
-                print("switch")
                 self.switch_anim("walk")
             
             else:
