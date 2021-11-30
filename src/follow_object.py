@@ -51,17 +51,16 @@ class FollowObject(src.object_base.ObjectBase):
         globalGravity
         ):
         if len(playerPositions) > self.followDistance: 
+            
             if not playerMoved: 
                 if self.followContinueFrames < self.followDistance:
-                    if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level][self.room], globalGravity): # If the object needs to update its y position (because of gravity) or it isn't on a platform
+                    if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level][self.room], globalGravity): # If the entity needs to update its y position (because of gravity) or it isn't on a platform:
                         self.followContinueFrames += 1
                 
             else:
                 if self.followContinueFrames > 0:
-                    self.followContinueFrames -= 2
-                
-                if self.followContinueFrames < 0:
-                    self.followContinueFrames = 0
+                    if self.rect.y == playerPositions[0][1] and self.check_below(levels[self.level][self.room], globalGravity): # If the entity is not in need of changing at all
+                        self.followContinueFrames -= 1
 
             self.test_grav_line(globalGravity)
             self.update_animation()
