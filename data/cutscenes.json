@@ -51,7 +51,7 @@
         "cutsceneLevel": 1,
         "backgroundAnim": {"path": "res/cutscenes/corlen's_house.png", "room": 1},
         "start": {
-            "player": {"pos": [-16, 192]},
+            "player": {"pos": [0, 176]},
             "ellipse": {"pos": [-16, -16], "room": 0},
             "corlen": {"pos": [192, 192], "room": 1}
         },
@@ -59,26 +59,22 @@
         "time_commands": {
             "0": [
                 "player noncontrolled",
-                "player move right",
-                "corlen face right"
+                "player move right"
             ],
             "50": [
+                "player controlled",
                 "player move still",
-                "corlen face left",
-                "text change !",
-                "text move 192 180",
-                "text display",
-                "delay 20 corlenStop"
+                "run testNextRoom"
             ]
         },
         "conditionals": {
-            
+            "testNextRoom": "room == 1"
         },
-        "cond_commands":{
-            "corlenStop": [
-                "text change [insert weirdo]",
-                "player teleport 16 192",
-                "player controlled"
+        "cond_commands": {
+            "testNextRoom": [
+                "text change HELLO",
+                "text move 100 100",
+                "text display"
             ]
         }
     },

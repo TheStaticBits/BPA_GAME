@@ -168,7 +168,7 @@ class Cutscenes(src.scene_base.SceneBase):
         # if the command is asking for a single variable
         elif len(cond) == 3:
             if cond[0] == "room":
-                check = eval(f"{self.room} {cond[1]}")
+                check = eval(f"{self.room} {cond[1]} {cond[2]}")
         
         if check:
             self.activeConditionals.append(condName)
