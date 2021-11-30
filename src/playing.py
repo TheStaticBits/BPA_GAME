@@ -53,8 +53,10 @@ class Playing(src.scene_base.SceneBase):
             new = True
         )
 
-        self.ellipse = src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level)
-        self.corlen = src.corlen.Corlen((self.player.rect.y, self.player.rect.x), self.room, self.level)
+        self.entities = []
+
+        self.entities.append(src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level))
+        self.entities.append(src.corlen.Corlen((self.player.rect.y, self.player.rect.x), self.room, self.level))
 
         # Setup tile drawing surface
         self.tileSurface = pygame.Surface((
@@ -211,12 +213,6 @@ class Playing(src.scene_base.SceneBase):
                 # Resetting the player
                 self.setup_player()
 
-                self.ellipse.rect.x, self.ellipse.rect.y = self.player.rect.x, self.player.rect.y
-                self.corlen.rect.x, self.corlen.rect.y = self.player.rect.x, self.player.rect.y
-
-                self.playerPositions = []
-                self.playerLevelAndRoom = []
-
                 check = self.check_for_cutscene()
                 if check != None:
                     return check # Switches to the cutscene
@@ -276,22 +272,15 @@ class Playing(src.scene_base.SceneBase):
         else:
             playerMoved = False
 
-        # Ellipse update
-        self.ellipse.update(
-            self.levels, 
-            self.playerPositions,
-            self.playerLevelAndRoom,
-            playerMoved,
-            self.gravityDir
-        )
-        # Corlen update
-        self.corlen.update(
-            self.levels, 
-            self.playerPositions,
-            self.playerLevelAndRoom,
-            playerMoved,
-            self.gravityDir
-        )
+        # Updating Ellipse and Corlen
+        for ent in self.entities:
+            ent.update(
+                self.levels, 
+                self.playerPositions,
+                self.playerLevelAndRoom,
+                playerMoved,
+                self.gravityDir
+            )
 
         self.tileRenderer.update_tiles_with_anims()
 
@@ -353,8 +342,8 @@ class Playing(src.scene_base.SceneBase):
             )
 
         # Drawing Ellipse and Corlen
-        self.ellipse.render(self.room, self.level, window)
-        self.corlen.render(self.room, self.level, window)
+        for ent in self.entities:
+            ent.render(self.room, self.level, window)
 
         # Drawing player
         self.player.render(window)
