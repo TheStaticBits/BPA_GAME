@@ -1,6 +1,5 @@
 background = b
 music = Ellipse
-text = 
 ------------------------
 ssssssssssssssssssssssss
 ssssssssssssssssssssssss
@@ -19,7 +18,6 @@ ssssssssssssssssssssssss
 ------------------------
 background = w
 music = Corlen
-text = 
 ------------------------
 wwwwwwwwwwwwwwwwwwwww   
 wwwwwwwwwwwwwwwwwwwww   
