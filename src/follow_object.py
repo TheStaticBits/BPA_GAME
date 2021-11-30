@@ -28,14 +28,18 @@ class FollowObject(src.object_base.ObjectBase):
         self.yVelocity = velocity
 
     
-    def check_below(self, room): # Check if the object is on a platform
-        super().update_gravity() # Adds gravity to yVelocity
-        super().update_y_collision(room) # Uses yVelocity and checks if there is a tile below
+    def check_below(self, room, globalGrav): # Check if the object is on a platform
+        self.yVelocity -= self.gravityDir
 
-        ret = self.yVelocity == 0 # Return value
+        prevY = self.rect.y
+        self.update_y_pos()
+
+        result = super().update_y_collision(room, modif=False) # Uses yVelocity and checks if there is a tile below
+
+        self.rect.y = prevY
         self.yVelocity = 0 # Reset yVelocity
         
-        return ret # Return the return value
+        return result == True # Return the result
 
     
     def update(
@@ -49,17 +53,20 @@ class FollowObject(src.object_base.ObjectBase):
         if len(playerPositions) > self.followDistance: 
             if not playerMoved: 
                 if self.followContinueFrames < self.followDistance:
-                    if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level][self.room]): # If the object needs to update its y position (because of gravity) or it isn't on a platform
+                    if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level][self.room], globalGravity): # If the object needs to update its y position (because of gravity) or it isn't on a platform
                         self.followContinueFrames += 1
                 
             else:
-                if self.followContinueFrames != 0:
-                    self.followContinueFrames -= 1
+                if self.followContinueFrames > 0:
+                    self.followContinueFrames -= 2
+                
+                if self.followContinueFrames < 0:
+                    self.followContinueFrames = 0
 
             self.test_grav_line(globalGravity)
             self.update_animation()
 
-            xMoved = (playerPositions[self.followDistance - self.followContinueFrames][0] - self.rect.x - (self.followDistance // 2))
+            xMoved = (playerPositions[self.followDistance - self.followContinueFrames][0] - self.rect.x - (constants.PLAYER_WIDTH // 2))
             
             self.rect.x += xMoved
 
@@ -67,6 +74,7 @@ class FollowObject(src.object_base.ObjectBase):
 
             if dirMoved != 0:
                 self.facing = dirMoved
+                print("switch")
                 self.switch_anim("walk")
             
             else:

@@ -53,10 +53,7 @@ class Playing(src.scene_base.SceneBase):
             new = True
         )
 
-        self.entities = []
-
-        self.entities.append(src.ellipse.Ellipse((self.player.rect.y, self.player.rect.x), self.room, self.level))
-        self.entities.append(src.corlen.Corlen((self.player.rect.y, self.player.rect.x), self.room, self.level))
+        self.setup_entities((self.player.rect.x, self.player.rect.y))
 
         # Setup tile drawing surface
         self.tileSurface = pygame.Surface((
@@ -179,6 +176,13 @@ class Playing(src.scene_base.SceneBase):
             self.player.reset(playerStart, yVelocity, xVelocity) # Resetting the player's position and velocity
 
 
+    def setup_entities(self, position):
+        self.entities = []
+
+        self.entities.append(src.ellipse.Ellipse(position, self.room, self.level))
+        self.entities.append(src.corlen.Corlen(position, self.room, self.level))
+
+
     def update(
         self, 
         inputs, # Dictionary of keys pressed
@@ -212,6 +216,8 @@ class Playing(src.scene_base.SceneBase):
                 
                 # Resetting the player
                 self.setup_player()
+
+                self.setup_entities((self.player.rect.x, self.player.rect.y))
 
                 check = self.check_for_cutscene()
                 if check != None:

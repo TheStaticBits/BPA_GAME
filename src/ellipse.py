@@ -1,4 +1,5 @@
 import src.follow_object
+import src.constants as constants
 
 class Ellipse(src.follow_object.FollowObject):
     def __init__(

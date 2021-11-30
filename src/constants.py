@@ -44,8 +44,8 @@ MAX_SPEED = 2 # Maximum left/right speed
 SPEED_UP_SPEED = 0.3 # How quickly the player accelerates/decelerates
 
 CORLEN_FOLLOW_DISTANCE = 10 # How far behind Corlen is from the player
-ELLIPSE_FOLLOW_DISTANCE = 20 # How far behind Ellipse is from the player
-MAX_FOLLOW_DISTANCE = 20 # Player positions stored
+ELLIPSE_FOLLOW_DISTANCE = 22 # How far behind Ellipse is from the player
+MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 
 # Default save (for the database)
 DEFAULT_SAVE = {

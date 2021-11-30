@@ -148,7 +148,7 @@ class ObjectBase:
         return specialTiles
 
     
-    def update_y_collision(self, room) -> dict:
+    def update_y_collision(self, room, modif=True) -> dict:
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -166,14 +166,19 @@ class ObjectBase:
 
                     isSolid, result = self.check_tile(room, tilePos)
                     if isSolid:
-                        if dirMoved == 1:
-                            self.rect.top = result.bottom
-                            self.collisions["up"] = True
+                        if modif:
+                            if dirMoved == 1:
+                                self.rect.top = result.bottom
+                                self.collisions["up"] = True
+                            else:
+                                self.rect.bottom = result.top
+                                self.collisions["down"] = True
+                            
+                            break
+                    
                         else:
-                            self.rect.bottom = result.top
-                            self.collisions["down"] = True
-                        
-                        break
+                            if result != False:
+                                return True
                     
                     elif result != False:
                         specialTiles[result] = tilePos
