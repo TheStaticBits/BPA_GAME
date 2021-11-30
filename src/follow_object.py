@@ -72,7 +72,6 @@ class FollowObject(src.object_base.ObjectBase):
             else:
                 self.switch_anim("idle")
 
-            super().reset_current_tile()
             super().update_x_collision(
                 levels[self.level][self.room], 
                 dirMoved
@@ -81,6 +80,17 @@ class FollowObject(src.object_base.ObjectBase):
             self.level, self.room = playerLevelAndRoom[self.followDistance - self.followContinueFrames] # Setting level and room
 
             self.rect.y = playerPositions[self.followDistance - self.followContinueFrames][1]
+
+            # Checking both directions after updating y position
+            super().update_x_collision(
+                levels[self.level][self.room],
+                -1
+            )
+
+            super().update_x_collision(
+                levels[self.level][self.room],
+                1
+            )
             
 
     def render(self, currentRoom, currentLevel, window):

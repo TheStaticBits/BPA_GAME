@@ -74,7 +74,6 @@ class Player(src.object_base.ObjectBase):
         # Applying the xVelocity to the player's position
         self.rect.x += round(self.xVelocity)
 
-        super().reset_current_tile()
         specialTiles = super().update_x_collision(
             room, 
             1 if self.xVelocity > 0 else (0 if self.xVelocity == 0 else -1)
@@ -106,8 +105,6 @@ class Player(src.object_base.ObjectBase):
             self.canJump = False
 
         super().update_y_pos()
-        
-        super().reset_current_tile()
 
         result = super().update_y_collision(room)
         for tile, tilePos in result.items():

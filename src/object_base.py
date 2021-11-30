@@ -118,6 +118,8 @@ class ObjectBase:
 
 
     def update_x_collision(self, room, dirMoved) -> dict:
+        self.reset_current_tile()
+
         # Resets the self.collisions dictionary
         self.collisions["left"] = False
         self.collisions["right"] = False
@@ -147,6 +149,8 @@ class ObjectBase:
 
     
     def update_y_collision(self, room) -> dict:
+        self.reset_current_tile()
+
         # Resets the self.collisions dictionary
         self.collisions["up"] = False
         self.collisions["down"] = False
