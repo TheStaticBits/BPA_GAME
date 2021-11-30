@@ -15,8 +15,15 @@ import src.cutscenes
 # Initializing Pygame
 pygame.init()
 
+
+"""
+This class creates and manages all of the scenes, the window, and the main game loop. 
+It also sets up the game.
+After the game closes, this class takes all game data and calls a function located in src/utility.py which serializes all of the data to a database.
+"""
 class Loop(src.scene_base.SceneBase):
     def __init__(self):
+        # Initializes all of the classes, with error handling.
         super().__init__(__name__)
 
         self.scene = "playing"
@@ -37,6 +44,7 @@ class Loop(src.scene_base.SceneBase):
             check = self.playing.check_for_cutscene()
 
             if check != None and self.playing.room == 0:
+                # If there was a cutscene where the player was when they closed the game
                 self.cutscene.setup(check)
                 self.scene = "cutscene"
             
@@ -55,6 +63,8 @@ class Loop(src.scene_base.SceneBase):
 
 
     def run_framerate(self):
+        # Is run in the background.
+        # Manages the framerate and prints it out to the console every second.
         while True:
             sleep(1)
             print(self.framerate, "FPS")
@@ -62,6 +72,7 @@ class Loop(src.scene_base.SceneBase):
 
 
     def run_game(self):
+        # This handles the main game loop, along with any errors that occur in the game.
         if not self.error:
             # Starting FPS counter
             framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
@@ -69,8 +80,8 @@ class Loop(src.scene_base.SceneBase):
 
             try:
                 while not self.window.closeWindow:
-                    # Clearing the events.log file
                     with open(constants.EVENT_LOG_PATH, "w"):
+                        # Clearing the events.log file
                         pass
 
                     self.window.flip()
@@ -92,26 +103,29 @@ class Loop(src.scene_base.SceneBase):
 
 
     def update(self):
-        super().update()
+        # This method updates the scene the game is in, along with the window class.
+        super().update() # Logging
 
         self.window.update_inputs()
 
         if self.scene == "playing":
             result = self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
             
-            if result != None:
+            if result != None: # If the playing class switched to a cutscene
                 self.cutscene.setup(result)
                 self.scene = "cutscene"
         
         if self.scene == "cutscene":
             result = self.cutscene.update(self.window.inputs)
-            if result == False:
+
+            if result == False: # If the cutscene ended
                 self.scene = "playing"
                 self.playing.load_room()
                 self.playing.start_music()
     
     
     def render(self):
+        # This method renders all objects, based on the current scene 
         super().render()
 
         if self.scene == "playing":
@@ -122,6 +136,8 @@ class Loop(src.scene_base.SceneBase):
     
 
     def save_and_exit(self):
+        # This method saves all data to a database for later playing
+        
         self.logger.info("Saving game state...")
 
         # Saves the game's data
