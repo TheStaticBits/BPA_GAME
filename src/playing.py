@@ -76,6 +76,7 @@ class Playing(src.scene_base.SceneBase):
 
         self.playerPositions = [] # List of player positions for Corlen and Ellipse to follow
         self.playerLevelAndRoom = [] # List of the level and room the player is in at what frame
+        self.playerFacing = [] # List of what direction the player is facing at what frame
 
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
@@ -176,11 +177,15 @@ class Playing(src.scene_base.SceneBase):
             self.player.reset(playerStart, yVelocity, xVelocity) # Resetting the player's position and velocity
 
 
-    def setup_entities(self, position):
+    def setup_entities(self, position, facing = 1):
         self.entities = []
 
         self.entities.append(src.ellipse.Ellipse(position, self.room, self.level))
         self.entities.append(src.corlen.Corlen(position, self.room, self.level))
+
+        for ent in self.entities:
+            ent.facing = facing
+            print(facing)
 
 
     def update(
@@ -216,8 +221,9 @@ class Playing(src.scene_base.SceneBase):
                 
                 # Resetting the player
                 self.setup_player()
+                self.player.facing = 1
 
-                self.setup_entities((self.player.rect.x, self.player.rect.y))
+                self.setup_entities((self.player.rect.x, self.player.rect.y), facing=1)
 
                 check = self.check_for_cutscene()
                 if check != None:
@@ -270,10 +276,12 @@ class Playing(src.scene_base.SceneBase):
 
             self.playerPositions.insert(0, (self.player.rect.x, self.player.rect.y)) # inserts at the front of the list
             self.playerLevelAndRoom.insert(0, (self.level, self.room))
+            self.playerFacing.insert(0, self.player.facing)
             
             if len(self.playerPositions) > constants.MAX_FOLLOW_DISTANCE + 1:
                 self.playerPositions.pop(-1)
                 self.playerLevelAndRoom.pop(-1)
+                self.playerFacing.pop(-1)
         
         else:
             playerMoved = False
@@ -284,6 +292,7 @@ class Playing(src.scene_base.SceneBase):
                 self.levels, 
                 self.playerPositions,
                 self.playerLevelAndRoom,
+                self.playerFacing,
                 playerMoved,
                 self.gravityDir
             )

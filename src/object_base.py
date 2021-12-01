@@ -155,7 +155,7 @@ class ObjectBase:
         self.collisions["up"] = False
         self.collisions["down"] = False
 
-        dirMoved = 1 if self.yVelocity > 0 else (0 if self.yVelocity == 0 else -1)
+        dirMoved = utility.lock_neg1_zero_pos1(self.yVelocity)
 
         specialTiles = {}
 

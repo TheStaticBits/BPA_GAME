@@ -1,8 +1,9 @@
 import pygame
 
 import src.object_base
-import src.constants as constants
 import src.animation
+import src.utility as utility
+import src.constants as constants
 
 class FollowObject(src.object_base.ObjectBase):
     def __init__(
@@ -47,10 +48,14 @@ class FollowObject(src.object_base.ObjectBase):
         levels, # List of all levels
         playerPositions,
         playerLevelAndRoom,
+        playerFacing,
         playerMoved, # If the player has moved
         globalGravity
         ):
         if len(playerPositions) > self.followDistance: 
+            self.level, self.room = playerLevelAndRoom[self.followDistance - self.followContinueFrames] # Setting level and room
+
+            self.facing = playerFacing[self.followDistance - self.followContinueFrames] # Setting facing
             
             if not playerMoved: 
                 if self.followContinueFrames < self.followDistance:
@@ -59,7 +64,7 @@ class FollowObject(src.object_base.ObjectBase):
                 
             else:
                 if self.followContinueFrames > 0:
-                    if self.rect.y == playerPositions[0][1] and self.check_below(levels[self.level][self.room], globalGravity): # If the entity is not in need of changing at all
+                    if self.rect.y == playerPositions[0][1] or self.check_below(levels[self.level][self.room], globalGravity): # If the entity is not in need of changing
                         self.followContinueFrames -= 1
 
             self.test_grav_line(globalGravity)
@@ -67,23 +72,13 @@ class FollowObject(src.object_base.ObjectBase):
 
             xMoved = (playerPositions[self.followDistance - self.followContinueFrames][0] - self.rect.x - (constants.PLAYER_WIDTH // 2))
             
+            posBeforeMov = self.rect.x
             self.rect.x += xMoved
-
-            dirMoved = 1 if xMoved > 0 else (0 if xMoved == 0 else -1)
-
-            if dirMoved != 0:
-                self.facing = dirMoved
-                self.switch_anim("walk")
-            
-            else:
-                self.switch_anim("idle")
 
             super().update_x_collision(
                 levels[self.level][self.room], 
-                dirMoved
+                utility.lock_neg1_zero_pos1(xMoved)
             )
-
-            self.level, self.room = playerLevelAndRoom[self.followDistance - self.followContinueFrames] # Setting level and room
 
             self.rect.y = playerPositions[self.followDistance - self.followContinueFrames][1]
 
@@ -97,6 +92,13 @@ class FollowObject(src.object_base.ObjectBase):
                 levels[self.level][self.room],
                 1
             )
+
+            if self.rect.x != posBeforeMov:
+                self.switch_anim("walk")
+            
+            else:
+                self.switch_anim("idle")
+
             
 
     def render(self, currentRoom, currentLevel, window):

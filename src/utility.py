@@ -12,6 +12,12 @@ import json
 import src.constants as constants
 
 
+def lock_neg1_zero_pos1(number):
+    if number > 0: return 1
+    elif number < 0: return -1
+    else: return 0
+
+
 # Gets a file from the filePath
 def get_file(filePath) -> str:
     with open(filePath, "r") as file:
