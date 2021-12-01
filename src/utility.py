@@ -106,15 +106,21 @@ def save_room(
 # It returns a list of all the frames of the spritesheet
 def load_spritesheet(
         filePath, # Path to the file
-        width # Width of each image
+        width=None, # Width of each image
+        frames=None # Frames in the animation
+        # Choose either width or frames
     ): 
 
     image = pygame.image.load(filePath).convert_alpha() # Loads the spritesheet from a file
 
+    # Calculating the other var based on the given
+    if width is None: width = image.get_width() // frames
+    else: frames = image.get_width() // width
+
     result = []
 
     # Iterates through a range which is the amount of images in the spritesheet
-    for count in range(image.get_width() // width):
+    for count in range(frames):
         tempImage = pygame.Surface((width, image.get_height())) # Creates an image the size of one frame
         tempImage.fill((33, 22, 11)) # Fills the image with a color which will probably not be used in images
         tempImage.blit(
@@ -122,7 +128,7 @@ def load_spritesheet(
             (-(count * width), # This moves the spritesheet back enough so that the only frame in the image is the individual frame being saved
             0)
         )
-        tempImage.set_colorkey((33, 22, 11)) # Sets the colorkey
+        tempImage.set_colorkey((33, 22, 11)) # Sets the background color to transparent
         result.append(tempImage)
     
     return result

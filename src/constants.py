@@ -175,6 +175,19 @@ CORLEN_ANIMATIONS = {
     }
 }
 
+BEQUE_ANIMATIONS = {
+    "idle": {
+        "delay": 6,
+        "path": "res/characters/beque/idle.png",
+        "frames": 4
+    },
+    "attack": {
+        "delay": 5,
+        "path": "res/characters/beque/walking.png",
+        "frames": 3
+    }
+}
+
 # Other tiles
 SPIKE_PATH = "res/misc/spike.png"
 SPIKE_ROTATIONS = {

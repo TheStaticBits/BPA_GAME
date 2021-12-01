@@ -50,8 +50,8 @@ class Cutscenes(src.scene_base.SceneBase):
         if "backgroundAnim" in self.cutsceneData:
             self.backgroundAnim = src.animation.Animation(
                 10, 
-                self.cutsceneData["backgroundAnim"]["path"],
-                constants.SCREEN_SIZE[0]
+                path = self.cutsceneData["backgroundAnim"]["path"],
+                width = constants.SCREEN_SIZE[0]
             )
         
         else:

@@ -35,8 +35,8 @@ class ObjectBase:
         for name, data in animationData.items():
             self.animations[name] = src.animation.Animation(
                 data["delay"],
-                data["path"],
-                width
+                path = data["path"],
+                width = width
             )
         
         self.facing = 1

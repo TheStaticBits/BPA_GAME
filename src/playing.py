@@ -70,8 +70,8 @@ class Playing(src.scene_base.SceneBase):
         # Setting up gravity beam animation
         self.gravityBeam = src.animation.Animation(
             constants.GRAV_BEAM_DELAY,
-            constants.GRAV_BEAM_PATH, 
-            constants.GRAV_BEAM_WIDTH
+            path = constants.GRAV_BEAM_PATH, 
+            width = constants.GRAV_BEAM_WIDTH
         )
 
         self.playerPositions = [] # List of player positions for Corlen and Ellipse to follow

@@ -51,8 +51,8 @@ class TileRenderer:
             for animName, data in anims["animations"].items():
                 self.tileAnims[tile][animName] = src.animation.Animation(
                     data["delay"],
-                    data["path"], 
-                    constants.TILE_SIZE[0] 
+                    path = data["path"], 
+                    width = constants.TILE_SIZE[0] 
                 )
 
 

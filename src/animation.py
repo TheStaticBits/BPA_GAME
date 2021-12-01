@@ -7,10 +7,17 @@ class Animation:
         self, 
         delay, # Delay between frames
         path = None, # Path of the image
-        width = None # Width of one frame
+        width = None, # Width of one frame
+        frames = None # Frames in the image
+        # The load_spritesheet function only requires either frames or width
+        # So any instances of this class can be created with one or the other
         ):
         if path != None:
-            self.images = utility.load_spritesheet(path, width)
+            self.images = utility.load_spritesheet(
+                path, 
+                width = width, 
+                frames = frames
+            )
 
         self.delay = delay
 
