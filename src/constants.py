@@ -175,18 +175,22 @@ CORLEN_ANIMATIONS = {
     }
 }
 
-BEQUE_ANIMATIONS = {
+BELLOQ_ANIMATIONS = {
     "idle": {
         "delay": 6,
-        "path": "res/characters/beque/idle.png",
+        "path": "res/characters/belloq/idle.png",
         "frames": 4
     },
     "attack": {
         "delay": 5,
-        "path": "res/characters/beque/walking.png",
+        "path": "res/characters/belloq/walking.png",
         "frames": 3
     }
 }
+
+LAZER_SPEED = 5
+LAZER_LENGTH = 10
+LAZER_COLOR = (255, 255, 0)
 
 # Other tiles
 SPIKE_PATH = "res/misc/spike.png"
