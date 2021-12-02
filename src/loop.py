@@ -35,11 +35,9 @@ class Loop(src.scene_base.SceneBase):
 
             save = utility.load_save()
 
-            self.tileRenderer = src.tile_renderer.TileRenderer()
+            self.playing = src.playing.Playing(save)
 
-            self.playing = src.playing.Playing(save, self.tileRenderer)
-
-            self.cutscene = src.cutscenes.Cutscenes(self.tileRenderer)
+            self.cutscene = src.cutscenes.Cutscenes()
 
             check = self.playing.check_for_cutscene()
 

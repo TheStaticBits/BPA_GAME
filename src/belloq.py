@@ -3,7 +3,6 @@ import math
 
 import src.animation
 import src.constants as constants
-from src.constants import LAZER_LENGTH
 
 class Lazer:
     def __init__(

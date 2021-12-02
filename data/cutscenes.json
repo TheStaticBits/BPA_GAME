@@ -26,7 +26,7 @@
                 "player face right",
                 "text change I am here to warn you...",
                 "text move 190 120",
-                "delay 110 step2"
+                "delay 165 step2"
             ],
             "step2": [
                 "text hide",
@@ -35,7 +35,7 @@
             "step3": [
                 "text change The Belloq are coming...",
                 "text display",
-                "delay 110 step4"
+                "delay 165 step4"
             ],
             "step4": [
                 "text hide",

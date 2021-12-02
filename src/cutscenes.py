@@ -8,12 +8,13 @@ import src.corlen
 import src.utility as utility
 import src.constants as constants
 import src.animation
+import src.tile_renderer
 
 class Cutscenes(src.scene_base.SceneBase):
-    def __init__(self, tileRenderer):
+    def __init__(self):
         super().__init__(__name__)
 
-        self.tileRenderer = tileRenderer
+        self.tileRenderer = src.tile_renderer.TileRenderer()
         
         self.room = 0
         self.timer = 0
