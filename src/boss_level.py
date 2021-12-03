@@ -3,6 +3,7 @@ import pygame
 import src.base_level
 import src.tile_renderer
 import src.belloq
+import src.constants as constants
 
 class BossLevel(src.base_level.BaseLevel):
     def __init__(self, saveData):
@@ -18,7 +19,7 @@ class BossLevel(src.base_level.BaseLevel):
         self.tilesOffset = 0
 
 
-    def switch_boss_and_level(self, boss, level, room):
+    def setup(self, boss, level, room):
         self.level = level
         self.room = room
 
@@ -52,7 +53,7 @@ class BossLevel(src.base_level.BaseLevel):
         super().update(
             inputs, 
             self.tileRenderers[0],
-            playerSpawnOffset = 0
+            playerSpawnOffset = 0 # change maybe soon
         )
 
         self.tilesOffset = self.player.rect.x + (constants.PLAYER_WIDTH // 2) - constants.SCREEN_WIDTH[0]
@@ -71,4 +72,11 @@ class BossLevel(src.base_level.BaseLevel):
     
     
     def render(self, window):
-        super().render()
+        for count, ts in enumerate(self.tileSurfaces):
+            room = self.room + count * (
+                -(self.tilesOffset < (self.room * constants.SCREEN_SIZE[0])) + (self.tilesOffset > (self.room * constants.SCREEN_SIZE[0])) # Finds the room to be rendered through the count, which starts at zero and can move left/right based on the offset of the tiles
+            )
+
+            window.blit(ts, (count * (self.tilesOffset - constants.SCREEN_SIZE[0])))
+
+        super().render(self.tileSurfaces[0])

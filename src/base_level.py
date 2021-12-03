@@ -131,6 +131,10 @@ class BaseLevel(src.scene_base.SceneBase):
         for name, data in self.cutsceneData.items():
             if self.level == data["beforeLevel"]:
                 return name
+    
+    def check_for_boss(self):
+        if "boss" in self.levelData[self.level]:
+            return self.levelData[self.level]
 
 
     def update(
@@ -172,7 +176,11 @@ class BaseLevel(src.scene_base.SceneBase):
 
                 check = self.check_for_cutscene()
                 if check != None:
-                    return check # Switches to the cutscene
+                    return ("cutscene", check) # Switches to the cutscene
+                
+                check = self.check_for_boss()
+                if check != None:
+                    return ("boss", check) # Switches to the boss
             
             else:
                 self.player.rect.x = -playerSpawnOffset # Moving the player to the complete other side of the room

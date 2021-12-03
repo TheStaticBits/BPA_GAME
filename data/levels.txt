@@ -128,6 +128,26 @@ v^><wel        w    wwww
   wwwwwwww     w  wwwwww
 ------------------------
 
+background = w
+music = Belloq
+boss = Belloq
+------------------------
+wwwvv            wwwwwww
+wwv               wwwwww
+wv                 www  
+w                  www  
+wp         ^    ^  www  
+ww      ww wwwwww  www  
+wwwwww  vv wwwwww  www  
+wwwwww^    vwwwwv  www  
+wwwwwww     vwwv   www  
+wwwwwww^^  ^^ww         
+wwwwwwwww^^wwww^        
+wwwwwwwwwwwwwwww^      ^
+wwwwwwwwwwwwwwwww^    ^w
+wwwwwwwwwwwwwwwwww^^^^ww
+------------------------
+
 background = d
 music = DeepBelow
 ------------------------

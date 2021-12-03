@@ -11,6 +11,7 @@ import src.scene_base
 import src.constants as constants
 import src.tile_renderer
 import src.cutscenes
+import src.boss_level
 
 # Initializing Pygame
 pygame.init()
@@ -38,6 +39,7 @@ class Loop(src.scene_base.SceneBase):
             self.playing = src.playing.Playing(save)
 
             self.cutscene = src.cutscenes.Cutscenes()
+            self.bossLevel = src.boss_level.BossLevel()
 
             check = self.playing.check_for_cutscene()
 
@@ -110,8 +112,13 @@ class Loop(src.scene_base.SceneBase):
             result = self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
             
             if result != None: # If the playing class switched to a cutscene
-                self.cutscene.setup(result)
-                self.scene = "cutscene"
+                if result[0] == "cutscene":
+                    self.cutscene.setup(result[1])
+                
+                elif result[0] == "boss":
+                    self.bossLevel.setup(result[1], self.playing.level, self.playing.room)
+                
+                self.scene = result[0]
         
         if self.scene == "cutscene":
             result = self.cutscene.update(self.window.inputs)
@@ -120,6 +127,9 @@ class Loop(src.scene_base.SceneBase):
                 self.scene = "playing"
                 self.playing.load_room()
                 self.playing.start_music()
+        
+        if self.scene == "boss":
+            self.bossLevel.update(self.window.inputs)
     
     
     def render(self):
