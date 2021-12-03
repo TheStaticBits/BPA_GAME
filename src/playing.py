@@ -13,7 +13,7 @@ import src.constants as constants
 
 class Playing(src.base_level.BaseLevel):
     def __init__(self, saveData):
-        super().__init__(saveData)
+        super().__init__(saveData, __name__)
 
         self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
 

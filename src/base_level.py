@@ -5,8 +5,8 @@ import src.constants as constants
 import src.utility as utility
 
 class BaseLevel(src.scene_base.SceneBase):
-    def __init__(self, saveData):
-        super().__init__(__name__)
+    def __init__(self, saveData, name):
+        super().__init__(name)
 
         # Setting data based off of save data from save.db
         self.level = int(saveData["level"])
@@ -116,15 +116,15 @@ class BaseLevel(src.scene_base.SceneBase):
             self.player.reset(playerStart, yVelocity, xVelocity) # Resetting the player's position and velocity
 
 
-    def setup_entities(self, position, facing = 1):
+    def setup_entities(self, position):
         self.entities = []
 
         self.entities.append(src.ellipse.Ellipse(position, self.room, self.level))
         self.entities.append(src.corlen.Corlen(position, self.room, self.level))
 
         for ent in self.entities:
-            ent.facing = facing
-            print(facing)
+            ent.facing = self.player.facing
+            ent.gravityDir = self.player.gravityDir
 
 
     def check_for_cutscene(self):
@@ -168,7 +168,7 @@ class BaseLevel(src.scene_base.SceneBase):
                 self.setup_player()
                 self.player.facing = 1
 
-                self.setup_entities((self.player.rect.x, self.player.rect.y), facing=1)
+                self.setup_entities((self.player.rect.x, self.player.rect.y))
 
                 check = self.check_for_cutscene()
                 if check != None:
