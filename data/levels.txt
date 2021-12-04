@@ -2,6 +2,7 @@
 background = w
 music = ThereIsSomethingV2
 text 0 = Use W or UP to jump
+entities = none
 ------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w
@@ -66,6 +67,7 @@ wwwwwwwwwwwww     wwwwww
 
 background = w
 music = ThereIsSomethingV2
+entities = none
 ------------------------
 w^><wwwww           wwww
 wwwwwwwww           wwww
@@ -112,7 +114,7 @@ wwwwwwww  www   ^ ^ ^ ^
 wwww       w    ww> <ww 
 wwww       w    ww> <ww 
 ||||||||||||||||||||||||
-v^><wel        w    wwww
+v^><w          w    wwww
                w    wwww
                w        
       ww ww   ^w^       
@@ -131,6 +133,7 @@ v^><wel        w    wwww
 background = w
 music = Belloq
 boss = Belloq
+entities = none
 ------------------------
 wwwvv            wwwwwww
 wwv               wwwwww

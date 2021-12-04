@@ -40,6 +40,9 @@ class BaseLevel(src.scene_base.SceneBase):
         self.playerPositions = [] # List of player positions for Corlen and Ellipse to follow
         self.playerLevelAndRoom = [] # List of the level and room the player is in at what frame
         self.playerFacing = [] # List of what direction the player is facing at what frame
+
+        self.showEntities = True
+        self.check_entity_rendering()
         
         self.playingSong = ""
 
@@ -127,6 +130,13 @@ class BaseLevel(src.scene_base.SceneBase):
             ent.gravityDir = self.player.gravityDir
 
 
+    def check_entity_rendering(self):
+        if "entities" in self.levelData[self.level]:
+            self.showEntities = self.levelData[self.level]["entities"] != "none"
+        else:
+            self.showEntities = True
+
+
     def update(
         self, 
         inputs, # Dictionary of keys pressed
@@ -170,6 +180,8 @@ class BaseLevel(src.scene_base.SceneBase):
 
                 self.setup_entities((self.player.rect.x, self.player.rect.y))
 
+                self.check_entity_rendering()
+
             else:
                 self.player.rect.x = -constants.PLAYER_WIDTH - playerSpawnOffset # Moving the player to the complete other side of the room
 
@@ -209,31 +221,32 @@ class BaseLevel(src.scene_base.SceneBase):
                     if not self.crystals[self.level]:
                         self.currentCrystal = True
 
-        if self.playerPositions == [] or self.playerPositions[0] != (self.player.rect.x, self.player.rect.y): # If the player moved
-            playerMoved = True
+        if self.showEntities:
+            if self.playerPositions == [] or self.playerPositions[0] != (self.player.rect.x, self.player.rect.y): # If the player moved
+                playerMoved = True
 
-            self.playerPositions.insert(0, (self.player.rect.x, self.player.rect.y)) # inserts at the front of the list
-            self.playerLevelAndRoom.insert(0, (self.level, self.room))
-            self.playerFacing.insert(0, self.player.facing)
+                self.playerPositions.insert(0, (self.player.rect.x, self.player.rect.y)) # inserts at the front of the list
+                self.playerLevelAndRoom.insert(0, (self.level, self.room))
+                self.playerFacing.insert(0, self.player.facing)
+                
+                if len(self.playerPositions) > constants.MAX_FOLLOW_DISTANCE + 1:
+                    self.playerPositions.pop(-1)
+                    self.playerLevelAndRoom.pop(-1)
+                    self.playerFacing.pop(-1)
             
-            if len(self.playerPositions) > constants.MAX_FOLLOW_DISTANCE + 1:
-                self.playerPositions.pop(-1)
-                self.playerLevelAndRoom.pop(-1)
-                self.playerFacing.pop(-1)
-        
-        else:
-            playerMoved = False
+            else:
+                playerMoved = False
 
-        # Updating Ellipse and Corlen
-        for ent in self.entities:
-            ent.update(
-                self.levels, 
-                self.playerPositions,
-                self.playerLevelAndRoom,
-                self.playerFacing,
-                playerMoved,
-                self.gravityDir
-            )
+            # Updating Ellipse and Corlen
+            for ent in self.entities:
+                ent.update(
+                    self.levels, 
+                    self.playerPositions,
+                    self.playerLevelAndRoom,
+                    self.playerFacing,
+                    playerMoved,
+                    self.gravityDir
+                )
         
         self.gravityBeam.update()
 
@@ -244,13 +257,14 @@ class BaseLevel(src.scene_base.SceneBase):
     def render(self, surface, offset = 0, renderWithCheck = True):
         super().render() # For logging
 
-        # Drawing Ellipse and Corlen
-        for ent in self.entities:
-            if renderWithCheck:
-                ent.render_with_check(self.room, self.level, surface, offset = offset)
-            
-            else:
-                ent.render_move_over(surface, self.room, offset = offset)
+        if self.showEntities:
+            # Drawing Ellipse and Corlen
+            for ent in self.entities:
+                if renderWithCheck:
+                    ent.render_with_check(self.room, self.level, surface, offset = offset)
+                
+                else:
+                    ent.render_move_over(surface, self.room, offset = offset)
         
         # Rendering the player
         self.player.render(surface, offset = offset)

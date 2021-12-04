@@ -132,8 +132,7 @@ class Loop(src.scene_base.SceneBase):
                 check = self.playing.check_for_boss()
                 if check is None:
                     self.scene = "playing"
-                    self.playing.load_room()
-                    self.playing.start_music()
+                    self.playing.setup()
                 
                 else:
                     self.scene = "boss"
@@ -150,8 +149,7 @@ class Loop(src.scene_base.SceneBase):
 
                 if cutsceneCheck is None:
                     self.scene = "playing"
-                    self.playing.load_room()
-                    self.playing.start_music()
+                    self.playing.setup()
                 
                 else:
                     self.cutscene.setup(cutsceneCheck)

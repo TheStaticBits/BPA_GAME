@@ -34,6 +34,14 @@ class Playing(src.base_level.BaseLevel):
 
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
+    
+    
+    # Calls a bunch of other functions which sets up the world with all the aspects of it
+    def setup(self):
+        self.get_text()
+        self.load_room()
+        self.start_music()
+        self.check_entity_rendering()
 
 
     def load_room(self):
