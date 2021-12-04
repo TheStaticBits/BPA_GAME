@@ -86,7 +86,7 @@ class ObjectBase:
         makeYTileCheck = not yPosOnScreen and xPosOnScreen
 
         # If the tile is off the level, make a tile and check for collisions
-        makeXTileCheck = tilePos[0] < 0 and room == 0 or tilePos[0] >= constants.SCREEN_TILE_SIZE[0] and room == len(level) - 1
+        makeXTileCheck = tilePos[0] < 0 and roomNumber == 0 or tilePos[0] >= constants.SCREEN_TILE_SIZE[0] and roomNumber == len(level) - 1
 
         if makeYTileCheck or makeXTileCheck or tileOnScreen and room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
             tileRect = pygame.Rect(
