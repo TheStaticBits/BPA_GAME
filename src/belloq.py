@@ -58,14 +58,14 @@ class Lazer:
 
 class Belloq:
     def __init__(self):
-        self.animation = []
-        for name, data in constants.BEQUE_ANIMATIONS.items():
+        self.animation = {}
+        for name, data in constants.BELLOQ_ANIMATIONS.items():
             self.animation[name] = src.animation.Animation(
                 data["delay"],
                 path = data["path"],
                 frames = data["frames"]
             )
-        self.currentAnim = ""
+        self.currentAnim = "idle"
 
         self.position = [0, 0]
         

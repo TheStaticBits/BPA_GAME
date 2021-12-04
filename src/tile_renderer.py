@@ -21,6 +21,26 @@ class TileRenderer:
         self.check_tile = lambda room, x, y: utility.check_between((x, y), (0, 0), constants.SCREEN_TILE_SIZE) and room[y][x] in constants.TRANSPARENT_TILES 
     
 
+    def check_tile_across_rooms(self, roomNumber, level, x, y):
+        # Finds the x position of the tile on the screen next to the one being checked, flipping it over to the other side of the screen
+        if x >= constants.SCREEN_TILE_SIZE[0]:
+            checkRoomX = 0
+            checkRoomNum = roomNumber + 1
+
+        elif x < 0:
+            checkRoomX = constants.SCREEN_TILE_SIZE[0] - 1
+            checkRoomNum = roomNumber - 1
+        
+        else:
+            return False
+
+        
+        if 0 <= checkRoomNum < len(level): # If the room being checked is not the first or last room in the level
+            # Checks if the tile is transparent and returns that
+            return level[checkRoomNum][y][checkRoomX] in constants.TRANSPARENT_TILES
+        
+        return False
+
     def load_tiles(self):
         # Creating a dictionary
         # Keys are the letter used to represent the tile
@@ -118,12 +138,18 @@ class TileRenderer:
 
 
     # This function renders the SOLID tiles onto a given surface
-    def draw_tiles(self, room, surface, backgroundTile):
+    def draw_tiles(
+        self, 
+        room, 
+        surface, 
+        backgroundTile,
+        level = None, # If it needs to be drawn over multiple levels, with the edges and corners being accurate with the other rooms in the level
+        roomNumber = None
+        ):
         # Setting up background tile
         backgroundTile = self.tileKey[backgroundTile]["tile"].copy()
         backgroundTile.fill((255, 255, 255, 150), None, pygame.BLEND_RGBA_MULT)
 
-        """  BEWARE: SPAGHETTI CODE AHEAD  """ # Maybe I should clean this up a bit...
         # Iterating through all of the tiles in the current room
         for y, row in enumerate(room): 
             for x, tile in enumerate(row):
@@ -140,8 +166,12 @@ class TileRenderer:
                     # Offset is the direction in which the program is checking in relation to the tile being drawn
                     for offset in range(-1, 2):
                         # VERTICAL EDGES
-                        if self.check_tile(room, x + offset, y): # If the tile being checked in relation to the tile being rendered is on the screen and transparent
+                        check = self.check_tile(room, x + offset, y) # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
+                        if not check and level != None:
+                            check = self.check_tile_across_rooms(roomNumber, level, x + offset, y)
+                        
+                        if check:
                             # Creates the image of the edge with a rotation based on which direction the offset is checking. 
                             # These are the vertical edges.
                             image = pygame.transform.rotate(
@@ -185,16 +215,21 @@ class TileRenderer:
                                 utility.check_between((x + offset2, y + offset), (0, 0), constants.SCREEN_TILE_SIZE)
                                 ):
                                     # These are for checks
-                                    edgeT1 = room[y + offset][x] in constants.TRANSPARENT_TILES # If the edge in one direction of the corner is transparent
-                                    edgeT2 = room[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge in the other direction of the corner is transparent
-                                    corner = room[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner is transparent
+                                    edgeTile1 = room[y + offset][x] in constants.TRANSPARENT_TILES # If the edge tile in one direction of the corner is transparent
+                                    edgeTile2 = room[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge tile in the other direction of the corner is transparent
+                                    if not edgeTile2 and level != None:
+                                        edgeTile2 = self.check_tile_across_rooms(roomNumber, level, x + offset2, y)
+
+                                    corner = room[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner tile is transparent
+                                    if not corner and level != None:
+                                        corner = self.check_tile_across_rooms(roomNumber, level, x + offset2, y + offset)
 
                                     selectedImage = None
 
-                                    if edgeT1 and edgeT2:  # If both edges are transparent
+                                    if edgeTile1 and edgeTile2:  # If both edges of the corner are transparent
                                         selectedImage = self.tileKey[tile]["corner"]
 
-                                    elif not edgeT1 and not edgeT2 and corner: # If both edges are not transparent and the corner is
+                                    elif not edgeTile1 and not edgeTile2 and corner: # If both edges are not transparent and the corner is
                                         selectedImage = self.tileKey[tile]["inverse_corner"]
                                     
                                     if selectedImage != None:

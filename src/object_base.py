@@ -70,54 +70,83 @@ class ObjectBase:
         self.animations[self.currentAnim].update()
         
     
-    def check_tile(self, room, tilePos):
+    def check_tile(
+        self, 
+        room, 
+        tilePos, 
+        roomNumber = None, 
+        level = None, 
+        offset = 0
+        ):
 
-        offscreen = not utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE)
+        onscreen = utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE)
 
-        if offscreen or room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
-            tileRect = pygame.Rect(
-                tilePos[0] * constants.TILE_SIZE[0], 
-                tilePos[1] * constants.TILE_SIZE[1],
-                constants.TILE_SIZE[0],
-                constants.TILE_SIZE[1]
-            )
+        if onscreen:
+            if room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
+                tileRect = pygame.Rect(
+                    tilePos[0] * constants.TILE_SIZE[0] + offset, 
+                    tilePos[1] * constants.TILE_SIZE[1],
+                    constants.TILE_SIZE[0],
+                    constants.TILE_SIZE[1]
+                )
 
-            if self.rect.colliderect(tileRect):
-                return True, tileRect
+                if self.rect.colliderect(tileRect):
+                    return True, tileRect
 
-        elif not offscreen and room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
-            tile = room[tilePos[1]][tilePos[0]]
+            elif room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
+                tile = room[tilePos[1]][tilePos[0]]
 
-            if not (tile in self.cachedMasks):
-                if tile in constants.SPIKE_ROTATIONS: # If it's a spike
-                    image = pygame.transform.rotate(
-                        pygame.image.load(constants.SPIKE_PATH).convert_alpha(), 
-                        constants.SPIKE_ROTATIONS[tile]
+                if not (tile in self.cachedMasks):
+                    if tile in constants.SPIKE_ROTATIONS: # If it's a spike
+                        image = pygame.transform.rotate(
+                            pygame.image.load(constants.SPIKE_PATH).convert_alpha(), 
+                            constants.SPIKE_ROTATIONS[tile]
+                        )
+                    
+                    else:
+                        image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
+                        image.set_colorkey((255, 255, 255))
+                    
+                    objMask = pygame.mask.from_surface(image)
+                    self.cachedMasks[tile] = objMask
+
+                playerImage = pygame.transform.flip(self.animations[self.currentAnim].get_frame(), False, self.gravityDir == -1) # self.images REQUIRED FOR CHILD CLASSES
+                playerMask = pygame.mask.from_surface(playerImage)
+
+                collided = self.cachedMasks[tile].overlap(
+                    playerMask, 
+                    (self.rect.x - tilePos[0] * constants.TILE_SIZE[0] + offset, 
+                    self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
+                )
+
+                if collided:
+                    return False, tile
+            
+        elif roomNumber != None:
+            if 0 <= tilePos[1] < constants.SCREEN_TILE_SIZE[1]: # If the y position is on screen
+                if tilePos[0] < 0:
+                    roomNum = roomNumber - 1
+                    tileX = constants.SCREEN_TILE_SIZE[0] - 1
+                    offs = -constants.TILE_SIZE[0]
+
+                elif tilePos[0] >= constants.SCREEN_TILE_SIZE[0]:
+                    roomNum = roomNumber + 1
+                    tileX = 0
+                    offs = constants.TILE_SIZE[0]
+                
+                if 0 <= roomNum < len(level):
+                    return self.check_tile(
+                        level[roomNum],
+                        (tilePos[1], tileX), 
+                        roomNum, 
+                        level, 
+                        offset = offs
                     )
-                
-                else:
-                    image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
-                    image.set_colorkey((255, 255, 255))
-                
-                objMask = pygame.mask.from_surface(image)
-                self.cachedMasks[tile] = objMask
-
-            playerImage = pygame.transform.flip(self.animations[self.currentAnim].get_frame(), False, self.gravityDir == -1) # self.images REQUIRED FOR CHILD CLASSES
-            playerMask = pygame.mask.from_surface(playerImage)
-
-            collided = self.cachedMasks[tile].overlap(
-                playerMask, 
-                (self.rect.x - tilePos[0] * constants.TILE_SIZE[0], 
-                self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
-            )
-
-            if collided:
-                return False, tile
     
         return False, False
 
 
-    def update_x_collision(self, room, dirMoved) -> dict:
+    def update_x_collision(self, room, roomNum, level, dirMoved) -> dict:
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -131,7 +160,7 @@ class ObjectBase:
                 for x in range(0, 2):
                     tilePos = (self.currentTile[0] + x * dirMoved, self.currentTile[1] + y)
                     
-                    isSolid, result = self.check_tile(room, tilePos)
+                    isSolid, result = self.check_tile(room, tilePos, roomNum, level)
                     if isSolid:
                         if dirMoved == 1:
                             self.rect.right = result.left
@@ -194,9 +223,9 @@ class ObjectBase:
             self.gravityDir = -1 * globalGravity
     
 
-    def render(self, window):
+    def render(self, window, offset = 0):
         frame = self.animations[self.currentAnim].get_frame()
 
         frame = pygame.transform.flip(frame, self.facing == -1, self.gravityDir == -1)
 
-        window.blit(frame, (self.rect.x, self.rect.y))
+        window.blit(frame, (self.rect.x + offset, self.rect.y))

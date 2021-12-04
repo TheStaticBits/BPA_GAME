@@ -224,7 +224,12 @@ class Cutscenes(src.scene_base.SceneBase):
                 if not self.playerCanJump:
                     inputs["up"] = False
 
-                result = object.update(self.level[self.room], inputs)
+                result = object.update(
+                    self.level[self.room], 
+                    self.room,
+                    self.level,
+                    inputs
+                )
 
                 if result == "right":
                     try:
@@ -301,7 +306,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
         for obj in self.objects:
             if obj != "player":
-                self.objects[obj]["obj"].render(self.room, 0, window)
+                self.objects[obj]["obj"].render_with_check(self.room, 0, window)
         
         if self.showText:
             self.textWavX += 0.05

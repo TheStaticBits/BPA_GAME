@@ -62,6 +62,17 @@ class Playing(src.base_level.BaseLevel):
             pass
 
 
+    def check_for_cutscene(self):
+        for name, data in self.cutsceneData.items():
+            if self.level == data["beforeLevel"]:
+                return name
+
+
+    def check_for_boss(self):
+        if "boss" in self.levelData[self.level]:
+            return self.levelData[self.level]["boss"]
+
+
     def update(
         self, 
         inputs, # Dictionary of keys pressed
@@ -72,6 +83,16 @@ class Playing(src.base_level.BaseLevel):
             inputs,
             self.tileRenderer
         )
+
+        if changeToCutscene == "right":
+            if self.room == 0: # If it switched to a new level
+                check = self.check_for_boss()
+                if check != None:
+                    return ("boss", check) # Switches to the boss
+
+                check = self.check_for_cutscene()
+                if check != None:
+                    return ("cutscene", check) # Switches to the cutscene
 
         self.tileRenderer.update_tiles_with_anims()
 
@@ -102,7 +123,8 @@ class Playing(src.base_level.BaseLevel):
         if inputs["space"]:
             utility.save_room(self.level, self.room, self.levels[self.level][self.room], constants.LEVELS_PATH) # Saves the room to the levels.txt file
         
-        return changeToCutscene
+        if not isinstance(changeToCutscene, str):
+            return changeToCutscene
 
 
     # Renders everything to the screen

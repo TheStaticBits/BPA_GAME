@@ -127,16 +127,6 @@ class BaseLevel(src.scene_base.SceneBase):
             ent.gravityDir = self.player.gravityDir
 
 
-    def check_for_cutscene(self):
-        for name, data in self.cutsceneData.items():
-            if self.level == data["beforeLevel"]:
-                return name
-    
-    def check_for_boss(self):
-        if "boss" in self.levelData[self.level]:
-            return self.levelData[self.level]
-
-
     def update(
         self, 
         inputs, # Dictionary of keys pressed
@@ -148,7 +138,13 @@ class BaseLevel(src.scene_base.SceneBase):
         """
         Updating Player
         """
-        playerState = self.player.update(self.levels[self.level][self.room], inputs, self.gravityDir) # Updating the player with the inputs
+        playerState = self.player.update(
+            self.levels[self.level][self.room],
+            self.room,
+            self.levels[self.level],
+            inputs, 
+            globalGravity = self.gravityDir
+        ) # Updating the player with the inputs
 
         # If the player moved to the far right of the screen
         if playerState == "right":
@@ -174,16 +170,9 @@ class BaseLevel(src.scene_base.SceneBase):
 
                 self.setup_entities((self.player.rect.x, self.player.rect.y))
 
-                check = self.check_for_cutscene()
-                if check != None:
-                    return ("cutscene", check) # Switches to the cutscene
-                
-                check = self.check_for_boss()
-                if check != None:
-                    return ("boss", check) # Switches to the boss
-            
             else:
-                self.player.rect.x = -playerSpawnOffset # Moving the player to the complete other side of the room
+                pass
+                self.player.rect.x = -constants.PLAYER_WIDTH - playerSpawnOffset # Moving the player to the complete other side of the room
 
             self.tilesChanged = True # This will make the renderer rerender the tiles in the render function
 
@@ -192,7 +181,7 @@ class BaseLevel(src.scene_base.SceneBase):
             if self.room > 0: # If it isn't the start of a level
                 self.room -= 1
 
-                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) - constants.PLAYER_WIDTH + playerSpawnOffset # Moving the player to the opposite side of the screen
+                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) + playerSpawnOffset # Moving the player to the opposite side of the screen
 
                 self.tilesChanged = True # Rerendering the tiles
 
@@ -248,20 +237,24 @@ class BaseLevel(src.scene_base.SceneBase):
             )
         
         self.gravityBeam.update()
-    
-    
-    def render(self, surface):
-        super().render()
 
-        # Rendering the player
-        self.player.render(surface)
+        if playerState in ("right", "left"):
+            return playerState
+    
+    
+    def render(self, surface, offset = 0, renderWithCheck = True):
+        super().render() # For logging
 
         # Drawing Ellipse and Corlen
         for ent in self.entities:
-            ent.render(self.room, self.level, surface)
-
-        # Drawing player
-        self.player.render(surface)
+            if renderWithCheck:
+                ent.render_with_check(self.room, self.level, surface, offset = offset)
+            
+            else:
+                ent.render_move_over(surface, self.room, offset = offset)
+        
+        # Rendering the player
+        self.player.render(surface, offset = offset)
     
 
     def render_grav_beam(self, window):

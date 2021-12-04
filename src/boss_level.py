@@ -12,37 +12,50 @@ class BossLevel(src.base_level.BaseLevel):
         self.tileRenderers = []
 
         for x in range(2):
-            self.tileRenderers.append(src.tile_renderer.TileRenderer)
+            self.tileRenderers.append(src.tile_renderer.TileRenderer())
 
         self.tileSurfaces = []
 
+        self.playerRoomIndex = 0 # This is the index in the list of tile surfaces that the player is in
+
         self.tilesOffset = 0
+
+        self.empty_surf = pygame.Surface(constants.SCREEN_SIZE)
+        self.empty_surf.fill(constants.NEVER_USED_COLOR)
+        self.empty_surf.set_colorkey(constants.NEVER_USED_COLOR)
 
 
     def setup(self, boss, level, room):
         self.level = level
         self.room = room
+        
+        self.load_rooms()
+        self.start_music()
 
-        if boss == "belloq":
+        if boss == "Belloq":
             self.boss = src.belloq.Belloq()
+
+        self.minOffset = -((len(self.levels[self.level]) - 1) * constants.SCREEN_SIZE[0])
 
     
     def load_rooms(self):
-        self.maxOffset = ((len(self.levels) - 1 * constants.SCREEN_WIDTH[0]))
         self.tileSurfaces.clear()
 
         for count, tr in enumerate(self.tileRenderers):
-            # self.room is the room that the player is in            
-            room = self.room + count * (
-                -(self.tilesOffset < (self.room * constants.SCREEN_SIZE[0])) + (self.tilesOffset > (self.room * constants.SCREEN_SIZE[0])) # Finds the room to be rendered through the count, which starts at zero and can move left/right based on the offset of the tiles
-            )
+            # self.room is the room that the player is in
+            room = self.room + count - self.playerRoomIndex
 
-            surf = pygame.Surface(constants.SCREEN_WIDTH)
+            if room > len(self.levels[self.level]) - 1:
+                room = len(self.levels[self.level]) - 1
+
+            surf = pygame.Surface(constants.SCREEN_SIZE)
 
             tr.draw_tiles(
                 self.levels[self.level][room], 
                 surf, 
-                self.levelData[self.level]["background"]
+                self.levelData[self.level]["background"],
+                level = self.levels[self.level],
+                roomNumber = room
             )
             self.tileSurfaces.append(surf)
             
@@ -50,33 +63,68 @@ class BossLevel(src.base_level.BaseLevel):
 
     
     def update(self, inputs):
-        super().update(
+        dir = super().update(
             inputs, 
             self.tileRenderers[0],
             playerSpawnOffset = 0 # change maybe soon
         )
 
-        self.tilesOffset = self.player.rect.x + (constants.PLAYER_WIDTH // 2) - constants.SCREEN_WIDTH[0]
+        if dir == "right":
+            if self.room == 0:
+                return "playing"
+            
+            else:
+                if dir == "right":
+                    self.playerRoomIndex = 1
+                
+        elif dir == "left":
+            self.playerRoomIndex = 0
+            self.load_rooms()
 
-        if self.tilesOffset < 0:
+        self.tilesOffset = -(self.player.rect.x + (constants.PLAYER_WIDTH // 2) - (constants.SCREEN_SIZE[0] // 2))
+
+        checkTileOffset = self.tilesOffset - (constants.SCREEN_SIZE[0] * self.room)
+
+        if checkTileOffset > 0:
             self.tilesOffset = 0
 
-        elif self.tilesOffset > self.maxOffset:
-            self.tilesOffset = self.maxOffset
-
-
+        elif checkTileOffset < self.minOffset:
+            self.tilesOffset = self.minOffset + (constants.SCREEN_SIZE[0] * self.room)
+        
+        if self.playerRoomIndex == 1:
+            if self.tilesOffset <= 0:
+                self.playerRoomIndex = 0
+                self.load_rooms()
+        
+        elif self.playerRoomIndex == 0:
+            if self.tilesOffset > 0:
+                self.playerRoomIndex = 1
+                self.load_rooms()
+                
         for tr in self.tileRenderers:
-            tr.update_tiles_with_anims()
+            tr.update_tiles_with_anims() # Update any tiles that have animations
         
         self.boss.update(self.player)
     
     
     def render(self, window):
-        for count, ts in enumerate(self.tileSurfaces):
-            room = self.room + count * (
-                -(self.tilesOffset < (self.room * constants.SCREEN_SIZE[0])) + (self.tilesOffset > (self.room * constants.SCREEN_SIZE[0])) # Finds the room to be rendered through the count, which starts at zero and can move left/right based on the offset of the tiles
-            )
+        window.blit(self.tileSurfaces[self.playerRoomIndex], (self.tilesOffset, 0))
 
-            window.blit(ts, (count * (self.tilesOffset - constants.SCREEN_SIZE[0])))
+        if self.playerRoomIndex == 0:
+            otherRoomIndex = 1
+            otherRoomX = self.tilesOffset + constants.SCREEN_SIZE[0]
+        else:
+            otherRoomIndex = 0
+            otherRoomX = self.tilesOffset - constants.SCREEN_SIZE[0]
+            
+        window.blit(self.tileSurfaces[otherRoomIndex], (otherRoomX, 0))
 
-        super().render(self.tileSurfaces[0])
+        entitiesSurf = self.empty_surf.copy()
+        super().render(
+            entitiesSurf, 
+            offset = self.tilesOffset, 
+            renderWithCheck = (self.tilesOffset == 0)
+        )
+        window.blit(entitiesSurf, (0, 0))
+
+        super().render_grav_beam(window)

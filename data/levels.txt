@@ -146,6 +146,36 @@ wwwwwwwww^^wwww^
 wwwwwwwwwwwwwwww^      ^
 wwwwwwwwwwwwwwwww^    ^w
 wwwwwwwwwwwwwwwwww^^^^ww
+||||||||||||||||||||||||
+                        
+                        
+                        
+w                       
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                       w
+||||||||||||||||||||||||
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
+                       w
 ------------------------
 
 background = d

@@ -34,13 +34,15 @@ class Player(src.object_base.ObjectBase):
     def update(
         self, 
         room, # List of tiles in the current room
+        roomNumber, # The index of the current room
+        level, # Used for collisions across rooms
         inputs, # Input dictionary
         globalGravity = None, # The gravity of the world
         ) -> str:
 
         super().update_animation()
 
-        if not (globalGravity is None):
+        if globalGravity != None:
             super().test_grav_line(globalGravity)
         else:
             self.gravityDir = 1 # Setting it to normal gravity
@@ -77,6 +79,8 @@ class Player(src.object_base.ObjectBase):
 
         specialTiles = super().update_x_collision(
             room, 
+            roomNumber,
+            level,
             1 if self.xVelocity > 0 else (0 if self.xVelocity == 0 else -1)
         )
 
@@ -129,12 +133,12 @@ class Player(src.object_base.ObjectBase):
                     return (tile, position)
 
 
-        if self.collisions["right"]:
-            if self.rect.x == constants.TILE_SIZE[0] * constants.SCREEN_TILE_SIZE[0] - constants.PLAYER_WIDTH:
+        if inputs["right"]:
+            if self.rect.x >= constants.TILE_SIZE[0] * constants.SCREEN_TILE_SIZE[0] - constants.PLAYER_WIDTH:
                 return "right"
         
-        elif self.collisions["left"]:
-            if self.rect.x == 0:
+        elif inputs["left"]:
+            if self.rect.x <= 0:
                 return "left"
 
         return "alive"

@@ -39,14 +39,19 @@ class Loop(src.scene_base.SceneBase):
             self.playing = src.playing.Playing(save)
 
             self.cutscene = src.cutscenes.Cutscenes()
-            self.bossLevel = src.boss_level.BossLevel()
+            self.bossLevel = src.boss_level.BossLevel(save)
 
-            check = self.playing.check_for_cutscene()
+            cutsceneCheck = self.playing.check_for_cutscene()
+            bossCheck = self.playing.check_for_boss()
 
-            if check != None and self.playing.room == 0:
+            if cutsceneCheck != None and self.playing.room == 0:
                 # If there was a cutscene where the player was when they closed the game
-                self.cutscene.setup(check)
+                self.cutscene.setup(cutsceneCheck)
                 self.scene = "cutscene"
+            
+            elif bossCheck != None:
+                self.scene = "boss"
+                self.bossLevel.setup(bossCheck, self.playing.level, self.playing.room)
             
             else:
                 self.playing.start_music()
@@ -124,12 +129,25 @@ class Loop(src.scene_base.SceneBase):
             result = self.cutscene.update(self.window.inputs)
 
             if result == False: # If the cutscene ended
-                self.scene = "playing"
-                self.playing.load_room()
-                self.playing.start_music()
+                check = self.playing.check_for_boss()
+                if check is None:
+                    self.scene = "playing"
+                    self.playing.load_room()
+                    self.playing.start_music()
+                
+                else:
+                    self.scene = "boss"
+                    self.bossLevel.setup(check, self.playing.level, self.playing.room)
         
         if self.scene == "boss":
-            self.bossLevel.update(self.window.inputs)
+            check = self.bossLevel.update(self.window.inputs)
+
+            if check != None:
+                self.scene = "playing"
+                self.playing.level += 1
+                self.playing.room = 0
+                self.playing.load_room()
+                self.playing.start_music()
     
     
     def render(self):
@@ -141,6 +159,9 @@ class Loop(src.scene_base.SceneBase):
         
         elif self.scene == "cutscene":
             self.cutscene.render(self.window.miniWindow)
+        
+        elif self.scene == "boss":
+            self.bossLevel.render(self.window.miniWindow)
     
 
     def save_and_exit(self):

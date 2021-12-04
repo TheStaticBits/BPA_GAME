@@ -76,7 +76,9 @@ class FollowObject(src.object_base.ObjectBase):
             self.rect.x += xMoved
 
             super().update_x_collision(
-                levels[self.level][self.room], 
+                levels[self.level][self.room],
+                self.room,
+                levels[self.level], 
                 utility.lock_neg1_zero_pos1(xMoved)
             )
 
@@ -85,11 +87,15 @@ class FollowObject(src.object_base.ObjectBase):
             # Checking both directions after updating y position
             super().update_x_collision(
                 levels[self.level][self.room],
+                self.room,
+                levels[self.level],
                 -1
             )
 
             super().update_x_collision(
                 levels[self.level][self.room],
+                self.room,
+                levels[self.level],
                 1
             )
 
@@ -99,8 +105,16 @@ class FollowObject(src.object_base.ObjectBase):
             else:
                 self.switch_anim("idle")
 
-            
+    
+    def render_move_over(self, surface, playerRoomNum, offset = 0):
+        if playerRoomNum != self.room:
+            dir = 1 if playerRoomNum - self.room == -1 else -1
+            super().render(surface, offset = offset + (dir * constants.SCREEN_SIZE[0]))
+        
+        else:
+            super().render(surface, offset = offset)
 
-    def render(self, currentRoom, currentLevel, window):
+
+    def render_with_check(self, currentRoom, currentLevel, window, offset = 0):
         if currentRoom == self.room and currentLevel == self.level:
-            super().render(window)
+            super().render(window, offset = offset)

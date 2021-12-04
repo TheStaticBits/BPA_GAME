@@ -47,7 +47,7 @@
     },
 
     "corlen's_house": {
-        "beforeLevel": 2,
+        "beforeLevel": 3,
         "cutsceneLevel": 1,
         "backgroundAnim": {"path": "res/cutscenes/corlen's_house.png", "room": 1},
         "start": {
