@@ -262,7 +262,7 @@ Would you like to report this crash?""",
 
         connection = ssl.create_default_context() # Creating a connection
         
-        # 
+        # Reading and decoding password
         with open(constants.EMAIL_PWD_PATH, "r") as file:
             password = base64.b64decode(file.read()).decode("utf-8")
 
