@@ -29,13 +29,13 @@ class FollowObject(src.object_base.ObjectBase):
         self.yVelocity = velocity
 
     
-    def check_below(self, room, globalGrav): # Check if the object is on a platform
+    def check_below(self, level): # Check if the object is on a platform
         self.yVelocity -= self.gravityDir
 
         prevY = self.rect.y
         self.update_y_pos()
 
-        result = super().update_y_collision(room, modif=False) # Uses yVelocity and checks if there is a tile below
+        result = super().update_y_collision(level[self.room], self.room, level, modif=False) # Uses yVelocity and checks if there is a tile below
 
         self.rect.y = prevY
         self.yVelocity = 0 # Reset yVelocity
@@ -59,12 +59,12 @@ class FollowObject(src.object_base.ObjectBase):
             
             if not playerMoved: 
                 if self.followContinueFrames < self.followDistance:
-                    if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level][self.room], globalGravity): # If the entity needs to update its y position (because of gravity) or it isn't on a platform:
+                    if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level]): # If the entity needs to update its y position (because of gravity) or it isn't on a platform:
                         self.followContinueFrames += 1
                 
             else:
                 if self.followContinueFrames > 0:
-                    if self.rect.y == playerPositions[0][1] or self.check_below(levels[self.level][self.room], globalGravity): # If the entity is not in need of changing
+                    if self.rect.y == playerPositions[0][1] or self.check_below(levels[self.level]): # If the entity is not in need of changing
                         self.followContinueFrames -= 1
 
             self.test_grav_line(globalGravity)

@@ -73,75 +73,80 @@ class ObjectBase:
     def check_tile(
         self, 
         room, 
+        roomNumber, 
+        level, 
         tilePos, 
-        roomNumber = None, 
-        level = None, 
         offset = 0
         ):
 
-        onscreen = utility.check_between(tilePos, (0, 0), constants.SCREEN_TILE_SIZE)
+        yPosOnScreen = 0 <= tilePos[1] < constants.SCREEN_TILE_SIZE[1]
+        xPosOnScreen = 0 <= tilePos[0] < constants.SCREEN_TILE_SIZE[0]
+        tileOnScreen = xPosOnScreen and yPosOnScreen
 
-        if onscreen:
-            if room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
-                tileRect = pygame.Rect(
-                    tilePos[0] * constants.TILE_SIZE[0] + offset, 
-                    tilePos[1] * constants.TILE_SIZE[1],
-                    constants.TILE_SIZE[0],
-                    constants.TILE_SIZE[1]
-                )
+        makeYTileCheck = not yPosOnScreen and xPosOnScreen
 
-                if self.rect.colliderect(tileRect):
-                    return True, tileRect
+        # If the tile is off the level, make a tile and check for collisions
+        makeXTileCheck = tilePos[0] < 0 and room == 0 or tilePos[0] >= constants.SCREEN_TILE_SIZE[0] and room == len(level) - 1
 
-            elif room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
-                tile = room[tilePos[1]][tilePos[0]]
+        if makeYTileCheck or makeXTileCheck or tileOnScreen and room[tilePos[1]][tilePos[0]] in constants.TILE_KEYS:
+            tileRect = pygame.Rect(
+                tilePos[0] * constants.TILE_SIZE[0] + offset, 
+                tilePos[1] * constants.TILE_SIZE[1],
+                constants.TILE_SIZE[0],
+                constants.TILE_SIZE[1]
+            )
 
-                if not (tile in self.cachedMasks):
-                    if tile in constants.SPIKE_ROTATIONS: # If it's a spike
-                        image = pygame.transform.rotate(
-                            pygame.image.load(constants.SPIKE_PATH).convert_alpha(), 
-                            constants.SPIKE_ROTATIONS[tile]
-                        )
-                    
-                    else:
-                        image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
-                        image.set_colorkey((255, 255, 255))
-                    
-                    objMask = pygame.mask.from_surface(image)
-                    self.cachedMasks[tile] = objMask
+            if self.rect.colliderect(tileRect):
+                return True, tileRect
 
-                playerImage = pygame.transform.flip(self.animations[self.currentAnim].get_frame(), False, self.gravityDir == -1) # self.images REQUIRED FOR CHILD CLASSES
-                playerMask = pygame.mask.from_surface(playerImage)
+        elif tileOnScreen and room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
+            tile = room[tilePos[1]][tilePos[0]]
 
-                collided = self.cachedMasks[tile].overlap(
-                    playerMask, 
-                    (self.rect.x - tilePos[0] * constants.TILE_SIZE[0] + offset, 
-                    self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
-                )
-
-                if collided:
-                    return False, tile
-            
-        elif roomNumber != None:
-            if 0 <= tilePos[1] < constants.SCREEN_TILE_SIZE[1]: # If the y position is on screen
-                if tilePos[0] < 0:
-                    roomNum = roomNumber - 1
-                    tileX = constants.SCREEN_TILE_SIZE[0] - 1
-                    offs = -constants.TILE_SIZE[0]
-
-                elif tilePos[0] >= constants.SCREEN_TILE_SIZE[0]:
-                    roomNum = roomNumber + 1
-                    tileX = 0
-                    offs = constants.TILE_SIZE[0]
-                
-                if 0 <= roomNum < len(level):
-                    return self.check_tile(
-                        level[roomNum],
-                        (tilePos[1], tileX), 
-                        roomNum, 
-                        level, 
-                        offset = offs
+            if not (tile in self.cachedMasks):
+                if tile in constants.SPIKE_ROTATIONS: # If it's a spike
+                    image = pygame.transform.rotate(
+                        pygame.image.load(constants.SPIKE_PATH).convert_alpha(), 
+                        constants.SPIKE_ROTATIONS[tile]
                     )
+                
+                else:
+                    image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
+                    image.set_colorkey((255, 255, 255))
+                
+                objMask = pygame.mask.from_surface(image)
+                self.cachedMasks[tile] = objMask
+
+            playerImage = pygame.transform.flip(self.animations[self.currentAnim].get_frame(), False, self.gravityDir == -1) # self.images REQUIRED FOR CHILD CLASSES
+            playerMask = pygame.mask.from_surface(playerImage)
+
+            collided = self.cachedMasks[tile].overlap(
+                playerMask, 
+                (self.rect.x - tilePos[0] * constants.TILE_SIZE[0] + offset, 
+                self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
+            )
+
+            if collided:
+                return False, tile
+            
+        elif not xPosOnScreen and yPosOnScreen: # If the y position is on screen, the x position isn't, test the tile in the other room
+            if tilePos[0] < 0:
+                roomNum = roomNumber - 1
+                tileX = tilePos[0] + constants.SCREEN_TILE_SIZE[0]
+                offs = -constants.SCREEN_SIZE[0]
+
+            elif tilePos[0] >= constants.SCREEN_TILE_SIZE[0]:
+                roomNum = roomNumber + 1
+                tileX = tilePos[0] - constants.SCREEN_TILE_SIZE[0]
+                offs = constants.SCREEN_SIZE[0]
+            
+            if 0 <= roomNum < len(level):
+                return self.check_tile(
+                    level[roomNum],
+                    roomNum, 
+                    level, 
+                    (tileX, tilePos[1]), 
+                    offset = offs
+                )
     
         return False, False
 
@@ -160,7 +165,8 @@ class ObjectBase:
                 for x in range(0, 2):
                     tilePos = (self.currentTile[0] + x * dirMoved, self.currentTile[1] + y)
                     
-                    isSolid, result = self.check_tile(room, tilePos, roomNum, level)
+                    isSolid, result = self.check_tile(room, roomNum, level, tilePos)
+                        
                     if isSolid:
                         if dirMoved == 1:
                             self.rect.right = result.left
@@ -177,7 +183,7 @@ class ObjectBase:
         return specialTiles
 
     
-    def update_y_collision(self, room, modif=True) -> dict:
+    def update_y_collision(self, room, roomNum, level, modif=True) -> dict:
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -193,7 +199,7 @@ class ObjectBase:
                 for x in range(-1, 2):
                     tilePos = (self.currentTile[0] + x, self.currentTile[1] - y * dirMoved)
 
-                    isSolid, result = self.check_tile(room, tilePos)
+                    isSolid, result = self.check_tile(room, roomNum, level, tilePos)
                     if isSolid:
                         if modif:
                             if dirMoved == 1:

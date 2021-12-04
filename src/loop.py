@@ -143,11 +143,19 @@ class Loop(src.scene_base.SceneBase):
             check = self.bossLevel.update(self.window.inputs)
 
             if check != None:
-                self.scene = "playing"
                 self.playing.level += 1
                 self.playing.room = 0
-                self.playing.load_room()
-                self.playing.start_music()
+
+                cutsceneCheck = self.playing.check_for_cutscene()
+
+                if cutsceneCheck is None:
+                    self.scene = "playing"
+                    self.playing.load_room()
+                    self.playing.start_music()
+                
+                else:
+                    self.cutscene.setup(cutsceneCheck)
+                    self.scene = "cutscene"
     
     
     def render(self):

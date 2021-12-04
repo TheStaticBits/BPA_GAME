@@ -134,7 +134,7 @@ boss = Belloq
 ------------------------
 wwwvv            wwwwwww
 wwv               wwwwww
-wv                 www  
+wv                 www w
 w                  www  
 wp         ^    ^  www  
 ww      ww wwwwww  www  
@@ -151,9 +151,9 @@ wwwwwwwwwwwwwwwwww^^^^ww
                         
                         
 w                       
-                        
-                        
-                        
+w                       
+w                       
+<                       
                         
                         
                         
@@ -168,8 +168,8 @@ w
                        w
                        w
                        w
-                       w
-                       w
+                        
+                        
                        w
                        w
                        w
@@ -180,6 +180,7 @@ w
 
 background = d
 music = DeepBelow
+text 0 = Jump again while touching the orb!
 ------------------------
 v^><jddddddddddddddddddd
 dddddddddddddddddddddddd

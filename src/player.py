@@ -9,7 +9,7 @@ class Player(src.object_base.ObjectBase):
         self, 
         startPos, 
         yVelocity = 0,
-        xVelocity = 0
+        xVelocity = 0,
         ):
         super().__init__(constants.PLAYER_ANIMATIONS, constants.PLAYER_WIDTH)
         
@@ -111,7 +111,7 @@ class Player(src.object_base.ObjectBase):
 
         super().update_y_pos()
 
-        result = super().update_y_collision(room)
+        result = super().update_y_collision(room, roomNum = roomNumber, level = level)
         for tile, tilePos in result.items():
             specialTiles[tile] = tilePos
 

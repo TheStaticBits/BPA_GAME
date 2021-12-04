@@ -171,7 +171,6 @@ class BaseLevel(src.scene_base.SceneBase):
                 self.setup_entities((self.player.rect.x, self.player.rect.y))
 
             else:
-                pass
                 self.player.rect.x = -constants.PLAYER_WIDTH - playerSpawnOffset # Moving the player to the complete other side of the room
 
             self.tilesChanged = True # This will make the renderer rerender the tiles in the render function
