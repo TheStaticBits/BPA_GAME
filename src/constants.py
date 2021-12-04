@@ -11,6 +11,8 @@ LEVELS_PATH = "data/levels.txt"
 CUTSCENE_DATA_PATH = "data/cutscenes.json"
 CUTSCENE_LEVELS_PATH = "data/cutscene_levels.txt"
 
+EMAIL_PWD_PATH = "data/emailpassword.txt"
+
 MUSIC_FOLDER = "res/sound"
 
 CAP_FPS = True # True/False to cap FPS
@@ -56,7 +58,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 3,
+    "level": 0,
     "room": 0,
     "crystals": "00000000000000000"
 }

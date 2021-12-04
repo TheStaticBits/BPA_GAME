@@ -8,6 +8,7 @@ import os
 import win32api
 import smtplib, ssl
 import json
+import base64
 
 import src.constants as constants
 
@@ -253,15 +254,19 @@ Would you like to report this crash?""",
         1
     ) # Generates a popup box with the error
 
-    if result: # If the user wants to report the crash
+    if result == 1: # If the user wants to report the crash
         with open(constants.EVENT_LOG_PATH, "r") as file: # Opens the file
             contents = file.read() # Grabs the contents of the file
         
         contents = "Subject: Another error\n\n" + contents
 
         connection = ssl.create_default_context() # Creating a connection
+        
+        # 
+        with open(constants.EMAIL_PWD_PATH, "r") as file:
+            password = base64.b64decode(file.read()).decode("utf-8")
 
         with smtplib.SMTP_SSL("smtp.gmail.com", context=connection) as s: # Connecting to the server
-            s.login("reporterofcrashes@gmail.com", "reportthosecrashes")
+            s.login("reporterofcrashes@gmail.com", password)
 
             s.sendmail("reporterofcrashes@gmail.com", "reporterofcrashes@gmail.com", contents) # Sends the email
