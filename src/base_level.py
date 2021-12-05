@@ -192,7 +192,7 @@ class BaseLevel(src.scene_base.SceneBase):
                 self.setup_player()
                 self.player.facing = 1
 
-                self.setup_entities(self.player.topleft)
+                self.setup_entities(self.player.rect.topleft)
 
                 self.check_entity_rendering()
 
