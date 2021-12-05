@@ -68,6 +68,13 @@ class ObjectBase:
     
     def update_animation(self):
         self.animations[self.currentAnim].update()
+    
+
+    def get_mask(self):
+        objImage = pygame.transform.flip(self.animations[self.currentAnim].get_frame(), False, self.gravityDir == -1)
+        objMask = pygame.mask.from_surface(objImage)
+
+        return objMask
         
     
     def check_tile(
@@ -113,15 +120,14 @@ class ObjectBase:
                     image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
                     image.set_colorkey((255, 255, 255))
                 
-                objMask = pygame.mask.from_surface(image)
-                self.cachedMasks[tile] = objMask
+                tileMask = pygame.mask.from_surface(image)
+                self.cachedMasks[tile] = tileMask
 
-            playerImage = pygame.transform.flip(self.animations[self.currentAnim].get_frame(), False, self.gravityDir == -1) # self.images REQUIRED FOR CHILD CLASSES
-            playerMask = pygame.mask.from_surface(playerImage)
+            objMask = self.get_mask()
 
             collided = self.cachedMasks[tile].overlap(
-                playerMask, 
-                (self.rect.x - tilePos[0] * constants.TILE_SIZE[0] + offset, 
+                objMask, 
+                (self.rect.x - tilePos[0] * constants.TILE_SIZE[0] - offset, 
                 self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
             )
 

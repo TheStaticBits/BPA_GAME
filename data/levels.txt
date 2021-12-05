@@ -139,7 +139,7 @@ wwwvv            wwwwwww
 wwv               wwwwww
 wv                 www w
 w                  www  
-wp         ^    ^  www  
+w          ^ p  ^  www  
 ww      ww wwwwww  www  
 wwwwww  vv wwwwww  www  
 wwwwww^    vwwwwv  www  

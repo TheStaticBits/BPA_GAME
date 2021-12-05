@@ -64,13 +64,13 @@ class BossLevel(src.base_level.BaseLevel):
 
     
     def update(self, inputs):
-        dir = super().update(
+        playerState = super().update(
             inputs, 
             self.tileRenderers[0],
             playerSpawnOffset = 0 # change maybe soon
         )
 
-        if dir == "right":
+        if playerState == "right":
             if self.room == 0:
                 return "playing"
             
@@ -78,8 +78,14 @@ class BossLevel(src.base_level.BaseLevel):
                 if dir == "right":
                     self.playerRoomIndex = 1
                 
-        elif dir == "left":
+        elif playerState == "left":
             self.playerRoomIndex = 0
+            self.load_rooms()
+        
+        elif playerState == "dead":
+            self.boss.reset()
+            self.playerRoomIndex = 0
+            self.room = 0
             self.load_rooms()
 
         self.tilesOffset = -(self.player.rect.x + (constants.PLAYER_WIDTH // 2) - (constants.SCREEN_SIZE[0] // 2))
@@ -105,7 +111,18 @@ class BossLevel(src.base_level.BaseLevel):
         for tr in self.tileRenderers:
             tr.update_tiles_with_anims() # Update any tiles that have animations
         
-        self.boss.update(self.player)
+        dead = self.boss.update(
+            self.player, 
+            self.room, 
+            len(self.levels[self.level]), 
+            self.tilesOffset
+        )
+        if dead:
+            self.boss.reset()
+            self.playerRoomIndex = 0
+            self.room = 0
+            self.load_rooms()
+            self.reset_all()
     
     
     def render(self, window):
@@ -128,4 +145,7 @@ class BossLevel(src.base_level.BaseLevel):
         )
         window.blit(entitiesSurf, (0, 0))
 
+        self.boss.render(window)
+
         super().render_grav_beam(window)
+        super().render_screen_shadow(window)

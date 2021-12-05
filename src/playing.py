@@ -163,3 +163,5 @@ class Playing(src.base_level.BaseLevel):
                     50 + math.sin(self.textWavX) * 5
                 )
             )
+        
+        super().render_screen_shadow(window)

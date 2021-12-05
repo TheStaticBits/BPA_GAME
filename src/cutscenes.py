@@ -233,7 +233,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
                 if result == "right":
                     try:
-                        object.rect.x = 0
+                        object.rect.x -= constants.SCREEN_SIZE[0]
                         self.room += 1
                         self.rerender_tiles()
 
@@ -243,6 +243,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 
                 elif result == "left":
                     if self.room > 0:
+                        object.rect.x += constants.SCREEN_SIZE[0]
                         self.room -= 1
                         self.rerender_tiles()
                 
@@ -259,7 +260,7 @@ class Cutscenes(src.scene_base.SceneBase):
                     if object.rect.x >= (constants.SCREEN_SIZE[0]):
                         if obj == "player":
                             try:
-                                object.rect.x = 0
+                                object.rect.x = -constants.PLAYER_WIDTH
                                 self.room += 1
                                 self.rerender_tiles()
 
@@ -267,22 +268,23 @@ class Cutscenes(src.scene_base.SceneBase):
                                 return False
                         
                         else:
-                            object.rect.x = 0
+                            object.rect.x = -object.rect.width
                             object.room += 1
 
                 if movement == "left":
                     object.rect.x -= constants.MAX_SPEED
                     object.facing = -1
 
-                    if object.rect.x <= 0:
+                    if object.rect.x <= object.rect.width:
                         if obj == "player":
                             if self.room > 0:
                                 self.room -= 1
                                 self.rerender_tiles()
                         
                         else:
-                            object.rect.x = (constants.SCREEN_SIZE[0]) - object.rect.width
                             object.room -= 1
+                        
+                        object.rect.x += constants.SCREEN_SIZE[0]
 
 
             else:

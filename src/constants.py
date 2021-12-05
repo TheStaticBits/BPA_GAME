@@ -15,6 +15,8 @@ EMAIL_PWD_PATH = "data/emailpassword.txt"
 
 MUSIC_FOLDER = "res/sound"
 
+SCREEN_SHADOW_PATH = "res/misc/shadow.png"
+
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
 
@@ -58,7 +60,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 0,
+    "level": 2,
     "room": 0,
     "crystals": "00000000000000000"
 }
@@ -191,8 +193,16 @@ BELLOQ_ANIMATIONS = {
         "frames": 3
     }
 }
+BELLOQ_SPEED = 0.5 # Pixels moved per frame
+BELLOQ_COOLDOWN = 45 # Frames between lazers
+BELLOQ_LAZER_OFFSET = (33, 17) # Position of the eye in relation to the top left of the sprite
+# Where the lazer fires from
+BELLOQ_LAZER_ACCURACY = 0.2 # A random number chosen between the negative of this number and the positive of this number will be added onto the lazer's direction
+# Can only be up to the hundreths in decimal places
+# Is in randians
+# If it's zero, it will have perfect accuracy
 
-LAZER_SPEED = 5
+LAZER_SPEED = 3
 LAZER_LENGTH = 10
 LAZER_COLOR = (255, 255, 0)
 

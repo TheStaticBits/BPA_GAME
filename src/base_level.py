@@ -14,6 +14,8 @@ class BaseLevel(src.scene_base.SceneBase):
 
         # Loading levels from levels.txt
         self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
+        
+        self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
 
         # Gravity line pull direction
         # Each entity still has its own pull direction for if it's below or above the line.
@@ -35,7 +37,7 @@ class BaseLevel(src.scene_base.SceneBase):
             new = True
         )
 
-        self.setup_entities((self.player.rect.x, self.player.rect.y))
+        self.setup_entities(self.player.rect.topleft)
 
         self.playerPositions = [] # List of player positions for Corlen and Ellipse to follow
         self.playerLevelAndRoom = [] # List of the level and room the player is in at what frame
@@ -130,6 +132,18 @@ class BaseLevel(src.scene_base.SceneBase):
             ent.gravityDir = self.player.gravityDir
 
 
+    def reset_all(self):
+        self.room = 0 # Resetting the room number
+        self.setup_player() # Resetting the player
+        self.tilesChanged = True # Rerenders
+        self.gravityDir = 1 # Resetting gravity
+
+        # Resetting crystal
+        if self.currentCrystal:
+            self.reset_crystal_in_level()
+            self.currentCrystal = False
+
+
     def check_entity_rendering(self):
         if "entities" in self.levelData[self.level]:
             self.showEntities = self.levelData[self.level]["entities"] != "none"
@@ -178,7 +192,7 @@ class BaseLevel(src.scene_base.SceneBase):
                 self.setup_player()
                 self.player.facing = 1
 
-                self.setup_entities((self.player.rect.x, self.player.rect.y))
+                self.setup_entities(self.player.topleft)
 
                 self.check_entity_rendering()
 
@@ -198,15 +212,7 @@ class BaseLevel(src.scene_base.SceneBase):
 
         # If the player died
         elif playerState == "dead":
-            self.room = 0 # Resetting the room number
-            self.setup_player() # Resetting the player
-            self.tilesChanged = True # Rerenders
-            self.gravityDir = 1 # Resetting gravity
-
-            # Resetting crystal
-            if self.currentCrystal:
-                self.reset_crystal_in_level()
-                self.currentCrystal = False
+            self.reset_all()
         
         # If the return result was of a tile
         # Play the "struck" animation for the tile
@@ -222,10 +228,10 @@ class BaseLevel(src.scene_base.SceneBase):
                         self.currentCrystal = True
 
         if self.showEntities:
-            if self.playerPositions == [] or self.playerPositions[0] != (self.player.rect.x, self.player.rect.y): # If the player moved
+            if self.playerPositions == [] or self.playerPositions[0] != self.player.rect.topleft: # If the player moved
                 playerMoved = True
 
-                self.playerPositions.insert(0, (self.player.rect.x, self.player.rect.y)) # inserts at the front of the list
+                self.playerPositions.insert(0, self.player.rect.topleft) # inserts at the front of the list
                 self.playerLevelAndRoom.insert(0, (self.level, self.room))
                 self.playerFacing.insert(0, self.player.facing)
                 
@@ -250,8 +256,7 @@ class BaseLevel(src.scene_base.SceneBase):
         
         self.gravityBeam.update()
 
-        if playerState in ("right", "left"):
-            return playerState
+        return playerState
     
     
     def render(self, surface, offset = 0, renderWithCheck = True):
@@ -279,3 +284,7 @@ class BaseLevel(src.scene_base.SceneBase):
                 (x * constants.GRAV_BEAM_WIDTH, 
                 (constants.GRAV_BEAM_TILE_Y_POS * constants.TILE_SIZE[1]) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
             )
+    
+    
+    def render_screen_shadow(self, window):
+        window.blit(self.screenShadow, (0, 0))
