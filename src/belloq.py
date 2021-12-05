@@ -146,13 +146,22 @@ class Belloq:
 
     
     def update(self, player, playerRoom, amountOfRooms, tilesOffset):
-        self.position[0] += constants.BELLOQ_SPEED
-
         self.screenPosition = self.position.copy()
         self.screenPosition[0] += tilesOffset
         self.screenPosition[0] -= playerRoom * constants.SCREEN_SIZE[0]
 
         playerScreenX = player.rect.x + tilesOffset
+
+
+        img = self.animation[self.currentAnim].get_frame()
+
+        if playerScreenX < self.screenPosition[0] + (img.get_width() / 2):
+            self.position[1] += (player.rect.y - (self.screenPosition[1] + img.get_height() / 2)) / 25
+            
+            self.position[0] += (playerScreenX - (self.screenPosition[0] + img.get_width() / 2)) / 25
+        
+        else:
+            self.position[0] += constants.BELLOQ_SPEED
 
         self.cooldown -= 1
 
