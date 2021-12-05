@@ -50,6 +50,7 @@ class Button:
         if round(self.highlightYPos) != 0:
             text = pygame.Surface((self.rect.width, self.rect.height - self.highlightYPos))
             text.blit(self.fontRendered, (0, 0))
+            text.set_colorkey((0, 0, 0))
 
             highlighted = pygame.Surface((self.rect.width, self.highlightYPos))
             highlighted.fill((255, 255, 255))

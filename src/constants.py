@@ -11,6 +11,8 @@ LEVELS_PATH = "data/levels.txt"
 CUTSCENE_DATA_PATH = "data/cutscenes.json"
 CUTSCENE_LEVELS_PATH = "data/cutscene_levels.txt"
 
+MAIN_MENU_LEVEL_PATH = "data/menu_level.txt"
+
 EMAIL_PWD_PATH = "data/emailpassword.txt"
 
 MUSIC_FOLDER = "res/sound"
@@ -62,7 +64,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 2,
+    "level": 0,
     "room": 0,
     "crystals": "00000000000000000"
 }

@@ -44,7 +44,7 @@ class Loop(src.scene_base.SceneBase):
                 "mainMenu": src.main_menu.MainMenu()
             }
 
-            # self.scenes["mainMenu"].start_music()
+            self.scenes["mainMenu"].start_music()
         
         except Exception:
             err = traceback.format_exc()
