@@ -17,6 +17,8 @@ MUSIC_FOLDER = "res/sound"
 
 SCREEN_SHADOW_PATH = "res/misc/shadow.png"
 
+BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower the button fills up when you hover your mouse over it.
+
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
 

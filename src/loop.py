@@ -12,6 +12,7 @@ import src.constants as constants
 import src.tile_renderer
 import src.cutscenes
 import src.boss_level
+import src.main_menu
 
 # Initializing Pygame
 pygame.init()
@@ -27,34 +28,23 @@ class Loop(src.scene_base.SceneBase):
         # Initializes all of the classes, with error handling.
         super().__init__(__name__)
 
-        self.scene = "playing"
+        self.scene = "mainMenu"
         self.framerate = 0
-        self.error = False
+        self.errorSettingUp = False
 
         try:
             self.window = src.window.Window()
 
             save = utility.load_save()
 
-            self.playing = src.playing.Playing(save)
+            self.scenes = {
+                "playing": src.playing.Playing(save),
+                "bossLevel": src.boss_level.BossLevel(save),
+                "cutscene": src.cutscenes.Cutscenes(),
+                "mainMenu": src.main_menu.MainMenu()
+            }
 
-            self.cutscene = src.cutscenes.Cutscenes()
-            self.bossLevel = src.boss_level.BossLevel(save)
-
-            cutsceneCheck = self.playing.check_for_cutscene()
-            bossCheck = self.playing.check_for_boss()
-
-            if cutsceneCheck != None and self.playing.room == 0:
-                # If there was a cutscene where the player was when they closed the game
-                self.cutscene.setup(cutsceneCheck)
-                self.scene = "cutscene"
-            
-            elif bossCheck != None:
-                self.scene = "boss"
-                self.bossLevel.setup(bossCheck, self.playing.level, self.playing.room)
-            
-            else:
-                self.playing.start_music()
+            # self.scenes["mainMenu"].start_music()
         
         except Exception:
             err = traceback.format_exc()
@@ -64,7 +54,7 @@ class Loop(src.scene_base.SceneBase):
 
             utility.error_box(err)
 
-            self.error = True
+            self.errorSettingUp = True
 
 
     def run_framerate(self):
@@ -78,7 +68,7 @@ class Loop(src.scene_base.SceneBase):
 
     def run_game(self):
         # This handles the main game loop, along with any errors that occur in the game.
-        if not self.error:
+        if not self.errorSettingUp: # If there was no error while setting up
             # Starting FPS counter
             framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
             framerate.start()
@@ -114,61 +104,79 @@ class Loop(src.scene_base.SceneBase):
         self.window.update_inputs()
 
         if self.scene == "playing":
-            result = self.playing.update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
+            result = self.scenes["playing"].update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
             
             if result != None: # If the playing class switched to a cutscene
                 if result[0] == "cutscene":
-                    self.cutscene.setup(result[1])
+                    self.scenes["cutscene"].setup(result[1])
                 
                 elif result[0] == "boss":
-                    self.bossLevel.setup(result[1], self.playing.level, self.playing.room)
+                    self.scenes["bossLevel"].setup(result[1], self.scenes["playing"].level, self.scenes["playing"].room)
                 
                 self.scene = result[0]
         
-        if self.scene == "cutscene":
-            result = self.cutscene.update(self.window.inputs)
+        elif self.scene == "cutscene":
+            result = self.scenes["cutscene"].update(self.window.inputs)
 
             if result == False: # If the cutscene ended
-                check = self.playing.check_for_boss()
+                check = self.scenes["playing"].check_for_boss()
                 if check is None:
                     self.scene = "playing"
-                    self.playing.setup()
+                    self.scenes["playing"].setup()
                 
                 else:
-                    self.scene = "boss"
-                    self.bossLevel.setup(check, self.playing.level, self.playing.room)
+                    self.scene = "bossLevel"
+                    self.scenes["bossLevel"].setup(check, self.scenes["playing"].level, self.scenes["playing"].room)
         
-        if self.scene == "boss":
-            check = self.bossLevel.update(self.window.inputs)
+        elif self.scene == "bossLevel":
+            check = self.scenes["bossLevel"].update(self.window.inputs)
 
             if check != None:
-                self.playing.level += 1
-                self.playing.room = 0
+                self.scenes["playing"].level += 1
+                self.scenes["playing"].room = 0
 
-                cutsceneCheck = self.playing.check_for_cutscene()
+                cutsceneCheck = self.scenes["playing"].check_for_cutscene()
 
                 if cutsceneCheck is None:
                     self.scene = "playing"
-                    self.playing.setup()
+                    self.scenes["playing"].setup()
                 
                 else:
-                    self.cutscene.setup(cutsceneCheck)
+                    self.scenes["cutscene"].setup(cutsceneCheck)
                     self.scene = "cutscene"
+        
+        elif self.scene == "mainMenu":
+            changeTo = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
+
+            if changeTo == "start":
+                self.check_what_scene()
+                self.update()
     
     
     def render(self):
         # This method renders all objects, based on the current scene 
         super().render()
 
-        if self.scene == "playing":
-            self.playing.render(self.window.miniWindow)
+        self.scenes[self.scene].render(self.window.miniWindow)
+
+
+    def check_what_scene(self):
+        cutsceneCheck = self.scenes["playing"].check_for_cutscene()
+        bossCheck = self.scenes["playing"].check_for_boss()
+
+        if cutsceneCheck != None and self.scenes["playing"].room == 0:
+            # If there was a cutscene where the player was when they closed the game
+            self.scenes["cutscene"].setup(cutsceneCheck)
+            self.scene = "cutscene"
         
-        elif self.scene == "cutscene":
-            self.cutscene.render(self.window.miniWindow)
+        elif bossCheck != None:
+            self.scene = "bossLevel"
+            self.scenes["bossLevel"].setup(bossCheck, self.scenes["playing"].level, self.scenes["playing"].room)
         
-        elif self.scene == "boss":
-            self.bossLevel.render(self.window.miniWindow)
-    
+        else:
+            self.scene = "playing"
+            self.scenes["playing"].start_music()
+
 
     def save_and_exit(self):
         # This method saves all data to a database for later playing
@@ -177,14 +185,14 @@ class Loop(src.scene_base.SceneBase):
 
         # Saves the game's data
         utility.modif_save({
-            "playerX": self.playing.player.rect.x,
-            "playerY": self.playing.player.rect.y,
-            "playerYVelocity": self.playing.player.yVelocity,
-            "playerXVelocity": self.playing.player.xVelocity,
-            "globalGravity": self.playing.gravityDir,
-            "level": self.playing.level,
-            "room": self.playing.room,
-            "crystals": "".join([str(x) for x in self.playing.crystals])
+            "playerX": self.scenes["playing"].player.rect.x,
+            "playerY": self.scenes["playing"].player.rect.y,
+            "playerYVelocity": self.scenes["playing"].player.yVelocity,
+            "playerXVelocity": self.scenes["playing"].player.xVelocity,
+            "globalGravity": self.scenes["playing"].gravityDir,
+            "level": self.scenes["playing"].level,
+            "room": self.scenes["playing"].room,
+            "crystals": "".join([str(x) for x in self.scenes["playing"].crystals])
         }) 
 
         self.logger.info("Exiting Pygame...")
