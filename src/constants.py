@@ -194,7 +194,7 @@ BELLOQ_ANIMATIONS = {
     }
 }
 BELLOQ_SPEED = 0.5 # Pixels moved per frame
-BELLOQ_COOLDOWN = 45 # Frames between lazers
+BELLOQ_COOLDOWN = 80 # Frames between lazers
 BELLOQ_LAZER_OFFSET = (33, 17) # Position of the eye in relation to the top left of the sprite
 # Where the lazer fires from
 BELLOQ_LAZER_ACCURACY = 0.2 # A random number chosen between the negative of this number and the positive of this number will be added onto the lazer's direction
