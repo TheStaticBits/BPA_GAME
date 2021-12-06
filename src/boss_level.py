@@ -32,6 +32,7 @@ class BossLevel(src.base_level.BaseLevel):
         self.load_rooms()
         self.start_music()
         self.check_entity_rendering()
+        self.reset_all()
 
         if boss == "Belloq":
             self.boss = src.belloq.Belloq()

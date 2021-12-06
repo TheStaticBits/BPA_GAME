@@ -110,10 +110,11 @@ class Loop(src.scene_base.SceneBase):
                 if result[0] == "cutscene":
                     self.scenes["cutscene"].setup(result[1])
                 
-                elif result[0] == "boss":
+                elif result[0] == "bossLevel":
                     self.scenes["bossLevel"].setup(result[1], self.scenes["playing"].level, self.scenes["playing"].room)
                 
                 self.scene = result[0]
+                self.update()
         
         elif self.scene == "cutscene":
             result = self.scenes["cutscene"].update(self.window.inputs)
@@ -127,6 +128,8 @@ class Loop(src.scene_base.SceneBase):
                 else:
                     self.scene = "bossLevel"
                     self.scenes["bossLevel"].setup(check, self.scenes["playing"].level, self.scenes["playing"].room)
+
+                    self.update()
         
         elif self.scene == "bossLevel":
             check = self.scenes["bossLevel"].update(self.window.inputs)

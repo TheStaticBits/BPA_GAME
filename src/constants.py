@@ -64,7 +64,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 0,
+    "level": 1,
     "room": 0,
     "crystals": "00000000000000000"
 }

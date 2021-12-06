@@ -96,7 +96,7 @@ class Playing(src.base_level.BaseLevel):
             if self.room == 0: # If it switched to a new level
                 check = self.check_for_boss()
                 if check != None:
-                    return ("boss", check) # Switches to the boss
+                    return ("bossLevel", check) # Switches to the boss
 
                 check = self.check_for_cutscene()
                 if check != None:
@@ -130,9 +130,6 @@ class Playing(src.base_level.BaseLevel):
         # Other editor inputs
         if inputs["space"]:
             utility.save_room(self.level, self.room, self.levels[self.level][self.room], constants.LEVELS_PATH) # Saves the room to the levels.txt file
-        
-        if not isinstance(changeToCutscene, str):
-            return changeToCutscene
 
 
     # Renders everything to the screen
