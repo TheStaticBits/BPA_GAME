@@ -106,8 +106,8 @@ class Belloq:
     def reset(self):
         self.switchAnim("idle")
         self.position = [
-            -self.animation[self.currentAnim].get_frame().get_width(), 
-            constants.SCREEN_SIZE[1] // 2 - self.animation[self.currentAnim].get_frame().get_height() // 2
+            -self.animation[self.currentAnim].get_image_width(), 
+            constants.SCREEN_SIZE[1] // 2 - self.animation[self.currentAnim].get_image_height() // 2
         ]
         self.lazers.clear()
         self.cooldown = constants.BELLOQ_COOLDOWN
@@ -119,15 +119,15 @@ class Belloq:
             self.animation[self.currentAnim].reset()
 
 
-    def create_lazer(self, player, playerScreenX):
+    def create_lazer(self, player, playerScreenX, screenPos):
         playerCenter = (
             playerScreenX + constants.PLAYER_WIDTH // 2,
             player.rect.y + player.rect.height // 2
         )
 
         eyeballCenter = (
-            self.screenPosition[0] + constants.BELLOQ_LAZER_OFFSET[0],
-            self.screenPosition[1] + constants.BELLOQ_LAZER_OFFSET[1]
+            screenPos[0] + constants.BELLOQ_LAZER_OFFSET[0],
+            screenPos[1] + constants.BELLOQ_LAZER_OFFSET[1]
         )
 
         randomOffsetDegrees = random.randrange(
@@ -146,19 +146,16 @@ class Belloq:
 
     
     def update(self, player, playerRoom, amountOfRooms, tilesOffset):
-        self.screenPosition = self.position.copy()
-        self.screenPosition[0] += tilesOffset
-        self.screenPosition[0] -= playerRoom * constants.SCREEN_SIZE[0]
+        screenPos = self.position.copy()
+        screenPos[0] += tilesOffset
+        screenPos[0] -= playerRoom * constants.SCREEN_SIZE[0]
 
         playerScreenX = player.rect.x + tilesOffset
 
-
-        img = self.animation[self.currentAnim].get_frame()
-
-        if playerScreenX < self.screenPosition[0] + (img.get_width() / 2):
-            self.position[1] += (player.rect.y - (self.screenPosition[1] + img.get_height() / 2)) / 25
+        if playerScreenX < screenPos[0] + (self.animation[self.currentAnim].get_image_width() / 2):
+            self.position[1] += (player.rect.y - (screenPos[1] + self.animation[self.currentAnim].get_image_height() / 2)) / 25
             
-            self.position[0] += (playerScreenX - (self.screenPosition[0] + img.get_width() / 2)) / 25
+            self.position[0] += (playerScreenX - (screenPos[0] + self.animation[self.currentAnim].get_image_width() / 2)) / 25
         
         else:
             self.position[0] += constants.BELLOQ_SPEED
@@ -191,16 +188,20 @@ class Belloq:
 
         collided = belloqMask.overlap(
             playerMask,
-            (playerScreenX - self.screenPosition[0],
-            player.rect.y - self.screenPosition[1])
+            (playerScreenX - screenPos[0],
+            player.rect.y - screenPos[1])
         )
         
         if collided:
             return True
     
 
-    def render(self, window):
-        self.animation[self.currentAnim].render(window, self.screenPosition)
+    def render(self, window, tilesOffset, playerRoom):
+        self.animation[self.currentAnim].render(
+            window, 
+            (self.position[0] + tilesOffset - (playerRoom * constants.SCREEN_SIZE[0]),
+             self.position[1])
+        )
 
         for lazer in self.lazers:
             lazer.render(window)

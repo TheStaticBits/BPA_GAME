@@ -3,6 +3,7 @@ import pygame
 import src.base_level
 import src.tile_renderer
 import src.belloq
+import src.big_bite
 import src.constants as constants
 
 class BossLevel(src.base_level.BaseLevel):
@@ -23,6 +24,8 @@ class BossLevel(src.base_level.BaseLevel):
         self.empty_surf = pygame.Surface(constants.SCREEN_SIZE)
         self.empty_surf.fill(constants.NEVER_USED_COLOR)
         self.empty_surf.set_colorkey(constants.NEVER_USED_COLOR)
+        
+        self.bossName = None
 
 
     def setup(self, boss, level, room):
@@ -36,6 +39,11 @@ class BossLevel(src.base_level.BaseLevel):
 
         if boss == "Belloq":
             self.boss = src.belloq.Belloq()
+            self.bossName = "Belloq"
+        
+        elif boss == "Big Bite":
+            self.boss = src.big_bite.BigBite()
+            self.bossName = "Big Bite"
 
         self.minOffset = -((len(self.levels[self.level]) - 1) * constants.SCREEN_SIZE[0])
 
@@ -112,12 +120,22 @@ class BossLevel(src.base_level.BaseLevel):
         for tr in self.tileRenderers:
             tr.update_tiles_with_anims() # Update any tiles that have animations
         
-        dead = self.boss.update(
-            self.player, 
-            self.room, 
-            len(self.levels[self.level]), 
-            self.tilesOffset
-        )
+        if self.bossName == "Belloq":
+            dead = self.boss.update(
+                self.player, 
+                self.room, 
+                len(self.levels[self.level]), 
+                self.tilesOffset
+            )
+
+        elif self.bossName == "Big Bite":
+            dead = self.boss.update(
+                self.player.get_mask(), 
+                self.player.rect.topleft, 
+                self.tilesOffset,
+                self.room
+            )
+
         if dead:
             self.boss.reset()
             self.playerRoomIndex = 0
@@ -146,7 +164,7 @@ class BossLevel(src.base_level.BaseLevel):
         )
         window.blit(entitiesSurf, (0, 0))
 
-        self.boss.render(window)
+        self.boss.render(window, self.tilesOffset, self.room)
 
         super().render_grav_beam(window)
         super().render_screen_shadow(window)

@@ -64,7 +64,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 1,
+    "level": 0,
     "room": 0,
     "crystals": "00000000000000000"
 }
@@ -185,6 +185,8 @@ CORLEN_ANIMATIONS = {
     }
 }
 
+# The Belloq is the first boss
+# This holds the animations for the Belloq, their paths, frames, and delays
 BELLOQ_ANIMATIONS = {
     "idle": {
         "delay": 6,
@@ -206,9 +208,17 @@ BELLOQ_LAZER_ACCURACY = 0.2 # A random number chosen between the negative of thi
 # Is in randians
 # If it's zero, it will have perfect accuracy
 
+# Belloq boss constants
 LAZER_SPEED = 3
 LAZER_LENGTH = 10
 LAZER_COLOR = (255, 255, 0)
+
+# Big Bite Boss constants
+BIG_BITE_ANIM_PATH = "res/characters/big_bite/anim.png"
+BIG_BITE_ATTACK_FRAME = 3 # The frame number in the animation in which collisions are checked between the player and the boss
+BIG_BITE_TOTAL_FRAMES = 5
+BIG_BITE_DELAY = 15 # The delay between frames in the animation, in game frames (60 frames per second)
+BIG_BITE_ATTACK_DELAY = (5, 40) # The delay between each attack in frames. It is randomly chosen between these two numbers
 
 # Other tiles
 SPIKE_PATH = "res/misc/spike.png"

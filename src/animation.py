@@ -46,6 +46,14 @@ class Animation:
     def get_frame(self):
         return self.images[self.frame]
     
+    
+    def get_image_width(self):
+        return self.images[self.frame].get_width()
+
+
+    def get_image_height(self):
+        return self.images[self.frame].get_height()
+    
 
     def copy(self) -> "Animation":
         obj = Animation(self.delay)
