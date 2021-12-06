@@ -42,6 +42,7 @@ class Playing(src.base_level.BaseLevel):
         self.load_room()
         self.start_music()
         self.check_entity_rendering()
+        self.setup_player()
 
 
     def load_room(self):
