@@ -30,10 +30,9 @@ class Button:
         if self.rect.collidepoint(mousePos):
             self.selected = True
 
-            self.highlightYPos += (self.rect.height - self.highlightYPos) / constants.BUTTON_HIGHLIGHT_SPEED
-
             if mouseInputs["left"]:
                 self.clicked = True
+
             else:
                 if self.clicked:
                     self.clicked = False
@@ -42,6 +41,10 @@ class Button:
         else:
             self.selected = False
 
+        if self.selected and not self.clicked:
+            self.highlightYPos += (self.rect.height - self.highlightYPos) / constants.BUTTON_HIGHLIGHT_SPEED
+        
+        else:
             self.highlightYPos -= self.highlightYPos / constants.BUTTON_HIGHLIGHT_SPEED
         
         return False
