@@ -75,13 +75,22 @@ class BossLevel(src.base_level.BaseLevel):
     def update(self, inputs):
         playerState = super().update(
             inputs, 
-            self.tileRenderers[0],
+            self.tileRenderers[self.playerRoomIndex],
             playerSpawnOffset = 0 # change maybe soon
         )
 
         if playerState == "right":
             if self.room == 0:
-                return "playing"
+                self.level += 1
+
+                if self.check_for_boss():
+                    self.setup(self.levelData[self.level]["boss"], self.level, 0)
+                
+                elif self.check_for_cutscene():
+                    return "cutscene"
+                
+                else:
+                    return "playing"
             
             else:
                 if dir == "right":
@@ -146,6 +155,7 @@ class BossLevel(src.base_level.BaseLevel):
     
     def render(self, window):
         window.blit(self.tileSurfaces[self.playerRoomIndex], (self.tilesOffset, 0))
+        self.tileRenderers[self.playerRoomIndex].render_tiles_with_anims(window, self.gravityDir, offset = self.tilesOffset)
 
         if self.playerRoomIndex == 0:
             otherRoomIndex = 1
@@ -155,6 +165,7 @@ class BossLevel(src.base_level.BaseLevel):
             otherRoomX = self.tilesOffset - constants.SCREEN_SIZE[0]
             
         window.blit(self.tileSurfaces[otherRoomIndex], (otherRoomX, 0))
+        self.tileRenderers[otherRoomIndex].render_tiles_with_anims(window, self.gravityDir, offset = otherRoomX)
 
         entitiesSurf = self.empty_surf.copy()
         super().render(

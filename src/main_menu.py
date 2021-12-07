@@ -30,7 +30,8 @@ class MainMenu(src.scene_base.SceneBase):
             constants.SCREEN_SIZE[0] / 2,
             constants.SCREEN_SIZE[1] / 2,
             fontObj,
-            "Continue"
+            "Continue",
+            textOffset = 2
         )
 
 

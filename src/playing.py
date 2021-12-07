@@ -71,17 +71,6 @@ class Playing(src.base_level.BaseLevel):
             pass
 
 
-    def check_for_cutscene(self):
-        for name, data in self.cutsceneData.items():
-            if self.level == data["beforeLevel"]:
-                return name
-
-
-    def check_for_boss(self):
-        if "boss" in self.levelData[self.level]:
-            return self.levelData[self.level]["boss"]
-
-
     def update(
         self, 
         inputs, # Dictionary of keys pressed

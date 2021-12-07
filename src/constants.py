@@ -209,8 +209,8 @@ BELLOQ_LAZER_ACCURACY = 0.2 # A random number chosen between the negative of thi
 # If it's zero, it will have perfect accuracy
 
 # Belloq boss constants
-LAZER_SPEED = 3
-LAZER_LENGTH = 10
+LAZER_SPEED = 2
+LAZER_LENGTH = 20
 LAZER_COLOR = (255, 255, 0)
 
 # Big Bite Boss constants

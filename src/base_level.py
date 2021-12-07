@@ -149,6 +149,17 @@ class BaseLevel(src.scene_base.SceneBase):
             self.showEntities = self.levelData[self.level]["entities"] != "none"
         else:
             self.showEntities = True
+    
+
+    def check_for_cutscene(self):
+        for name, data in self.cutsceneData.items():
+            if self.level == data["beforeLevel"]:
+                return name
+
+
+    def check_for_boss(self):
+        if "boss" in self.levelData[self.level]:
+            return self.levelData[self.level]["boss"]
 
 
     def update(

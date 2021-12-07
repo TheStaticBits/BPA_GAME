@@ -92,7 +92,7 @@ class TileRenderer:
                     }
 
 
-    def render_tiles_with_anims(self, window, gravityDir):
+    def render_tiles_with_anims(self, window, gravityDir, offset = 0 ):
         for tilePos, anim in self.individualTileAnims.items():
             frame = anim["animationObject"].get_frame()
 
@@ -103,7 +103,7 @@ class TileRenderer:
             
             frame = pygame.transform.flip(frame, False, flip) # Flipping the frame
 
-            window.blit(frame, (tilePos[0] * constants.TILE_SIZE[0], tilePos[1] * constants.TILE_SIZE[1]))
+            window.blit(frame, (tilePos[0] * constants.TILE_SIZE[0] + offset, tilePos[1] * constants.TILE_SIZE[1]))
 
 
     def update_tiles_with_anims(self):

@@ -15,32 +15,34 @@ class Lazer:
         self.position = list(startPos)
     
     
-    def get_top_left(self):
+    def get_top_left(self, position):
         # Gets the lessor of the two points, for the top left
-        topLeftX = self.position[0] if self.position[0] < self.endPoint[0] else self.endPoint[0]
-        topLeftY = self.position[1] if self.position[1] < self.endPoint[1] else self.endPoint[1]
+        topLeftX = position[0] if position[0] < self.endPoint[0] else self.endPoint[0]
+        topLeftY = position[1] if position[1] < self.endPoint[1] else self.endPoint[1]
         return (topLeftX, topLeftY)
     
 
-    def get_bottom_right(self):
+    def get_bottom_right(self, position):
         # Gets the greater of the two points, for the bottom right
-        bottomRightX = self.position[0] if self.position[0] > self.endPoint[0] else self.endPoint[0]
-        bottomRightY = self.position[1] if self.position[1] > self.endPoint[1] else self.endPoint[1]
+        bottomRightX = position[0] if position[0] > self.endPoint[0] else self.endPoint[0]
+        bottomRightY = position[1] if position[1] > self.endPoint[1] else self.endPoint[1]
         return(bottomRightX, bottomRightY)
     
 
-    def update(self, playerMask, playerPos, tilesOffset):
+    def update(self, playerMask, playerPos, playerRoom, tilesOffset):
         self.position[0] += math.cos(self.degreesFacing) * constants.LAZER_SPEED
         self.position[1] += math.sin(self.degreesFacing) * constants.LAZER_SPEED
 
+        self.screenPos = self.position.copy()
+        self.screenPos[0] += tilesOffset - playerRoom * constants.SCREEN_SIZE[0]
+
         self.endPoint = (
-            self.position[0] + (math.cos(self.degreesFacing) * constants.LAZER_LENGTH),
-            self.position[1] + (math.sin(self.degreesFacing) * constants.LAZER_LENGTH)
+            self.screenPos[0] + (math.cos(self.degreesFacing) * constants.LAZER_LENGTH),
+            self.screenPos[1] + (math.sin(self.degreesFacing) * constants.LAZER_LENGTH)
         )
 
-        topLeftX, topLeftY = self.get_top_left()
-        
-        bottomRightX, bottomRightY = self.get_bottom_right()
+        topLeftX, topLeftY = self.get_top_left(self.screenPos)
+        bottomRightX, bottomRightY = self.get_bottom_right(self.screenPos)
 
         collisionSurface = pygame.Surface((
             math.ceil(bottomRightX - topLeftX),
@@ -50,7 +52,7 @@ class Lazer:
         pygame.draw.line(
             collisionSurface, 
             constants.LAZER_COLOR,
-            (math.ceil(self.position[0] - topLeftX), math.ceil(self.position[1] - topLeftY)),
+            (math.ceil(self.screenPos[0] - topLeftX), math.ceil(self.screenPos[1] - topLeftY)),
             (math.ceil(self.endPoint[0] - topLeftX), math.ceil(self.endPoint[1] - topLeftY))
         )
 
@@ -65,14 +67,13 @@ class Lazer:
         return collided
     
 
-    def check_offscreen(self, tilesOffset, playerRoom, rooms):
-        topLeftX, topLeftY = self.get_top_left()
-        bottomRightX, bottomRightY = self.get_bottom_right()
+    def check_offscreen(self, rooms):
+        topLeftX, topLeftY = self.get_top_left(self.position)
+        bottomRightX, bottomRightY = self.get_bottom_right(self.position)
 
-        startOfLevel = -(playerRoom * constants.SCREEN_SIZE[0]) + tilesOffset
-        endOfLevel = startOfLevel + (rooms * constants.SCREEN_SIZE[0])
+        endOfLevel = rooms * constants.SCREEN_SIZE[0]
 
-        xOffScreen = bottomRightX < startOfLevel or topLeftX > endOfLevel
+        xOffScreen = bottomRightX < 0 or topLeftX > endOfLevel
         yOffScreen = bottomRightY < 0 or topLeftY > constants.SCREEN_SIZE[1]
 
         return xOffScreen or yOffScreen
@@ -82,7 +83,7 @@ class Lazer:
         pygame.draw.line(
             window, 
             constants.LAZER_COLOR,
-            self.position,
+            self.screenPos,
             self.endPoint
         )
 
@@ -126,9 +127,15 @@ class Belloq:
         )
 
         eyeballCenter = (
+            self.position[0] + constants.BELLOQ_LAZER_OFFSET[0],
+            self.position[1] + constants.BELLOQ_LAZER_OFFSET[1]
+        )
+
+        eyeballCenterScreenPos = (
             screenPos[0] + constants.BELLOQ_LAZER_OFFSET[0],
             screenPos[1] + constants.BELLOQ_LAZER_OFFSET[1]
         )
+
 
         randomOffsetDegrees = random.randrange(
             -constants.BELLOQ_LAZER_ACCURACY * 100, 
@@ -138,8 +145,8 @@ class Belloq:
         # Creating a lazer pointing at the player
         self.lazers.append(Lazer(
             math.atan2( # Finds the rotation needed to point at the player
-                playerCenter[1] - eyeballCenter[1],
-                playerCenter[0] - eyeballCenter[0]
+                playerCenter[1] - eyeballCenterScreenPos[1],
+                playerCenter[0] - eyeballCenterScreenPos[0]
             ) + randomOffsetDegrees,
             eyeballCenter # Starting position
         ))
@@ -172,15 +179,15 @@ class Belloq:
             if self.currentAnim == "attack":
                 self.switchAnim("idle")
 
-                self.create_lazer(player, playerScreenX)
+                self.create_lazer(player, playerScreenX, screenPos)
         
         for lazer in self.lazers:
-            if lazer.update(player.get_mask(), player.rect.topleft, tilesOffset):
+            if lazer.update(player.get_mask(), player.rect.topleft, playerRoom, tilesOffset):
                 # Collided with player
                 return True
         
         # Removing lazers that are offscreen
-        self.lazers[:] = [lazer for lazer in self.lazers if not lazer.check_offscreen(tilesOffset, playerRoom, amountOfRooms)] 
+        self.lazers[:] = [lazer for lazer in self.lazers if not lazer.check_offscreen(amountOfRooms)] 
 
         # Checking collisions between the Belloq and the player
         belloqMask = pygame.mask.from_surface(self.animation[self.currentAnim].get_frame())
