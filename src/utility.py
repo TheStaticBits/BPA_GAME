@@ -113,8 +113,8 @@ def save_room(
 # It returns a list of all the frames of the spritesheet
 def load_spritesheet(
         filePath, # Path to the file
-        width=None, # Width of each image
-        frames=None # Frames in the animation
+        width = None, # Width of each image
+        frames = None # Frames in the animation
         # Choose either width or frames
     ): 
 
@@ -128,19 +128,20 @@ def load_spritesheet(
 
     # Iterates through a range which is the amount of images in the spritesheet
     for count in range(frames):
-        tempImage = pygame.Surface((width, image.get_height())) # Creates an image the size of one frame
-        tempImage.fill(constants.NEVER_USED_COLOR) # Fills the image with a color which will probably not be used in images, to be able to set the transparent color after the image is loaded
-        tempImage.blit(
+        frame = pygame.Surface((width, image.get_height()), flags=pygame.SRCALPHA) # Creates a surface for each frame
+        
+        frame.blit(
             image, 
             (-(count * width), # This moves the spritesheet back enough so that the only frame in the image is the individual frame being saved
-            0)
+            0),
+            special_flags = pygame.BLEND_RGBA_MAX
         )
-        tempImage.set_colorkey(constants.NEVER_USED_COLOR) # Sets the background color to transparent
-        result.append(tempImage)
+
+        result.append(frame)
     
     return result
-
-
+    
+    
 def load_json(filePath) -> dict:
     with open(filePath, "r") as file:
         return json.load(file)

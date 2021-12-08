@@ -148,7 +148,7 @@ class TileRenderer:
         ):
         # Setting up background tile
         backgroundTile = self.tileKey[backgroundTile]["tile"].copy()
-        backgroundTile.fill((255, 255, 255, 150), None, pygame.BLEND_RGBA_MULT)
+        backgroundTile.set_alpha(150)
 
         # Iterating through all of the tiles in the current room
         for y, row in enumerate(room): 

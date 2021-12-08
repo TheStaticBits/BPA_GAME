@@ -21,9 +21,8 @@ class BossLevel(src.base_level.BaseLevel):
 
         self.tilesOffset = 0
 
-        self.empty_surf = pygame.Surface(constants.SCREEN_SIZE)
-        self.empty_surf.fill(constants.NEVER_USED_COLOR)
-        self.empty_surf.set_colorkey(constants.NEVER_USED_COLOR)
+        # Transparent surface used for entity rendering
+        self.empty_surf = pygame.Surface(constants.SCREEN_SIZE, flags = pygame.SRCALPHA)
         
         self.bossName = None
 

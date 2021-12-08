@@ -55,8 +55,6 @@ CORLEN_FOLLOW_DISTANCE = 10 # How far behind Corlen is from the player
 ELLIPSE_FOLLOW_DISTANCE = 22 # How far behind Ellipse is from the player
 MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 
-NEVER_USED_COLOR = (33, 22, 11) # Color used for setting color keys for transparency on surfaces when loading animations and for the entities surface in boss levels
-
 # Default save (for the database)
 DEFAULT_SAVE = {
     "playerX": -1,
@@ -64,7 +62,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 2,
+    "level": 0,
     "room": 0,
     "crystals": "00000000000000000"
 }

@@ -24,11 +24,16 @@ class Button:
             self.fontRendered.get_height()
         ))
 
+        self.reset()
+
+    
+    def reset(self):
         self.selected = False # If the mouse is hovering over the button
         self.clicked = False # The button activates when you let go of it
         self.highlightYPos = 0
+
     
-    def update(self, mousePos, mouseInputs):
+    def update(self, mousePos, mouseInputs) -> bool:
         self.selected = self.rect.collidepoint(mousePos)
 
         if self.selected:
@@ -37,6 +42,7 @@ class Button:
 
             else:
                 if self.clicked:
+                    self.reset()
                     return True
                     
         else:

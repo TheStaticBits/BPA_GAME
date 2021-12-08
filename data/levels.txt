@@ -132,7 +132,7 @@ v^><w          w    wwww
 
 background = w
 music = Belloq
-boss = Big Bite
+boss = Belloq
 entities = none
 ------------------------
 wwwvv            wwwwwww

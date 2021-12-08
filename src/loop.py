@@ -1,5 +1,4 @@
 import pygame
-import logging
 import traceback
 from time import sleep
 import threading
@@ -13,6 +12,7 @@ import src.tile_renderer
 import src.cutscenes
 import src.boss_level
 import src.main_menu
+import src.pause_menu
 
 # Initializing Pygame
 pygame.init()
@@ -41,8 +41,11 @@ class Loop(src.scene_base.SceneBase):
                 "playing": src.playing.Playing(save),
                 "bossLevel": src.boss_level.BossLevel(save),
                 "cutscene": src.cutscenes.Cutscenes(),
-                "mainMenu": src.main_menu.MainMenu()
+                "mainMenu": src.main_menu.MainMenu(),
+                "pauseMenu": src.pause_menu.PauseMenu()
             }
+
+            self.prevScene = self.scene # For the pause menu resuming
 
             self.scenes["mainMenu"].start_music()
         
@@ -60,7 +63,7 @@ class Loop(src.scene_base.SceneBase):
     def run_framerate(self):
         # Is run in the background.
         # Manages the framerate and prints it out to the console every second.
-        while True:
+        while not self.window.closeWindow:
             sleep(1)
             print(self.framerate, "FPS")
             self.framerate = 0
@@ -102,6 +105,7 @@ class Loop(src.scene_base.SceneBase):
         super().update() # Logging
 
         self.window.update_inputs()
+
 
         if self.scene == "playing":
             result = self.scenes["playing"].update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
@@ -146,18 +150,45 @@ class Loop(src.scene_base.SceneBase):
                     self.scene = "cutscene"
         
         elif self.scene == "mainMenu":
-            changeTo = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
+            check = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
 
-            if changeTo == "start":
+            if check == "start":
                 self.check_what_scene()
                 self.update()
+        
+        elif self.scene == "pauseMenu":
+            check = self.scenes["pauseMenu"].update(
+                self.window.inputs, 
+                self.window.mousePos, 
+                self.window.mousePressed
+            )
+
+            if check != "pause":
+                self.window.inputs["esc"] = False
+                
+                if check == "resume":
+                    self.scene = self.prevScene
+                
+                elif check == "mainMenu":
+                    self.scene = "mainMenu"
+
+
+        if self.scenes["pauseMenu"].check_for_pause(self.scene, self.window.inputs):
+            if self.scene != "pauseMenu":
+                self.prevScene = self.scene
+
+                self.scenes[self.scene].render(self.window.miniWindow)
+                self.scenes["pauseMenu"].update_background(self.window.miniWindow)
+                
+                self.scene = "pauseMenu"
     
-    
-    def render(self):
+    def render(self) -> "pygame.Surface":
         # This method renders all objects, based on the current scene 
         super().render()
 
         self.scenes[self.scene].render(self.window.miniWindow)
+
+        return self.window.miniWindow
 
 
     def check_what_scene(self):

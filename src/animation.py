@@ -54,6 +54,11 @@ class Animation:
     def get_image_height(self):
         return self.images[self.frame].get_height()
     
+    
+    def set_alpha(self, alpha):
+        for image in self.images:
+            image.set_alpha(alpha)
+    
 
     def copy(self) -> "Animation":
         obj = Animation(self.delay)
