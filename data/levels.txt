@@ -137,7 +137,7 @@ entities = none
 ------------------------
 wwwvv            wwwwwww
 wwv               wwwwww
-wv                 www w
+wv                 wwwww
 w                  www  
 w          ^ p  ^  www  
 ww      ww wwwwww  www  
@@ -146,21 +146,21 @@ wwwwww^    vwwwwv  www
 wwwwwww     vwwv   www  
 wwwwwww^^  ^^ww         
 wwwwwwwww^^wwww^        
-wwwwwwwwwwwwwwww^      ^
-wwwwwwwwwwwwwwwww^    ^w
+wwwwwwwwwwwwwwww^       
+wwwwwwwwwwwwwwwww^    ^^
 wwwwwwwwwwwwwwwwww^^^^ww
 ||||||||||||||||||||||||
-                        
-                        
-                        
 w                       
 w                       
 w                       
-<                       
-                        
-                        
-                        
-                        
+w                       
+w                       
+w   wwwww               
+<    www                
+     www                
+     www                
+     www                
+     www                
                         
                         
                        w
@@ -422,39 +422,54 @@ dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 ddddddddddddddjddddddddd
 ||||||||||||||||||||||||
-v^><dcjg                
+v^><dcjgdddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddd c ddddddddddd
+     vvv       vvv      
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+           ^            
+^^^       ^d^       ^^^^
+ddddddd   ddd   dddddd
+ddddddd         dddddddd
+dddddddd       ddddddddd
+dddddddd       ddddddddd
+dddddddddddddddddddddddd
 ------------------------
 
 background = d
 music = DeepBelow
 ------------------------
 v^><dcjg                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+dddddddddddddddddddddddd
+d               dd      
+d     ^^ g ^^ g dd      
+d  g  dd   dd   dd      
+d  p  dd   dd   dd     d
+dddddddd   dd   dd   ddd
+d c dddd   dd   dd   ddd
+d     vv   dd   dd   ddd
+d          dd g dd   ddd 
+d          dd   dd   ddd
+d          dd   vv g ddd
+d          dd        ddd
+dddddddddddddddddddddddd
+||||||||||||||||||||||||
+   v       d        dddd
+     g   g d      j dddd
+       ^   d   dd   dddd
+dddddddd   d   dd j dddd
+d      v   d j dd   dddd
+d          d   dd j dddd
+d  ^       d j dd   dddd
+d  ddddddddd   dd j dddd
+d       dddd j dd   dddd
+d   d g dddd   dd j dddd
+ddddd   vvvv j dd   dddd
+ddddd          dd       
+ddddd        j dd       
+ddddd          dd       
 ||||||||||||||||||||||||
 v^><dcjg                
                         
@@ -485,18 +500,4 @@ v^><dcjg
                         
                         
                         
-||||||||||||||||||||||||
-v^><dcjg                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+------------------------
