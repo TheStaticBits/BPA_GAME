@@ -11,11 +11,15 @@ LEVELS_PATH = "data/levels.txt"
 CUTSCENE_DATA_PATH = "data/cutscenes.json"
 CUTSCENE_LEVELS_PATH = "data/cutscene_levels.txt"
 
+MAIN_MENU_LEVEL_PATH = "data/menu_level.txt"
+
 EMAIL_PWD_PATH = "data/emailpassword.txt"
 
 MUSIC_FOLDER = "res/sound"
 
 SCREEN_SHADOW_PATH = "res/misc/shadow.png"
+
+BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower the button fills up when you hover your mouse over it.
 
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
@@ -51,8 +55,6 @@ CORLEN_FOLLOW_DISTANCE = 10 # How far behind Corlen is from the player
 ELLIPSE_FOLLOW_DISTANCE = 22 # How far behind Ellipse is from the player
 MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 
-NEVER_USED_COLOR = (33, 22, 11) # Color used for setting color keys for transparency on surfaces when loading animations and for the entities surface in boss levels
-
 # Default save (for the database)
 DEFAULT_SAVE = {
     "playerX": -1,
@@ -60,7 +62,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 2,
+    "level": 0,
     "room": 0,
     "crystals": "00000000000000000"
 }
@@ -181,6 +183,8 @@ CORLEN_ANIMATIONS = {
     }
 }
 
+# The Belloq is the first boss
+# This holds the animations for the Belloq, their paths, frames, and delays
 BELLOQ_ANIMATIONS = {
     "idle": {
         "delay": 6,
@@ -194,7 +198,7 @@ BELLOQ_ANIMATIONS = {
     }
 }
 BELLOQ_SPEED = 0.5 # Pixels moved per frame
-BELLOQ_COOLDOWN = 45 # Frames between lazers
+BELLOQ_COOLDOWN = 80 # Frames between lazers
 BELLOQ_LAZER_OFFSET = (33, 17) # Position of the eye in relation to the top left of the sprite
 # Where the lazer fires from
 BELLOQ_LAZER_ACCURACY = 0.2 # A random number chosen between the negative of this number and the positive of this number will be added onto the lazer's direction
@@ -202,9 +206,17 @@ BELLOQ_LAZER_ACCURACY = 0.2 # A random number chosen between the negative of thi
 # Is in randians
 # If it's zero, it will have perfect accuracy
 
-LAZER_SPEED = 3
-LAZER_LENGTH = 10
+# Belloq boss constants
+LAZER_SPEED = 2
+LAZER_LENGTH = 20
 LAZER_COLOR = (255, 255, 0)
+
+# Big Bite Boss constants
+BIG_BITE_ANIM_PATH = "res/characters/big_bite/anim.png"
+BIG_BITE_ATTACK_FRAME = 3 # The frame number in the animation in which collisions are checked between the player and the boss
+BIG_BITE_TOTAL_FRAMES = 5
+BIG_BITE_DELAY = 15 # The delay between frames in the animation, in game frames (60 frames per second)
+BIG_BITE_ATTACK_DELAY = (5, 40) # The delay between each attack in frames. It is randomly chosen between these two numbers
 
 # Other tiles
 SPIKE_PATH = "res/misc/spike.png"

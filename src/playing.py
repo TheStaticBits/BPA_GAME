@@ -15,8 +15,6 @@ class Playing(src.base_level.BaseLevel):
     def __init__(self, saveData):
         super().__init__(saveData, __name__)
 
-        self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
-
         self.font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Setting up the font
         self.get_text() # Getting the text for the current room
         
@@ -42,6 +40,7 @@ class Playing(src.base_level.BaseLevel):
         self.load_room()
         self.start_music()
         self.check_entity_rendering()
+        self.setup_player()
 
 
     def load_room(self):
@@ -70,17 +69,6 @@ class Playing(src.base_level.BaseLevel):
             pass
 
 
-    def check_for_cutscene(self):
-        for name, data in self.cutsceneData.items():
-            if self.level == data["beforeLevel"]:
-                return name
-
-
-    def check_for_boss(self):
-        if "boss" in self.levelData[self.level]:
-            return self.levelData[self.level]["boss"]
-
-
     def update(
         self, 
         inputs, # Dictionary of keys pressed
@@ -96,7 +84,7 @@ class Playing(src.base_level.BaseLevel):
             if self.room == 0: # If it switched to a new level
                 check = self.check_for_boss()
                 if check != None:
-                    return ("boss", check) # Switches to the boss
+                    return ("bossLevel", check) # Switches to the boss
 
                 check = self.check_for_cutscene()
                 if check != None:
@@ -130,9 +118,6 @@ class Playing(src.base_level.BaseLevel):
         # Other editor inputs
         if inputs["space"]:
             utility.save_room(self.level, self.room, self.levels[self.level][self.room], constants.LEVELS_PATH) # Saves the room to the levels.txt file
-        
-        if not isinstance(changeToCutscene, str):
-            return changeToCutscene
 
 
     # Renders everything to the screen

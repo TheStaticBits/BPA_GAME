@@ -3,6 +3,7 @@ import pygame
 import src.base_level
 import src.tile_renderer
 import src.belloq
+import src.big_bite
 import src.constants as constants
 
 class BossLevel(src.base_level.BaseLevel):
@@ -20,9 +21,10 @@ class BossLevel(src.base_level.BaseLevel):
 
         self.tilesOffset = 0
 
-        self.empty_surf = pygame.Surface(constants.SCREEN_SIZE)
-        self.empty_surf.fill(constants.NEVER_USED_COLOR)
-        self.empty_surf.set_colorkey(constants.NEVER_USED_COLOR)
+        # Transparent surface used for entity rendering
+        self.empty_surf = pygame.Surface(constants.SCREEN_SIZE, flags = pygame.SRCALPHA)
+        
+        self.bossName = None
 
 
     def setup(self, boss, level, room):
@@ -32,9 +34,15 @@ class BossLevel(src.base_level.BaseLevel):
         self.load_rooms()
         self.start_music()
         self.check_entity_rendering()
+        self.reset_all()
 
         if boss == "Belloq":
             self.boss = src.belloq.Belloq()
+            self.bossName = "Belloq"
+        
+        elif boss == "Big Bite":
+            self.boss = src.big_bite.BigBite()
+            self.bossName = "Big Bite"
 
         self.minOffset = -((len(self.levels[self.level]) - 1) * constants.SCREEN_SIZE[0])
 
@@ -66,13 +74,20 @@ class BossLevel(src.base_level.BaseLevel):
     def update(self, inputs):
         playerState = super().update(
             inputs, 
-            self.tileRenderers[0],
+            self.tileRenderers[self.playerRoomIndex],
             playerSpawnOffset = 0 # change maybe soon
         )
 
         if playerState == "right":
             if self.room == 0:
-                return "playing"
+                if self.check_for_boss():
+                    self.setup(self.levelData[self.level]["boss"], self.level, 0)
+                
+                elif cutscene := self.check_for_cutscene():
+                    return cutscene
+                
+                else:
+                    return "playing"
             
             else:
                 if dir == "right":
@@ -111,12 +126,22 @@ class BossLevel(src.base_level.BaseLevel):
         for tr in self.tileRenderers:
             tr.update_tiles_with_anims() # Update any tiles that have animations
         
-        dead = self.boss.update(
-            self.player, 
-            self.room, 
-            len(self.levels[self.level]), 
-            self.tilesOffset
-        )
+        if self.bossName == "Belloq":
+            dead = self.boss.update(
+                self.player, 
+                self.room, 
+                len(self.levels[self.level]), 
+                self.tilesOffset
+            )
+
+        elif self.bossName == "Big Bite":
+            dead = self.boss.update(
+                self.player.get_mask(), 
+                self.player.rect.topleft, 
+                self.tilesOffset,
+                self.room
+            )
+
         if dead:
             self.boss.reset()
             self.playerRoomIndex = 0
@@ -127,6 +152,7 @@ class BossLevel(src.base_level.BaseLevel):
     
     def render(self, window):
         window.blit(self.tileSurfaces[self.playerRoomIndex], (self.tilesOffset, 0))
+        self.tileRenderers[self.playerRoomIndex].render_tiles_with_anims(window, self.gravityDir, offset = self.tilesOffset)
 
         if self.playerRoomIndex == 0:
             otherRoomIndex = 1
@@ -136,6 +162,7 @@ class BossLevel(src.base_level.BaseLevel):
             otherRoomX = self.tilesOffset - constants.SCREEN_SIZE[0]
             
         window.blit(self.tileSurfaces[otherRoomIndex], (otherRoomX, 0))
+        self.tileRenderers[otherRoomIndex].render_tiles_with_anims(window, self.gravityDir, offset = otherRoomX)
 
         entitiesSurf = self.empty_surf.copy()
         super().render(
@@ -145,7 +172,7 @@ class BossLevel(src.base_level.BaseLevel):
         )
         window.blit(entitiesSurf, (0, 0))
 
-        self.boss.render(window)
+        self.boss.render(window, self.tilesOffset, self.room)
 
         super().render_grav_beam(window)
         super().render_screen_shadow(window)

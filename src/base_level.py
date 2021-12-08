@@ -8,6 +8,8 @@ class BaseLevel(src.scene_base.SceneBase):
     def __init__(self, saveData, name):
         super().__init__(name)
 
+        self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
+
         # Setting data based off of save data from save.db
         self.level = int(saveData["level"])
         self.room = int(saveData["room"])
@@ -56,6 +58,7 @@ class BaseLevel(src.scene_base.SceneBase):
             path = constants.GRAV_BEAM_PATH, 
             width = constants.GRAV_BEAM_WIDTH
         )
+        self.gravityBeam.set_alpha(150) # Makes gravity beam transparent
 
 
     def start_music(self):
@@ -149,6 +152,17 @@ class BaseLevel(src.scene_base.SceneBase):
             self.showEntities = self.levelData[self.level]["entities"] != "none"
         else:
             self.showEntities = True
+    
+
+    def check_for_cutscene(self):
+        for name, data in self.cutsceneData.items():
+            if self.level == data["beforeLevel"]:
+                return name
+
+
+    def check_for_boss(self):
+        if "boss" in self.levelData[self.level]:
+            return self.levelData[self.level]["boss"]
 
 
     def update(
@@ -192,7 +206,7 @@ class BaseLevel(src.scene_base.SceneBase):
                 self.setup_player()
                 self.player.facing = 1
 
-                self.setup_entities(self.player.topleft)
+                self.setup_entities(self.player.rect.topleft)
 
                 self.check_entity_rendering()
 
@@ -217,15 +231,20 @@ class BaseLevel(src.scene_base.SceneBase):
         # If the return result was of a tile
         # Play the "struck" animation for the tile
         elif playerState != "alive":
-            if tileRenderer.change_tile_anim(playerState[0], playerState[1], "struck"):
-                if playerState[0] == "g": # Gravity orb
-                    self.gravityDir *= -1 # Changing the gravity direction
-                
-                elif playerState[0] == "c":
-                    self.levels[self.level][self.room][playerState[1][1]][playerState[1][0]] = " " # Removing the tile
+            try:
+                if tileRenderer.change_tile_anim(playerState[0], playerState[1], "struck"):
+                    if playerState[0] == "g": # Gravity orb
+                        self.gravityDir *= -1 # Changing the gravity direction
+                    
+                    elif playerState[0] == "c":
+                        self.levels[self.level][self.room][playerState[1][1]][playerState[1][0]] = " " # Removing the tile
 
-                    if not self.crystals[self.level]:
-                        self.currentCrystal = True
+                        if not self.crystals[self.level]:
+                            self.currentCrystal = True
+            
+            except Exception as ex:
+                print(playerState)
+                print(ex)
 
         if self.showEntities:
             if self.playerPositions == [] or self.playerPositions[0] != self.player.rect.topleft: # If the player moved

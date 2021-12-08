@@ -3,7 +3,7 @@ import src.constants as constants
 
 """
 This class creates, manages, and updates the Pygame Window.
-It also manages the inputs from the player
+It also manages the inputs from the user
 """
 class Window:
     WINDOW_SIZE = (
@@ -30,7 +30,8 @@ class Window:
             "left": False,
             "right": False,
             "up": False,
-            "space": False
+            "space": False,
+            "esc": False
         }
         self.mousePos = (0, 0)
         self.mousePressed = {
@@ -46,6 +47,7 @@ class Window:
         # Resetting one-time inputs
         self.inputs["up"] = False
         self.inputs["space"] = False
+        self.inputs["esc"] = False
 
         # Getting mouse positions and buttons pressed
         self.mousePos = (
@@ -64,7 +66,6 @@ class Window:
 
             elif event.type == pygame.KEYDOWN:
                 # If there was a key pressed down, sets the corresponding key to true
-
                 if event.key in constants.RIGHT_KEYS:
                     self.inputs["right"] = True
                 elif event.key in constants.LEFT_KEYS:
@@ -73,6 +74,8 @@ class Window:
                     self.inputs["up"] = True
                 elif event.key == pygame.K_SPACE:
                     self.inputs["space"] = True
+                elif event.key == pygame.K_ESCAPE:
+                    self.inputs["esc"] = True
             
             elif event.type == pygame.KEYUP:
                 # If there was a key let go, sets the corresponding non-one-time keys to false
