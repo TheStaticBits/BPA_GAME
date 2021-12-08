@@ -81,13 +81,11 @@ class BossLevel(src.base_level.BaseLevel):
 
         if playerState == "right":
             if self.room == 0:
-                self.level += 1
-
                 if self.check_for_boss():
                     self.setup(self.levelData[self.level]["boss"], self.level, 0)
                 
-                elif self.check_for_cutscene():
-                    return "cutscene"
+                elif cutscene := self.check_for_cutscene():
+                    return cutscene
                 
                 else:
                     return "playing"

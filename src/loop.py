@@ -133,19 +133,16 @@ class Loop(src.scene_base.SceneBase):
         
         elif self.scene == "bossLevel":
             check = self.scenes["bossLevel"].update(self.window.inputs)
-
             if check != None:
-                self.scenes["playing"].level += 1
+                self.scenes["playing"].level = self.scenes["bossLevel"].level
                 self.scenes["playing"].room = 0
 
-                cutsceneCheck = self.scenes["playing"].check_for_cutscene()
-
-                if cutsceneCheck is None:
+                if check == "playing":
                     self.scene = "playing"
                     self.scenes["playing"].setup()
                 
                 else:
-                    self.scenes["cutscene"].setup(cutsceneCheck)
+                    self.scenes["cutscene"].setup(check)
                     self.scene = "cutscene"
         
         elif self.scene == "mainMenu":

@@ -8,6 +8,8 @@ class BaseLevel(src.scene_base.SceneBase):
     def __init__(self, saveData, name):
         super().__init__(name)
 
+        self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
+
         # Setting data based off of save data from save.db
         self.level = int(saveData["level"])
         self.room = int(saveData["room"])

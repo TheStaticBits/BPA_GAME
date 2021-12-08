@@ -15,8 +15,6 @@ class Playing(src.base_level.BaseLevel):
     def __init__(self, saveData):
         super().__init__(saveData, __name__)
 
-        self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
-
         self.font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Setting up the font
         self.get_text() # Getting the text for the current room
         
