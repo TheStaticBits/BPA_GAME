@@ -150,35 +150,35 @@ wwwwwwwwwwwwwwww^
 wwwwwwwwwwwwwwwww^    ^^
 wwwwwwwwwwwwwwwwww^^^^ww
 ||||||||||||||||||||||||
-w                       
-w                       
-w                       
-w                       
-w                       
-w   wwwww               
-<    www                
-     www                
-     www                
-     www                
-     www                
-                        
-                        
-                       w
+w                      w
+w                      w
+w                      w
+w                www   w
+w           www  vvv   w
+w   wwwww   vvv        w
+<    www         ^^^   w
+     www    ^^^  www   w
+     www    www  vvv    
+     www    vvv         
+     www         ^^^    
+     www    ^^^  www    
+     www    www  vvv    
+     wwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
-                       w
-                       w
-                       w
-                       w
-                       w
-                       w
-                        
-                        
-                       w
-                       w
-                       w
-                       w
-                       w
-                       w
+wwww                   w
+wwww                   w
+wwww                   w
+wwww                   w
+wwww                   w
+wwww   ^^   ww         w
+wwww   wwwwwww    ^^^   
+wwww   wwwww      www   
+       wwwww      www  w
+       wwww       www  w
+       wwww       www  w
+       ww         www  w
+       ww         www  w
+       ww         www  w
 ------------------------
 
 background = d
