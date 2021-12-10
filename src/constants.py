@@ -133,7 +133,7 @@ TILES_WITH_ANIMATIONS = {
         "mask": "res/tiles/animated/gravity_orb/mask.png"
     },
 
-    "c": { # Crystals
+    "c": { # Crystals tile
         "animations": {
             "default": {
                 "path": "res/tiles/animated/crystal/idle.png",

@@ -18,7 +18,7 @@ class Window:
         self.miniWindow = pygame.Surface((
             self.WINDOW_SIZE[0] / constants.PX_SCALE_FACTOR,
             self.WINDOW_SIZE[1] / constants.PX_SCALE_FACTOR
-        ))
+        )) # Miniwindow is the window divided by the pixel scale factor
 
         pygame.display.set_caption("BPA Game")
 
