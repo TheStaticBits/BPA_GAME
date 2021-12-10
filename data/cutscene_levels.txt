@@ -19,19 +19,19 @@ ssssssssssssssssssssssss
 background = w
 music = Corlen
 ------------------------
-wwwwwwwwwwwwwwwwwwwww   
-wwwwwwwwwwwwwwwwwwwww   
-wwwwwwwwwwwwwwwwwwww    
-wwwwwwwwwwwwwwwwwwww    
-wwwwwwwwwwwwwwwwwwww    
-wwwwwwwwwwwwwwwwwww     
-wwwwwwwwwwwwwwwww       
-wwwwwwwwwwwww           
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
                         
                         
                         
                         
-wwwwwwwwww              
+                        
 wwwwwwwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
                         

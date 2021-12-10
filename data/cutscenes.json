@@ -11,7 +11,7 @@
                 "player controlled",
                 "player jump not",
                 "ellipse face left",
-                "text move 80 20",
+                "text move 168 20",
                 "text change Use W and D or LEFT and RIGHT to move",
                 "text display",
                 "run testMoved"
@@ -25,7 +25,7 @@
                 "player uncontrolled",
                 "player face right",
                 "text change I am here to warn you...",
-                "text move 190 120",
+                "text move 264 120",
                 "delay 165 step2"
             ],
             "step2": [
@@ -51,30 +51,45 @@
         "cutsceneLevel": 1,
         "backgroundAnim": {"path": "res/cutscenes/corlen's_house.png", "room": 1},
         "start": {
-            "player": {"pos": [0, 176]},
+            "player": {"pos": [0, 192]},
             "ellipse": {"pos": [-16, -16], "room": 0},
-            "corlen": {"pos": [192, 192], "room": 1}
+            "corlen": {"pos": [210, 192], "room": 0}
         },
 
         "time_commands": {
             "0": [
-                "player noncontrolled",
-                "player move right"
-            ],
-            "50": [
+                "player jump not",
                 "player controlled",
-                "player move still",
-                "run testNextRoom"
+                "run corlenNotice"
             ]
         },
         "conditionals": {
-            "testNextRoom": "room == 1"
+            "corlenNotice": "player x > 90"
         },
         "cond_commands": {
-            "testNextRoom": [
-                "text change HELLO",
-                "text move 100 100",
-                "text display"
+            "corlenNotice": [
+                "text change !",
+                "text move 218 170",
+                "text display",
+                "corlen face left",
+                "player uncontrolled",
+                "delay 60 whoRU"
+            ], "whoRU": [
+                "text change Who are you?",
+                "delay 80 noResponse..."
+            ], "noResponse...": [
+                "text hide",
+                "delay 120 movingOn"
+            ], "movingOn": [
+                "text change Well, uh, I'm Corlen.",
+                "text display",
+                "delay 90 randomHallway"
+            ], "randomHallway": [
+                "text change This is a random hallway in the middle of nowhere.",
+                "delay 120 something"
+            ], "something": [
+                "text change [INSERT CORLEN SOUNDS]",
+                "player controlled"
             ]
         }
     },

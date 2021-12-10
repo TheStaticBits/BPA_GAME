@@ -78,9 +78,8 @@ class Cutscenes(src.scene_base.SceneBase):
 
         # Variables for running commands for cutscenes
         self.timer = 0
-        self.runningConditionals = []
-        self.activeConditionals = []
-        self.delays = {}
+        self.runningConditionals = [] # These are conditionals that are being checked every frame
+        self.delays = {} 
 
     
     def rerender_tiles(self):
@@ -98,84 +97,96 @@ class Cutscenes(src.scene_base.SceneBase):
         # For example, ["ellipse", "walk", "right"]
         # And other formats
         # Look inside data/cutscenes.json for more examples
-        for command in commands:
-            comm = command.split(" ")
+        try:
+            for command in commands:
+                comm = command.split(" ")
 
-            if comm[0] in self.objects:
-                if comm[1] == "walk":
-                    self.objects[comm[0]]["movement"] = comm[2]
-                
-                elif comm[1] == "face":
-                    if comm[2] == "right":
-                        self.objects[comm[0]]["obj"].facing = 1
-                    else:
-                        self.objects[comm[0]]["obj"].facing = -1
+                if comm[0] in self.objects:
+                    if comm[1] == "walk":
+                        self.objects[comm[0]]["movement"] = comm[2]
+                    
+                    elif comm[1] == "face":
+                        if comm[2] == "right":
+                            self.objects[comm[0]]["obj"].facing = 1
+                        else:
+                            self.objects[comm[0]]["obj"].facing = -1
 
-                elif comm[1] == "teleport":
-                    self.objects[comm[0]]["obj"].rect.x = int(comm[2])
-                    self.objects[comm[0]]["obj"].rect.y = int(comm[3])
-                
-                elif comm[1] == "controlled":
-                    self.playerControlled = True
-                
-                elif comm[1] == "uncontrolled":
-                    self.playerControlled = False
-                    self.objects["player"]["obj"].xVelocity = 0
-                
-                elif comm[1] == "jump":
-                    if comm[2] == "can":
-                        self.playerCanJump = True
-                    else:
-                        self.playerCanJump = False
+                    elif comm[1] == "teleport":
+                        self.objects[comm[0]]["obj"].rect.x = int(comm[2])
+                        self.objects[comm[0]]["obj"].rect.y = int(comm[3])
+                    
+                    elif comm[1] == "controlled":
+                        self.playerControlled = True
+                    
+                    elif comm[1] == "uncontrolled":
+                        self.playerControlled = False
+                        self.objects["player"]["obj"].xVelocity = 0
+                    
+                    elif comm[1] == "jump":
+                        if comm[2] == "can":
+                            self.playerCanJump = True
+                        else:
+                            self.playerCanJump = False
 
-            elif comm[0] == "text":
+                elif comm[0] == "text":
 
-                if comm[1] == "display":
-                    self.showText = True
-                elif comm[1] == "hide":
-                    self.showText = False
+                    if comm[1] == "display":
+                        self.showText = True
+                    elif comm[1] == "hide":
+                        self.showText = False
+                    
+                    elif comm[1] == "change":
+                        self.text = " ".join(comm[2:])
+                    elif comm[1] == "move":
+                        self.textPos = (int(comm[2]), int(comm[3])) 
                 
-                elif comm[1] == "change":
-                    self.text = " ".join(comm[2:])
-                elif comm[1] == "move":
-                    self.textPos = (int(comm[2]), int(comm[3])) 
+                elif comm[0] == "run": # Runs a conditional
+                    self.runningConditionals.append(comm[1])
+                
+                elif comm[0] == "delay": # Starts a delay
+                    self.delays[comm[2]] = int(comm[1])
+                
+                elif comm[0] == "end":
+                    return "end"
+        except Exception as exc:
+            raise Exception(f"Error occured in command: {command}")
+
+
+    def run_conditional(self, conditional):
+        multConditionals = conditional.split(" and ")
+        if len(multConditionals) == 1:
+            cond = conditional.split(" ")
+
+            # If the command is asking for the data of an entity
+            if len(cond) == 4:
+                checking = self.objects[cond[0]]["obj"]
+
+                if cond[1] == "x":
+                    checking = checking.rect.x
+                elif cond[1] == "y":
+                    checking = checking.rect.y
+                
+                command = "".join(cond[2:])
+
+                check = eval(f"{checking} {command}")
             
-            elif comm[0] == "run": # Runs a conditional
-                self.runningConditionals.append(comm[1])
+            # if the command is asking for a single variable
+            elif len(cond) == 3:
+                if cond[0] == "room":
+                    check = eval(f"{self.room} {cond[1]} {cond[2]}")
             
-            elif comm[0] == "delay": # Starts a delay
-                self.delays[comm[2]] = int(comm[1])
+            if check:
+                return True
+
+            return False
+
+        else:
+            # Goes through and runs all conditionals in the list
+            for c in multConditionals:
+                if not self.run_conditional(c):
+                    return False
             
-            elif comm[0] == "end":
-                return "end"
-
-
-    def run_conditional(self, condName, conditional):
-        cond = conditional.split(" ")
-
-        # If the command is asking for the data of an entity
-        if len(cond) == 4:
-            checking = self.objects[cond[0]]["obj"]
-
-            if cond[1] == "x":
-                checking = checking.rect.x
-            elif cond[1] == "y":
-                checking = checking.rect.y
-            
-            command = "".join(cond[2:])
-
-            check = eval(f"{checking} {command}")
-        
-        # if the command is asking for a single variable
-        elif len(cond) == 3:
-            if cond[0] == "room":
-                check = eval(f"{self.room} {cond[1]} {cond[2]}")
-        
-        if check:
-            self.activeConditionals.append(condName)
             return True
-
-        return False
 
 
     def update(self, inputs):
@@ -194,15 +205,10 @@ class Cutscenes(src.scene_base.SceneBase):
         
         # Running conditionals
         for condName in self.runningConditionals:
-            if self.run_conditional(condName, self.cutsceneData["conditionals"][condName]):
+            if self.run_conditional(self.cutsceneData["conditionals"][condName]):
                 self.runningConditionals.remove(condName)
-        
-        # Checking and running commands that are dependent on conditionals
-        for conditional, commands in self.cutsceneData["cond_commands"].items():
-            if conditional in self.activeConditionals:
-                self.activeConditionals.remove(conditional)
-
-                result = self.interpret_commands(commands)
+                
+                result = self.interpret_commands(self.cutsceneData["cond_commands"][condName])
                 if result == "end":
                     return False
         
@@ -316,4 +322,4 @@ class Cutscenes(src.scene_base.SceneBase):
             renderText = self.textObject.render(self.text, False, (255, 255, 255))
             textYOffset = math.sin(self.textWavX) * 5
 
-            window.blit(renderText, (self.textPos[0], self.textPos[1] + textYOffset))
+            window.blit(renderText, (self.textPos[0] - renderText.get_width() / 2, self.textPos[1] + textYOffset))
