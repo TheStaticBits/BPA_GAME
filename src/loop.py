@@ -17,7 +17,6 @@ import src.pause_menu
 # Initializing Pygame
 pygame.init()
 
-
 """
 This class creates and manages all of the scenes, the window, and the main game loop. 
 It also sets up the game.
@@ -168,7 +167,10 @@ class Loop(src.scene_base.SceneBase):
                 
                 if check == "resume":
                     self.scene = self.prevScene
-                    self.scenes[self.scene].start_music()
+                
+                elif check == "restart":
+                    self.scene = self.prevScene
+                    self.scenes[self.scene].restart_level()
                 
                 elif check == "mainMenu":
                     self.scene = "mainMenu"
@@ -176,7 +178,7 @@ class Loop(src.scene_base.SceneBase):
 
 
         if self.scenes["pauseMenu"].check_for_pause(self.scene, self.window.inputs):
-            if self.scene != "pauseMenu":
+            if self.scene != "pauseMenu" and self.scene != "mainMenu":
                 self.prevScene = self.scene
 
                 self.scenes[self.scene].render(self.window.miniWindow)
@@ -216,6 +218,10 @@ class Loop(src.scene_base.SceneBase):
         
         self.logger.info("Saving game state...")
 
+        crystals = []
+        for index, c in enumerate(self.scenes["playing"].crystals):
+            crystals.append(int(c or self.scenes["bossLevel"].crystals[index]))
+
         # Saves the game's data
         utility.modif_save({
             "playerX": self.scenes["playing"].player.rect.x,
@@ -225,7 +231,7 @@ class Loop(src.scene_base.SceneBase):
             "globalGravity": self.scenes["playing"].gravityDir,
             "level": self.scenes["playing"].level,
             "room": self.scenes["playing"].room,
-            "crystals": "".join([str(x) for x in self.scenes["playing"].crystals])
+            "crystals": "".join([str(x) for x in crystals])
         }) 
 
         self.logger.info("Exiting Pygame...")

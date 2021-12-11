@@ -10,21 +10,31 @@ class PauseMenu(src.scene_base.SceneBase):
 
         font = pygame.font.Font(constants.FONT_PATH, 25)
 
-        self.resumeButton = src.button.Button(
-            constants.SCREEN_SIZE[0] / 2,
-            100,
-            font,
-            "Resume",
-            textOffset = 2
-        )
+        self.buttons = {
+            "resume": src.button.Button(
+                constants.SCREEN_SIZE[0] / 2,
+                80,
+                font,
+                "Resume",
+                textOffset = 2
+            ),
 
-        self.mainMenuButton = src.button.Button(
-            constants.SCREEN_SIZE[0] / 2,
-            140,
-            font,
-            "Main Menu",
-            textOffset = 2
-        )
+            "restart": src.button.Button(
+                constants.SCREEN_SIZE[0] / 2,
+                120,
+                font,
+                "Restart Level",
+                textOffset = 2
+            ),
+
+            "mainMenu": src.button.Button(
+                constants.SCREEN_SIZE[0] / 2,
+                160,
+                font,
+                "Main Menu",
+                textOffset = 2
+            )
+        }
 
         self.background = None
     
@@ -41,11 +51,13 @@ class PauseMenu(src.scene_base.SceneBase):
     def update(self, inputs, mousePos, mouseInputs) -> str:
         super().update()
 
-        if self.resumeButton.update(mousePos, mouseInputs) or inputs["esc"]:
-            return "resume"
-
-        elif self.mainMenuButton.update(mousePos, mouseInputs):
-            return "mainMenu"
+        for key, button in self.buttons.items():
+            if button.update(mousePos, mouseInputs):
+                return key
+            
+            elif key == "resume":
+                if inputs["esc"]:
+                    return "resume"
         
         return "pause"
 
@@ -54,5 +66,5 @@ class PauseMenu(src.scene_base.SceneBase):
 
         window.blit(self.background, (0, 0))
 
-        self.resumeButton.render(window)
-        self.mainMenuButton.render(window)
+        for button in self.buttons.values():
+            button.render(window)

@@ -61,6 +61,16 @@ class BossLevel(src.base_level.BaseLevel):
         # so, when the player reaches the end of the level, it can't scroll off the screen
         self.minOffset = -((len(self.levels[self.level]) - 1) * constants.SCREEN_SIZE[0])
         # This is minimum because the tileOffset goes negative, not positive.
+    
+    
+    def restart_level(self, resetAll = True):
+        if resetAll:
+            super().reset_all()
+        
+        self.boss.reset()
+        self.playerRoomIndex = 0
+        self.room = 0
+        self.load_rooms()
 
     
     def load_rooms(self):
@@ -115,10 +125,7 @@ class BossLevel(src.base_level.BaseLevel):
                     return "playing"
         
         elif playerState == "dead":
-            self.boss.reset()
-            self.playerRoomIndex = 0
-            self.room = 0
-            self.load_rooms()
+            self.restart_level(resetAll = False)
 
         self.tilesOffset = -(self.player.rect.x + (constants.PLAYER_WIDTH // 2) - (constants.SCREEN_SIZE[0] // 2))
 
@@ -160,11 +167,7 @@ class BossLevel(src.base_level.BaseLevel):
             )
 
         if dead:
-            self.boss.reset()
-            self.playerRoomIndex = 0
-            self.room = 0
-            self.load_rooms()
-            self.reset_all()
+            self.restart_level()
     
     
     def render(self, window):

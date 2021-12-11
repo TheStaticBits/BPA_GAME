@@ -21,6 +21,8 @@ class Cutscenes(src.scene_base.SceneBase):
 
 
     def setup(self, scene):
+        self.scene = scene
+
         self.cutsceneData = utility.load_json("data/cutscenes.json")[scene]
         
         self.objects = {}
@@ -81,6 +83,10 @@ class Cutscenes(src.scene_base.SceneBase):
         self.timer = 0
         self.runningConditionals = [] # These are conditionals that are being checked every frame
         self.delays = {} 
+
+
+    def restart_level(self):
+        self.setup(self.scene)
 
     
     def rerender_tiles(self):

@@ -38,9 +38,17 @@ class Playing(src.base_level.BaseLevel):
     def setup(self):
         self.get_text()
         self.load_room()
-        self.start_music()
-        self.check_entity_rendering()
-        self.setup_player()
+        super().start_music()
+        super().check_entity_rendering()
+        super().setup_player()
+    
+    
+    # Restarts the level the player is in
+    def restart_level(self):
+        super().reset_all()
+        self.get_text()
+        self.load_room()
+        super().setup_player()
 
 
     def load_room(self):
