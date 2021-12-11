@@ -1,6 +1,7 @@
 import pygame
 
 import src.constants as constants
+import src.utility as utility
 import src.object_base
 import src.animation
 

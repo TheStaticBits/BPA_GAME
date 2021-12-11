@@ -102,7 +102,7 @@ class TileRenderer:
     def get_tile_anim_frame(self, position, globalGravity):
         image = self.individualTileAnims[position]["animationObject"].get_frame()
 
-        flip = tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS
+        flip = position[1] >= constants.GRAV_BEAM_TILE_Y_POS
 
         # If the global gravity is reversed, also reverse the tile's image
         if globalGravity == -1: flip = not flip

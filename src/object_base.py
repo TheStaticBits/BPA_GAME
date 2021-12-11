@@ -82,7 +82,7 @@ class ObjectBase:
         level, 
         tilePos, 
         tileRenderer,
-        globalGravity
+        globalGravity,
         offset = 0
         ):
 
@@ -122,7 +122,7 @@ class ObjectBase:
                 tileMask = pygame.mask.from_surface(image)
                 objMask = self.get_mask()
 
-                collided = self.cachedMasks[tile].overlap(
+                collided = tileMask.overlap(
                     objMask, 
                     (self.rect.x - tilePos[0] * constants.TILE_SIZE[0] - offset, 
                     self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
@@ -147,7 +147,9 @@ class ObjectBase:
                     level[roomNum],
                     roomNum, 
                     level, 
-                    (tileX, tilePos[1]), 
+                    (tileX, tilePos[1]),
+                    tileRenderer,
+                    globalGravity,
                     offset = offs
                 )
     
