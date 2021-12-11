@@ -1,7 +1,3 @@
-"""
-This renderer 
-"""
-
 import pygame
 import os
 
@@ -9,6 +5,13 @@ import src.animation
 import src.constants as constants
 import src.utility as utility
 
+"""
+This class handles all of the rendering of tiles, whether they have animations
+or not. It loads all tile images and animations as well.
+Render tiles without animations through draw_tiles()
+and render tiles with animations through render_tiles_with_anims()
+after you've initialized the tiles through setup_room_tile_anims()
+"""
 class TileRenderer:
     def __init__(self):
         self.load_tiles()
@@ -61,8 +64,12 @@ class TileRenderer:
                 self.tileKey[tileKey]["inverse_corner"] = self.tileKey[tileKey]["corner"] # Sets the inverse_corner to the normal corner
     
 
-    # This loads all of the tile's animations
     def load_tile_anims(self):
+        # Loads all the animations that tiles could have
+        # creates a dictionary, tileAnim, that can be accessed through:
+        # self.tileAnims[tileLetter][animationName]
+        # Where tileLetter is the letter that represents the tile, such as "j" for jump orbs
+
         self.tileAnims = {}
 
         for tile, anims in constants.TILES_WITH_ANIMATIONS.items():
@@ -92,17 +99,22 @@ class TileRenderer:
                     }
 
 
-    def render_tiles_with_anims(self, window, gravityDir, offset = 0 ):
+    def render_tiles_with_anims(self, window, gravityDir, offset = 0):
+        # Renders all tiles with animations
+        # Renders the tiles flipped if they're bellow the gravity line
+
         for tilePos, anim in self.individualTileAnims.items():
             frame = anim["animationObject"].get_frame()
 
             flip = tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS
 
+            # If the global gravity is reversed, also reverse the tile's position
             if gravityDir == -1:
                 flip = not flip
             
             frame = pygame.transform.flip(frame, False, flip) # Flipping the frame
 
+            # Rendering it on the screen
             window.blit(frame, (tilePos[0] * constants.TILE_SIZE[0] + offset, tilePos[1] * constants.TILE_SIZE[1]))
 
 
@@ -127,6 +139,9 @@ class TileRenderer:
 
 
     def change_tile_anim(self, tile, pos, animationName) -> bool:
+        # Changes the tile's animation at a given position
+        # Returns True if it wasn't already the animation it was changing it to
+
         if self.individualTileAnims[pos]["animationName"] != animationName:
             self.individualTileAnims[pos]["animationName"] = "struck"
             self.individualTileAnims[pos]["animationObject"] = self.tileAnims[tile]["struck"].copy()

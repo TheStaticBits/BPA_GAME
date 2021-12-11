@@ -168,9 +168,11 @@ class Loop(src.scene_base.SceneBase):
                 
                 if check == "resume":
                     self.scene = self.prevScene
+                    self.scenes[self.scene].start_music()
                 
                 elif check == "mainMenu":
                     self.scene = "mainMenu"
+                    self.scenes["mainMenu"].start_music()
 
 
         if self.scenes["pauseMenu"].check_for_pause(self.scene, self.window.inputs):

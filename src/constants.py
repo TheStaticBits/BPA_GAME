@@ -62,7 +62,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 0,
+    "level": 3,
     "room": 0,
     "crystals": "00000000000000000"
 }
@@ -133,7 +133,7 @@ TILES_WITH_ANIMATIONS = {
         "mask": "res/tiles/animated/gravity_orb/mask.png"
     },
 
-    "c": { # Crystals
+    "c": { # Crystals tile
         "animations": {
             "default": {
                 "path": "res/tiles/animated/crystal/idle.png",

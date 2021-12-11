@@ -2,7 +2,13 @@ import pygame
 
 import src.utility as utility
 
+"""
+This class, Animation, handles the animation.
+It has several functions which updates the animation, renders the frame, gets the frame image, and more.
+It also loads the animation by itself.
+"""
 class Animation:
+    # Loads the spritesheet with the appropriate inputs, creates default variables
     def __init__(
         self, 
         delay, # Delay between frames
@@ -24,7 +30,7 @@ class Animation:
         self.timer = 0
         self.frame = 0
 
-    
+    # Updates the frames, returns False if the animation ended
     def update(self) -> bool:
         self.timer += 1
 
@@ -38,33 +44,40 @@ class Animation:
 
         return True
     
-
+    
+    # Renders the frame to the window, at a given position
     def render(self, window, position):
         window.blit(self.images[self.frame], position)
     
-    
-    def get_frame(self):
+
+    # Gets the current pygame.Surface frame
+    def get_frame(self) -> "pygame.Surface":
         return self.images[self.frame]
     
-    
-    def get_image_width(self):
+
+    # Gets the width of the current frame
+    def get_image_width(self) -> int:
         return self.images[self.frame].get_width()
 
-
-    def get_image_height(self):
+    
+    # Gets the height of the current frame
+    def get_image_height(self) -> int:
         return self.images[self.frame].get_height()
     
     
+    # Sets the alpha value for all frames to a given alpha value
     def set_alpha(self, alpha):
         for image in self.images:
             image.set_alpha(alpha)
     
 
+    # Creates a copy of the animation
     def copy(self) -> "Animation":
         obj = Animation(self.delay)
         obj.images = self.images
         return obj
     
+    # Resets the frame and timer
     def reset(self):
         self.frame = 0
         self.timer = 0

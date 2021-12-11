@@ -5,12 +5,17 @@ import math
 import src.animation
 import src.constants as constants
 
+"""
+This class, lazer, manages the lazers that the Belloq fires.
+It has several functions that can check collisions with the player, check if it's offscreen, and more.
+"""
 class Lazer:
     def __init__(
         self, 
         degreesFacing, # What direction it's facing in radians 
         startPos 
         ):
+        # Sets the default vars
         self.degreesFacing = degreesFacing
         self.position = list(startPos)
     
@@ -29,13 +34,17 @@ class Lazer:
         return(bottomRightX, bottomRightY)
     
 
-    def update(self, playerMask, playerPos, playerRoom, tilesOffset):
+    def update(self, playerMask, playerPos, playerRoom, tilesOffset) -> bool:
+        # Updates the lazer, returning True if it has collided with the player
+
+        # Moves the lazer in the direction it's moving
         self.position[0] += math.cos(self.degreesFacing) * constants.LAZER_SPEED
         self.position[1] += math.sin(self.degreesFacing) * constants.LAZER_SPEED
 
         self.screenPos = self.position.copy()
         self.screenPos[0] += tilesOffset - playerRoom * constants.SCREEN_SIZE[0]
 
+        # The end point of the lazer (self.position is the starting point of it)
         self.endPoint = (
             self.screenPos[0] + (math.cos(self.degreesFacing) * constants.LAZER_LENGTH),
             self.screenPos[1] + (math.sin(self.degreesFacing) * constants.LAZER_LENGTH)
@@ -44,11 +53,14 @@ class Lazer:
         topLeftX, topLeftY = self.get_top_left(self.screenPos)
         bottomRightX, bottomRightY = self.get_bottom_right(self.screenPos)
 
+        # Creates a surface with the exact size of the lazer
+        # Used to create a mask to check collisions with the player
         collisionSurface = pygame.Surface((
             math.ceil(bottomRightX - topLeftX),
             math.ceil(bottomRightY - topLeftY)
         ))
 
+        # Draws the lazer onto the collision surface
         pygame.draw.line(
             collisionSurface, 
             constants.LAZER_COLOR,
@@ -68,6 +80,8 @@ class Lazer:
     
 
     def check_offscreen(self, rooms):
+        # Checks if it's off the screen of the entire level
+
         topLeftX, topLeftY = self.get_top_left(self.position)
         bottomRightX, bottomRightY = self.get_bottom_right(self.position)
 
@@ -80,6 +94,7 @@ class Lazer:
 
     
     def render(self, window):
+        # Draws the line to the screen, from the starting position to the ending position
         pygame.draw.line(
             window, 
             constants.LAZER_COLOR,
@@ -87,7 +102,10 @@ class Lazer:
             self.endPoint
         )
 
-
+"""
+This manages the Belloq boss, creating lazers, moving it, 
+checking collisions with the player, and rendering it.
+"""
 class Belloq:
     def __init__(self):
         self.lazers = []
