@@ -265,6 +265,34 @@ class BaseLevel(src.scene_base.SceneBase):
                         self.gravBeamYPos -= int(self.levelData[self.level][key])
                         self.pressedButton = None
 
+            if result:
+                if playerState[0] == "g": # Gravity orb
+                    self.gravityDir *= -1 # Changing the gravity direction
+                
+                elif playerState[0] == "c": # Crystal
+                    self.levels[self.level][self.room][playerState[1][1]][playerState[1][0]] = " " # Removing the tile
+
+                    if not self.crystals[self.level]:
+                        self.currentCrystal = True
+                
+                elif playerState[0] == "m": # Gravity Beam Button
+                    # Changes the gravity beam position by a specified
+                    # amount in the level data, in levels.txt
+                    # Which is specified as:
+                    # button room, buttonX, buttonY = yPosMoved
+                    # where those are all integers besides "button"
+                    
+                    key = f"button {self.room}, {playerState[1][0]}, {playerState[1][1]}"
+
+                    if self.pressedButton != playerState[1]:
+                        self.gravityBeamYPos += self.levelData[self.level][key]
+                        self.pressedButton = playerState[1]
+                    
+                    else:
+                        self.gravityBeamYPos -= self.levelData[self.level][key]
+                        self.pressedButton = None
+
+            
         if self.showEntities:
             if self.playerPositions == [] or self.playerPositions[0] != self.player.rect.topleft: # If the player moved
                 playerMoved = True
