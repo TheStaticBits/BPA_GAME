@@ -1,5 +1,7 @@
 import pygame
 
+import src.utility as utility
+
 SAVE_PATH = "saves/save.db"
 EVENT_LOG_PATH = "saves/events.log"
 
@@ -62,7 +64,7 @@ DEFAULT_SAVE = {
     "playerYVelocity": 0,
     "playerXVelocity": 0,
     "globalGravity": 1,
-    "level": 3,
+    "level": 0,
     "room": 0,
     "crystals": "00000000000000000"
 }
@@ -89,7 +91,8 @@ TRANSPARENT_TILES = (
     "^", "<", "v", ">", # Spikes
     "j", # Jump orb
     "g",
-    "c"
+    "c",
+    "m"
 )
 
 # Tiles that have special actions
@@ -98,105 +101,23 @@ SPECIAL_TILES = (
     "^", "<", "v", ">", # Spikes
     "j", # Jump orb
     "g", # Gravity orb
-    "c"
+    "c", # Crystal
+    "m"  # Gravity button
 )
 
 # These tiles have animations
-TILES_WITH_ANIMATIONS = {
-    "j": { # Jump orbs
-        "animations": {
-            "default": {
-                "path": "res/tiles/animated/jump_orb/idle.png",
-                "delay": 10 # Delay between frames
-            },
-            "struck": {
-                "path": "res/tiles/animated/jump_orb/struck.png",
-                "delay": 10
-            }
-        },
+TILES_WITH_ANIMATIONS = utility.load_json("res/tiles/animated/anim_dat.json")
 
-        "mask": "res/tiles/animated/jump_orb/mask.png" # Used for pixel perfect collision
-    },
-
-    "g": { # Gravity orbs
-        "animations": {
-            "default": {
-                "path": "res/tiles/animated/gravity_orb/idle.png",
-                "delay": 5
-            },
-            "struck": {
-                "path": "res/tiles/animated/gravity_orb/struck.png",
-                "delay": 10
-            }
-        },
-
-        "mask": "res/tiles/animated/gravity_orb/mask.png"
-    },
-
-    "c": { # Crystals tile
-        "animations": {
-            "default": {
-                "path": "res/tiles/animated/crystal/idle.png",
-                "delay": 8
-            },
-            "struck": {
-                "path": "res/tiles/animated/crystal/collected.png",
-                "delay": 10
-            }
-        },
-
-        "mask": "res/tiles/animated/crystal/mask.png"
-    }
-}
-
-PLAYER_ANIMATIONS = {
-    "idle": {
-        "path": "res/characters/player/idle.png",
-        "delay": 25
-    },
-    "walk": {
-        "path": "res/characters/player/walk.png",
-        "delay": 7
-    }
-}
+PLAYER_ANIMATIONS = utility.load_json("res/characters/player/animations.json")
 PLAYER_WIDTH = 8
 
-ELLIPSE_ANIMATIONS = {
-    "idle": {
-        "path": "res/characters/ellipse/idle.png",
-        "delay": 20
-    },
-    "walk": {
-        "path": "res/characters/ellipse/walking.png",
-        "delay": 7
-    }
-}
+ELLIPSE_ANIMATIONS = utility.load_json("res/characters/ellipse/animations.json")
 
-CORLEN_ANIMATIONS = {
-    "idle": {
-        "path": "res/characters/corlen/idle.png",
-        "delay": 27
-    },
-    "walk": {
-        "path": "res/characters/corlen/walking.png",
-        "delay": 7
-    }
-}
+CORLEN_ANIMATIONS = utility.load_json("res/characters/corlen/animations.json")
 
 # The Belloq is the first boss
 # This holds the animations for the Belloq, their paths, frames, and delays
-BELLOQ_ANIMATIONS = {
-    "idle": {
-        "delay": 6,
-        "path": "res/characters/belloq/idle.png",
-        "frames": 4
-    },
-    "attack": {
-        "delay": 5,
-        "path": "res/characters/belloq/attack.png",
-        "frames": 3
-    }
-}
+BELLOQ_ANIMATIONS = utility.load_json("res/characters/belloq/animations.json")
 BELLOQ_SPEED = 0.5 # Pixels moved per frame
 BELLOQ_COOLDOWN = 80 # Frames between lazers
 BELLOQ_LAZER_OFFSET = (33, 17) # Position of the eye in relation to the top left of the sprite

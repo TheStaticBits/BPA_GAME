@@ -1,0 +1,10 @@
+{
+    "idle": {
+        "path": "res/characters/corlen/idle.png",
+        "delay": 27
+    },
+    "walk": {
+        "path": "res/characters/corlen/walking.png",
+        "delay": 7
+    }
+}

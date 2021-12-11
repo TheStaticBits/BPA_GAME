@@ -1,0 +1,10 @@
+{
+    "idle": {
+        "path": "res/characters/ellipse/idle.png",
+        "delay": 20
+    },
+    "walk": {
+        "path": "res/characters/ellipse/walking.png",
+        "delay": 7
+    }
+}

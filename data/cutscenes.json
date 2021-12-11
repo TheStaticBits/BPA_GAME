@@ -75,6 +75,7 @@
                 "player uncontrolled",
                 "delay 60 whoRU"
             ], "whoRU": [
+                "text color 252 227 3",
                 "text change Who are you?",
                 "delay 80 noResponse..."
             ], "noResponse...": [

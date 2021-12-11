@@ -75,6 +75,7 @@ class Cutscenes(src.scene_base.SceneBase):
         self.textObject = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
         self.textPos = [0, 0]
         self.textWavX = 0
+        self.textColor = (255, 255, 255)
 
         # Variables for running commands for cutscenes
         self.timer = 0
@@ -139,6 +140,8 @@ class Cutscenes(src.scene_base.SceneBase):
                         self.text = " ".join(comm[2:])
                     elif comm[1] == "move":
                         self.textPos = (int(comm[2]), int(comm[3])) 
+                    elif comm[1] == "color":
+                        self.textColor = (int(comm[2]), int(comm[3]), int(comm[4]))
                 
                 elif comm[0] == "run": # Runs a conditional
                     self.runningConditionals.append(comm[1])
@@ -319,7 +322,7 @@ class Cutscenes(src.scene_base.SceneBase):
         if self.showText:
             self.textWavX += 0.05
 
-            renderText = self.textObject.render(self.text, False, (255, 255, 255))
+            renderText = self.textObject.render(self.text, False, self.textColor)
             textYOffset = math.sin(self.textWavX) * 5
 
             window.blit(renderText, (self.textPos[0] - renderText.get_width() / 2, self.textPos[1] + textYOffset))

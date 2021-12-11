@@ -1,0 +1,61 @@
+{
+    "j": {
+        "animations": {
+            "default": {
+                "path": "res/tiles/animated/jump_orb/idle.png",
+                "delay": 10
+            },
+            "struck": {
+                "path": "res/tiles/animated/jump_orb/struck.png",
+                "delay": 10
+            }
+        },
+
+        "mask": "res/tiles/animated/jump_orb/mask.png"
+    },
+
+    "g": {
+        "animations": {
+            "default": {
+                "path": "res/tiles/animated/gravity_orb/idle.png",
+                "delay": 5
+            },
+            "struck": {
+                "path": "res/tiles/animated/gravity_orb/struck.png",
+                "delay": 10
+            }
+        },
+
+        "mask": "res/tiles/animated/gravity_orb/mask.png"
+    },
+
+    "c": {
+        "animations": {
+            "default": {
+                "path": "res/tiles/animated/crystal/idle.png",
+                "delay": 8
+            },
+            "struck": {
+                "path": "res/tiles/animated/crystal/collected.png",
+                "delay": 10
+            }
+        },
+
+        "mask": "res/tiles/animated/crystal/mask.png"
+    },
+
+    "m": {
+        "animations": {
+            "default": {
+                "path": "res/tiles/animated/gravity_button/normal.png",
+                "delay": 8
+            },
+            "struck": {
+                "path": "res/tiles/animated/gravity_button/pressed.png",
+                "delay": 10
+            }
+        },
+
+        "mask": "res/tiles/animated/gravity_button/mask.png"
+    }
+}

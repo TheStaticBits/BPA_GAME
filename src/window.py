@@ -31,7 +31,8 @@ class Window:
             "right": False,
             "up": False,
             "space": False,
-            "esc": False
+            "esc": False,
+            "shift": False
         }
         self.mousePos = (0, 0)
         self.mousePressed = {
@@ -48,6 +49,7 @@ class Window:
         self.inputs["up"] = False
         self.inputs["space"] = False
         self.inputs["esc"] = False
+        self.inputs["shift"] = False
 
         # Getting mouse positions and buttons pressed
         self.mousePos = (
@@ -76,6 +78,8 @@ class Window:
                     self.inputs["space"] = True
                 elif event.key == pygame.K_ESCAPE:
                     self.inputs["esc"] = True
+                elif event.key == pygame.K_LSHIFT or event.key == pygame.K_RSHIFT:
+                    self.inputs["shift"] = True
             
             elif event.type == pygame.KEYUP:
                 # If there was a key let go, sets the corresponding non-one-time keys to false

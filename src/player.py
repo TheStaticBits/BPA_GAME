@@ -117,13 +117,17 @@ class Player(src.object_base.ObjectBase):
 
         # Handle special tiles
         for tile, position in specialTiles.items():
-            if tile == "j":
+            if tile == "j": # Jump orb
                 if inputs["up"]:
                     self.yVelocity = constants.JUMP_FORCE * self.gravityDir
                     return (tile, position)
                 
-            elif tile == "c" or tile == "g":
+            elif tile == "c" or tile == "g": # Crystal or gravity orb
                 return (tile, position)
+            
+            elif tile == "m": # Gravity Button
+                if inputs["shift"]:
+                    return (tile, position)
             
             elif tile in constants.SPIKE_ROTATIONS:
                 return "dead"
