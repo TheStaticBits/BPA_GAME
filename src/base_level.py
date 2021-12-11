@@ -169,6 +169,7 @@ class BaseLevel(src.scene_base.SceneBase):
         self, 
         inputs, # Dictionary of keys pressed
         tileRenderer,
+        otherTileRenderer = None,
         playerSpawnOffset = 0, # Offset for when the player switches levels/rooms
         ):
         super().update()
@@ -181,7 +182,8 @@ class BaseLevel(src.scene_base.SceneBase):
             self.room,
             self.levels[self.level],
             inputs, 
-            globalGravity = self.gravityDir
+            globalGravity = self.gravityDir,
+            tileRenderer
         ) # Updating the player with the inputs
 
         # If the player moved to the far right of the screen
@@ -262,6 +264,12 @@ class BaseLevel(src.scene_base.SceneBase):
             else:
                 playerMoved = False
 
+
+            if otherTileRenderer is not None:
+                entRenderer = otherTileRenderer
+            else:
+                entRenderer = tileRenderer
+
             # Updating Ellipse and Corlen
             for ent in self.entities:
                 ent.update(
@@ -270,7 +278,8 @@ class BaseLevel(src.scene_base.SceneBase):
                     self.playerLevelAndRoom,
                     self.playerFacing,
                     playerMoved,
-                    self.gravityDir
+                    self.gravityDir,
+                    entRenderer
                 )
         
         self.gravityBeam.update()

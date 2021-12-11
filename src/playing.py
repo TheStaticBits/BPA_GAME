@@ -83,11 +83,11 @@ class Playing(src.base_level.BaseLevel):
         if changeToCutscene == "right":
             if self.room == 0: # If it switched to a new level
                 check = self.check_for_boss()
-                if check != None:
+                if check is not None:
                     return ("bossLevel", check) # Switches to the boss
 
                 check = self.check_for_cutscene()
-                if check != None:
+                if check is not None:
                     return ("cutscene", check) # Switches to the cutscene
 
         self.tileRenderer.update_tiles_with_anims()
@@ -140,7 +140,7 @@ class Playing(src.base_level.BaseLevel):
         self.textWavX += 0.05
         
         # Drawing text if there is any in the room
-        if self.text != None:
+        if self.text is not None:
             window.blit(
                 self.textSurface, 
                 (

@@ -40,7 +40,7 @@ class FollowObject(src.object_base.ObjectBase):
         self.rect.y = prevY
         self.yVelocity = 0 # Reset yVelocity
         
-        return result == True # Return the result
+        return result is True # Return the result
 
     
     def update(
@@ -50,7 +50,8 @@ class FollowObject(src.object_base.ObjectBase):
         playerLevelAndRoom,
         playerFacing,
         playerMoved, # If the player has moved
-        globalGravity
+        globalGravity,
+        tileRenderer
         ):
         if len(playerPositions) > self.followDistance: 
             self.level, self.room = playerLevelAndRoom[self.followDistance - self.followContinueFrames] # Setting level and room

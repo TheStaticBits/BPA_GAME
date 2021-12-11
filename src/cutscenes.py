@@ -192,7 +192,7 @@ class Cutscenes(src.scene_base.SceneBase):
     def update(self, inputs):
         super().update()
 
-        if self.backgroundAnim != None:
+        if self.backgroundAnim is not None:
             if self.room == self.cutsceneData["backgroundAnim"]["room"]:
                 self.backgroundAnim.update()
 
@@ -306,7 +306,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
         window.blit(self.tiles, (0, 0))
 
-        if self.backgroundAnim != None:
+        if self.backgroundAnim is not None:
             if self.room == self.cutsceneData["backgroundAnim"]["room"]:
                 self.backgroundAnim.render(window, (0, 0))
         
