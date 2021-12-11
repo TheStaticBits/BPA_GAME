@@ -113,13 +113,6 @@ class BossLevel(src.base_level.BaseLevel):
                 else:
                     # Changes to normal level layout
                     return "playing"
-            
-            else:
-                self.playerRoomIndex = 1
-                
-        elif playerState == "left":
-            self.playerRoomIndex = 0
-            self.load_rooms()
         
         elif playerState == "dead":
             self.boss.reset()
