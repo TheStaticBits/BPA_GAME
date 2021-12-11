@@ -75,7 +75,7 @@ class TileRenderer:
         for tile, anims in constants.TILES_WITH_ANIMATIONS.items():
             self.tileAnims[tile] = {}
             
-            for animName, data in anims["animations"].items():
+            for animName, data in anims.items():
                 self.tileAnims[tile][animName] = src.animation.Animation(
                     data["delay"],
                     path = data["path"], 
