@@ -14,6 +14,7 @@ CUTSCENE_DATA_PATH = "data/cutscenes.json"
 CUTSCENE_LEVELS_PATH = "data/cutscene_levels.txt"
 
 MAIN_MENU_LEVEL_PATH = "data/menu_level.txt"
+LOGO_PATH = "res/misc/logo.png"
 
 EMAIL_PWD_PATH = "data/emailpassword.txt"
 

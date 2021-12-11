@@ -11,6 +11,7 @@ class MainMenu(src.scene_base.SceneBase):
         super().__init__(__name__)
 
         self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
+        self.logo = pygame.image.load(constants.LOGO_PATH).convert_alpha()
 
         levels, levelData = utility.load_levels(constants.MAIN_MENU_LEVEL_PATH)
 
@@ -26,13 +27,31 @@ class MainMenu(src.scene_base.SceneBase):
 
         fontObj = pygame.font.Font(constants.FONT_PATH, 30)
 
-        self.playButton = src.button.Button(
-            constants.SCREEN_SIZE[0] / 2,
-            constants.SCREEN_SIZE[1] / 2,
-            fontObj,
-            "Continue",
-            textOffset = 2
-        )
+        self.buttons = {
+            "start": src.button.Button(
+                120,
+                constants.SCREEN_SIZE[1] / 2,
+                fontObj,
+                "Continue",
+                textOffset = 2
+            ),
+
+            "newSave": src.button.Button(
+                120,
+                constants.SCREEN_SIZE[1] / 2 + 30,
+                fontObj,
+                "Restart",
+                textOffset = 2
+            ),
+            
+            "help": src.button.Button(
+                120,
+                constants.SCREEN_SIZE[1] / 2 + 60,
+                fontObj,
+                "Help",
+                textOffset = 2
+            ),
+        }
 
 
     def start_music(self):
@@ -42,8 +61,9 @@ class MainMenu(src.scene_base.SceneBase):
     def update(self, mousePos, mouseInputs):
         super().update()
 
-        if self.playButton.update(mousePos, mouseInputs):
-            return "start"
+        for key, button in self.buttons.items():
+            if button.update(mousePos, mouseInputs):
+                return key
 
     
     def render(self, window):
@@ -52,4 +72,7 @@ class MainMenu(src.scene_base.SceneBase):
         window.blit(self.background, (0, 0))
         window.blit(self.screenShadow, (0, 0))
 
-        self.playButton.render(window)
+        window.blit(self.logo, (constants.SCREEN_SIZE[0] / 2 - self.logo.get_width() / 2, 15))
+
+        for button in self.buttons.values():
+            button.render(window)

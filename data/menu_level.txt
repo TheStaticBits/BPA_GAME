@@ -1,17 +1,17 @@
 background = w
 music = normalDay
 ------------------------
-wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwvvvvvvvvvvvvwwwwww
-wwwvvv            vvvwww
-ww>                  <ww
-ww>                  <ww
-w>                    <w
-w>                    <w
-w>                    <w
-w>                    <w
-ww>                  <ww
-ww>                  <ww
-www^^^            ^^^www
-wwwwww^^^^^^^^^^^^wwwwww
-wwwwwwwwwwwwwwwwwwwwwwww
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
