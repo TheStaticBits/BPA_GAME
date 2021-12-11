@@ -99,23 +99,29 @@ class TileRenderer:
                     }
 
 
-    def render_tiles_with_anims(self, window, gravityDir, offset = 0):
+    def get_tile_anim_frame(self, position, globalGravity):
+        image = self.individualTileAnims[position]["animationObject"].get_frame()
+
+        flip = tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS
+
+        # If the global gravity is reversed, also reverse the tile's image
+        if globalGravity == -1: flip = not flip
+
+        return pygame.transform.flip(image, False, flip)
+
+
+    def render_tiles_with_anims(self, window, globalGravity, offset = 0):
         # Renders all tiles with animations
         # Renders the tiles flipped if they're bellow the gravity line
 
-        for tilePos, anim in self.individualTileAnims.items():
-            frame = anim["animationObject"].get_frame()
-
-            flip = tilePos[1] >= constants.GRAV_BEAM_TILE_Y_POS
-
-            # If the global gravity is reversed, also reverse the tile's position
-            if gravityDir == -1:
-                flip = not flip
-            
-            frame = pygame.transform.flip(frame, False, flip) # Flipping the frame
+        for tilePos in self.individualTileAnims:
+            frame = self.get_tile_anim_frame(tilePos, globalGravity)
 
             # Rendering it on the screen
-            window.blit(frame, (tilePos[0] * constants.TILE_SIZE[0] + offset, tilePos[1] * constants.TILE_SIZE[1]))
+            window.blit(frame, (
+                tilePos[0] * constants.TILE_SIZE[0] + offset, 
+                tilePos[1] * constants.TILE_SIZE[1]
+            ))
 
 
     def update_tiles_with_anims(self):
@@ -148,8 +154,7 @@ class TileRenderer:
 
             return True
 
-        else:
-            return False
+        return False
 
 
     # This function renders the SOLID tiles onto a given surface
@@ -183,7 +188,7 @@ class TileRenderer:
                         # VERTICAL EDGES
                         check = self.check_tile(room, x + offset, y) # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
-                        if not check and level != None:
+                        if not check and level is not None:
                             check = self.check_tile_across_rooms(roomNumber, level, x + offset, y)
                         
                         if check:
@@ -232,11 +237,11 @@ class TileRenderer:
                                     # These are for checks
                                     edgeTile1 = room[y + offset][x] in constants.TRANSPARENT_TILES # If the edge tile in one direction of the corner is transparent
                                     edgeTile2 = room[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge tile in the other direction of the corner is transparent
-                                    if not edgeTile2 and level != None:
+                                    if not edgeTile2 and level is not None:
                                         edgeTile2 = self.check_tile_across_rooms(roomNumber, level, x + offset2, y)
 
                                     corner = room[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner tile is transparent
-                                    if not corner and level != None:
+                                    if not corner and level is not None:
                                         corner = self.check_tile_across_rooms(roomNumber, level, x + offset2, y + offset)
 
                                     selectedImage = None
@@ -247,7 +252,7 @@ class TileRenderer:
                                     elif not edgeTile1 and not edgeTile2 and corner: # If both edges are not transparent and the corner is
                                         selectedImage = self.tileKey[tile]["inverse_corner"]
                                     
-                                    if selectedImage != None:
+                                    if selectedImage is not None:
                                         image = pygame.transform.rotate(
                                             selectedImage, 
                                             -90 if (offset, offset2) == (-1, 1) else (45 * (offset + 1) + 45 * (offset2 + 1)) # Finds the degree of rotation based on the position of the corner

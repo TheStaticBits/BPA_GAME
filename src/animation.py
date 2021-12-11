@@ -18,7 +18,7 @@ class Animation:
         # The load_spritesheet function only requires either frames or width
         # So any instances of this class can be created with one or the other
         ):
-        if path != None:
+        if path is not None:
             self.images = utility.load_spritesheet(
                 path, 
                 width = width, 

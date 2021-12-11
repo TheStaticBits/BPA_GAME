@@ -6,18 +6,28 @@ import src.belloq
 import src.big_bite
 import src.constants as constants
 
+"""
+This class, BossLevel, inherits all of the base level functionality from the BaseLevel class.
+It adds onto the BaseLevel class by handling screen scrolling and the boss objects
+"""
 class BossLevel(src.base_level.BaseLevel):
     def __init__(self, saveData):
-        super().__init__(saveData, __name__)
+        # Initializes all class variables
+
+        super().__init__(saveData, __name__) # Initializes the entities, player, gravity beam, and more
 
         self.tileRenderers = []
 
+        # Creates two tile renderers
         for x in range(2):
             self.tileRenderers.append(src.tile_renderer.TileRenderer())
+        # The list of tileRenderers is two long because there can only be two rooms on screen at once.
 
-        self.tileSurfaces = []
+        self.tileSurfaces = [] # Used to store the two Pygame Surface objects which have the rooms on them
 
         self.playerRoomIndex = 0 # This is the index in the list of tile surfaces that the player is in
+        # So the playerRoomIndex is zero when the player is in the room on the left
+        # And 1 when the player reaches the next room
 
         self.tilesOffset = 0
 
@@ -28,6 +38,9 @@ class BossLevel(src.base_level.BaseLevel):
 
 
     def setup(self, boss, level, room):
+        # Sets up the boss level with a given boss, level, and room.
+        # It also starts the music and loads the room images.
+
         self.level = level
         self.room = room
         
@@ -44,12 +57,18 @@ class BossLevel(src.base_level.BaseLevel):
             self.boss = src.big_bite.BigBite()
             self.bossName = "Big Bite"
 
+        # The minimum tile offset that it can be 
+        # so, when the player reaches the end of the level, it can't scroll off the screen
         self.minOffset = -((len(self.levels[self.level]) - 1) * constants.SCREEN_SIZE[0])
+        # This is minimum because the tileOffset goes negative, not positive.
 
     
     def load_rooms(self):
+        # Renders the rooms to a Pygame Surface and adds that to the tileSurface list
+
         self.tileSurfaces.clear()
 
+        # iterating through the tileRenderer objects
         for count, tr in enumerate(self.tileRenderers):
             # self.room is the room that the player is in
             room = self.room + count - self.playerRoomIndex
@@ -68,25 +87,33 @@ class BossLevel(src.base_level.BaseLevel):
             )
             self.tileSurfaces.append(surf)
             
+            # Sets up all tiles with animations into the tileRenderer object
             tr.setup_room_tile_anims(self.levels[self.level][room])
 
     
     def update(self, inputs):
+        # Updates everything in the boss level, such as the boss object, the player, and the tile rendering offset
+
+        otherTR = 0 if self.playerRoomIndex == 1 else 1
         playerState = super().update(
             inputs, 
             self.tileRenderers[self.playerRoomIndex],
+            otherTileRenderer = self.tileRenderers[otherTR],
             playerSpawnOffset = 0 # change maybe soon
         )
 
-        if playerState == "right":
-            if self.room == 0:
-                if self.check_for_boss():
+        if playerState == "right": # If the player moved to the next room or level
+            # If the room variable was reset, meaning the player moved to the next level
+            if self.room == 0: 
+                if self.check_for_boss(): # If there's a boss level in the new level
                     self.setup(self.levelData[self.level]["boss"], self.level, 0)
-                
-                elif cutscene := self.check_for_cutscene():
+                    # Sets up the boss level with the new level
+
+                elif cutscene := self.check_for_cutscene(): # If there's a cutscene in the new level
                     return cutscene
                 
                 else:
+                    # Changes to normal level layout
                     return "playing"
         
         elif playerState == "dead":

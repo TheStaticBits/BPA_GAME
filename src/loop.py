@@ -110,7 +110,7 @@ class Loop(src.scene_base.SceneBase):
         if self.scene == "playing":
             result = self.scenes["playing"].update(self.window.inputs, self.window.mousePos, self.window.mousePressed)
             
-            if result != None: # If the playing class switched to a cutscene
+            if result is not None: # If the playing class switched to a cutscene
                 if result[0] == "cutscene":
                     self.scenes["cutscene"].setup(result[1])
                 
@@ -123,7 +123,7 @@ class Loop(src.scene_base.SceneBase):
         elif self.scene == "cutscene":
             result = self.scenes["cutscene"].update(self.window.inputs)
 
-            if result == False: # If the cutscene ended
+            if result is False: # If the cutscene ended
                 check = self.scenes["playing"].check_for_boss()
                 if check is None:
                     self.scene = "playing"
@@ -137,7 +137,7 @@ class Loop(src.scene_base.SceneBase):
         
         elif self.scene == "bossLevel":
             check = self.scenes["bossLevel"].update(self.window.inputs)
-            if check != None:
+            if check is not None:
                 self.scenes["playing"].level = self.scenes["bossLevel"].level
                 self.scenes["playing"].room = 0
 
@@ -197,12 +197,12 @@ class Loop(src.scene_base.SceneBase):
         cutsceneCheck = self.scenes["playing"].check_for_cutscene()
         bossCheck = self.scenes["playing"].check_for_boss()
 
-        if cutsceneCheck != None and self.scenes["playing"].room == 0:
+        if cutsceneCheck is not None and self.scenes["playing"].room == 0:
             # If there was a cutscene where the player was when they closed the game
             self.scenes["cutscene"].setup(cutsceneCheck)
             self.scene = "cutscene"
         
-        elif bossCheck != None:
+        elif bossCheck is not None:
             self.scene = "bossLevel"
             self.scenes["bossLevel"].setup(bossCheck, self.scenes["playing"].level, self.scenes["playing"].room)
         

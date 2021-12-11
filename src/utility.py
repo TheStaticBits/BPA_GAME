@@ -14,6 +14,7 @@ import src.constants as constants
 
 
 def lock_neg1_zero_pos1(number):
+    # Locks a number to 1, 0, or -1 and returns that number
     if number > 0: return 1
     elif number < 0: return -1
     else: return 0

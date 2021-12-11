@@ -3,11 +3,12 @@ background = w
 music = ThereIsSomethingV2
 text 0 = Use W or UP to jump
 entities = none
+button 0, 5, 3 = 4
 ------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w
 w         wwwww        w
-w         wwwww  m      
+w    m    wwwww         
 w   www   wwwww   www   
 w p www   wwwww   www   
 wwwwwww   wwwww   wwwwww

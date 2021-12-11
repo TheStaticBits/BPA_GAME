@@ -27,8 +27,6 @@ class ObjectBase:
         # If this is 1, the gravity is pulling downward
         # If this is -1, the gravity is pulling upward
         self.gravityDir = None
-
-        self.cachedMasks = {}
         
         self.currentAnim = "idle"
         self.animations = {}
@@ -83,6 +81,8 @@ class ObjectBase:
         roomNumber, 
         level, 
         tilePos, 
+        tileRenderer,
+        globalGravity
         offset = 0
         ):
 
@@ -109,7 +109,7 @@ class ObjectBase:
         elif tileOnScreen and room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
             tile = room[tilePos[1]][tilePos[0]]
 
-            if not (tile in self.cachedMasks):
+            if tileRenderer is not None:
                 if tile in constants.SPIKE_ROTATIONS: # If it's a spike
                     image = pygame.transform.rotate(
                         pygame.image.load(constants.SPIKE_PATH).convert_alpha(), 
@@ -117,22 +117,19 @@ class ObjectBase:
                     )
                 
                 else:
-                    image = pygame.image.load(constants.TILES_WITH_ANIMATIONS[tile]["mask"]).convert()
-                    image.set_colorkey((255, 255, 255))
+                    image = tileRenderer.get_tile_anim_frame(tilePos, globalGravity)
                 
                 tileMask = pygame.mask.from_surface(image)
-                self.cachedMasks[tile] = tileMask
+                objMask = self.get_mask()
 
-            objMask = self.get_mask()
+                collided = self.cachedMasks[tile].overlap(
+                    objMask, 
+                    (self.rect.x - tilePos[0] * constants.TILE_SIZE[0] - offset, 
+                    self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
+                )
 
-            collided = self.cachedMasks[tile].overlap(
-                objMask, 
-                (self.rect.x - tilePos[0] * constants.TILE_SIZE[0] - offset, 
-                self.rect.y - tilePos[1] * constants.TILE_SIZE[1])
-            )
-
-            if collided:
-                return False, tile
+                if collided:
+                    return False, tile
             
         elif not xPosOnScreen and yPosOnScreen: # If the y position is on screen, the x position isn't, test the tile in the other room
             if tilePos[0] < 0:
@@ -157,7 +154,7 @@ class ObjectBase:
         return False, False
 
 
-    def update_x_collision(self, room, roomNum, level, dirMoved) -> dict:
+    def update_x_collision(self, room, roomNum, level, dirMoved, tileRenderer = None, globalGravity = None) -> dict:
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -171,7 +168,7 @@ class ObjectBase:
                 for x in range(0, 2):
                     tilePos = (self.currentTile[0] + x * dirMoved, self.currentTile[1] + y)
                     
-                    isSolid, result = self.check_tile(room, roomNum, level, tilePos)
+                    isSolid, result = self.check_tile(room, roomNum, level, tilePos, tileRenderer, globalGravity)
                         
                     if isSolid:
                         if dirMoved == 1:
@@ -183,13 +180,13 @@ class ObjectBase:
                         
                         break
                     
-                    elif result != False:
+                    elif result is not False:
                         specialTiles[result] = tilePos
         
         return specialTiles
 
     
-    def update_y_collision(self, room, roomNum, level, modif=True) -> dict:
+    def update_y_collision(self, room, roomNum, level, tileRenderer = None, globalGravity = None, modif=True) -> dict:
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -205,7 +202,7 @@ class ObjectBase:
                 for x in range(-1, 2):
                     tilePos = (self.currentTile[0] + x, self.currentTile[1] - y * dirMoved)
 
-                    isSolid, result = self.check_tile(room, roomNum, level, tilePos)
+                    isSolid, result = self.check_tile(room, roomNum, level, tilePos, tileRenderer, globalGravity)
                     if isSolid:
                         if modif:
                             if dirMoved == 1:
@@ -218,10 +215,10 @@ class ObjectBase:
                             break
                     
                         else:
-                            if result != False:
+                            if result is not False:
                                 return True
                     
-                    elif result != False:
+                    elif result is not False:
                         specialTiles[result] = tilePos
         
         return specialTiles

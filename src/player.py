@@ -38,11 +38,12 @@ class Player(src.object_base.ObjectBase):
         level, # Used for collisions across rooms
         inputs, # Input dictionary
         globalGravity = None, # The gravity of the world
+        tileRenderer = None
         ) -> str:
 
         super().update_animation()
 
-        if globalGravity != None:
+        if globalGravity is not None:
             super().test_grav_line(globalGravity)
         else:
             self.gravityDir = 1 # Setting it to normal gravity
@@ -81,7 +82,9 @@ class Player(src.object_base.ObjectBase):
             room, 
             roomNumber,
             level,
-            1 if self.xVelocity > 0 else (0 if self.xVelocity == 0 else -1)
+            utility.lock_neg1_zero_pos1(self.xVelocity),
+            tileRenderer, # Direction moved, locked to 1, 0, or -1
+            globalGravity
         )
 
         if self.dirMoved == 0:
@@ -111,7 +114,7 @@ class Player(src.object_base.ObjectBase):
 
         super().update_y_pos()
 
-        result = super().update_y_collision(room, roomNum = roomNumber, level = level)
+        result = super().update_y_collision(room, roomNumber, level, tileRenderer, globalGravity)
         for tile, tilePos in result.items():
             specialTiles[tile] = tilePos
 
