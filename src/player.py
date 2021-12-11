@@ -38,6 +38,7 @@ class Player(src.object_base.ObjectBase):
         roomNumber, # The index of the current room
         level, # Used for collisions across rooms
         inputs, # Input dictionary
+        gravBeamYPos = None,
         globalGravity = None, # The gravity of the world
         tileRenderer = None
         ) -> str:
@@ -45,7 +46,7 @@ class Player(src.object_base.ObjectBase):
         super().update_animation()
 
         if globalGravity is not None:
-            super().test_grav_line(globalGravity)
+            super().test_grav_line(globalGravity, gravBeamYPos)
         else:
             self.gravityDir = 1 # Setting it to normal gravity
         

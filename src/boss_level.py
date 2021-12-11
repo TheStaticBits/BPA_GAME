@@ -94,11 +94,9 @@ class BossLevel(src.base_level.BaseLevel):
     def update(self, inputs):
         # Updates everything in the boss level, such as the boss object, the player, and the tile rendering offset
 
-        otherTR = 0 if self.playerRoomIndex == 1 else 1
         playerState = super().update(
             inputs, 
             self.tileRenderers[self.playerRoomIndex],
-            otherTileRenderer = self.tileRenderers[otherTR],
             playerSpawnOffset = 0 # change maybe soon
         )
 

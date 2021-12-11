@@ -174,7 +174,6 @@ class BaseLevel(src.scene_base.SceneBase):
         self, 
         inputs, # Dictionary of keys pressed
         tileRenderer,
-        otherTileRenderer = None,
         playerSpawnOffset = 0, # Offset for when the player switches levels/rooms
         ):
         super().update()
@@ -187,6 +186,7 @@ class BaseLevel(src.scene_base.SceneBase):
             self.room,
             self.levels[self.level],
             inputs, 
+            self.gravBeamYPos,
             globalGravity = self.gravityDir,
             tileRenderer = tileRenderer
         ) # Updating the player with the inputs
@@ -238,38 +238,32 @@ class BaseLevel(src.scene_base.SceneBase):
         # If the return result was of a tile
         # Play the "struck" animation for the tile
         elif playerState != "alive":
-            try:
-                if tileRenderer.change_tile_anim(playerState[0], playerState[1], "struck"):
-                    if playerState[0] == "g": # Gravity orb
-                        self.gravityDir *= -1 # Changing the gravity direction
+            if tileRenderer.change_tile_anim(playerState[0], playerState[1], "struck"):
+                if playerState[0] == "g": # Gravity orb
+                    self.gravityDir *= -1 # Changing the gravity direction
+                
+                elif playerState[0] == "c": # Crystal
+                    self.levels[self.level][self.room][playerState[1][1]][playerState[1][0]] = " " # Removing the tile
+
+                    if not self.crystals[self.level]:
+                        self.currentCrystal = True
+                
+                elif playerState[0] == "m": # Gravity Beam Button
+                    # Changes the gravity beam position by a specified
+                    # amount in the level data, in levels.txt
+                    # Which is specified as:
+                    # button room, buttonX, buttonY = yPosMoved
+                    # where those are all integers besides "button"
                     
-                    elif playerState[0] == "c": # Crystal
-                        self.levels[self.level][self.room][playerState[1][1]][playerState[1][0]] = " " # Removing the tile
+                    key = f"button {self.room}, {playerState[1][0]}, {playerState[1][1]}"
 
-                        if not self.crystals[self.level]:
-                            self.currentCrystal = True
+                    if self.pressedButton != playerState[1]:
+                        self.gravBeamYPos += int(self.levelData[self.level][key])
+                        self.pressedButton = playerState[1]
                     
-                    elif playerState[0] == "m": # Gravity Beam Button
-                        # Changes the gravity beam position by a specified
-                        # amount in the level data, in levels.txt
-                        # Which is specified as:
-                        # button room, buttonX, buttonY = yPosMoved
-                        # where those are all integers besides "button"
-                        
-                        key = f"button {self.room}, {playerState[1][0]}, {playerState[1][1]}"
-
-                        if self.pressedButton != playerState[1]:
-                            self.gravityBeamYPos += self.levelData[self.level][key]
-                            self.pressedButton = playerState[1]
-                        
-                        else:
-                            self.gravityBeamYPos -= self.levelData[self.level][key]
-                            self.pressedButton = None
-
-            
-            except Exception as ex:
-                print(playerState)
-                print(ex)
+                    else:
+                        self.gravBeamYPos -= int(self.levelData[self.level][key])
+                        self.pressedButton = None
 
         if self.showEntities:
             if self.playerPositions == [] or self.playerPositions[0] != self.player.rect.topleft: # If the player moved
@@ -287,12 +281,6 @@ class BaseLevel(src.scene_base.SceneBase):
             else:
                 playerMoved = False
 
-
-            if otherTileRenderer is not None:
-                entRenderer = otherTileRenderer
-            else:
-                entRenderer = tileRenderer
-
             # Updating Ellipse and Corlen
             for ent in self.entities:
                 ent.update(
@@ -301,8 +289,8 @@ class BaseLevel(src.scene_base.SceneBase):
                     self.playerLevelAndRoom,
                     self.playerFacing,
                     playerMoved,
-                    self.gravityDir,
-                    entRenderer
+                    self.gravBeamYPos,
+                    self.gravityDir
                 )
         
         self.gravityBeam.update()
@@ -333,7 +321,7 @@ class BaseLevel(src.scene_base.SceneBase):
             self.gravityBeam.render(
                 window, 
                 (x * constants.GRAV_BEAM_WIDTH, 
-                (constants.GRAV_BEAM_TILE_Y_POS * constants.TILE_SIZE[1]) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
+                (self.gravBeamYPos * constants.TILE_SIZE[1]) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
             )
     
     

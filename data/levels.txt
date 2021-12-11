@@ -4,6 +4,7 @@ music = ThereIsSomethingV2
 text 0 = Use W or UP to jump
 entities = none
 button 0, 5, 3 = 4
+button 0, 11, 10 = -8
 ------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w
