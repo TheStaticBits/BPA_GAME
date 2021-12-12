@@ -20,7 +20,7 @@ class Window:
             self.WINDOW_SIZE[1] / constants.PX_SCALE_FACTOR
         )) # Miniwindow is the window divided by the pixel scale factor
 
-        pygame.display.set_caption("BPA Game")
+        pygame.display.set_caption("There Is Nothing")
 
         self.clock = pygame.time.Clock()
 
