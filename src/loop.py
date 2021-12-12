@@ -50,7 +50,7 @@ class Loop(src.scene_base.SceneBase):
                 "playing": src.playing.Playing(),
                 "bossLevel": src.boss_level.BossLevel(),
                 "cutscene": src.cutscenes.Cutscenes(),
-                "mainMenu": src.main_menu.MainMenu(save, self.levelsList, self.levelsCompleted),
+                "mainMenu": src.main_menu.MainMenu(save, self.levelsList, self.levelsCompleted, self.crystals, self.remove_cutscenes),
                 "pauseMenu": src.pause_menu.PauseMenu()
             }
 

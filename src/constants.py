@@ -21,7 +21,10 @@ MUSIC_FOLDER = "res/sound"
 
 SCREEN_SHADOW_PATH = "res/misc/shadow.png"
 
-BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower the button fills up when you hover your mouse over it.
+CRYSTAL_CHECK_PATH = "res/misc/crystal_check.png"
+CRYSTAL_X_PATH = "res/misc/crystal_x.png"
+
+BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower buttons fills up when hovering a mouse over it.
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)

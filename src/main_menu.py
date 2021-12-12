@@ -7,12 +7,17 @@ import src.button
 import src.tile_renderer
 
 class MainMenu(src.scene_base.SceneBase):
-    def __init__(self, save, levelsList, levelsCompleted):
+    def __init__(self, save, levelsList, levelsCompleted, crystals, remove_cutscenes):
         super().__init__(__name__)
 
         self.levelsList = levelsList
         self.levelsCompleted = levelsCompleted
+        self.crystals = crystals
+        self.remove_cutscenes = remove_cutscenes # Function to remove cutscenes from a number
         self.lvlsIndex = int(save["level"])
+
+        self.crystal_check = pygame.image.load(constants.CRYSTAL_CHECK_PATH).convert_alpha()
+        self.crystal_x = pygame.image.load(constants.CRYSTAL_X_PATH).convert_alpha()
 
         self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
         self.logo = pygame.image.load(constants.LOGO_PATH).convert_alpha()
@@ -111,10 +116,16 @@ class MainMenu(src.scene_base.SceneBase):
         for button in self.buttons.values():
             button.render(window)
         
-        self.render_text(window, "Level Picker", (255, constants.SCREEN_SIZE[1] / 2 + 5))
+        self.render_text(window, "Level Selector", (255, constants.SCREEN_SIZE[1] / 2 + 5))
         self.render_text(window, f"Level: {self.lvlsIndex + 1}", (255, constants.SCREEN_SIZE[1] / 2 + 20))
         self.render_text(window, self.levelsList[self.lvlsIndex], (255, constants.SCREEN_SIZE[1] / 2 + 30))
 
         levelStatus, color = self.get_status(self.lvlsIndex)
         
         self.render_text(window, levelStatus, (255, constants.SCREEN_SIZE[1] / 2 + 45), color)
+
+        if self.crystals[self.remove_cutscenes(self.lvlsIndex)]:
+            window.blit(self.crystal_check, (218, constants.SCREEN_SIZE[1] / 2 + 22))
+        
+        else:
+            window.blit(self.crystal_x, (218, constants.SCREEN_SIZE[1] / 2 + 22))
