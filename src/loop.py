@@ -123,7 +123,9 @@ class Loop(src.scene_base.SceneBase):
                 self.logger.critical(err)
 
                 utility.error_box(err)
-
+            
+                self.save_and_exit()
+                
 
     def increment_index(self):
         self.levelsCompleted[self.level] = 1

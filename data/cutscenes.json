@@ -48,7 +48,7 @@
         "backgroundAnim": {"path": "res/cutscenes/corlen's_house.png", "room": 1},
         "start": {
             "player": {"pos": [0, 192]},
-            "ellipse": {"pos": [-16, -16], "room": 0},
+            "ellipse": {"pos": [384, 192], "room": 1},
             "corlen": {"pos": [210, 192], "room": 0}
         },
 
@@ -60,10 +60,15 @@
             ]
         },
         "conditionals": {
-            "corlenNotice": "player x > 90"
+            "corlenNotice": "player x > 90",
+            "corlenStop": "corlen room == 1 and corlen x > 110",
+            "playerMovingOn": "room == 1 and player x >= 20",
+            "ellipseStop": "ellipse x < 300",
+            "corlenBehindPlayer": "corlen x < 4"
         },
         "cond_commands": {
             "corlenNotice": [
+                "text color 252 227 3",
                 "text change !",
                 "text move 218 170",
                 "text display",
@@ -71,21 +76,140 @@
                 "player uncontrolled",
                 "delay 60 whoRU"
             ], "whoRU": [
-                "text color 252 227 3",
                 "text change Who are you?",
                 "delay 80 noResponse..."
             ], "noResponse...": [
                 "text hide",
                 "delay 120 movingOn"
             ], "movingOn": [
+                "text display",
+                "text change Not a big talker, huh?",
+                "delay 120 introducing"
+            ], "introducing": [
                 "text change Well, uh, I'm Corlen.",
                 "text display",
-                "delay 90 randomHallway"
+                "delay 110 randomHallway"
             ], "randomHallway": [
                 "text change This is a random hallway in the middle of nowhere.",
-                "delay 120 something"
-            ], "something": [
-                "text change [INSERT CORLEN SOUNDS]",
+                "delay 140 delayyy"
+            ], "delayyy": [
+                "text hide",
+                "delay 80 newRoundHere"
+            ], "newRoundHere": [
+                "text display",
+                "text change You're new around here, aren't you?",
+                "delay 120 newbieFight"
+            ], "newbieFight": [
+                "text change Only a newbie would fight the Belloq like that.",
+                "delay 150 saysNothing"
+            ], "saysNothing": [
+                "text hide",
+                "delay 90 ropes"
+            ], "ropes": [
+                "text change Oh well, I guess I'll have to show you the ropes.",
+                "text display",
+                "delay 130 follow"
+            ], "follow": [
+                "text change Follow me.",
+                "delay 80 allowFollow"
+            ], "allowFollow": [
+                "text hide",
+                "corlen walk right",
+                "player controlled",
+                "run corlenStop",
+                "run playerMovingOn"
+            ],
+
+            "corlenStop": [
+                "corlen face left",
+                "corlen walk still"
+            ],
+            
+            "playerMovingOn": [
+                "player uncontrolled",
+                "text move 118 170",
+                "text change This is my humble abode.",
+                "text display",
+                "delay 90 notMuch"
+            ], "notMuch": [
+                "text move 118 155",
+                "text change It's not much, but\nit's enough for me.",
+                "delay 100 silence."
+            ], "silence.": [
+                "text hide",
+                "delay 60 thinking"
+            ], "thinking": [
+                "text display",
+                "text change You may be thinking, \n\"What is this place?\"",
+                "delay 130 assuming"
+            ], "assuming": [
+                "text change I'm assuming you're thinking that\nbecause you haven't said a word yet.",
+                "delay 150 goodQuestion"
+            ], "goodQuestion": [
+                "text move 118 170",
+                "text change That's a good question.",
+                "delay 90 dunnoMan"
+            ], "dunnoMan": [
+                "text change But I don't know either.",
+                "delay 90 noOneElse"
+            ], "noOneElse": [
+                "text move 118 155",
+                "text change There's no one else around\nbesides you and me,",
+                "delay 100 allTheRest"
+            ], "allTheRest": [
+                "text change and those crazy monsters\ncalled the Belloq everywhere.",
+                "delay 30 ellipseAppears"
+            ], "ellipseAppears": [
+                "ellipse walk left",
+                "run ellipseStop",
+                "delay 100 AHHHHH"
+            ], 
+            
+            "ellipseStop": ["ellipse walk still"],
+
+            "AHHHHH": [
+                "text move 118 170",
+                "text change AHHHHH A BELLOQ!",
+                "corlen face right",
+                "ellipse walk still",
+                "delay 90 careful"
+            ], "careful": [
+                "text move 118 155",
+                "text change Be careful, Belloq are very dangerous.\nWe should get out of here quickly!",
+                "delay 150 ellipseTalked!"
+            ], "ellipseTalked!": [
+                "text change ...",
+                "text color 255 255 255",
+                "text move 308 170",
+                "delay 90 itTalked"
+            ], "itTalked": [
+                "text change It talked!",
+                "text color 252 227 3",
+                "text move 118 170",
+                "delay 40 corlenMove"
+            ], "corlenMove": [
+                "text hide",
+                "corlen walk left",
+                "run corlenBehindPlayer"
+            ],
+
+            "corlenBehindPlayer": [
+                "corlen walk still",
+                "corlen face right",
+                "delay 20 moreDots"
+            ],
+
+            "moreDots": [
+                "text change ...",
+                "text color 255 255 255",
+                "text move 308 192",
+                "delay 90 hmm"
+            ], "hmm": [
+                "text change Hmm...",
+                "text color 252 227 3",
+                "text move 20 170",
+                "delay 50 moveRight"
+            ], "moveRight": [
                 "player controlled"
             ]
         }

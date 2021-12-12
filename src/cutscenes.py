@@ -86,7 +86,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
 
     def restart_level(self):
-        self.setup(self.scene)
+        self.setup(self.scene, self.levelNum)
 
     
     def rerender_tiles(self):
@@ -175,6 +175,9 @@ class Cutscenes(src.scene_base.SceneBase):
                     checking = checking.rect.x
                 elif cond[1] == "y":
                     checking = checking.rect.y
+                
+                elif cond[1] == "room":
+                    checking = checking.room
                 
                 command = "".join(cond[2:])
 
@@ -293,7 +296,7 @@ class Cutscenes(src.scene_base.SceneBase):
                     object.rect.x -= constants.MAX_SPEED
                     object.facing = -1
 
-                    if object.rect.x <= object.rect.width:
+                    if object.rect.x <= -object.rect.width:
                         if obj == "player":
                             if self.room > 0:
                                 self.room -= 1
@@ -331,7 +334,15 @@ class Cutscenes(src.scene_base.SceneBase):
         if self.showText:
             self.textWavX += 0.05
 
-            renderText = self.textObject.render(self.text, False, self.textColor)
-            textYOffset = math.sin(self.textWavX) * 5
 
-            window.blit(renderText, (self.textPos[0] - renderText.get_width() / 2, self.textPos[1] + textYOffset))
+            textYOffset = math.sin(self.textWavX) * 5
+            text = self.text.split("\n")
+            
+            for count, t in enumerate(text):
+                renderText = self.textObject.render(t, False, self.textColor)
+                backgroundText = self.textObject.render(t, False, constants.BLACK)
+
+                position = (self.textPos[0] - renderText.get_width() / 2, self.textPos[1] + textYOffset + count * 12)
+
+                window.blit(backgroundText, (position[0] - 1, position[1] - 1))
+                window.blit(renderText, position)
