@@ -12,8 +12,8 @@ import src.utility as utility
 import src.constants as constants
 
 class Playing(src.base_level.BaseLevel):
-    def __init__(self, saveData):
-        super().__init__(saveData, __name__)
+    def __init__(self, levelsList):
+        super().__init__(__name__, levelsList)
 
         self.font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Setting up the font
         self.get_text() # Getting the text for the current room
@@ -35,12 +35,17 @@ class Playing(src.base_level.BaseLevel):
     
     
     # Calls a bunch of other functions which sets up the world with all the aspects of it
-    def setup(self):
+    def setup(self, level, crystal):
+        self.level = level
+        
+        if crystal: super().remove_crystal(level)
+        else: super().reset_crystal(level)
+        
+        super().reset_all()
+        super().check_entity_rendering()
         self.get_text()
         self.load_room()
         super().start_music()
-        super().check_entity_rendering()
-        super().setup_player()
     
     
     # Restarts the level the player is in
@@ -48,12 +53,11 @@ class Playing(src.base_level.BaseLevel):
         super().reset_all()
         self.get_text()
         self.load_room()
-        super().setup_player()
 
 
     def load_room(self):
         self.get_text()
-        self.tileSurface.fill((0, 0, 0))
+        self.tileSurface.fill(constants.BLACK)
         self.tileRenderer.draw_tiles(
             self.levels[self.level][self.room], 
             self.tileSurface, 
@@ -69,7 +73,7 @@ class Playing(src.base_level.BaseLevel):
         try:
             if self.levelData[self.level][f"text {self.room}"] != "":
                 self.text = self.levelData[self.level][f"text {self.room}"]
-                self.textSurface = self.font.render(self.text, False, (255, 255, 255))
+                self.textSurface = self.font.render(self.text, False, constants.WHITE)
                 
                 self.fontX = (constants.SCREEN_SIZE[0]) / 2 - self.textSurface.get_width() / 2
 
@@ -77,26 +81,25 @@ class Playing(src.base_level.BaseLevel):
             pass
 
 
-    def update(
-        self, 
-        inputs, # Dictionary of keys pressed
-        mousePos, # Position of the mouse
-        mousePressed # Which mouse buttons were pressed
-        ):
-        changeToCutscene = super().update(
+    def update(self, window):
+        inputs = window.inputs # Dictionary of keys pressed
+        mousePos = window.mousePos # Position of the mouse
+        mousePressed = window.mousePressed # Which mouse buttons were pressed
+
+        result = super().update(
             inputs,
             self.tileRenderer
         )
 
-        if changeToCutscene == "right":
+        if result == "right":
             if self.room == 0: # If it switched to a new level
-                check = self.check_for_boss()
-                if check is not None:
-                    return ("bossLevel", check) # Switches to the boss
-
-                check = self.check_for_cutscene()
-                if check is not None:
-                    return ("cutscene", check) # Switches to the cutscene
+                return self.level
+        
+        if result in ("right", "left", "dead"):
+            self.load_room()
+        
+        elif result == "crystal":
+            return "crystal"
 
         self.tileRenderer.update_tiles_with_anims()
 

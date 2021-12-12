@@ -1,4 +1,24 @@
 
+background = b
+music = Ellipse
+cutscene = Ellipse
+------------------------
+ssssssssssssssssssssssss
+ssssssssssssssssssssssss
+ssssssssssssssssssssssss
+ssssssssssssssssssssssss
+ss                      
+ss                      
+ss                      
+ss                      
+ss                      
+ss                      
+ssssssssssssssssssssssss
+ssssssssssssssssssssssss
+ssssssssssssssssssssssss
+ssssssssssssssssssssssss
+------------------------
+
 background = w
 music = ThereIsSomethingV2
 text 0 = Use W or UP to jump
@@ -181,6 +201,41 @@ wwww   wwwww      www
        ww         www  w
        ww         www  w
        ww         www  w
+------------------------
+
+background = w
+music = Corlen
+cutscene = Corlen
+------------------------
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+                        
+                        
+                        
+                        
+                        
+wwwwwwwwwwwwwwwwwwwwwwww
+||||||||||||||||||||||||
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+wwwwwwwwwwwwwwwwwwwwwwww
 ------------------------
 
 background = d

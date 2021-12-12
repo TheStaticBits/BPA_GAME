@@ -40,6 +40,15 @@ class Window:
             "center": False,
             "right": False
         }
+
+        self.inputButtons = {
+            "left": constants.LEFT_KEYS,
+            "right": constants.RIGHT_KEYS,
+            "up": constants.UP_KEYS,
+            "space": [pygame.K_SPACE],
+            "esc": [pygame.K_ESCAPE],
+            "shift": (pygame.K_LSHIFT, pygame.K_RSHIFT)
+        }
     
     
     def update_inputs(self):
@@ -57,9 +66,7 @@ class Window:
             pygame.mouse.get_pos()[1] // constants.PX_SCALE_FACTOR,
         )
 
-        self.mousePressed["left"] = pygame.mouse.get_pressed()[0]
-        self.mousePressed["center"] = pygame.mouse.get_pressed()[1]
-        self.mousePressed["right"] = pygame.mouse.get_pressed()[2]
+        self.mousePressed["left"], self.mousePressed["center"], self.mousePressed["right"] = pygame.mouse.get_pressed()
         
         # Iterating through all events/inputs
         for event in pygame.event.get():
@@ -68,18 +75,9 @@ class Window:
 
             elif event.type == pygame.KEYDOWN:
                 # If there was a key pressed down, sets the corresponding key to true
-                if event.key in constants.RIGHT_KEYS:
-                    self.inputs["right"] = True
-                elif event.key in constants.LEFT_KEYS:
-                    self.inputs["left"] = True
-                elif event.key in constants.UP_KEYS:
-                    self.inputs["up"] = True
-                elif event.key == pygame.K_SPACE:
-                    self.inputs["space"] = True
-                elif event.key == pygame.K_ESCAPE:
-                    self.inputs["esc"] = True
-                elif event.key == pygame.K_LSHIFT or event.key == pygame.K_RSHIFT:
-                    self.inputs["shift"] = True
+                for key in self.inputButtons:
+                    if event.key in self.inputButtons[key]:
+                        self.inputs[key] = True
             
             elif event.type == pygame.KEYUP:
                 # If there was a key let go, sets the corresponding non-one-time keys to false
@@ -101,4 +99,4 @@ class Window:
         if constants.CAP_FPS:
             self.clock.tick(constants.FPS) # Manages the framerate
 
-        self.miniWindow.fill((0, 0, 0))
+        self.miniWindow.fill(constants.BLACK)

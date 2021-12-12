@@ -19,8 +19,9 @@ class Cutscenes(src.scene_base.SceneBase):
         self.timer = 0
 
 
-    def setup(self, scene):
+    def setup(self, scene, level):
         self.scene = scene
+        self.levelNum = level
 
         self.cutsceneData = utility.load_json("data/cutscenes.json")[scene]
         
@@ -45,9 +46,9 @@ class Cutscenes(src.scene_base.SceneBase):
                     "movement": "still"
                 }
 
-        levels, self.levelData = utility.load_levels(constants.CUTSCENE_LEVELS_PATH)
-        self.level = levels[self.cutsceneData["cutsceneLevel"]]
-        utility.play_music(self.levelData[self.cutsceneData["cutsceneLevel"]]["music"])
+        levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
+        self.level = levels[self.levelNum]
+        utility.play_music(self.levelData[self.levelNum]["music"])
 
         if "backgroundAnim" in self.cutsceneData:
             self.backgroundAnim = src.animation.Animation(
@@ -76,7 +77,7 @@ class Cutscenes(src.scene_base.SceneBase):
         self.textObject = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
         self.textPos = [0, 0]
         self.textWavX = 0
-        self.textColor = (255, 255, 255)
+        self.textColor = constants.WHITE
 
         # Variables for running commands for cutscenes
         self.timer = 0
@@ -89,11 +90,11 @@ class Cutscenes(src.scene_base.SceneBase):
 
     
     def rerender_tiles(self):
-        self.tiles.fill((0, 0, 0))
+        self.tiles.fill(constants.BLACK)
         self.tileRenderer.draw_tiles(
             self.level[self.room], 
             self.tiles, 
-            self.levelData[self.cutsceneData["cutsceneLevel"]]["background"]    
+            self.levelData[self.levelNum]["background"]    
         )
         self.tileRenderer.setup_room_tile_anims(self.level[self.room])
 
@@ -156,6 +157,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 
                 elif comm[0] == "end":
                     return "end"
+
         except Exception as exc:
             raise Exception(f"Error occured in command: {command}")
 
@@ -197,8 +199,10 @@ class Cutscenes(src.scene_base.SceneBase):
             return True
 
 
-    def update(self, inputs):
+    def update(self, window):
         super().update()
+
+        inputs = window.inputs
 
         if self.backgroundAnim is not None:
             if self.room == self.cutsceneData["backgroundAnim"]["room"]:
@@ -209,7 +213,7 @@ class Cutscenes(src.scene_base.SceneBase):
             if self.timer == int(time):
                 result = self.interpret_commands(commands)
                 if result == "end":
-                    return False
+                    return "end"
         
         # Running conditionals
         for condName in self.runningConditionals:
@@ -218,7 +222,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 
                 result = self.interpret_commands(self.cutsceneData["cond_commands"][condName])
                 if result == "end":
-                    return False
+                    return "end"
         
         # Updating delays
         for delayName in list(self.delays):
@@ -253,7 +257,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
                     except IndexError:
                         # Once the player has reached the end of the level, the cutscene ends
-                        return False
+                        return "end"
                 
                 elif result == "left":
                     if self.room > 0:
@@ -279,7 +283,7 @@ class Cutscenes(src.scene_base.SceneBase):
                                 self.rerender_tiles()
 
                             except IndexError:
-                                return False
+                                return "end"
                         
                         else:
                             object.rect.x = -object.rect.width

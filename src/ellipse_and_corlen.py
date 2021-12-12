@@ -1,7 +1,7 @@
 import src.follow_object
 import src.constants as constants
 
-def create_entity(entity, startPos, room, level, velocity):
+def create_entity(entity, startPos, room, level, velocity = 0):
     if entity == "ellipse":
         followDist = constants.ELLIPSE_FOLLOW_DISTANCE
         anim = constants.ELLIPSE_ANIMATIONS
@@ -10,4 +10,4 @@ def create_entity(entity, startPos, room, level, velocity):
         followDist = constants.CORLEN_FOLLOW_DISTANCE
         anim = constants.CORLEN_ANIMATIONS
 
-    return src.follow_object(startPos, room, level, followDist, anim, (16, 16), velocity)
+    return src.follow_object.FollowObject(startPos, room, level, followDist, anim, (16, 16), velocity)

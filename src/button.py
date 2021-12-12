@@ -16,7 +16,7 @@ class Button:
 
         self.textOffset = textOffset
 
-        self.fontRendered = fontObj.render(text, False, (255, 255, 255)) # Used to get the width of the text area
+        self.fontRendered = fontObj.render(text, False, constants.WHITE) # Used to get the width of the text area
         self.rect = pygame.Rect((
             centerX - (self.fontRendered.get_width() + self.textOffset) / 2,
             y,
@@ -60,14 +60,14 @@ class Button:
         if round(self.highlightYPos) != 0:
             text = pygame.Surface((self.rect.width, self.rect.height - self.highlightYPos))
             text.blit(self.fontRendered, (self.textOffset, 0))
-            text.set_colorkey((0, 0, 0)) # Removes black background
+            text.set_colorkey(constants.BLACK) # Removes black background
 
             highlighted = pygame.Surface((self.rect.width, self.highlightYPos))
-            highlighted.fill((255, 255, 255))
+            highlighted.fill(constants.WHITE)
 
-            blackFont = self.fontObj.render(self.text, False, (0, 0, 0))
+            blackFont = self.fontObj.render(self.text, False, constants.BLACK)
             highlighted.blit(blackFont, (self.textOffset, -(self.rect.height - self.highlightYPos)))
-            highlighted.set_colorkey((0, 0, 0)) # Makes the text transparent
+            highlighted.set_colorkey(constants.BLACK) # Makes the text transparent
 
             window.blit(text, self.rect.topleft)
             window.blit(highlighted, (self.rect.x, self.rect.y + (self.rect.height - self.highlightYPos)))

@@ -11,10 +11,10 @@ This class, BossLevel, inherits all of the base level functionality from the Bas
 It adds onto the BaseLevel class by handling screen scrolling and the boss objects
 """
 class BossLevel(src.base_level.BaseLevel):
-    def __init__(self, saveData):
+    def __init__(self, levelsList):
         # Initializes all class variables
 
-        super().__init__(saveData, __name__) # Initializes the entities, player, gravity beam, and more
+        super().__init__(__name__, levelsList) # Initializes the entities, player, gravity beam, and more
 
         self.tileRenderers = []
 
@@ -37,17 +37,19 @@ class BossLevel(src.base_level.BaseLevel):
         self.bossName = None
 
 
-    def setup(self, boss, level, room):
-        # Sets up the boss level with a given boss, level, and room.
+    def setup(self, boss, level, crystal):
+        # Sets up the boss level with a given boss and level
         # It also starts the music and loads the room images.
 
         self.level = level
-        self.room = room
+
+        if crystal: super().remove_crystal(level)
+        else: super().reset_crystal(level)
         
+        super().reset_all()
+        super().check_entity_rendering()
         self.load_rooms()
-        self.start_music()
-        self.check_entity_rendering()
-        self.reset_all()
+        super().start_music()
 
         if boss == "Belloq":
             self.boss = src.belloq.Belloq()
@@ -62,7 +64,7 @@ class BossLevel(src.base_level.BaseLevel):
         self.minOffset = -((len(self.levels[self.level]) - 1) * constants.SCREEN_SIZE[0])
         # This is minimum because the tileOffset goes negative, not positive.
     
-    
+
     def restart_level(self, resetAll = True):
         if resetAll:
             super().reset_all()
@@ -101,31 +103,25 @@ class BossLevel(src.base_level.BaseLevel):
             tr.setup_room_tile_anims(self.levels[self.level][room])
 
     
-    def update(self, inputs):
+    def update(self, window):
         # Updates everything in the boss level, such as the boss object, the player, and the tile rendering offset
 
         playerState = super().update(
-            inputs, 
+            window.inputs, 
             self.tileRenderers[self.playerRoomIndex],
             playerSpawnOffset = 0 # change maybe soon
         )
 
         if playerState == "right": # If the player moved to the next room or level
-            # If the room variable was reset, meaning the player moved to the next level
+            # If the room variable was reset (by the BaseLevel class), meaning the player moved to the next level
             if self.room == 0: 
-                if self.check_for_boss(): # If there's a boss level in the new level
-                    self.setup(self.levelData[self.level]["boss"], self.level, 0)
-                    # Sets up the boss level with the new level
-
-                elif cutscene := self.check_for_cutscene(): # If there's a cutscene in the new level
-                    return cutscene
-                
-                else:
-                    # Changes to normal level layout
-                    return "playing"
+                return self.level
         
         elif playerState == "dead":
             self.restart_level(resetAll = False)
+        
+        elif playerState == "crystal":
+            return "crystal"
 
         self.tilesOffset = -(self.player.rect.x + (constants.PLAYER_WIDTH // 2) - (constants.SCREEN_SIZE[0] // 2))
 

@@ -30,6 +30,7 @@ class Player(src.object_base.ObjectBase):
         self.rect.y = pos[1]
         self.yVelocity = yVelocity
         self.xVelocity = xVelocity
+        self.facing = 1
     
 
     def update(

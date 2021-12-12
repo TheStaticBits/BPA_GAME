@@ -107,9 +107,9 @@ class ObjectBase:
                 return True, tileRect
 
         elif tileOnScreen and room[tilePos[1]][tilePos[0]] in constants.SPECIAL_TILES:
-            tile = room[tilePos[1]][tilePos[0]]
-
             if tileRenderer is not None:
+                tile = room[tilePos[1]][tilePos[0]]
+
                 if tile in constants.SPIKE_ROTATIONS: # If it's a spike
                     image = pygame.transform.rotate(
                         pygame.image.load(constants.SPIKE_PATH).convert_alpha(), 

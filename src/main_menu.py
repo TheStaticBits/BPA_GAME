@@ -7,55 +7,58 @@ import src.button
 import src.tile_renderer
 
 class MainMenu(src.scene_base.SceneBase):
-    def __init__(self):
+    def __init__(self, save, levelsList):
         super().__init__(__name__)
+
+        self.levelsList = levelsList
+        self.lvlsIndex = int(save["level"])
 
         self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
         self.logo = pygame.image.load(constants.LOGO_PATH).convert_alpha()
 
-        levels, levelData = utility.load_levels(constants.MAIN_MENU_LEVEL_PATH)
+        self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
+
+        mainMenuLevel, mainMenuLevelData = utility.load_levels(constants.MAIN_MENU_LEVEL_PATH)
 
         tileRenderer = src.tile_renderer.TileRenderer()
         self.background = pygame.Surface(constants.SCREEN_SIZE)
         tileRenderer.draw_tiles(
-            levels[0][0],
+            mainMenuLevel[0][0],
             self.background,
-            levelData[0]["background"],
+            mainMenuLevelData[0]["background"],
         )
 
-        self.music = levelData[0]["music"]
+        self.music = mainMenuLevelData[0]["music"]
+
+        buttons = {
+            "start": (120, constants.SCREEN_SIZE[1] / 2, "Continue"),
+            "newSave": (120, constants.SCREEN_SIZE[1] / 2 + 30, "Restart"), 
+            "help": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Help"), 
+            "left": (210, constants.SCREEN_SIZE[1] / 2 + 20, "<"), 
+            "right": (300, constants.SCREEN_SIZE[1] / 2 + 20, ">"),
+            "play": (250, constants.SCREEN_SIZE[1] / 2 + 50, "Play"),
+        }
 
         fontObj = pygame.font.Font(constants.FONT_PATH, 30)
+        self.buttons = {}
+        for key, value in buttons.items():
+            self.buttons[key] = src.button.Button(
+                value[0],
+                value[1],
+                fontObj,
+                value[2],
+                textOffset = 2
+            )
 
-        self.buttons = {
-            "start": src.button.Button(
-                120,
-                constants.SCREEN_SIZE[1] / 2,
-                fontObj,
-                "Continue",
-                textOffset = 2
-            ),
-
-            "newSave": src.button.Button(
-                120,
-                constants.SCREEN_SIZE[1] / 2 + 30,
-                fontObj,
-                "Restart",
-                textOffset = 2
-            ),
-            
-            "help": src.button.Button(
-                120,
-                constants.SCREEN_SIZE[1] / 2 + 60,
-                fontObj,
-                "Help",
-                textOffset = 2
-            ),
-        }
+        self.otherTextFont = pygame.font.Font(constants.FONT_PATH, 15)
 
 
     def start_music(self):
         utility.play_music(self.music)
+
+
+    def change_level(self, level):
+        self.lvlsIndex = level
 
 
     def update(self, mousePos, mouseInputs):
@@ -63,7 +66,23 @@ class MainMenu(src.scene_base.SceneBase):
 
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs):
-                return key
+                if key == "left":
+                    self.lvlsIndex -= 1
+                    if self.lvlsIndex < 0:
+                        self.lvlsIndex = len(self.levelsList) - 1
+                
+                elif key == "right":
+                    self.lvlsIndex += 1
+                    if self.lvlsIndex >= len(self.levelsList):
+                        self.lvlsIndex = 0
+
+                else:
+                    return key
+
+
+    def render_text(self, window, text, position):
+        surf = self.otherTextFont.render(text, False, constants.WHITE)
+        window.blit(surf, (position[0] - surf.get_width() / 2, position[1]))
 
     
     def render(self, window):
@@ -76,3 +95,7 @@ class MainMenu(src.scene_base.SceneBase):
 
         for button in self.buttons.values():
             button.render(window)
+        
+        self.render_text(window, "Level Picker", (253, constants.SCREEN_SIZE[1] / 2 + 5))
+        self.render_text(window, f"Level: {self.lvlsIndex + 1}", (253, constants.SCREEN_SIZE[1] / 2 + 20))
+        self.render_text(window, self.levelsList[self.lvlsIndex], (253, constants.SCREEN_SIZE[1] / 2 + 30))

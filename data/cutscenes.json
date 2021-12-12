@@ -1,7 +1,5 @@
 {
-    "start": {
-        "beforeLevel": 0,
-        "cutsceneLevel": 0,
+    "Ellipse": {
         "start": {
             "player": {"pos": [64, 144]},
             "ellipse": {"pos": [256, 144], "room": 0}
@@ -46,9 +44,7 @@
         }
     },
 
-    "corlen's_house": {
-        "beforeLevel": 3,
-        "cutsceneLevel": 1,
+    "Corlen": {
         "backgroundAnim": {"path": "res/cutscenes/corlen's_house.png", "room": 1},
         "start": {
             "player": {"pos": [0, 192]},
@@ -92,40 +88,6 @@
                 "text change [INSERT CORLEN SOUNDS]",
                 "player controlled"
             ]
-        }
-    },
-
-    "example": {
-        "beforeLevel": 0,
-        "cutsceneLevel": 0,
-        "start": {
-            "player": [16, 16],
-            "ellipse": [0, 0]
-        },
-
-        "time_commands": {
-            "20": ["player walk right"],
-            "30": ["ellipse teleport 16 100"],
-            "50": ["ellipse walk right"],
-            "70": ["run testPX"],
-            "80": [
-                "text change HALLO THERE MR. PERSON",
-                "text move 100 100",
-                "text display"
-            ],
-            "90": [
-                "player walk still",
-                "player controlled"
-            ],
-            "200": ["player noncontrolled"],
-            "280": ["text hide"],
-            "300": ["end"]
-        },
-        "conditionals": {
-            "testPX": "player x > 50"
-        },
-        "cond_commands":{
-            "testPX": ["ellipse walk right"]
         }
     }
 }

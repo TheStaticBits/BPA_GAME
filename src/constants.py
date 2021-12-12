@@ -11,7 +11,6 @@ FONT_SIZE = 15
 LEVELS_PATH = "data/levels.txt"
 
 CUTSCENE_DATA_PATH = "data/cutscenes.json"
-CUTSCENE_LEVELS_PATH = "data/cutscene_levels.txt"
 
 MAIN_MENU_LEVEL_PATH = "data/menu_level.txt"
 LOGO_PATH = "res/misc/logo.png"
@@ -23,6 +22,9 @@ MUSIC_FOLDER = "res/sound"
 SCREEN_SHADOW_PATH = "res/misc/shadow.png"
 
 BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower the button fills up when you hover your mouse over it.
+
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen
@@ -60,13 +62,8 @@ MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 
 # Default save (for the database)
 DEFAULT_SAVE = {
-    "playerX": -1,
-    "playerY": -1,
-    "playerYVelocity": 0,
-    "playerXVelocity": 0,
-    "globalGravity": 1,
+    "levels": "00000000000000000000000000",
     "level": 0,
-    "room": 0,
     "crystals": "00000000000000000"
 }
 
