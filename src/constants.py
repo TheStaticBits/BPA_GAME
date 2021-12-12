@@ -25,6 +25,9 @@ BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower the button fills 
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
 
 CAP_FPS = True # True/False to cap FPS
 FPS = 60 # Frame rate of the screen

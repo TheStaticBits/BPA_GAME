@@ -11,10 +11,10 @@ This class, BossLevel, inherits all of the base level functionality from the Bas
 It adds onto the BaseLevel class by handling screen scrolling and the boss objects
 """
 class BossLevel(src.base_level.BaseLevel):
-    def __init__(self, levelsList):
+    def __init__(self):
         # Initializes all class variables
 
-        super().__init__(__name__, levelsList) # Initializes the entities, player, gravity beam, and more
+        super().__init__(__name__) # Initializes the entities, player, gravity beam, and more
 
         self.tileRenderers = []
 
@@ -65,12 +65,10 @@ class BossLevel(src.base_level.BaseLevel):
         # This is minimum because the tileOffset goes negative, not positive.
     
 
-    def restart_level(self, resetAll = True):
-        if not self.currentCrystal: super().reset_crystal(self.level)
+    def restart_level(self):
+        if self.currentCrystal: super().reset_crystal(self.level)
 
-        if resetAll:
-            super().reset_all()
-        
+        super().reset_all()
         self.boss.reset()
         self.playerRoomIndex = 0
         self.room = 0
@@ -120,7 +118,7 @@ class BossLevel(src.base_level.BaseLevel):
                 return self.level
         
         elif playerState == "dead":
-            self.restart_level(resetAll = False)
+            self.restart_level()
         
         elif playerState == "crystal":
             return "crystal"

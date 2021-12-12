@@ -6,10 +6,8 @@ import src.utility as utility
 import src.ellipse_and_corlen as eac
 
 class BaseLevel(src.scene_base.SceneBase):
-    def __init__(self, name, levelsList):
+    def __init__(self, name):
         super().__init__(name)
-
-        self.levelsList = levelsList
 
         self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
 
@@ -59,6 +57,10 @@ class BaseLevel(src.scene_base.SceneBase):
         if self.playingSong != self.levelData[self.level]["music"]:
             utility.play_music(self.levelData[self.level]["music"])
             self.playingSong = self.levelData[self.level]["music"]
+    
+
+    def music_stopped(self):
+        self.playingSong = None
 
 
     def remove_crystal(self, level):
@@ -193,14 +195,10 @@ class BaseLevel(src.scene_base.SceneBase):
                 self.room -= 1
 
                 self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) + playerSpawnOffset # Moving the player to the opposite side of the screen
-
-        # If the player died
-        elif playerState == "dead":
-            self.reset_all()
         
         # If the return result was of a tile
         # Play the "struck" animation for the tile
-        elif playerState != "alive":
+        elif isinstance(playerState, tuple):
             if tileRenderer.change_tile_anim(playerState[0], playerState[1], "struck"):
                 if playerState[0] == "g": # Gravity orb
                     self.gravityDir *= -1 # Changing the gravity direction

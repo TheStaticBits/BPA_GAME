@@ -12,8 +12,8 @@ import src.utility as utility
 import src.constants as constants
 
 class Playing(src.base_level.BaseLevel):
-    def __init__(self, levelsList):
-        super().__init__(__name__, levelsList)
+    def __init__(self):
+        super().__init__(__name__)
 
         self.font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Setting up the font
         self.get_text() # Getting the text for the current room
@@ -52,12 +52,11 @@ class Playing(src.base_level.BaseLevel):
     
     
     # Restarts the level the player is in
-    def restart_level(self, resetAll = True):
-        if not self.currentCrystal: super().reset_crystal(self.level)
+    def restart_level(self):
+        # If the player has previously collected a crystal, it will be reset
+        if self.currentCrystal: super().reset_crystal(self.level)
         
-        if resetAll:
-            super().reset_all()
-        
+        super().reset_all()
         self.get_text()
         self.load_room()
         
@@ -107,7 +106,7 @@ class Playing(src.base_level.BaseLevel):
         
         elif result == "dead":
             self.load_room()
-            self.restart_level(resetAll = False)
+            self.restart_level()
         
         elif result == "crystal":
             return "crystal"

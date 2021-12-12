@@ -1,17 +1,17 @@
 background = w
 music = normalDay
 ------------------------
+wwww                wwww
+ww                    ww
+w                      w
+w                      w
                         
                         
                         
                         
                         
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+w                      w
+w                      w
+ww                    ww
+wwww                wwww

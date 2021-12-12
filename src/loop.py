@@ -40,15 +40,17 @@ class Loop(src.scene_base.SceneBase):
 
             save = utility.load_save()
 
-            self.levelsCompleted = list(save["levels"])
+            # Converts string of ones and zeros into lists of integers
+            self.levelsCompleted = [int(x) for x in list(save["levels"])]
+            self.crystals = [int(x) for x in list(save["crystals"])]
+            
             self.level = int(save["level"])
-            self.crystals = [int(x) for x in list(save["crystals"])] # Converting the saved string to a list of ints
 
             self.scenes = {
-                "playing": src.playing.Playing(self.levelsList),
-                "bossLevel": src.boss_level.BossLevel(self.levelsList),
+                "playing": src.playing.Playing(),
+                "bossLevel": src.boss_level.BossLevel(),
                 "cutscene": src.cutscenes.Cutscenes(),
-                "mainMenu": src.main_menu.MainMenu(save, self.levelsList),
+                "mainMenu": src.main_menu.MainMenu(save, self.levelsList, self.levelsCompleted),
                 "pauseMenu": src.pause_menu.PauseMenu()
             }
 
@@ -157,6 +159,7 @@ class Loop(src.scene_base.SceneBase):
 
                 self.switch_to_new_scene(level)
                 self.update()
+                self.level = level
 
         
         elif self.scene == "pauseMenu":
@@ -179,7 +182,10 @@ class Loop(src.scene_base.SceneBase):
                 elif result == "mainMenu":
                     self.scene = "mainMenu"
                     self.scenes["mainMenu"].start_music()
-                    self.scenes["mainMenu"].change_level(self.level)
+                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted)
+
+                    self.scenes["playing"].music_stopped()
+                    self.scenes["bossLevel"].music_stopped()
         
         else:
             # Handles all "playing" scenes such as boss levels, cutscenes, and normal levels
@@ -217,10 +223,12 @@ class Loop(src.scene_base.SceneBase):
         if self.levelsList[level] == "Normal Level":
             self.scene = "playing"
             self.scenes["playing"].setup(level, self.crystals[self.remove_cutscenes(level)])
+            self.scenes["bossLevel"].music_stopped()
         
         elif self.levelsList[level] == "Boss Level":
             self.scene = "bossLevel"
             self.scenes["bossLevel"].setup(self.levelData[level]["boss"], level, self.crystals[self.remove_cutscenes(level)])
+            self.scenes["playing"].music_stopped()
 
         elif self.levelsList[level] == "Cutscene":
             self.scene = "cutscene"

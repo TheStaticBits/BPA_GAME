@@ -7,10 +7,11 @@ import src.button
 import src.tile_renderer
 
 class MainMenu(src.scene_base.SceneBase):
-    def __init__(self, save, levelsList):
+    def __init__(self, save, levelsList, levelsCompleted):
         super().__init__(__name__)
 
         self.levelsList = levelsList
+        self.levelsCompleted = levelsCompleted
         self.lvlsIndex = int(save["level"])
 
         self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
@@ -36,7 +37,7 @@ class MainMenu(src.scene_base.SceneBase):
             "help": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Help"), 
             "left": (210, constants.SCREEN_SIZE[1] / 2 + 20, "<"), 
             "right": (300, constants.SCREEN_SIZE[1] / 2 + 20, ">"),
-            "play": (250, constants.SCREEN_SIZE[1] / 2 + 50, "Play"),
+            "play": (250, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
         }
 
         fontObj = pygame.font.Font(constants.FONT_PATH, 30)
@@ -57,8 +58,18 @@ class MainMenu(src.scene_base.SceneBase):
         utility.play_music(self.music)
 
 
-    def change_level(self, level):
+    def update_info(self, level, levelsCompleted):
         self.lvlsIndex = level
+        self.levelsCompleted = levelsCompleted
+    
+
+    def get_status(self, level):
+        if self.levelsCompleted[level] == 1:
+            return "Completed", constants.GREEN
+        elif level == 0 or self.levelsCompleted[level - 1] == 1:
+            return "Unlocked", constants.YELLOW
+        else: 
+            return "Locked", constants.RED
 
 
     def update(self, mousePos, mouseInputs):
@@ -75,13 +86,17 @@ class MainMenu(src.scene_base.SceneBase):
                     self.lvlsIndex += 1
                     if self.lvlsIndex >= len(self.levelsList):
                         self.lvlsIndex = 0
+                    
+                elif key == "play":
+                    if self.get_status(self.lvlsIndex)[0] != "Locked":
+                        return "play"
 
                 else:
                     return key
 
 
-    def render_text(self, window, text, position):
-        surf = self.otherTextFont.render(text, False, constants.WHITE)
+    def render_text(self, window, text, position, color = constants.WHITE):
+        surf = self.otherTextFont.render(text, False, color)
         window.blit(surf, (position[0] - surf.get_width() / 2, position[1]))
 
     
@@ -99,3 +114,7 @@ class MainMenu(src.scene_base.SceneBase):
         self.render_text(window, "Level Picker", (253, constants.SCREEN_SIZE[1] / 2 + 5))
         self.render_text(window, f"Level: {self.lvlsIndex + 1}", (253, constants.SCREEN_SIZE[1] / 2 + 20))
         self.render_text(window, self.levelsList[self.lvlsIndex], (253, constants.SCREEN_SIZE[1] / 2 + 30))
+
+        levelStatus, color = self.get_status(self.lvlsIndex)
+        
+        self.render_text(window, levelStatus, (253, constants.SCREEN_SIZE[1] / 2 + 45), color)
