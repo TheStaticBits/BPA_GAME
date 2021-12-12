@@ -63,9 +63,10 @@ class MainMenu(src.scene_base.SceneBase):
         utility.play_music(self.music)
 
 
-    def update_info(self, level, levelsCompleted):
+    def update_info(self, level, levelsCompleted, crystals):
         self.lvlsIndex = level
         self.levelsCompleted = levelsCompleted
+        self.crystals
     
 
     def get_status(self, level):
@@ -124,8 +125,9 @@ class MainMenu(src.scene_base.SceneBase):
         
         self.render_text(window, levelStatus, (255, constants.SCREEN_SIZE[1] / 2 + 45), color)
 
-        if self.crystals[self.remove_cutscenes(self.lvlsIndex)]:
-            window.blit(self.crystal_check, (218, constants.SCREEN_SIZE[1] / 2 + 22))
-        
-        else:
-            window.blit(self.crystal_x, (218, constants.SCREEN_SIZE[1] / 2 + 22))
+        if "cutscene" not in self.levelData[self.lvlsIndex]:
+            if self.crystals[self.remove_cutscenes(self.lvlsIndex)]:
+                window.blit(self.crystal_check, (218, constants.SCREEN_SIZE[1] / 2 + 22))
+            
+            else:
+                window.blit(self.crystal_x, (218, constants.SCREEN_SIZE[1] / 2 + 22))

@@ -182,7 +182,7 @@ class Loop(src.scene_base.SceneBase):
                 elif result == "mainMenu":
                     self.scene = "mainMenu"
                     self.scenes["mainMenu"].start_music()
-                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted)
+                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
 
                     self.scenes["playing"].music_stopped()
                     self.scenes["bossLevel"].music_stopped()
