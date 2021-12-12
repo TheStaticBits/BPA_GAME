@@ -35,9 +35,9 @@ class MainMenu(src.scene_base.SceneBase):
             "start": (120, constants.SCREEN_SIZE[1] / 2, "Continue"),
             "newSave": (120, constants.SCREEN_SIZE[1] / 2 + 30, "Restart"), 
             "help": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Help"), 
-            "left": (210, constants.SCREEN_SIZE[1] / 2 + 20, "<"), 
-            "right": (300, constants.SCREEN_SIZE[1] / 2 + 20, ">"),
-            "play": (250, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
+            "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, "<"), 
+            "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, ">"),
+            "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
         }
 
         fontObj = pygame.font.Font(constants.FONT_PATH, 30)
@@ -111,10 +111,10 @@ class MainMenu(src.scene_base.SceneBase):
         for button in self.buttons.values():
             button.render(window)
         
-        self.render_text(window, "Level Picker", (253, constants.SCREEN_SIZE[1] / 2 + 5))
-        self.render_text(window, f"Level: {self.lvlsIndex + 1}", (253, constants.SCREEN_SIZE[1] / 2 + 20))
-        self.render_text(window, self.levelsList[self.lvlsIndex], (253, constants.SCREEN_SIZE[1] / 2 + 30))
+        self.render_text(window, "Level Picker", (255, constants.SCREEN_SIZE[1] / 2 + 5))
+        self.render_text(window, f"Level: {self.lvlsIndex + 1}", (255, constants.SCREEN_SIZE[1] / 2 + 20))
+        self.render_text(window, self.levelsList[self.lvlsIndex], (255, constants.SCREEN_SIZE[1] / 2 + 30))
 
         levelStatus, color = self.get_status(self.lvlsIndex)
         
-        self.render_text(window, levelStatus, (253, constants.SCREEN_SIZE[1] / 2 + 45), color)
+        self.render_text(window, levelStatus, (255, constants.SCREEN_SIZE[1] / 2 + 45), color)
