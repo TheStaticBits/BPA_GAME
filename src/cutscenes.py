@@ -3,8 +3,7 @@ import math
 
 import src.scene_base
 import src.player
-import src.ellipse
-import src.corlen
+import src.ellipse_and_corlen as eac
 import src.utility as utility
 import src.constants as constants
 import src.animation
@@ -36,13 +35,13 @@ class Cutscenes(src.scene_base.SceneBase):
             
             elif name == "ellipse":
                 self.objects[name] = {
-                    "obj": src.ellipse.Ellipse(position["pos"], position["room"], 0), # Since each cutscene is one level, the level number doesn't matter
+                    "obj": eac.create_entity("ellipse", position["pos"], position["room"], 0), # Since each cutscene is one level, the level number doesn't matter
                     "movement": "still"
                 }
             
             elif name == "corlen":
                 self.objects[name] = {
-                    "obj": src.corlen.Corlen(position["pos"], position["room"], 0),
+                    "obj": eac.create_entity("corlen", position["pos"], position["room"], 0),
                     "movement": "still"
                 }
 

@@ -3,6 +3,7 @@ import pygame
 import src.scene_base
 import src.constants as constants
 import src.utility as utility
+import src.ellipse_and_corlen as e_a_c
 
 class BaseLevel(src.scene_base.SceneBase):
     def __init__(self, saveData, name):
@@ -130,8 +131,8 @@ class BaseLevel(src.scene_base.SceneBase):
     def setup_entities(self, position):
         self.entities = []
 
-        self.entities.append(src.ellipse.Ellipse(position, self.room, self.level))
-        self.entities.append(src.corlen.Corlen(position, self.room, self.level))
+        self.entities.append(eac.create_entity("ellipse", position, self.room, self.level))
+        self.entities.append(eac.create_entity("corlen", position, self.room, self.level))
 
         for ent in self.entities:
             ent.facing = self.player.facing
