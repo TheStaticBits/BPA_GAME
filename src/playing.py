@@ -30,6 +30,8 @@ class Playing(src.base_level.BaseLevel):
 
         self.tilesChanged = False
 
+        self.crystal = False # If the crystal has been collected in the level
+
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
     
@@ -37,7 +39,8 @@ class Playing(src.base_level.BaseLevel):
     # Calls a bunch of other functions which sets up the world with all the aspects of it
     def setup(self, level, crystal):
         self.level = level
-        
+        self.crystal = crystal
+
         if crystal: super().remove_crystal(level)
         else: super().reset_crystal(level)
         
@@ -49,11 +52,15 @@ class Playing(src.base_level.BaseLevel):
     
     
     # Restarts the level the player is in
-    def restart_level(self):
-        super().reset_all()
+    def restart_level(self, resetAll = True):
+        if not self.currentCrystal: super().reset_crystal(self.level)
+        
+        if resetAll:
+            super().reset_all()
+        
         self.get_text()
         self.load_room()
-
+        
 
     def load_room(self):
         self.get_text()
@@ -95,8 +102,12 @@ class Playing(src.base_level.BaseLevel):
             if self.room == 0: # If it switched to a new level
                 return self.level
         
-        if result in ("right", "left", "dead"):
+        if result in ("right", "left"):
             self.load_room()
+        
+        elif result == "dead":
+            self.load_room()
+            self.restart_level(resetAll = False)
         
         elif result == "crystal":
             return "crystal"

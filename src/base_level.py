@@ -134,6 +134,7 @@ class BaseLevel(src.scene_base.SceneBase):
         self.gravityDir = 1 # Resetting gravity
         self.gravityBeamYPos = constants.GRAV_BEAM_TILE_Y_POS
         self.pressedButton = ()
+        self.currentCrystal = False
 
 
     def check_entity_rendering(self):

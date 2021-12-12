@@ -66,6 +66,8 @@ class BossLevel(src.base_level.BaseLevel):
     
 
     def restart_level(self, resetAll = True):
+        if not self.currentCrystal: super().reset_crystal(self.level)
+
         if resetAll:
             super().reset_all()
         
