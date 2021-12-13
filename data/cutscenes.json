@@ -64,7 +64,8 @@
             "corlenStop": "corlen room == 1 and corlen x > 110",
             "playerMovingOn": "room == 1 and player x >= 20",
             "ellipseStop": "ellipse x < 300",
-            "corlenBehindPlayer": "corlen x < 4"
+            "corlenBehindPlayer": "corlen x < 4",
+            "corlenGoesBack": "corlen x > 110"
         },
         "cond_commands": {
             "corlenNotice": [
@@ -80,8 +81,12 @@
                 "delay 80 noResponse..."
             ], "noResponse...": [
                 "text hide",
-                "delay 120 movingOn"
+                "delay 60 turnRound"
+            ], "turnRound": [
+                "corlen face right",
+                "delay 60 movingOn"
             ], "movingOn": [
+                "corlen face left",
                 "text display",
                 "text change Not a big talker, huh?",
                 "delay 120 introducing"
@@ -90,13 +95,15 @@
                 "text display",
                 "delay 110 randomHallway"
             ], "randomHallway": [
-                "text change This is a random hallway in the middle of nowhere.",
+                "text move 118 155",
+                "text change And this is a random\nhallway in the middle of nowhere.",
                 "delay 140 delayyy"
             ], "delayyy": [
                 "text hide",
                 "delay 80 newRoundHere"
             ], "newRoundHere": [
                 "text display",
+                "text move 118 170",
                 "text change You're new around here, aren't you?",
                 "delay 120 newbieFight"
             ], "newbieFight": [
@@ -181,7 +188,7 @@
                 "text change ...",
                 "text color 255 255 255",
                 "text move 308 170",
-                "delay 90 itTalked"
+                "delay 120 itTalked"
             ], "itTalked": [
                 "text change It talked!",
                 "text color 252 227 3",
@@ -203,13 +210,100 @@
                 "text change ...",
                 "text color 255 255 255",
                 "text move 308 192",
-                "delay 90 hmm"
+                "delay 120 hmm"
             ], "hmm": [
                 "text change Hmm...",
                 "text color 252 227 3",
                 "text move 20 170",
-                "delay 50 moveRight"
+                "delay 100 moveRight"
             ], "moveRight": [
+                "text hide",
+                "corlen walk right",
+                "run corlenGoesBack"
+            ],
+            
+            "corlenGoesBack": [
+                "corlen walk still",
+                "text color 252 227 3",
+                "text move 118 170",
+                "text change Maybe you aren't a Belloq after all.",
+                "delay 100 oneOfUs"
+            ], "oneOfUs": [
+                "corlen face left",
+                "text change If it can talk, maybe it's one of us!",
+                "delay 110 ellipseSayEllipse"
+            ], "ellipseSayEllipse": [
+                "corlen face right",
+                "text change ...",
+                "text color 255 255 255",
+                "text move 308 192",
+                "delay 120 namingEllipse"
+            ], "namingEllipse": [
+                "text change I think I'm going to call you... Ellipse!",
+                "text color 252 227 3",
+                "text move 118 170",
+                "delay 100 greatIdeaRight?"
+            ], "greatIdeaRight?": [
+                "text change What a great nickname, right Ellipse?",
+                "delay 100 ellipseResponds"
+            ], "ellipseResponds": [
+                "text change ...",
+                "text color 255 255 255",
+                "text move 308 192",
+                "delay 120 youKnowWhat?"
+            ], "YouKnowWhat?": [
+                "text change You know what?",
+                "delay 20 switchDirs"
+            ], "switchDirs": [
+                "corlen face left",
+                "delay 20 faceyRight"
+            ], "faceyRight": [
+                "corlen face right",
+                "delay 40 makeGoodTeam"
+            ], "makeGoodTeam": [
+                "text change We could make a good team,",
+                "delay 90 names"
+            ], "names": [
+                "text change Corlen, Ellipse, and a weird human!",
+                "delay 80 faceLeft"
+            ], "faceLeft": [
+                "corlen face left",
+                "delay 30 sickOfHouse"
+            ], "sickOfHouse": [
+                "text change And I'm sick of staying in my house all day.",
+                "delay 120 goOnAdventure"
+            ], "goOnAdventure": [
+                "corlen face right",
+                "text change I want to go on an adventure!",
+                "delay 100 comparisons"
+            ], "comparisons": [
+                "corlen face left",
+                "text move 118 155",
+                "text change And if a tiny human can survive\na Belloq encounter, I can too!",
+                "delay 120 dootdootdoot"
+            ], "dootdootdoot": [
+                "text change ...",
+                "text color 255 255 255",
+                "text move 308 192",
+                "delay 120 puttingWordsInMouth"
+            ], "puttingWordsInMouth": [
+                "text change See, Ellipse approves!",
+                "text color 252 227 3",
+                "text move 118 170",
+                "delay 90 mooooreDoots"
+            ], "mooooreDoots": [
+                "text change ...",
+                "text color 255 255 255",
+                "text move 308 192",
+                "delay 120 leadDahWay"
+            ], "leadDahWay": [
+                "corlen face left",
+                "text change Alright, blue human, lead the way!",
+                "text color 252 227 3",
+                "text move 118 170",
+                "delay 110 finish"
+            ], "finish": [
+                "corlen face right",
                 "player controlled"
             ]
         }
