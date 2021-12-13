@@ -199,6 +199,10 @@ class Loop(src.scene_base.SceneBase):
                         
                     self.load_save()
                     self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
+
+                elif result == "help":
+                    # Potentially moves to a help level or a help cutscene
+                    pass
         
         else:
             # Handles all "playing" scenes such as boss levels, cutscenes, and normal levels
