@@ -1,4 +1,5 @@
 import pygame
+import os
 import traceback
 from time import sleep
 import threading
@@ -38,7 +39,7 @@ class Loop(src.scene_base.SceneBase):
             self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
             self.levelsList = self.gen_levels_list()
 
-            self.load_save()
+            save = self.load_save()
 
             self.scenes = {
                 "playing": src.playing.Playing(),
@@ -63,7 +64,7 @@ class Loop(src.scene_base.SceneBase):
             self.errorSettingUp = True
 
     
-    def load_save(self):
+    def load_save(self) -> dict:
         save = utility.load_save()
 
         # Converts string of ones and zeros into lists of integers
@@ -71,6 +72,8 @@ class Loop(src.scene_base.SceneBase):
         self.crystals = [int(x) for x in list(save["crystals"])]
 
         self.level = int(save["level"])
+
+        return save
 
 
     def gen_levels_list(self):

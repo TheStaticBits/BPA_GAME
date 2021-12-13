@@ -9,7 +9,7 @@
                 "player controlled",
                 "player jump not",
                 "ellipse face left",
-                "text move 168 20",
+                "text move 192 20",
                 "text change Use W and D or LEFT and RIGHT to move",
                 "text display",
                 "run testMoved"
@@ -95,7 +95,7 @@
                 "text display",
                 "delay 110 randomHallway"
             ], "randomHallway": [
-                "text move 118 155",
+                "text move 218 155",
                 "text change And this is a random\nhallway in the middle of nowhere.",
                 "delay 140 delayyy"
             ], "delayyy": [
@@ -103,7 +103,7 @@
                 "delay 80 newRoundHere"
             ], "newRoundHere": [
                 "text display",
-                "text move 118 170",
+                "text move 218 170",
                 "text change You're new around here, aren't you?",
                 "delay 120 newbieFight"
             ], "newbieFight": [
@@ -207,9 +207,10 @@
             ],
 
             "moreDots": [
+                "text display",
                 "text change ...",
                 "text color 255 255 255",
-                "text move 308 192",
+                "text move 308 170",
                 "delay 120 hmm"
             ], "hmm": [
                 "text change Hmm...",
@@ -224,6 +225,7 @@
             
             "corlenGoesBack": [
                 "corlen walk still",
+                "text display",
                 "text color 252 227 3",
                 "text move 118 170",
                 "text change Maybe you aren't a Belloq after all.",
@@ -236,55 +238,60 @@
                 "corlen face right",
                 "text change ...",
                 "text color 255 255 255",
-                "text move 308 192",
+                "text move 308 170",
                 "delay 120 namingEllipse"
             ], "namingEllipse": [
-                "text change I think I'm going to call you... Ellipse!",
+                "text change I think I'm going to call\nyou... Ellipse!",
                 "text color 252 227 3",
-                "text move 118 170",
+                "text move 118 155",
                 "delay 100 greatIdeaRight?"
             ], "greatIdeaRight?": [
-                "text change What a great nickname, right Ellipse?",
+                "text change What a great nickname,\nright Ellipse?",
                 "delay 100 ellipseResponds"
             ], "ellipseResponds": [
                 "text change ...",
                 "text color 255 255 255",
-                "text move 308 192",
+                "text move 308 170",
                 "delay 120 youKnowWhat?"
-            ], "YouKnowWhat?": [
+            ], "youKnowWhat?": [
                 "text change You know what?",
+                "text color 252 227 3",
+                "text move 118 170",
                 "delay 20 switchDirs"
             ], "switchDirs": [
                 "corlen face left",
-                "delay 20 faceyRight"
+                "delay 30 faceyRight"
             ], "faceyRight": [
                 "corlen face right",
-                "delay 40 makeGoodTeam"
+                "delay 30 makeGoodTeam"
             ], "makeGoodTeam": [
                 "text change We could make a good team,",
                 "delay 90 names"
             ], "names": [
                 "text change Corlen, Ellipse, and a weird human!",
-                "delay 80 faceLeft"
+                "delay 70 faceLeft"
             ], "faceLeft": [
                 "corlen face left",
-                "delay 30 sickOfHouse"
+                "delay 40 sickOfHouse"
             ], "sickOfHouse": [
-                "text change And I'm sick of staying in my house all day.",
+                "text move 118 155",
+                "text change And I'm sick of staying\nin my house all day.",
                 "delay 120 goOnAdventure"
             ], "goOnAdventure": [
                 "corlen face right",
+                "text move 118 170",
                 "text change I want to go on an adventure!",
                 "delay 100 comparisons"
             ], "comparisons": [
                 "corlen face left",
                 "text move 118 155",
                 "text change And if a tiny human can survive\na Belloq encounter, I can too!",
-                "delay 120 dootdootdoot"
+                "delay 140 dootdootdoot"
             ], "dootdootdoot": [
                 "text change ...",
                 "text color 255 255 255",
-                "text move 308 192",
+                "text move 308 170",
+                "corlen face right",
                 "delay 120 puttingWordsInMouth"
             ], "puttingWordsInMouth": [
                 "text change See, Ellipse approves!",
@@ -294,7 +301,7 @@
             ], "mooooreDoots": [
                 "text change ...",
                 "text color 255 255 255",
-                "text move 308 192",
+                "text move 308 170",
                 "delay 120 leadDahWay"
             ], "leadDahWay": [
                 "corlen face left",
@@ -303,6 +310,7 @@
                 "text move 118 170",
                 "delay 110 finish"
             ], "finish": [
+                "text hide",
                 "corlen face right",
                 "player controlled"
             ]
