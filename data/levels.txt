@@ -432,6 +432,11 @@ dd                 ddddd
 ------------------------
 
 background = d
+music = RuinsV2
+cutscene = 
+
+------------------------
+background = d
 music = DeepBelow
 ------------------------
 dddddddddddddddddddddddd
