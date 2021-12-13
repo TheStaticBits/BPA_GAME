@@ -38,13 +38,7 @@ class Loop(src.scene_base.SceneBase):
             self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
             self.levelsList = self.gen_levels_list()
 
-            save = utility.load_save()
-
-            # Converts string of ones and zeros into lists of integers
-            self.levelsCompleted = [int(x) for x in list(save["levels"])]
-            self.crystals = [int(x) for x in list(save["crystals"])]
-            
-            self.level = int(save["level"])
+            self.load_save()
 
             self.scenes = {
                 "playing": src.playing.Playing(),
@@ -67,6 +61,16 @@ class Loop(src.scene_base.SceneBase):
             utility.error_box(err)
 
             self.errorSettingUp = True
+
+    
+    def load_save(self):
+        save = utility.load_save()
+
+        # Converts string of ones and zeros into lists of integers
+        self.levelsCompleted = [int(x) for x in list(save["levels"])]
+        self.crystals = [int(x) for x in list(save["crystals"])]
+
+        self.level = int(save["level"])
 
 
     def gen_levels_list(self):
@@ -188,6 +192,13 @@ class Loop(src.scene_base.SceneBase):
 
                     self.scenes["playing"].music_stopped()
                     self.scenes["bossLevel"].music_stopped()
+                
+                elif result == "newSave":
+                    if os.path.exists(constants.SAVE_PATH):
+                        os.remove(constants.SAVE_PATH)
+                        
+                    self.load_save()
+                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
         
         else:
             # Handles all "playing" scenes such as boss levels, cutscenes, and normal levels

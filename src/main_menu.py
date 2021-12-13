@@ -1,4 +1,5 @@
 import pygame
+import os
 
 import src.scene_base
 import src.constants as constants
@@ -66,7 +67,7 @@ class MainMenu(src.scene_base.SceneBase):
     def update_info(self, level, levelsCompleted, crystals):
         self.lvlsIndex = level
         self.levelsCompleted = levelsCompleted
-        self.crystals
+        self.crystals = crystals
     
 
     def get_status(self, level):
