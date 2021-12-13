@@ -433,9 +433,24 @@ dd                 ddddd
 
 background = d
 music = RuinsV2
-cutscene = 
-
+cutscene = Ruins
 ------------------------
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+dddddddddddddddddddddddd
+------------------------
+
 background = d
 music = DeepBelow
 ------------------------

@@ -312,7 +312,8 @@
             ], "finish": [
                 "text hide",
                 "corlen face right",
-                "player controlled"
+                "player controlled",
+                "player jump can"
             ]
         }
     },
@@ -358,7 +359,7 @@
                 "ellipse face right",
                 "text change ...",
                 "text move 208 170",
-                "text color 255 255",
+                "text color 255 255 255",
                 "delay 20 ellipseSecondLeft"
             ], "ellipseSecondLeft": [
                 "ellipse face left",
