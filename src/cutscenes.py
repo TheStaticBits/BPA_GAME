@@ -355,6 +355,6 @@ class Cutscenes(src.scene_base.SceneBase):
                 for count, t in enumerate(fullText):
                     renderText = self.textObject.render(t, False, text["color"])
 
-                    position = (text["position"][0] - renderText.get_widt() / 2, text["position"][1] + textYOffset + count * 12)
+                    position = (text["position"][0] - renderText.get_width() / 2, text["position"][1] + textYOffset + count * 12)
 
                     utility.draw_text_with_border(window, position, t, self.textObject, text["color"], renderText = renderText)
