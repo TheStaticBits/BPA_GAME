@@ -32,7 +32,8 @@ class Window:
             "up": False,
             "space": False,
             "esc": False,
-            "shift": False
+            "shift": False,
+            "enter": False
         }
         self.mousePos = (0, 0)
         self.mousePressed = {
@@ -47,7 +48,8 @@ class Window:
             "up": constants.UP_KEYS,
             "space": [pygame.K_SPACE],
             "esc": [pygame.K_ESCAPE],
-            "shift": (pygame.K_LSHIFT, pygame.K_RSHIFT)
+            "shift": (pygame.K_LSHIFT, pygame.K_RSHIFT),
+            "enter": [pygame.K_RETURN]
         }
     
     
@@ -59,6 +61,7 @@ class Window:
         self.inputs["space"] = False
         self.inputs["esc"] = False
         self.inputs["shift"] = False
+        self.inputs["enter"] = False
 
         # Getting mouse positions and buttons pressed
         self.mousePos = (

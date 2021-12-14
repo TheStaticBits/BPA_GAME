@@ -241,7 +241,7 @@ class Cutscenes(src.scene_base.SceneBase):
         
         # Updating delays
         for delayName in list(self.delays):
-            if self.delays[delayName] == 0:
+            if self.delays[delayName] == 0 or inputs["enter"]:
                 del self.delays[delayName]
                 self.interpret_commands(self.cutsceneData["cond_commands"][delayName])
 
