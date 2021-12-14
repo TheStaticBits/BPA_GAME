@@ -246,6 +246,7 @@
                 "delay 120 namingEllipse"
             ], "namingEllipse": [
                 "text ellipse hide",
+                "text corlen display",
                 "text corlen move 118 155",
                 "text corlen change I think I'm going to call\nyou... Ellipse!",
                 "delay 100 greatIdeaRight?"
