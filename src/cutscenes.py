@@ -72,12 +72,20 @@ class Cutscenes(src.scene_base.SceneBase):
 
         self.rerender_tiles()
 
-        self.text = ""
-        self.showText = False
         self.textObject = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
-        self.textPos = [0, 0]
-        self.textWavX = 0
-        self.textColor = constants.WHITE
+
+        # Will contain dictionaries such as the defaultText dictionary
+        # These are created at the command "text create name"
+        # Where the "name" will be the key used to access the dictionary in self.texts dictionary
+        self.texts = {}
+
+        self.defaultText = {
+            "text": "",
+            "show": False,
+            "position": (0, 0),
+            "color": constants.WHITE,
+            "displayWaveX": 0
+        }
 
         # Variables for running commands for cutscenes
         self.timer = 0
@@ -100,10 +108,9 @@ class Cutscenes(src.scene_base.SceneBase):
 
 
     def interpret_commands(self, commands):
-        # Interprets a command in the form of [character, command, argument]
-        # For example, ["ellipse", "walk", "right"]
-        # And other formats
-        # Look inside data/cutscenes.json for more examples
+        # Interprets a command in the form of "ellipse walk right" (and others)
+        # The commands parameter is a list of these commands
+        # LOok inside data/cutscenes.json for more examples
         try:
             for command in commands:
                 comm = command.split(" ")
@@ -136,18 +143,23 @@ class Cutscenes(src.scene_base.SceneBase):
                             self.playerCanJump = False
 
                 elif comm[0] == "text":
-
-                    if comm[1] == "display":
-                        self.showText = True
-                    elif comm[1] == "hide":
-                        self.showText = False
+                    if comm[1] == "create":
+                        self.texts[comm[2]] = self.defaultText
                     
-                    elif comm[1] == "change":
-                        self.text = " ".join(comm[2:])
-                    elif comm[1] == "move":
-                        self.textPos = (int(comm[2]), int(comm[3])) 
-                    elif comm[1] == "color":
-                        self.textColor = (int(comm[2]), int(comm[3]), int(comm[4]))
+                    else:
+                        key = comm[1]
+
+                        if comm[2] == "display":
+                            self.texts[key]["show"] = True
+                        elif comm[2] == "hide":
+                            self.texts[key]["show"] = False
+                    
+                        elif comm[2] == "change":
+                            self.texts[key]["text"] = " ".join(comm[3:])
+                        elif comm[2] == "move":
+                            self.texts[key]["position"] = (int(comm[3]), int(comm[4])) 
+                        elif comm[2] == "color":
+                            self.texts[key]["color"] = (int(comm[3]), int(comm[4]), int(comm[5]))
                 
                 elif comm[0] == "run": # Runs a conditional
                     self.runningConditionals.append(comm[1])
@@ -331,18 +343,20 @@ class Cutscenes(src.scene_base.SceneBase):
             if obj != "player":
                 self.objects[obj]["obj"].render_with_check(self.room, 0, window)
         
-        if self.showText:
-            self.textWavX += 0.05
 
+        # Going through all text objects and rendering them
+        for text in self.texts.values():
+            if text["show"]:
+                text["displayWaveX"] += 0.05
 
-            textYOffset = math.sin(self.textWavX) * 5
-            text = self.text.split("\n")
-            
-            for count, t in enumerate(text):
-                renderText = self.textObject.render(t, False, self.textColor)
-                backgroundText = self.textObject.render(t, False, constants.BLACK)
+                textYOffset = math.sin(text["displayWaveX"]) * 5
+                fullText = self.text.split("\n")
 
-                position = (self.textPos[0] - renderText.get_width() / 2, self.textPos[1] + textYOffset + count * 12)
+                for count, t in enumerate(fullText):
+                    renderText = self.textObject.render(t, False, text["color"])
+                    backgroundText = self.textObject.render(t, False, constants.BLACK)
 
-                window.blit(backgroundText, (position[0] - 1, position[1] - 1))
-                window.blit(renderText, position)
+                    position = (text["position"][0] - renderText.get_width() / 2, text["position"][1] + textYOffset + count * 12)
+
+                    window.blit(backgroundText, (position[0] - 1, position[1] - 1))
+                    window.blit(renderText, position)
