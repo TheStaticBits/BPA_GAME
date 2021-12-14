@@ -144,7 +144,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
                 elif comm[0] == "text":
                     if comm[1] == "create":
-                        self.texts[comm[2]] = self.defaultText
+                        self.texts[comm[2]] = self.defaultText.copy()
                     
                     else:
                         key = comm[1]
@@ -171,7 +171,7 @@ class Cutscenes(src.scene_base.SceneBase):
                     return "end"
 
         except Exception as exc:
-            raise Exception(f"Error occured in command: {command}")
+            raise Exception(f"Error occured in command: {command}\nCommand: {exc}")
 
 
     def run_conditional(self, conditional):
@@ -246,7 +246,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 self.interpret_commands(self.cutsceneData["cond_commands"][delayName])
 
             else:
-                self.delays[delayName] -= 1
+                self.delays[delayName] -= 2
         
         # Moving objects
         for obj in self.objects:
@@ -350,7 +350,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 text["displayWaveX"] += 0.05
 
                 textYOffset = math.sin(text["displayWaveX"]) * 5
-                fullText = self.text.split("\n")
+                fullText = text["text"].split("\n")
 
                 for count, t in enumerate(fullText):
                     renderText = self.textObject.render(t, False, text["color"])
@@ -358,5 +358,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
                     position = (text["position"][0] - renderText.get_width() / 2, text["position"][1] + textYOffset + count * 12)
 
-                    window.blit(backgroundText, (position[0] - 1, position[1] - 1))
+                    for x in range(-1, 2):
+                        for y in range(-1, 2):
+                            window.blit(backgroundText, (position[0] + x, position[1] + y))
                     window.blit(renderText, position)
