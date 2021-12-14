@@ -246,7 +246,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 self.interpret_commands(self.cutsceneData["cond_commands"][delayName])
 
             else:
-                self.delays[delayName] -= 2
+                self.delays[delayName] -= 1
         
         # Moving objects
         for obj in self.objects:
@@ -354,11 +354,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
                 for count, t in enumerate(fullText):
                     renderText = self.textObject.render(t, False, text["color"])
-                    backgroundText = self.textObject.render(t, False, constants.BLACK)
 
                     position = (text["position"][0] - renderText.get_width() / 2, text["position"][1] + textYOffset + count * 12)
 
-                    for x in range(-1, 2):
-                        for y in range(-1, 2):
-                            window.blit(backgroundText, (position[0] + x, position[1] + y))
-                    window.blit(renderText, position)
+                    utility.draw_text_with_border(window, position, text["text"], self.textObject, text["color"], renderText = renderText)

@@ -156,6 +156,27 @@ def check_between(
     return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
 
 
+def draw_text_with_border(
+    window, 
+    position, 
+    text, 
+    textObj, 
+    color, 
+    renderText = None,
+    backgroundText = None
+    ):
+    if renderText is None:
+        renderText = textObj.render(text, False, color)
+    
+    if backgroundText is None:
+        bgText = textObj.render(text, False, constants.BLACK)
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            window.blit(bgText, (position[0] + x, position[1] + y))
+    window.blit(renderText, position)
+
+
 def play_music(musicName) -> bool: # Successful or not
     try:
         # Setting up music

@@ -162,12 +162,10 @@ class Playing(src.base_level.BaseLevel):
         
         # Drawing text if there is any in the room
         if self.text is not None:
-            window.blit(
-                self.textSurface, 
-                (
-                    self.fontX, 
-                    50 + math.sin(self.textWavX) * 5
-                )
+            position = (
+                self.fontX, 
+                50 + math.sin(self.textWavX) * 5
             )
+            utility.draw_text_with_border(window, position, self.text, self.font, constants.WHITE, renderText = self.textSurface)
         
         super().render_screen_shadow(window)
