@@ -45,11 +45,11 @@ wwwwwwwwwwwwwwwwwwwwwwww
 w         ww       wwwww
 w         ww       wwwww
           ww       wwwww
-    www   ww       wwwww
     www   vv       wwwww
+    www            wwwww
 wwwwwww            wwwww
-wwwwwww        ^^  wwwww
-wwwwwww        ww    www
+wwwwwww            wwwww
+wwwwwww        ^^    www
 wwwwwww        ww    www
 wwwwwww        ww       
 wwwwwww        ww       
@@ -64,8 +64,8 @@ www              wwww  w
 www              wwww  w
 www              wwww  w
 www              wwww  w
-www   ^^    ^^   wwww  w
-www   ww    ww         w
+www         ^^   wwww  w
+www   ^^    ww         w
       ww    ww         w
       ww    ww         w
       ww^^^^ww^        w
@@ -76,12 +76,12 @@ v^><wwwwwwwwwwwwwwwwwwww
                ww      w
            ww  ww      w
 ww         ww  ww      w
-www     ^  ww  ww      w
+www     ^  ww          w
 wwwwwwwww  ww       ^  w
 wwwwwwwww  ww     www   
 wvvvwww    ww  wwwwww   
 w   www    ww  wwwwww   
-w          ww  v cwww  w
+w          ww  v  www  w
 w          ww     www  w
 w          ww     wwwwww
 wwwwwwwwwwwww     wwwwww
@@ -309,9 +309,9 @@ music = DeepBelow
 v^><wddddddddddddddddddd
 ddddddddd               
 ddddddddd               
-d     <dd               
-d     <dd  j j j j  dddd
-dp    <dd           dddd
+d      dd               
+d      dd  j j j j  dddd
+dp     dd           dddd
 ddd    dd           dddd
 ddd    dd           dddd
 ddd    dd    ^^^    dddd
@@ -325,20 +325,20 @@ dddddddddddddddddddd><^v
    ddd      dddddd      
    ddd      dddddd      
    ddv      dddddd      
-d  dd       dddddd      
-d       dd  vddddv  dddd
-dddd    dd   vvvv   dddd
+d  dd       vddddv      
+d       dd   vvvv   dddd
 dddd    dd          dddd
-dddd j  dd  j    j  dddd
+dddd    dd          dddd
+dddd j  dd   j  j   dddd
 dddd    dd          dddd
 dddd    dd              
 dddd    dd              
 dddd    dd^        ^dddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-v^><djgddd              
-      dddd              
+dddddjgdddddddd         
       vv                
+                        
                     dddd
                     dddd
 ddd       ^   ^     dddd
