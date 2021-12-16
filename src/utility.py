@@ -11,7 +11,7 @@ import json
 import base64
 
 import src.constants as constants
-import src.animations
+import src.animation
 
 
 def lock_neg1_zero_pos1(number):
