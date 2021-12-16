@@ -1,10 +1,13 @@
 {
     "body": {
         "path": "res/characters/red_stare/idle.png",
-        "delay": 10
+        "delay": 10,
+        "frames": 4
+
     },
     "mouth": {
         "path": "res/characters/red_stare/mouth_idle.png",
-        "delay": 15
+        "delay": 15,
+        "frames": 4
     }
 }

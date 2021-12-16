@@ -4,6 +4,7 @@ import src.base_level
 import src.tile_renderer
 import src.belloq
 import src.big_bite
+import src.red_stare
 import src.constants as constants
 
 """
@@ -53,11 +54,14 @@ class BossLevel(src.base_level.BaseLevel):
 
         if boss == "Belloq":
             self.boss = src.belloq.Belloq()
-            self.bossName = "Belloq"
         
         elif boss == "Big Bite":
             self.boss = src.big_bite.BigBite()
-            self.bossName = "Big Bite"
+        
+        elif boss == "Red Stare":
+            self.boss = src.red_stare.RedStare()
+        
+        self.bossName = boss
 
         # The minimum tile offset that it can be 
         # so, when the player reaches the end of the level, it can't scroll off the screen
@@ -159,6 +163,12 @@ class BossLevel(src.base_level.BaseLevel):
                 self.player.get_mask(), 
                 self.player.rect.topleft, 
                 self.tilesOffset,
+                self.room
+            )
+        
+        elif self.bossName == "Red Stare":
+            dead = self.boss.update(
+                self.player,
                 self.room
             )
 

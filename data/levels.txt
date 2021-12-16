@@ -154,7 +154,7 @@ v^><w          w    wwww
 
 background = w
 music = Belloq
-boss = Belloq
+boss = Red Stare
 entities = none
 ------------------------
 wwwvv            wwwwwww

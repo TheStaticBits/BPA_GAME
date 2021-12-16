@@ -161,7 +161,7 @@ RED_STARE_ANIMATIONS = utility.load_json("res/characters/red_stare/animations.js
 RED_STARE_COOLDOWN = 50 # Frames between each time it pops up from below the screen to throw its mouth
 RED_STARE_POPUP_RANGE = 20 # Pixels in each direction from the player's X that it can popup at (it's random)
 RED_STARE_POPUP_SPEED = 1 # How many pixels it moves to popup per frame
-RED_STARE_MOUTH_OFFSET = (35, -5) # The offset of the mouth from the top left of the sprite
+RED_STARE_MOUTH_OFFSET = (23, -21) # The offset of the mouth from the top left of the sprite
 
 # Gravity beam data
 GRAV_BEAM_PATH = "res/misc/grav_beam.png"
