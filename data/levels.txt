@@ -518,14 +518,14 @@ dddddddddddddddddddddddd
 background = d
 music = DeepBelow
 ------------------------
-v^><dcjg                
-dddddddddddddddddddddddd
+v^><dcjgdddddddddd      
+dddddddddddddddddd      
 d               dd      
-d     ^^ g ^^ g dd      
-d  g  dd   dd   dd      
-d  p  dd   dd   dd     d
+d     ^^ g ^^ g dd     d
+d  g  dd   dd   dd     d
+d  p  dd   dd   dd   ddd
 dddddddd   dd   dd   ddd
-d c dddd   dd   dd   ddd
+d   dddd   dd   dd   ddd
 d     vv   dd   dd   ddd
 d          dd g dd   ddd 
 d          dd   dd   ddd
@@ -559,8 +559,8 @@ d                      d
 d                      d
 dddd^^                 d
 dddddddddd^^           d
-     ddddddddddddddd   d
-                     j d
+     ddddddddddddddd j d
+                       d
                        d
 ||||||||||||||||||||||||
 dddddddddddddddddddddddd                
@@ -578,3 +578,39 @@ d         dd        dddd
 d         dd        dddd
 dddddddddddddddddddddddd
 ------------------------
+
+background = w
+music = Darkened
+entities = none
+button 0, 17, 2 = 6
+------------------------
+ogj^><vooooooooooooooooo
+o                  o    
+o p              m o c  
+oooo   ooooooooooooooooo
+oooo   ooooooooooooooooo
+oooo   ooooooooooooooooo
+oooo   ooooooooo        
+oooo   ooooooooo        
+oooo   oooooo           
+oooo   oooooo      ooooo
+oooo   vvvvvv      ooooo
+oooo            oooooooo
+oooo            oooooooo
+oooooooooooooooooooooooo
+||||||||||||||||||||||||
+ooo                   oo
+        oo            oo
+        oooooooo      oo
+oooooooooo        j     
+oooooooooo              
+        oo              
+        oo j      oooooo
+        oo     ooooooooo
+        oo j   ooooooooo
+oooo    oo        oooooo
+oooo    oo        oooooo
+oooo    ooooo     oooooo
+oooo           ooooooooo
+oooooooooooooooooooooooo
+||||||||||||||||||||||||
