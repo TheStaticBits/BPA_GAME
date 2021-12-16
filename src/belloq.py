@@ -2,8 +2,8 @@ import pygame
 import random
 import math
 
-import src.animation
 import src.constants as constants
+import src.utility as utility
 
 """
 This class, lazer, manages the lazers that the Belloq fires.
@@ -156,10 +156,11 @@ class Belloq:
 
         # Creating a lazer pointing at the player
         self.lazers.append(Lazer(
-            math.atan2( # Finds the rotation needed to point at the player
-                playerCenter[1] - eyeballCenterScreenPos[1],
-                playerCenter[0] - eyeballCenterScreenPos[0]
-            ) + randomOffsetDegrees,
+            utility.angle_to(eyeballCenter, playerCenter) + randomOffsetDegrees,
+            # math.atan2( # Finds the rotation needed to point at the player
+            #     playerCenter[1] - eyeballCenterScreenPos[1],
+            #     playerCenter[0] - eyeballCenterScreenPos[0]
+            # ) + randomOffsetDegrees,
             eyeballCenter # Starting position
         ))
 

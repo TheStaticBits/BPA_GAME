@@ -3,6 +3,7 @@ This file contains functions for things such as saving and loading, loading spri
 """
 
 import pygame
+import math
 import sqlite3
 import os
 import win32api
@@ -27,6 +28,15 @@ def get_file(filePath) -> str:
         text = file.read()
     
     return text
+
+
+def angle_to(pos1, pos2):
+    xDiff = pos2[0] - pos1[0]
+    yDiff = pos2[1] - pos1[1]
+
+    angle = math.atan2(yDiff, xDiff)
+
+    return angle
 
 
 # Loads the levels from a given path
