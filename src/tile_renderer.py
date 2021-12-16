@@ -21,7 +21,7 @@ class TileRenderer:
         self.spikeTile = pygame.image.load(constants.SPIKE_PATH).convert_alpha()
 
         # If the tile being checked is on the screen and transparent, used when drawing edges to the screen
-        self.check_tile = lambda room, x, y: utility.check_between((x, y), (0, 0), constants.SCREEN_TILE_SIZE) and room[y][x] in constants.TRANSPARENT_TILES 
+        self.check_tile = lambda room, x, y: utility.check_between((x, y), (0, 0), constants.SCREEN_TILE_SIZE) and room[y][x] in constants.TRANSPARENT_TILES
     
 
     def check_tile_across_rooms(self, roomNumber, level, x, y):
@@ -138,8 +138,8 @@ class TileRenderer:
                         self.individualTileAnims[tilePos]["animationName"] = "default"
                     
                     else:
-                        removeTiles.append(tilePos)
-        
+                        removeTiles.append(tilePos) # Removing crystals after they're collected
+         
         for tilePos in removeTiles:
             del self.individualTileAnims[tilePos]
 
@@ -147,14 +147,28 @@ class TileRenderer:
     def change_tile_anim(self, tile, pos, animationName) -> bool:
         # Changes the tile's animation at a given position
         # Returns True if it wasn't already the animation it was changing it to
+        # Or the tile was a holdable tile
 
-        if self.individualTileAnims[pos]["animationName"] != animationName:
+        ifNewAnim = self.individualTileAnims[pos]["animationName"] != animationName
+        ifHoldable = self.individualTileAnims[pos]["tile"] in constants.HOLDABLE_TILES
+
+        if ifNewAnim or ifHoldable:
             self.individualTileAnims[pos]["animationName"] = "struck"
             self.individualTileAnims[pos]["animationObject"] = self.tileAnims[tile]["struck"].copy()
 
-            return True
+            if ifNewAnim:
+                return True
 
         return False
+    
+
+    def update_held_tiles(self, tile, position):
+        if tile in constants.HOLDABLE_TILES:
+            self.heldTiles.append((tile, position))
+
+
+    def reset_held_tiles(self):
+        self.heldTiles.clear()
 
 
     # This function renders the SOLID tiles onto a given surface
