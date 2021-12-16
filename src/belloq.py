@@ -147,8 +147,7 @@ class Belloq:
             screenPos[0] + constants.BELLOQ_LAZER_OFFSET[0],
             screenPos[1] + constants.BELLOQ_LAZER_OFFSET[1]
         )
-
-
+        
         randomOffsetDegrees = random.randrange(
             -constants.BELLOQ_LAZER_ACCURACY * 100, 
             constants.BELLOQ_LAZER_ACCURACY * 100
@@ -156,7 +155,7 @@ class Belloq:
 
         # Creating a lazer pointing at the player
         self.lazers.append(Lazer(
-            utility.angle_to(eyeballCenter, playerCenter) + randomOffsetDegrees,
+            utility.angle_to(eyeballCenterScreenPos, playerCenter) + randomOffsetDegrees,
             # math.atan2( # Finds the rotation needed to point at the player
             #     playerCenter[1] - eyeballCenterScreenPos[1],
             #     playerCenter[0] - eyeballCenterScreenPos[0]
