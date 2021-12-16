@@ -111,13 +111,7 @@ class Belloq:
         self.lazers = []
         self.cooldown = constants.BELLOQ_COOLDOWN
 
-        self.animation = {}
-        for name, data in constants.BELLOQ_ANIMATIONS.items():
-            self.animation[name] = src.animation.Animation(
-                data["delay"],
-                path = data["path"],
-                frames = data["frames"]
-            )
+        self.animation = utility.load_animations_dict(constants.BELLOQ_ANIMATIONS)
         self.currentAnim = "idle"
         self.reset()
 

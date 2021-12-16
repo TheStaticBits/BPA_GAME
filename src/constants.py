@@ -109,6 +109,15 @@ SPECIAL_TILES = (
     "m"  # Gravity button
 )
 
+# Other tiles
+SPIKE_PATH = "res/misc/spike.png"
+SPIKE_ROTATIONS = {
+    "^": 0,
+    "<": 90,
+    "v": 180,
+    ">": 270
+}
+
 # These tiles have animations
 TILES_WITH_ANIMATIONS = utility.load_json("res/tiles/animated/anim_dat.json")
 
@@ -143,14 +152,10 @@ BIG_BITE_TOTAL_FRAMES = 5
 BIG_BITE_DELAY = 15 # The delay between frames in the animation, in game frames (60 frames per second)
 BIG_BITE_ATTACK_DELAY = (5, 40) # The delay between each attack in frames. It is randomly chosen between these two numbers
 
-# Other tiles
-SPIKE_PATH = "res/misc/spike.png"
-SPIKE_ROTATIONS = {
-    "^": 0,
-    "<": 90,
-    "v": 180,
-    ">": 270
-}
+RED_STARE_ANIMATIONS = utility.load_json("res/characters/red_stare/animations.json")
+RED_STARE_COOLDOWN = 50 # Frames between each time it pops up from below the screen to throw its mouth
+RED_STARE_POPUP_RANGE = 20 # Pixels in each direction from the player's X that it can popup at (it's random)
+RED_STARE_POPUP_SPEED = 1 # How many pixels it moves to popup per frame
 
 # Gravity beam data
 GRAV_BEAM_PATH = "res/misc/grav_beam.png"

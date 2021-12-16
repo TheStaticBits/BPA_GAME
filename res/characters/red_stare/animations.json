@@ -1,0 +1,10 @@
+{
+    "body": {
+        "path": "res/characters/red_stare/idle.png",
+        "delay": 10
+    },
+    "mouth": {
+        "path": "res/characters/red_stare/mouth_idle.png",
+        "delay": 15
+    }
+}

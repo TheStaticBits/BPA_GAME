@@ -11,6 +11,7 @@ import json
 import base64
 
 import src.constants as constants
+import src.animations
 
 
 def lock_neg1_zero_pos1(number):
@@ -191,6 +192,17 @@ def play_music(musicName) -> bool: # Successful or not
         return False
 
     return True
+
+
+def load_animations_dict(animations) -> dict:
+    animation = {}
+    for name, data in animations.items():
+        animation[name] = src.animation.Animation(
+            data["delay"],
+            path = data["path"],
+            frames = data["frames"]
+        )
+    return animation
 
 
 """
