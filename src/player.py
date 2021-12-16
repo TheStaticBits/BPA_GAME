@@ -128,12 +128,8 @@ class Player(src.object_base.ObjectBase):
                     self.yVelocity = constants.JUMP_FORCE * self.gravityDir
                     return (tile, position)
                 
-            elif tile == "c" or tile == "g": # Crystal or gravity orb
+            elif tile in ("c", "g", "m"): # Crystal or gravity orb
                 return (tile, position)
-            
-            elif tile == "m": # Gravity Button
-                if inputs["shift"]:
-                    return (tile, position)
             
             elif tile in constants.SPIKE_ROTATIONS:
                 return "dead"
