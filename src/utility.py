@@ -54,7 +54,7 @@ def load_levels(levelPath) -> list:
         # Splits the levels into lists of rooms
         levels[level] = levels[level].split(constants.ROOM_SEPARATOR)
         
-        if level % 2 == 0: # If the level index is even, this means this is data, not a level
+        if level % 2 == 0: # If the level index is even, this means this is data for a level, not an actual level
             # Takes something like:
             # background = g
             # music = yes
@@ -65,10 +65,15 @@ def load_levels(levelPath) -> list:
             allDat = levels[level][0]
             allDat = allDat.split("\n")
 
-            for dataBit in allDat:
-                if dataBit != "":
-                    dataBit = dataBit.split(constants.ASSIGNMENT_SEPARATOR)
-                    levelData[int(level / 2)][dataBit[0]] = dataBit[1]
+            try:
+                for dataBit in allDat:
+                    if dataBit != "":
+                        dataBit = dataBit.split(constants.ASSIGNMENT_SEPARATOR)
+                        levelData[level // 2][dataBit[0]] = dataBit[1]
+            
+            except IndexError:
+                raise Exception(f"Level data is not formatted correctly\nIn level {level // 2}\n{allDat}")
+
 
         else:
             for room in range(len(levels[level])):
