@@ -83,6 +83,7 @@ class ObjectBase:
         tilePos, 
         tileRenderer,
         globalGravity,
+        gravityBeamYPos,
         offset = 0
         ):
 
@@ -117,7 +118,7 @@ class ObjectBase:
                     )
                 
                 else:
-                    image = tileRenderer.get_tile_anim_frame(tilePos, globalGravity)
+                    image = tileRenderer.get_tile_anim_frame(tilePos,  globalGravity, gravityBeamYPos)
                 
                 tileMask = pygame.mask.from_surface(image)
                 objMask = self.get_mask()
@@ -156,7 +157,7 @@ class ObjectBase:
         return False, False
 
 
-    def update_x_collision(self, room, roomNum, level, dirMoved, tileRenderer = None, globalGravity = None) -> dict:
+    def update_x_collision(self, room, roomNum, level, dirMoved, tileRenderer = None, globalGravity = None, gravityBeamYPos = None) -> dict:
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -170,7 +171,7 @@ class ObjectBase:
                 for x in range(0, 2):
                     tilePos = (self.currentTile[0] + x * dirMoved, self.currentTile[1] + y)
                     
-                    isSolid, result = self.check_tile(room, roomNum, level, tilePos, tileRenderer, globalGravity)
+                    isSolid, result = self.check_tile(room, roomNum, level, tilePos, tileRenderer, globalGravity, gravityBeamYPos)
                         
                     if isSolid:
                         if dirMoved == 1:
@@ -188,7 +189,16 @@ class ObjectBase:
         return specialTiles
 
     
-    def update_y_collision(self, room, roomNum, level, tileRenderer = None, globalGravity = None, modif=True) -> dict:
+    def update_y_collision(
+        self, 
+        room, 
+        roomNum, 
+        level, 
+        tileRenderer = None, 
+        globalGravity = None, 
+        gravityBeamYPos = None, 
+        modif = True
+        ) -> dict:
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -204,7 +214,7 @@ class ObjectBase:
                 for x in range(-1, 2):
                     tilePos = (self.currentTile[0] + x, self.currentTile[1] - y * dirMoved)
 
-                    isSolid, result = self.check_tile(room, roomNum, level, tilePos, tileRenderer, globalGravity)
+                    isSolid, result = self.check_tile(room, roomNum, level, tilePos, tileRenderer, globalGravity, gravityBeamYPos)
                     if isSolid:
                         if modif:
                             if dirMoved == 1:

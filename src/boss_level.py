@@ -178,7 +178,7 @@ class BossLevel(src.base_level.BaseLevel):
     
     def render(self, window):
         window.blit(self.tileSurfaces[self.playerRoomIndex], (self.tilesOffset, 0))
-        self.tileRenderers[self.playerRoomIndex].render_tiles_with_anims(window, self.gravityDir, offset = self.tilesOffset)
+        self.tileRenderers[self.playerRoomIndex].render_tiles_with_anims(window, self.gravityDir, self.gravBeamYPos, offset = self.tilesOffset)
 
         if self.playerRoomIndex == 0:
             otherRoomIndex = 1
@@ -188,7 +188,7 @@ class BossLevel(src.base_level.BaseLevel):
             otherRoomX = self.tilesOffset - constants.SCREEN_SIZE[0]
             
         window.blit(self.tileSurfaces[otherRoomIndex], (otherRoomX, 0))
-        self.tileRenderers[otherRoomIndex].render_tiles_with_anims(window, self.gravityDir, offset = otherRoomX)
+        self.tileRenderers[otherRoomIndex].render_tiles_with_anims(window, self.gravityDir, self.gravBeamYPos, offset = otherRoomX)
 
         entitiesSurf = self.empty_surf.copy()
         super().render(

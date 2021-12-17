@@ -151,7 +151,7 @@ class Playing(src.base_level.BaseLevel):
         window.blit(self.tileSurface, (0, 0))
 
         # Drawing tiles with animations
-        self.tileRenderer.render_tiles_with_anims(window, self.gravityDir)
+        self.tileRenderer.render_tiles_with_anims(window, self.gravityDir, self.gravBeamYPos)
 
         # Renders entities and gravity beam
         super().render(window)

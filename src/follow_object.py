@@ -35,12 +35,12 @@ class FollowObject(src.object_base.ObjectBase):
         prevY = self.rect.y
         self.update_y_pos()
 
-        result = super().update_y_collision(level[self.room], self.room, level, modif=False) # Uses yVelocity and checks if there is a tile below
+        result = super().update_y_collision(level[self.room], self.room, level, modif = False) # Uses yVelocity and checks if there is a tile below
 
         self.rect.y = prevY
         self.yVelocity = 0 # Reset yVelocity
         
-        return result is True # Return the result
+        return result is True # If there was a collision below the player
 
     
     def update(

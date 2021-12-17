@@ -87,7 +87,8 @@ class Player(src.object_base.ObjectBase):
             level,
             utility.lock_neg1_zero_pos1(self.xVelocity),
             tileRenderer, # Direction moved, locked to 1, 0, or -1
-            globalGravity
+            globalGravity,
+            gravBeamYPos
         )
 
         if self.dirMoved == 0:
@@ -117,7 +118,7 @@ class Player(src.object_base.ObjectBase):
 
         super().update_y_pos()
 
-        result = super().update_y_collision(room, roomNumber, level, tileRenderer, globalGravity)
+        result = super().update_y_collision(room, roomNumber, level, tileRenderer, globalGravity, gravBeamYPos)
         for tile, tilePos in result.items():
             specialTiles[tile] = tilePos
 
