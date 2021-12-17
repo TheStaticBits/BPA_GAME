@@ -151,6 +151,7 @@ class ObjectBase:
                     (tileX, tilePos[1]),
                     tileRenderer,
                     globalGravity,
+                    gravityBeamYPos,
                     offset = offs
                 )
     
