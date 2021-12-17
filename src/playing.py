@@ -79,9 +79,6 @@ class Playing(src.base_level.BaseLevel):
         try:
             if self.levelData[self.level][f"text {self.room}"] != "":
                 self.text = self.levelData[self.level][f"text {self.room}"]
-                self.textSurface = self.font.render(self.text, False, constants.WHITE)
-                
-                self.fontX = (constants.SCREEN_SIZE[0]) / 2 - self.textSurface.get_width() / 2
 
         except KeyError: # If that room doesn't have text 
             pass
@@ -156,15 +153,24 @@ class Playing(src.base_level.BaseLevel):
         # Renders entities and gravity beam
         super().render(window)
         super().render_grav_beam(window)
-
-        self.textWavX += 0.05
         
         # Drawing text if there is any in the room
         if self.text is not None:
-            position = (
-                self.fontX, 
-                50 + math.sin(self.textWavX) * 5
-            )
-            utility.draw_text_with_border(window, position, self.text, self.font, constants.WHITE, renderText = self.textSurface)
+            self.textWavX += 0.05
+            
+            tList = self.text.split("\n")
+
+            # Iterating through a list of the text rows,
+            # rendering for every row
+            for count, text in enumerate(tList):
+                # Getting the surface with text on it
+                renderText = self.textObject.render(text, False, constants.WHITE)
+
+                position = (
+                    constants.SCREEN_SIZE[0] / 2 - renderText.get_width() / 2, # Centering text on screen 
+                    50 + math.sin(self.textWavX) * 5 + count * 12
+                )
+
+                utility.draw_text_with_border(window, position, text, self.font, constants.WHITE, renderText = renderText)
         
         super().render_screen_shadow(window)
