@@ -15,8 +15,8 @@ import src.constants as constants
 import src.animation
 
 
+# Locks a number to 1, 0, or -1 and returns that number
 def lock_neg1_zero_pos1(number):
-    # Locks a number to 1, 0, or -1 and returns that number
     if number > 0: return 1
     elif number < 0: return -1
     else: return 0
@@ -30,6 +30,7 @@ def get_file(filePath) -> str:
     return text
 
 
+# Finds the angle from one point to the next in radians
 def angle_to(pos1, pos2):
     xDiff = pos2[0] - pos1[0]
     yDiff = pos2[1] - pos1[1]
@@ -75,7 +76,7 @@ def load_levels(levelPath) -> list:
                 raise Exception(f"Level data is not formatted correctly\nIn level {level // 2}\n{allDat}")
 
 
-        else:
+        else: # If it's the contents of the level
             for room in range(len(levels[level])):
                 # Splits the rooms into lists of rows
                 levels[level][room] = levels[level][room].split("\n")
@@ -158,12 +159,14 @@ def load_spritesheet(
     
     return result
     
-    
+
+# Opens a json file and returns the dictionary
 def load_json(filePath) -> dict:
     with open(filePath, "r") as file:
         return json.load(file)
 
 
+# Checks if a point is between the given minimum and maximums
 def check_between(
         vect,
         min,
@@ -172,14 +175,15 @@ def check_between(
     return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
 
 
+# Draws text on the screen with a black one pixel border
 def draw_text_with_border(
     window, 
     position, 
     text, 
-    textObj, 
+    textObj, # Font object used to render
     color, 
-    renderText = None,
-    backgroundText = None
+    renderText = None, # Surface with text (if already made)
+    backgroundText = None # Pygame Surface with the background text
     ):
     if renderText is None:
         renderText = textObj.render(text, False, color)
@@ -187,12 +191,17 @@ def draw_text_with_border(
     if backgroundText is None:
         bgText = textObj.render(text, False, constants.BLACK)
 
+    # Goes in a square around the text's position
+    # Drawing the background text, which is the border
     for x in range(-1, 2):
         for y in range(-1, 2):
             window.blit(bgText, (position[0] + x, position[1] + y))
+    
+    # Drawing normal text on screen above the background text
     window.blit(renderText, position)
 
 
+# Plays music from the music folder in res
 def play_music(musicName) -> bool: # Successful or not
     try:
         # Setting up music
@@ -202,13 +211,14 @@ def play_music(musicName) -> bool: # Successful or not
         # Starting music
         pygame.mixer.music.play(-1)
 
+        return True
+
     except pygame.error:
         # If there wasn't an audio device found, 
         return False
 
-    return True
 
-
+# Loads a dictionary with the animations, with the keys being the animation's name
 def load_animations_dict(animations) -> dict:
     animation = {}
     for name, data in animations.items():
@@ -242,6 +252,7 @@ def create_default_database():
     conn.close()
 
 
+# Loads the save file, creating a default save file if it doesn't exist
 def load_save() -> dict:
     if os.path.isfile(constants.SAVE_PATH): # If the file exists already
         result = {}

@@ -84,6 +84,8 @@ class TileRenderer:
 
 
     def setup_room_tile_anims(self, room):
+        # Sets up the animation objects for the given room's data
+
         self.individualTileAnims = {} # A dictionary of all INDIVIDUAL tile's animation objects
 
         # Iterating through all of the tiles in the current room
@@ -99,7 +101,9 @@ class TileRenderer:
                     }
 
 
-    def get_tile_anim_frame(self, position, globalGravity):
+    def get_tile_anim_frame(self, position, globalGravity) -> "pygame.Surface":
+        # Gets the frame that the tile is currently in
+        
         image = self.individualTileAnims[position]["animationObject"].get_frame()
 
         flip = position[1] >= constants.GRAV_BEAM_TILE_Y_POS
@@ -134,6 +138,7 @@ class TileRenderer:
             if not result: # If the animation finished playing
                 if anim["animationName"] != "default":
                     if anim["tile"] != "c":
+                        # If the tile's animation is not the default and it's not a crystal, reset it
                         self.individualTileAnims[tilePos]["animationObject"] = self.tileAnims[anim["tile"]]["default"].copy()
                         self.individualTileAnims[tilePos]["animationName"] = "default"
                     
@@ -160,15 +165,6 @@ class TileRenderer:
                 return True
 
         return False
-    
-
-    def update_held_tiles(self, tile, position):
-        if tile in constants.HOLDABLE_TILES:
-            self.heldTiles.append((tile, position))
-
-
-    def reset_held_tiles(self):
-        self.heldTiles.clear()
 
 
     # This function renders the SOLID tiles onto a given surface
