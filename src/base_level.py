@@ -134,9 +134,13 @@ class BaseLevel(src.scene_base.SceneBase):
         self.setup_player() # Resetting the player
         self.setup_entities(self.player.rect.topleft)
         self.gravityDir = 1 # Resetting gravity
-        self.gravityBeamYPos = constants.GRAV_BEAM_TILE_Y_POS
+        self.gravBeamYPos = constants.GRAV_BEAM_TILE_Y_POS
         self.pressedButton = ()
         self.currentCrystal = False
+
+        self.playerPositions.clear()
+        self.playerLevelAndRoom.clear()
+        self.playerFacing.clear()
 
 
     def check_entity_rendering(self):

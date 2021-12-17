@@ -105,7 +105,6 @@ class Playing(src.base_level.BaseLevel):
             self.load_room()
         
         elif result == "dead":
-            self.load_room()
             self.restart_level()
         
         elif result == "crystal":
