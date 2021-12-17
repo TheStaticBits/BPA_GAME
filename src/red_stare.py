@@ -56,8 +56,8 @@ class RedStare:
                 self.mouthPos[1] += math.sin(self.mouthDegree) * 5
 
                 # Testing to see if the mouth has moved past the target point
-                movedPastX = (self.mouthPastPointOffset[0] and self.mouthPos[0] > self.mouthGoTo[0]) or (not self.mouthPastPointOffset and self.mouthPos[0] < self.mouthGoTo[0])
-                movedPastY = (self.mouthPastPointOffset[1] and self.mouthPos[1] > self.mouthGoTo[1]) or (not self.mouthPastPointOffset and self.mouthPos[1] < self.mouthGoTo[1])
+                movedPastX = (self.mouthPastPointOffset[0] and self.mouthPos[0] > self.mouthGoTo[0]) or (not self.mouthPastPointOffset[0] and self.mouthPos[0] < self.mouthGoTo[0])
+                movedPastY = (self.mouthPastPointOffset[1] and self.mouthPos[1] > self.mouthGoTo[1]) or (not self.mouthPastPointOffset[0] and self.mouthPos[1] < self.mouthGoTo[1])
 
                 if movedPastX and movedPastY:
                     if not self.mouthGoingBack:
