@@ -160,15 +160,22 @@ class Loop(src.scene_base.SceneBase):
 
 
             if result is not None:
-                if result == "start":
-                    level = self.level
+                if result == "play":
+                    self.level = self.scenes["mainMenu"].lvlsIndex
                 
-                elif result == "play":
-                    level = self.scenes["mainMenu"].lvlsIndex
+                elif result == "newSave":
+                    if os.path.exists(constants.SAVE_PATH):
+                        os.remove(constants.SAVE_PATH)
+                        
+                    self.load_save()
+                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
 
-                self.switch_to_new_scene(level)
+                elif result == "help":
+                    # Potentially moves to a help level or a help cutscene
+                    pass
+
+                self.switch_to_new_scene(self.level)
                 self.update()
-                self.level = level
 
         
         elif self.scene == "pauseMenu":
@@ -195,17 +202,6 @@ class Loop(src.scene_base.SceneBase):
 
                     self.scenes["playing"].music_stopped()
                     self.scenes["bossLevel"].music_stopped()
-                
-                elif result == "newSave":
-                    if os.path.exists(constants.SAVE_PATH):
-                        os.remove(constants.SAVE_PATH)
-                        
-                    self.load_save()
-                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
-
-                elif result == "help":
-                    # Potentially moves to a help level or a help cutscene
-                    pass
         
         else:
             # Handles all "playing" scenes such as boss levels, cutscenes, and normal levels
