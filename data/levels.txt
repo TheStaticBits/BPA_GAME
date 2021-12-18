@@ -580,6 +580,56 @@ d         dd        dddd
 dddddddddddddddddddddddd
 ------------------------
 
+background = d
+music = Tunnels
+boss = Big Bite
+------------------------
+d><^v                   
+                        
+                        
+          p             
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+d><^v                   
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+d><^v                   
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+------------------------
+
 background = e
 music = Darkened
 button 0, 17, 2 = 6
@@ -899,3 +949,23 @@ e><^v
                         
                         
                         
+------------------------
+
+background = e
+music = Blank
+cutscene = Blank
+------------------------
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+eeeeeeeeeeeeeeeeeeeeeeee

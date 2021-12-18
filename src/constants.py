@@ -70,7 +70,7 @@ MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 
 # Default save (for the database)
 DEFAULT_SAVE = {
-    "levels": "00000000000000000000000000",
+    "levels": "000000000000000000000000000",
     "level": 0,
     "crystals": "00000000000000000"
 }
@@ -83,8 +83,8 @@ TILE_KEYS = {
     "o": "crystal",
     "s": "star",
     "d": "dirt",
-    "b": "blank",
-    "e": "darkness",
+    "e": "blank",
+    "b": "darkness",
     "l": "blue"
 }
 
