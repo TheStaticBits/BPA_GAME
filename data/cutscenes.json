@@ -403,12 +403,98 @@
     "Blank": {
         "start": {
             "player": {"pos": [0, 192]},
-            "corlen": {"pos": [384, 192], "room": 0},
-            "ellipse": {"pos": [384, 192], "room": 0}
+            "corlen": {"pos": [50, -50], "room": 0},
+            "ellipse": {"pos": [50, -50], "room": 0}
         },
         "time_commands": {
             "0": [
-                "player uncontrolled"
+                "player controlled",
+                "player jump not",
+                "run playerMoved"
+            ]
+        },
+        "conditionals": {
+            "playerMoved": "player x > 90",
+            "testIfFaded": "fade done",
+            "crystalsCollected": "crystals is True",
+            "crystalsNot": "crystals is False"
+        },
+        "cond_commands": {
+            "playerMoved": [
+                "player uncontrolled",
+                
+                "text create corlen",
+                "text corlen color 252 227 3",
+                "text corlen display",
+                "text corlen change Hey! Ellipse? Blue\nhuman? Where are you???",
+                "text corlen move 70 155",
+
+                "text create ellipse",
+                "text ellipse move 192 175",
+
+                "delay 140 corlenStopSpeaking"
+            ], "corlenStopSpeaking": [
+                "text corlen hide",
+                "fade 2 res/characters/ellipse/big_head.png",
+                "run testIfFaded"
+            ],
+
+            "testIfFaded": [
+                "run crystalsCollected once",
+                "run crystalsNot once"
+            ],
+
+            "crystalsCollected": [
+                "text ellipse display",
+                "text ellipse change Keep obtaining the crystals.",
+                "delay 140 secret"
+            ],
+            
+            "secret": [
+                "text ellipse change There is a secret you do not know.",
+                "delay 140 showYou"
+            ],
+
+            "crystalsNot": [
+                "text ellipse display",
+                "text ellipse change You do not understand.",
+                "delay 130 showYou"
+            ],
+
+            "showYou": [
+                "text ellipse change I shall show you",
+                "delay 140 backToNormal"
+            ], "backToNormal": [
+                "fade clear",
+                "text ellipse hide",
+                
+                "corlen teleport 50 192",
+                "corlen face right",
+
+                "ellipse teleport 340 192",
+                "ellipse face left",
+
+                "delay 70 corlenQuestion"
+            ], "corlenQuestion": [
+                "text corlen move 58 170",
+                "text corlen change Ellipse?",
+                "text corlen display",
+                "delay 100 anotherCorlenQuestion"
+            ], "anotherCorlenQuestion": [
+                "text corlen change What was that?",
+                "delay 120 ellipseLeave"
+            ], "ellipseLeave": [
+                "text corlen hide",
+                "ellipse walk right",
+                "delay 100 corlenDots"
+            ], "corlenDots": [
+                "text corlen change ...",
+                "text corlen display",
+                "delay 80 end"
+            ], "end": [
+                "text corlen hide",
+                "player controlled",
+                "player jump can"
             ]
         }
     }
