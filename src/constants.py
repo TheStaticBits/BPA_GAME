@@ -26,6 +26,8 @@ CRYSTAL_X_PATH = "res/misc/crystal_x.png"
 
 BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower buttons fills up when hovering a mouse over it.
 
+SCREEN_SHAKE_POWER = 5 # How intense screenshakes are (in cutscenes)
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)

@@ -1,4 +1,5 @@
 import pygame
+import random
 import math
 
 import src.scene_base
@@ -101,6 +102,9 @@ class Cutscenes(src.scene_base.SceneBase):
         self.runningConditionals = [] # These are conditionals that are being checked every frame
         self.onceConditionals = [] # Conditionals run once
         self.delays = {} 
+
+        self.screenShake = False 
+        self.screen = pygame.Surface(constants.SCREEN_SIZE) # Used for screen shaking
     
 
     def update_crystals(self, crystals):
@@ -151,10 +155,7 @@ class Cutscenes(src.scene_base.SceneBase):
                         self.objects["player"]["obj"].xVelocity = 0
                     
                     elif comm[1] == "jump":
-                        if comm[2] == "can":
-                            self.playerCanJump = True
-                        else:
-                            self.playerCanJump = False
+                        self.playerCanJump = (comm[2] == "can")
 
                 elif comm[0] == "text":
                     if comm[1] == "create":
@@ -196,6 +197,10 @@ class Cutscenes(src.scene_base.SceneBase):
                         self.fadeProgress = 0
                         self.fadeSpeed = comm[1]
                         self.fadeDone = False
+                
+                
+                elif comm[0] == "shake":
+                    self.screenShake = (comm[1] == "start")
 
                 
                 elif comm[0] == "run": # Runs a conditional
@@ -388,17 +393,17 @@ class Cutscenes(src.scene_base.SceneBase):
     def render(self, window):
         super().render()
 
-        window.blit(self.tiles, (0, 0))
+        self.screen.blit(self.tiles, (0, 0))
 
         if self.backgroundAnim is not None:
             if self.room == self.cutsceneData["backgroundAnim"]["room"]:
-                self.backgroundAnim.render(window, (0, 0))
+                self.backgroundAnim.render(self.screen, (0, 0))
         
-        self.objects["player"]["obj"].render(window)
+        self.objects["player"]["obj"].render(self.screen)
 
         for obj in self.objects:
             if obj != "player":
-                self.objects[obj]["obj"].render_with_check(self.room, 0, window)
+                self.objects[obj]["obj"].render_with_check(self.room, 0, self.screen)
         
 
         if self.fadeImage is not None:
@@ -409,7 +414,7 @@ class Cutscenes(src.scene_base.SceneBase):
                     self.fadeDone = True
             
             self.fadeImage.set_alpha(self.fadeProgress)
-            window.blit(self.fadeImage, (0, 0))
+            self.screen.blit(self.fadeImage, (0, 0))
         
 
         # Going through all text objects and rendering them
@@ -425,4 +430,16 @@ class Cutscenes(src.scene_base.SceneBase):
 
                     position = (text["position"][0] - renderText.get_width() / 2, text["position"][1] + textYOffset + count * 12)
 
-                    utility.draw_text_with_border(window, position, t, self.textObject, text["color"], renderText = renderText)
+                    utility.draw_text_with_border(self.screen, position, t, self.textObject, text["color"], renderText = renderText)
+        
+
+        if self.screenShake:
+            offset = (
+                random.randint(-constants.SCREEN_SHAKE_POWER, constants.SCREEN_SHAKE_POWER),
+                random.randint(-constants.SCREEN_SHAKE_POWER, constants.SCREEN_SHAKE_POWER)
+            )
+
+            window.blit(self.screen, offset)
+        
+        else:
+            window.blit(self.screen, (0, 0))
