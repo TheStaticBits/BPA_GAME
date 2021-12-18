@@ -13,12 +13,10 @@ class RedStare:
 
 
     def reset_mouth(self):
-        self.mouthPos = None
         self.mouthStart = None
         self.mouthGoTo = None
         self.mouthDegree = None
         self.mouthGoingBack = False
-        self.mouthPastPointOffset = None
         self.mouthMoving = False
 
     
@@ -26,6 +24,7 @@ class RedStare:
         self.poppedUp = False
         self.bodyPos = None
         self.cooldown = constants.RED_STARE_COOLDOWN
+        self.mouthPos = None
 
         self.reset_mouth()
 
@@ -49,34 +48,34 @@ class RedStare:
                         playerRoomX + randomOffset, 
                         constants.SCREEN_SIZE[1] - constants.RED_STARE_MOUTH_OFFSET[1]
                     ]
+                    
+                    self.mouthPos = [
+                        self.bodyPos[0] + constants.RED_STARE_MOUTH_OFFSET[0], 
+                        self.bodyPos[1] + constants.RED_STARE_MOUTH_OFFSET[1]
+                    ]
             
             else:
                 self.bodyPos[1] += constants.RED_STARE_POPUP_SPEED
+                self.mouthPos[1] += constants.RED_STARE_POPUP_SPEED
 
         else:
             if self.mouthMoving:
-                halfDis = utility.distance_to(self.mouthStart, self.mouthGoTo) / 2
+                totalDis = utility.distance_to(self.mouthStart, self.mouthGoTo)
                 currDis = utility.distance_to(self.mouthPos, self.mouthGoTo)
-                distFromHalf = abs(halfDis - currDis)
 
-                velocity = distFromHalf / 35 + 1.5
+                if currDis <= totalDis / 2:
+                    distFromEitherSide = currDis
+                
+                else:
+                    distFromEitherSide = totalDis - currDis
+                    distFromEitherSide = max(0, distFromEitherSide)
+
+                velocity = distFromEitherSide / 15 + constants.RED_STARE_MOUTH_SPEED
 
                 self.mouthPos[0] += math.cos(self.mouthDegree) * velocity
                 self.mouthPos[1] += math.sin(self.mouthDegree) * velocity
 
-                # Testing to see if the mouth has moved past the target point
-                movedPastX = (
-                    self.mouthPastPointOffset[0] and self.mouthPos[0] > self.mouthGoTo[0]
-                    or 
-                    not self.mouthPastPointOffset[0] and self.mouthPos[0] < self.mouthGoTo[0]
-                )
-                movedPastY = (
-                    self.mouthPastPointOffset[1] and self.mouthPos[1] > self.mouthGoTo[1]
-                    or
-                    not self.mouthPastPointOffset[1] and self.mouthPos[1] < self.mouthGoTo[1]
-                )
-
-                if movedPastX and movedPastY:
+                if round(currDis) == 0:
                     if not self.mouthGoingBack:
                         self.mouthGoingBack = True
 
@@ -85,31 +84,28 @@ class RedStare:
                             self.bodyPos[1] + constants.RED_STARE_MOUTH_OFFSET[1]
                         )
 
-                        self.mouthStart = self.mouthGoTo[:]
+                        self.mouthStart = self.mouthPos[:]
 
                         self.mouthDegree = utility.angle_to(self.mouthPos, self.mouthGoTo)
-
-                        self.mouthPastPointOffset = (
-                            self.mouthGoTo[0] > self.mouthPos[0],
-                            self.mouthGoTo[1] > self.mouthPos[1]
-                        )
                     
                     else:
                         self.reset_mouth()
+                        
                         self.poppedUp = False
                         self.cooldown = constants.RED_STARE_COOLDOWN
 
             else:
                 self.bodyPos[1] -= constants.RED_STARE_POPUP_SPEED
+                self.mouthPos[1] -= constants.RED_STARE_POPUP_SPEED
+
+                self.mouthPos = [
+                    self.bodyPos[0] + constants.RED_STARE_MOUTH_OFFSET[0], 
+                    self.bodyPos[1] + constants.RED_STARE_MOUTH_OFFSET[1]
+                ]
 
                 # If the body has fully appeared on screen
-                if self.bodyPos[1] <= constants.SCREEN_SIZE[1] - self.animations["body"].get_image_height() - constants.RED_STARE_MOUTH_OFFSET[1]:
+                if self.bodyPos[1] <= constants.SCREEN_SIZE[1] - self.animations["body"].get_image_height():
                     self.mouthMoving = True
-
-                    self.mouthPos = [
-                        self.bodyPos[0] + constants.RED_STARE_MOUTH_OFFSET[0], 
-                        self.bodyPos[1] + constants.RED_STARE_MOUTH_OFFSET[1]
-                    ]
 
                     self.mouthStart = self.mouthPos[:]
 
@@ -120,15 +116,10 @@ class RedStare:
                     )
 
                     self.mouthDegree = utility.angle_to(self.mouthPos, self.mouthGoTo)
-
-                    self.mouthPastPointOffset = (
-                        self.mouthGoTo[0] > self.mouthPos[0],
-                        self.mouthGoTo[1] > self.mouthPos[1]
-                    )
-        
+            
         if self.mouthPos is not None:
-            pScreenX = room * constants.SCREEN_SIZE[0] + player.rect.x + tilesOffset
-            bScreenX = room * constants.SCREEN_SIZE[0] + self.mouthPos[0] + tilesOffset
+            pScreenX = player.rect.x + tilesOffset
+            bScreenX = self.mouthPos[0] + tilesOffset - room * constants.SCREEN_SIZE[0]
 
             mask = pygame.mask.from_surface(self.animations["mouth"].get_frame())
             playerMask = player.get_mask()
@@ -140,7 +131,7 @@ class RedStare:
             )
             
             return collided
-        
+            
         return False
 
     
