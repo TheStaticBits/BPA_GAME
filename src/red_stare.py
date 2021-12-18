@@ -30,7 +30,7 @@ class RedStare:
         self.reset_mouth()
 
     
-    def update(self, player, room):
+    def update(self, player, room, tilesOffset):
         for anim in self.animations.values():
             anim.update()
 
@@ -55,8 +55,14 @@ class RedStare:
 
         else:
             if self.mouthMoving:
-                self.mouthPos[0] += math.cos(self.mouthDegree) * 5
-                self.mouthPos[1] += math.sin(self.mouthDegree) * 5
+                halfDis = utility.distance_to(self.mouthStart, self.mouthGoTo) / 2
+                currDis = utility.distance_to(self.mouthPos, self.mouthGoTo)
+                distFromHalf = abs(halfDis - currDis)
+
+                velocity = distFromHalf / 35 + 1.5
+
+                self.mouthPos[0] += math.cos(self.mouthDegree) * velocity
+                self.mouthPos[1] += math.sin(self.mouthDegree) * velocity
 
                 # Testing to see if the mouth has moved past the target point
                 movedPastX = (
@@ -120,12 +126,27 @@ class RedStare:
                         self.mouthGoTo[1] > self.mouthPos[1]
                     )
         
+        if self.mouthPos is not None:
+            pScreenX = room * constants.SCREEN_SIZE[0] + player.rect.x + tilesOffset
+            bScreenX = room * constants.SCREEN_SIZE[0] + self.mouthPos[0] + tilesOffset
+
+            mask = pygame.mask.from_surface(self.animations["mouth"].get_frame())
+            playerMask = player.get_mask()
+
+            collided = mask.overlap(
+                playerMask, 
+                (pScreenX - bScreenX, 
+                player.rect.y - self.mouthPos[1])
+            )
+            
+            return collided
+        
         return False
 
     
-    def render(self, window, tileOffset, room):
+    def render(self, window, tilesOffset, room):
         if self.bodyPos is not None:
-            offset = tileOffset - room * constants.SCREEN_SIZE[0]
+            offset = tilesOffset - room * constants.SCREEN_SIZE[0]
 
             self.animations["body"].render(
                 window, 

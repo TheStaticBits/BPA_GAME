@@ -169,7 +169,8 @@ class BossLevel(src.base_level.BaseLevel):
         elif self.bossName == "Red Stare":
             dead = self.boss.update(
                 self.player,
-                self.room
+                self.room,
+                self.tilesOffset
             )
 
         if dead:
