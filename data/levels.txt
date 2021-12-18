@@ -155,7 +155,7 @@ v^><w          w    wwww
 
 background = w
 music = Belloq
-boss = Red Stare
+boss = Belloq
 entities = none
 ------------------------
 wwwvv           wwwwwwww
@@ -959,3 +959,53 @@ cutscene = Blank
                         
                         
 eeeeeeeeeeeeeeeeeeeeeeee
+------------------------
+
+background = e
+music = Stairs
+boss = Red Stare
+------------------------
+e><^v                   
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+e><^v                   
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+e><^v                   
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
