@@ -21,7 +21,7 @@ ssssssssssssssssssssssss
 
 background = w
 music = ThereIsSomethingV2
-text 0 = Use W er UP te Jump
+text 0 = Use W or UP to Jump
 text 1 = Gravity pulls towards the gravity line
 text 2 = Press escape to open the pause menu
 text 3 = Your pull towards the line stays the same!
