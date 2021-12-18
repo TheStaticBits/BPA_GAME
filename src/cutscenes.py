@@ -1,4 +1,5 @@
 import pygame
+import random
 import math
 
 import src.scene_base
@@ -10,8 +11,12 @@ import src.animation
 import src.tile_renderer
 
 class Cutscenes(src.scene_base.SceneBase):
-    def __init__(self):
+    def __init__(self, removeCutscenes, crystals):
         super().__init__(__name__)
+
+        self.remove_cutscenes = removeCutscenes # Takes a level number and removes numbers with cutscenes
+        
+        self.crystals = crystals
 
         self.tileRenderer = src.tile_renderer.TileRenderer()
         
@@ -87,10 +92,23 @@ class Cutscenes(src.scene_base.SceneBase):
             "displayWaveX": 0
         }
 
+        self.fadeImage = None
+        self.fadeProgress = 0
+        self.fadeSpeed = 1
+        self.fadeDone = False
+
         # Variables for running commands for cutscenes
         self.timer = 0
         self.runningConditionals = [] # These are conditionals that are being checked every frame
+        self.onceConditionals = [] # Conditionals run once
         self.delays = {} 
+
+        self.screenShake = False 
+        self.screen = pygame.Surface(constants.SCREEN_SIZE) # Used for screen shaking
+    
+
+    def update_crystals(self, crystals):
+        self.crystals = crystals
 
 
     def restart_level(self):
@@ -137,10 +155,7 @@ class Cutscenes(src.scene_base.SceneBase):
                         self.objects["player"]["obj"].xVelocity = 0
                     
                     elif comm[1] == "jump":
-                        if comm[2] == "can":
-                            self.playerCanJump = True
-                        else:
-                            self.playerCanJump = False
+                        self.playerCanJump = (comm[2] == "can")
 
                 elif comm[0] == "text":
                     if comm[1] == "create":
@@ -161,8 +176,38 @@ class Cutscenes(src.scene_base.SceneBase):
                         elif comm[2] == "color":
                             self.texts[key]["color"] = (int(comm[3]), int(comm[4]), int(comm[5]))
                 
+
+                # The fade command fades an image slowly onto the screen until the transparency is 255
+                # Something like: fade speed path_to_image.png
+                # Or if it's a solid color: fade speed 255 255 255
+                # and for clearing an image: fade clear
+                elif comm[0] == "fade":
+                    if comm[1] == "clear":
+                        self.fadeImage = None
+                    
+                    else:
+                        if len(comm) == 3: # If it gives an image
+                            self.fadeImage = pygame.image.load(comm[2]).convert_alpha()
+                        
+                        elif len(comm) == 5: # If it gives a solid color
+                            rect = pygame.Rect(0, 0, constants.SCREEN_SIZE[0], constants.SCREEN_SIZE[1])
+                            self.fadeImage = pygame.Surface(constants.SCREEN_SIZE)
+                            pygame.draw.rect(self.fadeImage, (comm[2], comm[3], comm[4]), rect)
+                        
+                        self.fadeProgress = 0
+                        self.fadeSpeed = comm[1]
+                        self.fadeDone = False
+                
+                
+                elif comm[0] == "shake":
+                    self.screenShake = (comm[1] == "start")
+
+                
                 elif comm[0] == "run": # Runs a conditional
                     self.runningConditionals.append(comm[1])
+                    
+                    elif "once" in comm:
+                        self.onceConditionals.append(comm[1])
                 
                 elif comm[0] == "delay": # Starts a delay
                     self.delays[comm[2]] = int(comm[1])
@@ -193,17 +238,30 @@ class Cutscenes(src.scene_base.SceneBase):
                 
                 command = "".join(cond[2:])
 
-                check = eval(f"{checking} {command}")
+                return eval(f"{checking} {command}")
             
             # if the command is asking for a single variable
+            # Example: room > 2
             elif len(cond) == 3:
                 if cond[0] == "room":
-                    check = eval(f"{self.room} {cond[1]} {cond[2]}")
+                    return eval(f"{self.room} {cond[1]} {cond[2]}")
+                
+            elif cond == ["fade", "done"]:
+                return self.fadeDone
             
-            if check:
-                return True
+            elif cond[0] == "crystals":
+                levelWithoutCutscenes = self.remove_cutscenes(self.levelNum)
 
-            return False
+                result = True
+                for x in range(levelWithoutCutscenes):
+                    if not self.crystals[x]:
+                        result = False
+                        break
+                
+                command = " ".join(cond[1:])
+
+                return eval(f"{result} {command}")
+
 
         else:
             # Goes through and runs all conditionals in the list
@@ -238,6 +296,10 @@ class Cutscenes(src.scene_base.SceneBase):
                 result = self.interpret_commands(self.cutsceneData["cond_commands"][condName])
                 if result == "end":
                     return "end"
+            
+            elif condName in self.onceConditionals:
+                self.runningConditionals.remove(condName)
+                self.onceConditionals.remove(condName)
         
         # Updating delays
         for delayName in list(self.delays):
@@ -331,17 +393,28 @@ class Cutscenes(src.scene_base.SceneBase):
     def render(self, window):
         super().render()
 
-        window.blit(self.tiles, (0, 0))
+        self.screen.blit(self.tiles, (0, 0))
 
         if self.backgroundAnim is not None:
             if self.room == self.cutsceneData["backgroundAnim"]["room"]:
-                self.backgroundAnim.render(window, (0, 0))
+                self.backgroundAnim.render(self.screen, (0, 0))
         
-        self.objects["player"]["obj"].render(window)
+        self.objects["player"]["obj"].render(self.screen)
 
         for obj in self.objects:
             if obj != "player":
-                self.objects[obj]["obj"].render_with_check(self.room, 0, window)
+                self.objects[obj]["obj"].render_with_check(self.room, 0, self.screen)
+        
+
+        if self.fadeImage is not None:
+            if not self.fadeDone:
+                self.fadeProgress += self.fadeSpeed
+
+                if self.fadeProgress >= 255:
+                    self.fadeDone = True
+            
+            self.fadeImage.set_alpha(self.fadeProgress)
+            self.screen.blit(self.fadeImage, (0, 0))
         
 
         # Going through all text objects and rendering them
@@ -357,4 +430,16 @@ class Cutscenes(src.scene_base.SceneBase):
 
                     position = (text["position"][0] - renderText.get_width() / 2, text["position"][1] + textYOffset + count * 12)
 
-                    utility.draw_text_with_border(window, position, t, self.textObject, text["color"], renderText = renderText)
+                    utility.draw_text_with_border(self.screen, position, t, self.textObject, text["color"], renderText = renderText)
+        
+
+        if self.screenShake:
+            offset = (
+                random.randint(-constants.SCREEN_SHAKE_POWER, constants.SCREEN_SHAKE_POWER),
+                random.randint(-constants.SCREEN_SHAKE_POWER, constants.SCREEN_SHAKE_POWER)
+            )
+
+            window.blit(self.screen, offset)
+        
+        else:
+            window.blit(self.screen, (0, 0))

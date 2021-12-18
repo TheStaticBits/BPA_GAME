@@ -44,7 +44,7 @@ class Loop(src.scene_base.SceneBase):
             self.scenes = {
                 "playing": src.playing.Playing(),
                 "bossLevel": src.boss_level.BossLevel(),
-                "cutscene": src.cutscenes.Cutscenes(),
+                "cutscene": src.cutscenes.Cutscenes(self.remove_cutscenes, self.crystals),
                 "mainMenu": src.main_menu.MainMenu(save, self.levelsList, self.levelsCompleted, self.crystals, self.remove_cutscenes),
                 "pauseMenu": src.pause_menu.PauseMenu()
             }
@@ -169,6 +169,7 @@ class Loop(src.scene_base.SceneBase):
                         
                     self.load_save()
                     self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
+                    self.scenes["cutscene"].update_crystals(self.crystals)
 
                 elif result == "help":
                     # Potentially moves to a help level or a help cutscene

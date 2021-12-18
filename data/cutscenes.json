@@ -380,5 +380,18 @@
                 "player controlled"
             ]
         }
+    },
+
+    "Blank": {
+        "start": {
+            "player": {"pos": [0, 192]},
+            "corlen": {"pos": [384, 192], "room": 0},
+            "ellipse": {"pos": [384, 192], "room": 0}
+        },
+        "time_commands": {
+            "0": [
+                "player uncontrolled"
+            ]
+        }
     }
 }
