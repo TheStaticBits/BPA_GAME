@@ -14,6 +14,7 @@ class RedStare:
 
     def reset_mouth(self):
         self.mouthPos = None
+        self.mouthStart = None
         self.mouthGoTo = None
         self.mouthDegree = None
         self.mouthGoingBack = False
@@ -42,8 +43,10 @@ class RedStare:
 
                     playerRoomX = room * constants.SCREEN_SIZE[0] + player.rect.x
 
+                    randomOffset = random.randint(-constants.RED_STARE_POPUP_RANGE, constants.RED_STARE_POPUP_RANGE)
+
                     self.bodyPos = [
-                        playerRoomX + room * constants.SCREEN_SIZE[0], 
+                        playerRoomX + randomOffset, 
                         constants.SCREEN_SIZE[1] - constants.RED_STARE_MOUTH_OFFSET[1]
                     ]
             
@@ -56,8 +59,16 @@ class RedStare:
                 self.mouthPos[1] += math.sin(self.mouthDegree) * 5
 
                 # Testing to see if the mouth has moved past the target point
-                movedPastX = (self.mouthPastPointOffset[0] and self.mouthPos[0] > self.mouthGoTo[0]) or ((not self.mouthPastPointOffset[0]) and self.mouthPos[0] < self.mouthGoTo[0])
-                movedPastY = (self.mouthPastPointOffset[1] and self.mouthPos[1] > self.mouthGoTo[1]) or ((not self.mouthPastPointOffset[0]) and self.mouthPos[1] < self.mouthGoTo[1])
+                movedPastX = (
+                    self.mouthPastPointOffset[0] and self.mouthPos[0] > self.mouthGoTo[0]
+                    or 
+                    not self.mouthPastPointOffset[0] and self.mouthPos[0] < self.mouthGoTo[0]
+                )
+                movedPastY = (
+                    self.mouthPastPointOffset[1] and self.mouthPos[1] > self.mouthGoTo[1]
+                    or
+                    not self.mouthPastPointOffset[1] and self.mouthPos[1] < self.mouthGoTo[1]
+                )
 
                 if movedPastX and movedPastY:
                     if not self.mouthGoingBack:
@@ -67,6 +78,8 @@ class RedStare:
                             self.bodyPos[0] + constants.RED_STARE_MOUTH_OFFSET[0], 
                             self.bodyPos[1] + constants.RED_STARE_MOUTH_OFFSET[1]
                         )
+
+                        self.mouthStart = self.mouthGoTo[:]
 
                         self.mouthDegree = utility.angle_to(self.mouthPos, self.mouthGoTo)
 
@@ -92,9 +105,12 @@ class RedStare:
                         self.bodyPos[1] + constants.RED_STARE_MOUTH_OFFSET[1]
                     ]
 
+                    self.mouthStart = self.mouthPos[:]
+
+                    # Centers the mouth onto the player
                     self.mouthGoTo = (
-                        room * constants.SCREEN_SIZE[0] + player.rect.x,
-                        player.rect.y
+                        room * constants.SCREEN_SIZE[0] + player.rect.x + player.rect.width / 2 - self.animations["mouth"].get_image_width() / 2,
+                        player.rect.y + player.rect.height / 2 - self.animations["mouth"].get_image_height() / 2
                     )
 
                     self.mouthDegree = utility.angle_to(self.mouthPos, self.mouthGoTo)

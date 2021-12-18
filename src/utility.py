@@ -206,7 +206,7 @@ def play_music(musicName) -> bool: # Successful or not
     try:
         # Setting up music
         pygame.mixer.music.load(f"{constants.MUSIC_FOLDER}/{musicName}.wav")
-        pygame.mixer.music.set_volume(0.2)
+        pygame.mixer.music.set_volume(0)
         
         # Starting music
         pygame.mixer.music.play(-1)
