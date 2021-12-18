@@ -34,7 +34,7 @@ class RedStare:
             anim.update()
 
         if not self.poppedUp:
-            if self.bodyPos is None or self.bodyPos[1] > constants.SCREEN_SIZE[1]:
+            if self.bodyPos is None or self.bodyPos[1] > constants.SCREEN_SIZE[1] - constants.RED_STARE_MOUTH_OFFSET[1]:
                 self.cooldown -= 1
 
                 if self.cooldown <= 0:
@@ -43,8 +43,8 @@ class RedStare:
                     playerRoomX = room * constants.SCREEN_SIZE[0] + player.rect.x
 
                     self.bodyPos = [
-                        random.randint(-constants.RED_STARE_POPUP_RANGE, constants.RED_STARE_POPUP_RANGE) + playerRoomX + room * constants.SCREEN_SIZE[0], 
-                        constants.SCREEN_SIZE[1]
+                        playerRoomX + room * constants.SCREEN_SIZE[0], 
+                        constants.SCREEN_SIZE[1] - constants.RED_STARE_MOUTH_OFFSET[1]
                     ]
             
             else:
@@ -56,8 +56,8 @@ class RedStare:
                 self.mouthPos[1] += math.sin(self.mouthDegree) * 5
 
                 # Testing to see if the mouth has moved past the target point
-                movedPastX = (self.mouthPastPointOffset[0] and self.mouthPos[0] > self.mouthGoTo[0]) or (not self.mouthPastPointOffset[0] and self.mouthPos[0] < self.mouthGoTo[0])
-                movedPastY = (self.mouthPastPointOffset[1] and self.mouthPos[1] > self.mouthGoTo[1]) or (not self.mouthPastPointOffset[0] and self.mouthPos[1] < self.mouthGoTo[1])
+                movedPastX = (self.mouthPastPointOffset[0] and self.mouthPos[0] > self.mouthGoTo[0]) or ((not self.mouthPastPointOffset[0]) and self.mouthPos[0] < self.mouthGoTo[0])
+                movedPastY = (self.mouthPastPointOffset[1] and self.mouthPos[1] > self.mouthGoTo[1]) or ((not self.mouthPastPointOffset[0]) and self.mouthPos[1] < self.mouthGoTo[1])
 
                 if movedPastX and movedPastY:
                     if not self.mouthGoingBack:
@@ -84,7 +84,7 @@ class RedStare:
                 self.bodyPos[1] -= constants.RED_STARE_POPUP_SPEED
 
                 # If the body has fully appeared on screen
-                if self.bodyPos[1] <= constants.SCREEN_SIZE[1] - self.animations["body"].get_image_height():
+                if self.bodyPos[1] <= constants.SCREEN_SIZE[1] - self.animations["body"].get_image_height() - constants.RED_STARE_MOUTH_OFFSET[1]:
                     self.mouthMoving = True
 
                     self.mouthPos = [
