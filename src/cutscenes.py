@@ -147,6 +147,9 @@ class Cutscenes(src.scene_base.SceneBase):
                         self.objects[comm[0]]["obj"].rect.x = int(comm[2])
                         self.objects[comm[0]]["obj"].rect.y = int(comm[3])
                     
+                    elif comm[1] == "room":
+                        self.objects[comm[0]]["obj"].room = int(comm[2])
+                    
                     elif comm[1] == "controlled":
                         self.playerControlled = True
                     
@@ -195,7 +198,7 @@ class Cutscenes(src.scene_base.SceneBase):
                             pygame.draw.rect(self.fadeImage, (comm[2], comm[3], comm[4]), rect)
                         
                         self.fadeProgress = 0
-                        self.fadeSpeed = comm[1]
+                        self.fadeSpeed = int(comm[1])
                         self.fadeDone = False
                 
                 
@@ -240,11 +243,8 @@ class Cutscenes(src.scene_base.SceneBase):
 
                 return eval(f"{checking} {command}")
             
-            # if the command is asking for a single variable
-            # Example: room > 2
-            elif len(cond) == 3:
-                if cond[0] == "room":
-                    return eval(f"{self.room} {cond[1]} {cond[2]}")
+            if cond[0] == "room":
+                return eval(f"{self.room} {cond[1]} {cond[2]}")
                 
             elif cond == ["fade", "done"]:
                 return self.fadeDone
@@ -261,7 +261,10 @@ class Cutscenes(src.scene_base.SceneBase):
                 command = " ".join(cond[1:])
 
                 return eval(f"{result} {command}")
-
+            
+            else:
+                print("Error: Unknown conditional")
+                print(conditional)
 
         else:
             # Goes through and runs all conditionals in the list
