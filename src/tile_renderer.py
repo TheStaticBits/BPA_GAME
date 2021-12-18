@@ -51,14 +51,16 @@ class TileRenderer:
 
         for tileKey in constants.TILE_KEYS:
             # Setting the key to another dictionary with the individual parts of the tile image
+            tilePath = "res/tiles/solid/" + constants.TILE_KEYS[tileKey] + "/"
+
             self.tileKey[tileKey] = {
-                "tile": pygame.image.load(f"res/tiles/solid/{constants.TILE_KEYS[tileKey]}/tile.png").convert_alpha(),
-                "corner": pygame.image.load(f"res/tiles/solid/{constants.TILE_KEYS[tileKey]}/corner.png").convert_alpha(),
-                "edge": pygame.image.load(f"res/tiles/solid/{constants.TILE_KEYS[tileKey]}/edge.png").convert_alpha(),
+                "tile": pygame.image.load(tilePath + "/tile.png").convert_alpha(),
+                "corner": pygame.image.load(tilePath + "corner.png").convert_alpha(),
+                "edge": pygame.image.load(tilePath + "edge.png").convert_alpha(),
             }
 
-            if os.path.isfile(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png"): # If there is an inverse_corner image for the tile
-                self.tileKey[tileKey]["inverse_corner"] = pygame.image.load(f"res/tiles/{constants.TILE_KEYS[tileKey]}/inverse_corner.png").convert_alpha() # Load the inverse corner
+            if os.path.isfile(tilePath + "inverse_corner.png"): # If there is an inverse_corner image for the tile
+                self.tileKey[tileKey]["inverse_corner"] = pygame.image.load(tilePath + "inverse_corner.png").convert_alpha() # Load the inverse corner
             
             else: # If there isn't an inverse_corner needed
                 self.tileKey[tileKey]["inverse_corner"] = self.tileKey[tileKey]["corner"] # Sets the inverse_corner to the normal corner
@@ -105,11 +107,17 @@ class TileRenderer:
         # Gets the frame that the tile is currently in
         
         image = self.individualTileAnims[position]["animationObject"].get_frame()
+        tile = self.individualTileAnims[position]["tile"]
 
-        flip = position[1] >= gravBeamYPos
+        if tile != "m":
+            flip = position[1] >= gravBeamYPos
+        
+        else:
+            flip = position[1] >= constants.GRAV_BEAM_TILE_Y_POS
 
         # If the global gravity is reversed, also reverse the tile's image
-        if globalGravity == -1: flip = not flip
+        if globalGravity == -1: 
+            flip = not flip
 
         return pygame.transform.flip(image, False, flip)
 
@@ -238,41 +246,53 @@ class TileRenderer:
                     for offset in range(-1, 2):
                         for offset2 in range(-1, 2):
 
-                            if (
-                                # If the tile being checked is a corner and not an edge
-                                offset != 0 and offset2 != 0 and 
-                                # If the tile the corner is facing is on the screen
-                                utility.check_between((x + offset2, y + offset), (0, 0), constants.SCREEN_TILE_SIZE)
-                                ):
-                                    # These are for checks
+                            # If the tile being checked is a corner and not an edge
+                            if offset != 0 and offset2 != 0:
+                                edgeTile1 = False
+                                corner = False
+                                if 0 <= y + offset < constants.SCREEN_TILE_SIZE[1]:
+                                    # Checking the edge tile that requires the y to be on screen
                                     edgeTile1 = room[y + offset][x] in constants.TRANSPARENT_TILES # If the edge tile in one direction of the corner is transparent
-                                    edgeTile2 = room[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge tile in the other direction of the corner is transparent
-                                    if not edgeTile2 and level is not None:
-                                        edgeTile2 = self.check_tile_across_rooms(roomNumber, level, x + offset2, y)
+                                    
+                                    # Checking the tile that the corner is facing
+                                    if utility.check_between((x + offset2, y + offset), (0, 0), constants.SCREEN_TILE_SIZE):
+                                        corner = room[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner tile is transparent
 
-                                    corner = room[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner tile is transparent
-                                    if not corner and level is not None:
+                                    elif level is not None:
                                         corner = self.check_tile_across_rooms(roomNumber, level, x + offset2, y + offset)
 
-                                    selectedImage = None
+                                if utility.check_between((x + offset2, y), (0, 0), constants.SCREEN_TILE_SIZE):
+                                    edgeTile2 = room[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge tile in the other direction of the corner is transparent
+                                
+                                elif level is not None:
+                                    edgeTile2 = self.check_tile_across_rooms(roomNumber, level, x + offset2, y)
+                                
+                                else:
+                                    edgeTile2 = False
 
-                                    if edgeTile1 and edgeTile2:  # If both edges of the corner are transparent
-                                        selectedImage = self.tileKey[tile]["corner"]
+                                selectedImage = None
 
-                                    elif not edgeTile1 and not edgeTile2 and corner: # If both edges are not transparent and the corner is
-                                        selectedImage = self.tileKey[tile]["inverse_corner"]
-                                    
-                                    if selectedImage is not None:
-                                        image = pygame.transform.rotate(
-                                            selectedImage, 
-                                            -90 if (offset, offset2) == (-1, 1) else (45 * (offset + 1) + 45 * (offset2 + 1)) # Finds the degree of rotation based on the position of the corner
-                                        )
+                                if edgeTile1 and edgeTile2: # If both edges of the corner are transparent
+                                    selectedImage = self.tileKey[tile]["corner"]
 
-                                        surface.blit(
-                                            image,
-                                            (x * constants.TILE_SIZE[0] + (0 if offset2 == -1 else constants.TILE_SIZE[0] - image.get_width()), # Finds the X position of the corner image
-                                            y * constants.TILE_SIZE[1] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_height())) # Finds the y position of the corner image
-                                        )
+                                elif not edgeTile1 and not edgeTile2 and corner: # If both edges are not transparent and the corner is
+                                    selectedImage = self.tileKey[tile]["inverse_corner"]
+                                
+                                if selectedImage is not None:
+                                    image = pygame.transform.rotate(
+                                        selectedImage, 
+                                        -90 if (offset, offset2) == (-1, 1) else (45 * (offset + 1) + 45 * (offset2 + 1)) # Finds the degree of rotation based on the position of the corner
+                                    )
+
+                                    pos = (
+                                        # Finds the X position of the corner image
+                                        x * constants.TILE_SIZE[0] + (0 if offset2 == -1 else constants.TILE_SIZE[0] - image.get_width()),
+
+                                        # Finds the y position of the corner image
+                                        y * constants.TILE_SIZE[1] + (0 if offset == -1 else constants.TILE_SIZE[0] - image.get_height())
+                                    )
+
+                                    surface.blit(image, pos)
 
                 elif tile in constants.TRANSPARENT_TILES: # If the tile is transparent
                     # Transparent tiles also draw the background behind them, and may have special properties.

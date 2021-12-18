@@ -158,19 +158,20 @@ class Playing(src.base_level.BaseLevel):
         if self.text is not None:
             self.textWavX += 0.05
             
-            tList = self.text.split("\n")
+            tList = self.text.split("\\n")
 
             # Iterating through a list of the text rows,
             # rendering for every row
             for count, text in enumerate(tList):
                 # Getting the surface with text on it
-                renderText = self.textObject.render(text, False, constants.WHITE)
+                if text != "":
+                    renderText = self.font.render(text, False, constants.WHITE)
 
-                position = (
-                    constants.SCREEN_SIZE[0] / 2 - renderText.get_width() / 2, # Centering text on screen 
-                    50 + math.sin(self.textWavX) * 5 + count * 12
-                )
+                    position = (
+                        constants.SCREEN_SIZE[0] / 2 - renderText.get_width() / 2, # Centering text on screen 
+                        50 + math.sin(self.textWavX) * 5 + count * 12
+                    )
 
-                utility.draw_text_with_border(window, position, text, self.font, constants.WHITE, renderText = renderText)
+                    utility.draw_text_with_border(window, position, text, self.font, constants.WHITE, renderText = renderText)
         
         super().render_screen_shadow(window)

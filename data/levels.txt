@@ -21,22 +21,22 @@ ssssssssssssssssssssssss
 
 background = w
 music = ThereIsSomethingV2
-text 0 = Use W or UP to jump
+text 0 = Use W er UP te Jump
+text 1 = Gravity pulls towards the gravity line
+text 3 = Your pull towards the line stays the same!
 entities = none
-button 0, 5, 3 = 4
-button 0, 11, 10 = -8
 ------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
 w         wwwww        w
 w         wwwww        w
-w    m    wwwww         
+w         wwwww         
 w   www   wwwww   www   
 w p www   wwwww   www   
 wwwwwww   wwwww   wwwwww
 wwwwwww   wwwww   wwwwww
 wwwwwww   wwwww   wwwwww
 wwwwwww   wwwww   wwwwww
-wwwwwww    m      wwwwww
+wwwwwww           wwwwww
 wwwwwww           wwwwww
 wwwwwww           wwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
@@ -81,7 +81,7 @@ wwwwwwwww  ww       ^  w
 wwwwwwwww  ww     www   
 wvvvwww    ww  wwwwww   
 w   www    ww  wwwwww   
-w          ww  v  www  w
+w          ww  v cwww  w
 w          ww     www  w
 w          ww     wwwwww
 wwwwwwwwwwwww     wwwwww
@@ -178,7 +178,7 @@ w                      w
 w                www   w
 w           www  vvv   w
 w   wwwww   vvv        w
-<    www         ^^^   w
+     www         ^^^   w
      www    ^^^  www   w
      www    www  vvv    
      www    vvv         
@@ -453,6 +453,7 @@ dddddddddddddddddddddddd
 
 background = d
 music = DeepBelow
+text 0 = Touch gravity orbs to reverse\nthe effects of the gravity line!
 ------------------------
 dddddddddddddddddddddddd
 dvvv         ddddddddddd
@@ -579,41 +580,41 @@ d         dd        dddd
 dddddddddddddddddddddddd
 ------------------------
 
-background = o
+background = e
 music = Darkened
 button 0, 17, 2 = 6
 ------------------------
-ogj^><vooooooooooooooooo
-o                  o    
-o p              m o c  
-oooo   ooooooooooooooooo
-oooo   ooooooooooooooooo
-oooo   ooooooooooooooooo
-oooo   ooooooooo        
-oooo   ooooooooo        
-oooo   oooooo           
-oooo   oooooo      ooooo
-oooo   vvvvvv      ooooo
-oooo            oooooooo
-oooo            oooooooo
-oooooooooooooooooooooooo
+egj^><veeeeeeeeeeeeeeeee
+e                  e    
+e p              m e c  
+eeee   eeeeeeeeeeeeeeeee
+eeee   eeeeeeeeeeeeeeeee
+eeee   eeeeeeeeeeeeeeeee
+eeee   eeeeeeeee        
+eeee   eeeeeeeee        
+eeee   eeeeee           
+eeee   eeeeee      eeeee
+eeee   vvvvvv      eeeee
+eeee            eeeeeeee
+eeee            eeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-ooo                   oo
-        oo            oo
-        oooooooo      oo
-oooooooooo        j     
-oooooooooo              
-        oo              
-        oo j      oooooo
-        oo     ooooooooo
-        oo j   ooooooooo
-oooo    oo        oooooo
-oooo    oo        oooooo
-oooo    ooooo     oooooo
-oooo           ooooooooo
-oooooooooooooooooooooooo
+eee                   ee
+        ee            ee
+        eeeeeeee      ee
+eeeeeeeeee        j     
+eeeeeeeeee              
+        ee              
+        ee j      eeeeee
+        ee     eeeeeeeee
+        ee j   eeeeeeeee
+eeee    ee        eeeeee
+eeee    ee        eeeeee
+eeee    eeeee     eeeeee
+eeee           eeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -628,7 +629,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -644,10 +645,10 @@ o><^v
                         
 ------------------------
 
-background = o
+background = e
 music = Darkened
 ------------------------
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -662,7 +663,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -677,7 +678,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -692,7 +693,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -708,10 +709,10 @@ o><^v
                         
 ------------------------
 
-background = o
+background = e
 music = Darkened
 ------------------------
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -726,7 +727,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -741,7 +742,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -756,7 +757,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -772,10 +773,10 @@ o><^v
                         
 ------------------------
 
-background = o
+background = e
 music = Darkened
 ------------------------
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -790,7 +791,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -805,7 +806,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -820,7 +821,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -836,10 +837,10 @@ o><^v
                         
 ------------------------
 
-background = o
+background = e
 music = Darkened
 ------------------------
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -854,7 +855,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -869,7 +870,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         
@@ -884,7 +885,7 @@ o><^v
                         
                         
 ||||||||||||||||||||||||
-o><^v                   
+e><^v                   
                         
                         
                         

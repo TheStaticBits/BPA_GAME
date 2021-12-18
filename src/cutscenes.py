@@ -206,7 +206,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 elif comm[0] == "run": # Runs a conditional
                     self.runningConditionals.append(comm[1])
                     
-                    elif "once" in comm:
+                    if "once" in comm:
                         self.onceConditionals.append(comm[1])
                 
                 elif comm[0] == "delay": # Starts a delay
