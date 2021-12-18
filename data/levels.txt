@@ -111,8 +111,8 @@ v^><wwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
-wwwwwvvwwwwwwwwwvvwwwwww
-wwwww  wwwwwvvvv  wwwwww
+wwwwwwwwwwwwwwwwvvwwwwww
+wwwwwwwwwwwwvvvv  wwwwww
 wwwww             wwwwww
 wwwww                www
 wwwww       ^^^^     www
@@ -158,7 +158,7 @@ music = Belloq
 boss = Red Stare
 entities = none
 ------------------------
-wwwvv            wwwwwww
+wwwvv           wwwwwwww
 wwv               wwwwww
 wv                 wwwww
 w                  www  
@@ -179,7 +179,7 @@ w                      w
 w                www   w
 w           www  vvv   w
 w   wwwww   vvv        w
-     www         ^^^   w
+v    www         ^^^   w
      www    ^^^  www   w
      www    www  vvv    
      www    vvv         
@@ -251,11 +251,11 @@ d              d
 dp      j      v        
 ddddd              ddddd
 ddddd              ddddd
-ddddd^^^^^^^       ddddd
-dddddddddddd       ddddd
-dddddddddddd       ddddd
-dddddddddddd       ddddd
-dddddddddddd^^^^^^^ddddd
+ddddd^^^^^^        ddddd
+ddddddddddd        ddddd
+ddddddddddd        ddddd
+ddddddddddd        ddddd
+ddddddddddd^^^^^^^^ddddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
 v^><ddddddd       dddddd
@@ -311,7 +311,7 @@ v^><wddddddddddddddddddd
 ddddddddd               
 ddddddddd               
 d      dd               
-d      dd  j j j j  dddd
+d      dd  j  j  j  dddd
 dp     dd           dddd
 ddd    dd           dddd
 ddd    dd           dddd
@@ -665,35 +665,20 @@ eeee    eeeee     eeeeee
 eeee           eeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^vooooooooooooooooooo
+ooooooooooo         oooo
+ooooooooooo    oo g oooo
+               oo   oooo
+               oo   oooo
+              goo   oooo
+ooo j   j    oooo   oooo
+ooo   ^   ^  oooo   oooo
+ooo j o j ooooooo   oooo
+ooo   o   ooooooo   oooo
+ooo j o j ooooooo   oooo
+ooo   o   ooooooo   oooo
+ooo   o   ooooooo       
+ooooooooooooooooo       
 ------------------------
 
 background = e
@@ -760,10 +745,11 @@ e><^v
                         
 ------------------------
 
-background = e
+background = w
 music = Darkened
+entities = none
 ------------------------
-e><^v                   
+o><^v                   
                         
                         
                         
@@ -824,10 +810,11 @@ e><^v
                         
 ------------------------
 
-background = e
+background = w
 music = Darkened
+entities = none
 ------------------------
-e><^v                   
+o><^v                   
                         
                         
                         
@@ -888,10 +875,11 @@ e><^v
                         
 ------------------------
 
-background = e
+background = w
 music = Darkened
+entities = none
 ------------------------
-e><^v                   
+o><^v                   
                         
                         
                         
