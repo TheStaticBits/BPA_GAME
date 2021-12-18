@@ -665,39 +665,40 @@ eeee    eeeee     eeeeee
 eeee           eeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-o><^vooooooooooooooooooo
-ooooooooooo         oooo
-ooooooooooo    oo g oooo
-               oo   oooo
-               oo   oooo
-              goo   oooo
-ooo j   j    oooo   oooo
-ooo   ^   ^  oooo   oooo
-ooo j o j ooooooo   oooo
-ooo   o   ooooooo   oooo
-ooo j o j ooooooo   oooo
-ooo   o   ooooooo   oooo
-ooo   o   ooooooo       
-ooooooooooooooooo       
+e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeee         eeee
+eeeeeeeeeee    ee g eeee
+               ee   eeee
+               ee   eeee
+              gee   eeee
+eee j   j    eeee   eeee
+eee   ^   ^  eeee   eeee
+eee j e j eeeeeee   eeee
+eee   e   eeeeeee   eeee
+eee j e j eeeeeee   eeee
+eee   e   eeeeeee   eeee
+eee   e   eeeeeee       
+eeeeeeeeeeeeeeeee       
 ------------------------
 
-background = e
+background = w
 music = Darkened
+button 0, 15, 5 = -2
 ------------------------
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+e               ee      
+e               ee      
+e p             ee      
+e             m ee      
+eeeee   eeeeeeeeee      
+eeeee   eeeeevvvee  eeee
+eeeee          cee  eeee
+eeeee           ee  eeee
+eeeee   eeeee^^^ee  eeee
+eeeee   eeeeeeeeee  eeee
+eeeee               eeee
+eeeee               eeee
 ||||||||||||||||||||||||
 e><^v                   
                         
