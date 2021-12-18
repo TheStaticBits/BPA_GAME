@@ -328,7 +328,7 @@
         "start": {
             "player": {"pos": [0, 192]},
             "ellipse": {"pos": [0, 192], "room": 0},
-            "corlen": {"pos": [210, 192], "room": 0}
+            "corlen": {"pos": [0, 192], "room": 0}
         },
         "time_commands": {
             "0": [
@@ -342,8 +342,8 @@
             ]
         },
         "conditionals": {
-            "corlenStop": "corlen x < 60",
-            "ellipseStop": "ellipse x < 200"
+            "corlenStop": "corlen x > 60",
+            "ellipseStop": "ellipse x > 200"
         },
         "cond_commands": {
             "corlenStop": [
@@ -352,27 +352,31 @@
                 "text corlen color 252 227 3",
                 "text corlen display",
                 "text corlen change What is this place?",
+                "corlen walk still",
                 "delay 100 stopTalking"
-            ], "stopTalking": ["text hide"],
+            ], "stopTalking": ["text corlen hide"],
             
             "ellipseStop": [
+                "ellipse walk still",
                 "ellipse face right",
+                "text create ellipse",
+                "text ellipse change ...",
+                "text ellipse move 208 170",
+                "text ellipse color 255 255 255",
+                "text ellipse display",
                 "delay 20 ellipseLeft"
             ], "ellipseLeft": [
                 "ellipse face left",
                 "delay 20 ellipseRight"
             ], "ellipseRight": [
                 "ellipse face right",
-                "text create ellipse",
-                "text ellipse change ...",
-                "text ellipse move 208 170",
-                "text ellipse color 255 255",
                 "delay 20 ellipseSecondLeft"
             ], "ellipseSecondLeft": [
                 "ellipse face left",
                 "delay 20 ellipseSecondRight"
             ], "ellipseSecondRight": [
                 "ellipse face right",
+                "text ellipse hide",
                 "player controlled"
             ]
         }
