@@ -5,7 +5,8 @@ import src.utility as utility
 SAVE_PATH = "saves/save.db"
 EVENT_LOG_PATH = "saves/events.log"
 
-LOGO_PATH = "res/misc/CTM_logo.png"
+CTM_LOGO_PATH = "res/misc/CTM_logo.png" # Cognitive Thought Media (Company Logo)
+TIN_LOGO_PATH = "res/misc/TIN_logo.png" # There Is Nothing (Game Logo)
 
 FONT_PATH = "res/font/monogram.ttf"
 FONT_SIZE = 15
@@ -15,7 +16,6 @@ LEVELS_PATH = "data/levels.txt"
 CUTSCENE_DATA_PATH = "data/cutscenes.json"
 
 MAIN_MENU_LEVEL_PATH = "data/menu_level.txt"
-LOGO_PATH = "res/misc/logo.png"
 
 EMAIL_PWD_PATH = "data/emailpassword.txt"
 

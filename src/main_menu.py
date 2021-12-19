@@ -21,7 +21,7 @@ class MainMenu(src.scene_base.SceneBase):
         self.crystal_x = pygame.image.load(constants.CRYSTAL_X_PATH).convert_alpha()
 
         self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
-        self.logo = pygame.image.load(constants.LOGO_PATH).convert_alpha()
+        self.logo = pygame.image.load(constants.TIN_LOGO_PATH).convert_alpha()
 
         self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
 

@@ -37,8 +37,8 @@ class Loop(src.scene_base.SceneBase):
             self.window = src.window.Window()
 
             self.startupAnim = src.animation.Animation(
-                10, # Amount of frames between each frame of the animation
-                path = constants.LOGO_PATH, 
+                3, # Amount of frames between each frame of the animation
+                path = constants.CTM_LOGO_PATH, 
                 width = constants.SCREEN_SIZE[0]
             )
 
@@ -244,7 +244,7 @@ class Loop(src.scene_base.SceneBase):
         super().render()
 
         if self.scene == "startup":
-            self.startupAnim.render(self.window.miniWindow)
+            self.startupAnim.render(self.window.miniWindow, (0, 0))
 
         else:
             self.scenes[self.scene].render(self.window.miniWindow)

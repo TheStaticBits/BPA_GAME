@@ -34,7 +34,7 @@ class Button:
             # This image needs to have the contents of the button,
             # (what is displayed when the button is idling), as white
             # while the background should be black
-            self.image = image
+            self.image = pygame.image.load(imagePath).convert()
 
             self.rect = pygame.Rect((
                 centerX - self.image.get_width() / 2,

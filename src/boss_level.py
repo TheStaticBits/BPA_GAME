@@ -55,13 +55,13 @@ class BossLevel(src.base_level.BaseLevel):
         self.bosses = {}
 
         if "Belloq" in boss:
-            self.boss["Belloq"] = src.belloq.Belloq()
+            self.bosses["Belloq"] = src.belloq.Belloq()
         
         if "Big Bite" in boss:
-            self.boss["Big Bite"] = src.big_bite.BigBite()
+            self.bosses["Big Bite"] = src.big_bite.BigBite()
         
         if "Red Stare" in boss:
-            self.boss["Red Stare"] = src.red_stare.RedStare()
+            self.bosses["Red Stare"] = src.red_stare.RedStare()
 
         # The minimum tile offset that it can be 
         # so, when the player reaches the end of the level, it can't scroll off the screen
