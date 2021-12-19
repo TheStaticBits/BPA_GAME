@@ -23,7 +23,7 @@ class PauseMenu(src.scene_base.SceneBase):
                 constants.SCREEN_SIZE[0] / 2,
                 values[0],
                 fontObj = font,
-                text = "Resume",
+                text = values[1],
                 textOffset = 2
             )
 

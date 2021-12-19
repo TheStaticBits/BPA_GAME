@@ -187,23 +187,32 @@ def draw_text_with_border(
     text, 
     textObj, # Font object used to render
     color, 
+    borderWidth = 1,
     renderText = None, # Surface with text (if already made)
-    backgroundText = None # Pygame Surface with the background text
+    backgroundText = None, # Pygame Surface with the background text
+    alpha = None
     ):
     if renderText is None:
         renderText = textObj.render(text, False, color)
     
     if backgroundText is None:
         bgText = textObj.render(text, False, constants.BLACK)
+    
+    textSurf = pygame.Surface((renderText.get_width() + borderWidth * 2, renderText.get_height() + 2), flags = pygame.SRCALPHA) # Creates a surface for the text
 
     # Goes in a square around the text's position
     # Drawing the background text, which is the border
-    for x in range(-1, 2):
-        for y in range(-1, 2):
-            window.blit(bgText, (position[0] + x, position[1] + y))
+    for x in (0, borderWidth, borderWidth * 2):
+        for y in (0, borderWidth, borderWidth * 2):
+            textSurf.blit(bgText, (x, y))
     
     # Drawing normal text on screen above the background text
-    window.blit(renderText, position)
+    textSurf.blit(renderText, (borderWidth, borderWidth))
+
+    if alpha is not None:
+        textSurf.set_alpha(alpha)
+    
+    window.blit(textSurf, (position[0] - borderWidth, position[1] - borderWidth)) # Blits the text to the screen
 
 
 # Plays music from the music folder in res
@@ -211,7 +220,7 @@ def play_music(musicName) -> bool: # Successful or not
     try:
         # Setting up music
         pygame.mixer.music.load(f"{constants.MUSIC_FOLDER}/{musicName}.wav")
-        pygame.mixer.music.set_volume(0)
+        pygame.mixer.music.set_volume(0.2)
         
         # Starting music
         pygame.mixer.music.play(-1)

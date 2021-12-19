@@ -30,6 +30,9 @@ BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower buttons fills up 
 
 SCREEN_SHAKE_POWER = 5 # How intense screenshakes are (in cutscenes)
 
+POPUP_TEXT_DURATION = 60
+POPUP_TEXT_FADE_SPEED = 4
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)

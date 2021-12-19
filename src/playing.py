@@ -103,6 +103,7 @@ class Playing(src.base_level.BaseLevel):
         
         elif result == "dead":
             self.restart_level()
+            self.popup("You Died!")
         
         elif result == "crystal":
             return "crystal"
@@ -175,3 +176,4 @@ class Playing(src.base_level.BaseLevel):
                     utility.draw_text_with_border(window, position, text, self.font, constants.WHITE, renderText = renderText)
         
         super().render_screen_shadow(window)
+        super().render_popup(window)

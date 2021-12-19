@@ -124,6 +124,7 @@ class BossLevel(src.base_level.BaseLevel):
         
         elif playerState == "dead":
             self.restart_level()
+            self.popup("You Died!")
         
         elif playerState == "crystal":
             return "crystal"
@@ -207,3 +208,4 @@ class BossLevel(src.base_level.BaseLevel):
 
         super().render_grav_beam(window)
         super().render_screen_shadow(window)
+        super().render_popup(window)

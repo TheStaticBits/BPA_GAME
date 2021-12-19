@@ -165,6 +165,7 @@ class Loop(src.scene_base.SceneBase):
         if self.scene == "startup":
             if not self.startupAnim.update(): # If the startup finished
                 self.scene = "mainMenu"
+                del self.startupAnim
                 self.update()
         
         elif self.scene == "mainMenu":
@@ -256,11 +257,13 @@ class Loop(src.scene_base.SceneBase):
         if self.levelsList[level] == "Normal Level":
             self.scene = "playing"
             self.scenes["playing"].setup(level, self.crystals[self.remove_cutscenes(level)])
+            self.scenes["playing"].popup(f"Level {level + 1}")
             self.scenes["bossLevel"].music_stopped()
         
         elif self.levelsList[level] == "Boss Level":
             self.scene = "bossLevel"
             self.scenes["bossLevel"].setup(self.levelData[level]["boss"], level, self.crystals[self.remove_cutscenes(level)])
+            self.scenes["bossLevel"].popup(f"Level {level + 1}")
             self.scenes["playing"].music_stopped()
 
         elif self.levelsList[level] == "Cutscene":

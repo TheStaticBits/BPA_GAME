@@ -50,7 +50,16 @@ class BaseLevel(src.scene_base.SceneBase):
         self.gravityBeam.set_alpha(150) # Makes gravity beam transparent
 
         self.gravBeamYPos = constants.GRAV_BEAM_TILE_Y_POS
-        self.pressedButton = ()
+
+        # For managing one time presses
+        self.pressedButton = None
+
+        self.popupFont = pygame.font.Font(constants.FONT_PATH, 40)
+
+        self.popupText = None
+        self.popupRendered = None
+        self.popupTextTimer = constants.POPUP_TEXT_DURATION
+        self.popupTextAlpha = 255
 
 
     def start_music(self):
@@ -131,16 +140,28 @@ class BaseLevel(src.scene_base.SceneBase):
 
     def reset_all(self):
         self.room = 0 # Resetting the room number
-        self.setup_player() # Resetting the player
+        
+        self.setup_player()
         self.setup_entities(self.player.rect.topleft)
-        self.gravityDir = 1 # Resetting gravity
+        
+        self.gravityDir = 1 # Resetting gravity pull
         self.gravBeamYPos = constants.GRAV_BEAM_TILE_Y_POS
-        self.pressedButton = ()
+        self.pressedButton = None
+
+        self.popupText = None
+        
         self.currentCrystal = False
 
         self.playerPositions.clear()
         self.playerLevelAndRoom.clear()
         self.playerFacing.clear()
+    
+
+    def popup(self, text):
+        self.popupText = text
+        self.popupRendered = self.popupFont.render(text, False, constants.WHITE)
+        self.popupTextTimer = constants.POPUP_TEXT_DURATION
+        self.popupTextAlpha = 255
 
 
     def check_entity_rendering(self):
@@ -157,6 +178,17 @@ class BaseLevel(src.scene_base.SceneBase):
         playerSpawnOffset = 0, # Offset for when the player switches levels/rooms
         ):
         super().update()
+
+        # Updating the popup text if there is any
+        if self.popupText is not None:
+            if self.popupTextTimer > 0:
+                self.popupTextTimer -= 1
+            
+            else:
+                self.popupTextAlpha -= constants.POPUP_TEXT_FADE_SPEED
+
+                if self.popupTextAlpha <= 0:
+                    self.popupText = None
 
         """
         Updating Player
@@ -212,7 +244,7 @@ class BaseLevel(src.scene_base.SceneBase):
 
                     self.currentCrystal = True
                 
-                elif playerState[0] == "m": # Gravity Beam Button
+                elif playerState[0] == "m": # Gravity Line Button
                     # Changes the gravity beam position by a specified
                     # amount in the level data, in levels.txt
                     # Which is specified as:
@@ -279,16 +311,30 @@ class BaseLevel(src.scene_base.SceneBase):
         self.player.render(surface, offset = offset)
     
 
-    def render_grav_beam(self, window):
+    def render_grav_beam(self, surface):
         # Drawing gravity beam
         for x in range(constants.SCREEN_SIZE[0] // constants.GRAV_BEAM_WIDTH): # Goes through the center of the screen
             # Draws the gravity beam
             self.gravityBeam.render(
-                window, 
+                surface, 
                 (x * constants.GRAV_BEAM_WIDTH, 
                 (self.gravBeamYPos * constants.TILE_SIZE[1]) - (self.gravityBeam.images[0].get_height() / 2)) # Centers the beam
             )
     
+
+    def render_popup(self, surface):
+        if self.popupText is not None:
+            utility.draw_text_with_border(
+                surface,
+                (constants.SCREEN_SIZE[0] / 2 - self.popupRendered.get_width() / 2, 
+                 constants.SCREEN_SIZE[1] / 4 - self.popupRendered.get_height() / 2),
+                self.popupText,
+                self.popupFont,
+                constants.WHITE,
+                borderWidth = 2,
+                alpha = self.popupTextAlpha
+            )
     
-    def render_screen_shadow(self, window):
-        window.blit(self.screenShadow, (0, 0))
+    
+    def render_screen_shadow(self, surface):
+        surface.blit(self.screenShadow, (0, 0))
