@@ -41,7 +41,7 @@ class Loop(src.scene_base.SceneBase):
                 path = constants.CTM_LOGO_PATH, 
                 width = constants.SCREEN_SIZE[0]
             )
-            pygame.mixer.Sound("res/sound/intro.wav").play()
+            self.startupSound = pygame.mixer.Sound("res/sound/intro.wav")
 
             self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
             self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
@@ -113,6 +113,8 @@ class Loop(src.scene_base.SceneBase):
             # Starting FPS counter
             framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
             framerate.start()
+
+            self.startupSound.play()
 
             try:
                 while not self.window.closeWindow:
@@ -230,8 +232,13 @@ class Loop(src.scene_base.SceneBase):
                 self.switch_to_new_scene(self.level)
 
 
-        if self.scenes["pauseMenu"].check_for_pause(self.scene, self.window.inputs):
-            if self.scene != "pauseMenu" and self.scene != "mainMenu":
+        if self.scene not in ("startup", "pauseMenu", "mainMenu"):
+            if self.scenes["pauseMenu"].check_for_pause(
+                self.scene, 
+                self.window.inputs, 
+                self.window.mousePos, 
+                self.window.mousePressed
+                ):
                 self.prevScene = self.scene
 
                 self.scenes[self.scene].render(self.window.miniWindow)
@@ -249,6 +256,9 @@ class Loop(src.scene_base.SceneBase):
 
         else:
             self.scenes[self.scene].render(self.window.miniWindow)
+
+            if self.scene not in ("mainMenu", "pauseMenu"):
+                self.scenes["pauseMenu"].render_pause_button(self.window.miniWindow)
 
         return self.window.miniWindow
 

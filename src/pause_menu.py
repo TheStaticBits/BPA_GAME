@@ -26,12 +26,26 @@ class PauseMenu(src.scene_base.SceneBase):
                 text = values[1],
                 textOffset = 2
             )
+        
+        self.pauseButton = src.button.Button(
+            8, 0,
+            imagePath = constants.PAUSE_BUTTON_PATH,
+        )
 
         self.background = None
     
 
-    def check_for_pause(self, scene, inputs) -> bool:
-        return inputs["esc"] and scene in ("playing", "bossLevel", "cutscene")
+    def render_pause_button(self, window):
+        self.pauseButton.render(window)
+
+
+    def check_for_pause(self, scene, inputs, mousePos, mouseInputs) -> bool:
+        if inputs["esc"] and scene:
+            return True
+        
+        else:
+            if self.pauseButton.update(mousePos, mouseInputs):
+                return True
 
     
     def update_background(self, background):

@@ -1,4 +1,5 @@
 import pygame
+from pygame import pixelarray
 
 import src.constants as constants
 
@@ -79,7 +80,7 @@ class Button:
         if round(self.highlightYPos) != 0:
 
             topHalf = pygame.Surface((self.rect.width, self.rect.height - self.highlightYPos))
-            highlighted = pygame.Surface((self.rect.width, self.highlightYPos))
+            highlighted = pygame.Surface((self.rect.width, self.highlightYPos), flags = pygame.SRCALPHA)
 
             if self.isText:
                 topHalf.blit(self.fontRendered, (self.textOffset, 0))
@@ -95,15 +96,18 @@ class Button:
                 topHalf.blit(self.image, (0, 0))
                 topHalf.set_colorkey(constants.BLACK)
 
-                flippedImg = self.image.copy()
-                flippedImg.set_colorkey(constants.WHITE)
+                noWhite = self.image.copy()
+                noWhite.set_colorkey(constants.WHITE)
 
-                # Turn the black background to white
-                pixelArr = pygame.PixelArray(flippedImg)
+                reversed = pygame.Surface(noWhite.get_size(), flags = pygame.SRCALPHA)
+                reversed.blit(noWhite, (0, 0))
+
+                # Turns the black background to white
+                pixelArr = pygame.PixelArray(reversed)
                 pixelArr.replace(constants.BLACK, constants.WHITE)
-                pixelArr.close()
+                del pixelArr
 
-                self.highlighted.blit(flippedImg, (0, -(self.recct.height - self.highlightedYPos)))
+                highlighted.blit(reversed, (0, -(self.rect.height - self.highlightYPos)))
                 
 
             window.blit(topHalf, self.rect.topleft)

@@ -26,6 +26,8 @@ SCREEN_SHADOW_PATH = "res/misc/shadow.png"
 CRYSTAL_CHECK_PATH = "res/misc/crystal_check.png"
 CRYSTAL_X_PATH = "res/misc/crystal_x.png"
 
+PAUSE_BUTTON_PATH = "res/misc/pause_button.png"
+
 BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower buttons fills up when hovering a mouse over it.
 
 SCREEN_SHAKE_POWER = 3 # How intense screenshakes are (in cutscenes)

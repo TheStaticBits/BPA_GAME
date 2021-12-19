@@ -239,7 +239,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 elif cond[1] == "room":
                     checking = checking.room
                 
-                command = "".join(cond[2:])
+                command = " ".join(cond[2:])
 
                 return eval(f"{checking} {command}")
             
@@ -312,7 +312,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
             else:
                 self.delays[delayName] -= 1
-        
+
         # Moving objects
         for obj in self.objects:
             object = self.objects[obj]["obj"]
