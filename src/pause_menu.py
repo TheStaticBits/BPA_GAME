@@ -11,31 +11,21 @@ class PauseMenu(src.scene_base.SceneBase):
         font = pygame.font.Font(constants.FONT_PATH, 25)
         self.logo = pygame.image.load(constants.LOGO_PATH).convert_alpha()
 
-        self.buttons = {
-            "resume": src.button.Button(
-                constants.SCREEN_SIZE[0] / 2,
-                120,
-                font,
-                "Resume",
-                textOffset = 2
-            ),
+        buttons = {
+            "resume": (120, "Resume"),
+            "restart": (150, "Restart Level"),
+            "mainMenu": (180, "Main Menu")
+        }
 
-            "restart": src.button.Button(
+        self.buttons = {}
+        for name, values in buttons.items():
+            self.buttons[name] = src.button.Button(
                 constants.SCREEN_SIZE[0] / 2,
-                150,
-                font,
-                "Restart Level",
-                textOffset = 2
-            ),
-
-            "mainMenu": src.button.Button(
-                constants.SCREEN_SIZE[0] / 2,
-                180,
-                font,
-                "Main Menu",
+                values[0],
+                fontObj = font,
+                text = "Resume",
                 textOffset = 2
             )
-        }
 
         self.background = None
     

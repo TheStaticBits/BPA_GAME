@@ -46,14 +46,15 @@ class MainMenu(src.scene_base.SceneBase):
             "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
         }
 
+        # Populating the self.buttons dict with buttons created from the data in the buttons variable
         fontObj = pygame.font.Font(constants.FONT_PATH, 30)
         self.buttons = {}
         for key, value in buttons.items():
             self.buttons[key] = src.button.Button(
                 value[0],
                 value[1],
-                fontObj,
-                value[2],
+                fontObj = fontObj,
+                text = value[2],
                 textOffset = 2
             )
 
