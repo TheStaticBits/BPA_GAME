@@ -5,6 +5,8 @@ import src.utility as utility
 SAVE_PATH = "saves/save.db"
 EVENT_LOG_PATH = "saves/events.log"
 
+LOGO_PATH = "res/misc/CTM_logo.png"
+
 FONT_PATH = "res/font/monogram.ttf"
 FONT_SIZE = 15
 
