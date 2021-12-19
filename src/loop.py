@@ -41,6 +41,7 @@ class Loop(src.scene_base.SceneBase):
                 path = constants.CTM_LOGO_PATH, 
                 width = constants.SCREEN_SIZE[0]
             )
+            pygame.mixer.Sound("res/sound/intro.wav").play()
 
             self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
             self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
@@ -57,8 +58,6 @@ class Loop(src.scene_base.SceneBase):
             }
 
             self.prevScene = self.scene # For the pause menu resuming
-
-            self.scenes["mainMenu"].start_music()
         
         except Exception:
             err = traceback.format_exc()
@@ -165,6 +164,7 @@ class Loop(src.scene_base.SceneBase):
         if self.scene == "startup":
             if not self.startupAnim.update(): # If the startup finished
                 self.scene = "mainMenu"
+                self.scenes["mainMenu"].start_music()
                 del self.startupAnim
                 self.update()
         
