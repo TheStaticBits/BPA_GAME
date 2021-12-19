@@ -9,6 +9,7 @@ import src.playing
 import src.utility as utility
 import src.scene_base
 import src.constants as constants
+import src.animation
 import src.tile_renderer
 import src.cutscenes
 import src.boss_level
@@ -28,12 +29,18 @@ class Loop(src.scene_base.SceneBase):
         # Initializes all of the classes, with error handling.
         super().__init__(__name__)
 
-        self.scene = "mainMenu"
+        self.scene = "startup"
         self.framerate = 0
         self.errorSettingUp = False
 
         try:
             self.window = src.window.Window()
+
+            self.startupAnim = src.animation.Animation(
+                10, # Amount of frames between each frame of the animation
+                path = constants.LOGO_PATH, 
+                width = constants.SCREEN_SIZE[0]
+            )
 
             self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
             self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
@@ -154,8 +161,13 @@ class Loop(src.scene_base.SceneBase):
         super().update() # Logging
 
         self.window.update_inputs()
+
+        if self.scene == "startup":
+            if not self.startupAnim.update(): # If the startup finished
+                self.scene = "mainMenu"
+                self.update()
         
-        if self.scene == "mainMenu":
+        elif self.scene == "mainMenu":
             result = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
 
 
@@ -231,7 +243,11 @@ class Loop(src.scene_base.SceneBase):
         # This method renders all objects, based on the current scene 
         super().render()
 
-        self.scenes[self.scene].render(self.window.miniWindow)
+        if self.scene == "startup":
+            self.startupAnim.render(self.window.miniWindow)
+
+        else:
+            self.scenes[self.scene].render(self.window.miniWindow)
 
         return self.window.miniWindow
 
