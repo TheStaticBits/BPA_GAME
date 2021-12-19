@@ -52,16 +52,16 @@ class BossLevel(src.base_level.BaseLevel):
         self.load_rooms()
         super().start_music()
 
-        if boss == "Belloq":
-            self.boss = src.belloq.Belloq()
+        self.bosses = {}
+
+        if "Belloq" in boss:
+            self.boss["Belloq"] = src.belloq.Belloq()
         
-        elif boss == "Big Bite":
-            self.boss = src.big_bite.BigBite()
+        if "Big Bite" in boss:
+            self.boss["Big Bite"] = src.big_bite.BigBite()
         
-        elif boss == "Red Stare":
-            self.boss = src.red_stare.RedStare()
-        
-        self.bossName = boss
+        if "Red Stare" in boss:
+            self.boss["Red Stare"] = src.red_stare.RedStare()
 
         # The minimum tile offset that it can be 
         # so, when the player reaches the end of the level, it can't scroll off the screen
@@ -73,7 +73,8 @@ class BossLevel(src.base_level.BaseLevel):
         if self.currentCrystal: super().reset_crystal(self.level)
 
         super().reset_all()
-        self.boss.reset()
+        for boss in self.bosses.values():
+            boss.reset()
         self.playerRoomIndex = 0
         self.room = 0
         self.load_rooms()
@@ -150,31 +151,33 @@ class BossLevel(src.base_level.BaseLevel):
         for tr in self.tileRenderers:
             tr.update_tiles_with_anims() # Update any tiles that have animations
         
-        if self.bossName == "Belloq":
-            dead = self.boss.update(
-                self.player, 
-                self.room, 
-                len(self.levels[self.level]), 
-                self.tilesOffset
-            )
+        for name, boss in self.bosses.items():
+            if name == "Belloq":
+                dead = boss.update(
+                    self.player, 
+                    self.room, 
+                    len(self.levels[self.level]), 
+                    self.tilesOffset
+                )
 
-        elif self.bossName == "Big Bite":
-            dead = self.boss.update(
-                self.player.get_mask(), 
-                self.player.rect.topleft, 
-                self.tilesOffset,
-                self.room
-            )
-        
-        elif self.bossName == "Red Stare":
-            dead = self.boss.update(
-                self.player,
-                self.room,
-                self.tilesOffset
-            )
+            elif name == "Big Bite":
+                dead = boss.update(
+                    self.player.get_mask(), 
+                    self.player.rect.topleft, 
+                    self.tilesOffset,
+                    self.room
+                )
+            
+            elif name == "Red Stare":
+                dead = boss.update(
+                    self.player,
+                    self.room,
+                    self.tilesOffset
+                )
 
-        if dead:
-            self.restart_level()
+            if dead: 
+                self.restart_level()
+                break
     
     
     def render(self, window):
@@ -199,7 +202,8 @@ class BossLevel(src.base_level.BaseLevel):
         )
         window.blit(entitiesSurf, (0, 0))
 
-        self.boss.render(window, self.tilesOffset, self.room)
+        for boss in self.bosses.values():
+            boss.render(window, self.tilesOffset, self.room)
 
         super().render_grav_beam(window)
         super().render_screen_shadow(window)
