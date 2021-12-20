@@ -733,7 +733,7 @@
             ], "somethingAhead": [
                 "corlen face left",
                 "text corlen move 296 107",
-                "text corlen change There's something, or\nseveral somethings up ahead",
+                "text corlen change There's something, or\nseveral somethings up ahead.",
                 "delay 160 turnBack?"
             ], "turnBack?": [
                 "text corlen move 296 122",
@@ -771,7 +771,7 @@
             ], "thingsNeverChange": [
                 "corlen face right",
                 "text ellipse hide",
-                "text corlen change Well, some things\nnever change",
+                "text corlen change Well, some things\nnever change.",
                 "text corlen display",
                 "delay 140 finish"
             ], "finish": [
