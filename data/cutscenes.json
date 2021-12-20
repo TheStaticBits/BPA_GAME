@@ -524,10 +524,9 @@
         },
         "time_commands": {
             "0": [
-                "player walk right",
-                "ellipse walk right",
-                "corlen walk right",
-                "run playerStop"
+                "player walk right",   "run playerStop",
+                "ellipse walk right",  "run ellipseStop",
+                "corlen walk right",   "run corlenStop"
             ]
         },
         "conditionals": {
@@ -536,14 +535,8 @@
             "corlenStop": "corlen x > 124"
         },
         "cond_commands": {
-            "playerStop": [
-                "player walk still",
-                "run ellipseStop",
-                "run corlenStop"
-            ],
-
+            "playerStop": ["player walk still"],
             "ellipseStop": ["ellipse walk still"],
-
             "corlenStop": [
                 "corlen walk still",
                 "corlen face left",
@@ -611,12 +604,82 @@
     "Light Returns": {
         "start": {
             "player": {"pos": [0, 128]},
-            "corlen": {"pos": [-16, 128], "room": 0},
-            "ellipse": {"pos": [-32, 128], "room": 0}
+            "corlen": {"pos": [-24, 128], "room": 0},
+            "ellipse": {"pos": [-48, 128], "room": 0}
         },
         "time_commands": {
             "0": [
-                "player walk right"
+                "player walk right",   "run playerStop",
+                "ellipse walk right",  "run ellipseStop",
+                "corlen walk right",   "run corlenStop"
+            ]
+        },
+        "conditionals": {
+            "ellipseStop": "ellipse x > 100",
+            "playerStop": "player x > 120",
+            "corlenStop": "corlen x > 144"
+        },
+        "cond_commands": {
+            "playerStop": ["player walk still"],
+            "ellipseStop": ["ellipse walk still"],
+            "corlenStop": [
+                "corlen walk still",
+                "corlen face left",
+
+                "text create corlen",
+                "text corlen color 252 227 3",
+                "text corlen move 154 106",
+                "text corlen change That area was disturbing.",
+                "text corlen display",
+
+                "delay 130 didYouSee"
+            ], "didYouSee": [
+                "text corlen change Did you see all those red-",
+                "delay 100 interuption"
+            ], "interuption": [
+                "text corlen hide",
+
+                "text create ellipse",
+                "text ellipse change ...",
+                "text ellipse move 110 106",
+                "text ellipse display",
+
+                "delay 160 ?"
+            ], "?": [
+                "text corlen change Ellipse?",
+                "text corlen display",
+                "text ellipse hide",
+                "delay 120 ..."
+            ], "...": [
+                "text ellipse display",
+                "text corlen hide",
+                "delay 140 whatHappened"
+            ], "whatHappened": [
+                "text corlen move 154 91",
+                "text corlen change Human? What happened in\nthe room before the boss?",
+                "text ellipse hide",
+                "text corlen display",
+                "delay 160 doot.doot.doot"
+            ], "doot.doot.doot": [
+                "text corlen hide",
+                "text ellipse display",
+                "delay 160 nevahMind"
+            ], "nevahMind": [
+                "text corlen move 154 106",
+                "text corlen change Nevermind.",
+                "text corlen display",
+                "text ellipse hide",
+                "delay 100 nextArea"
+            ], "nextArea": [
+                "corlen face right",
+                "text corlen change The next area looks less...",
+                "delay 130 ominous"
+            ], "ominous": [
+                "text corlen change Ominous. Less ominous.",
+                "delay 130 finish"
+            ], "finish": [
+                "text corlen hide",
+                "player controllable"
             ]
         }
     }
