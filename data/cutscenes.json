@@ -6,7 +6,7 @@
         },
         "time_commands": {
             "0": [
-                "player controlled",
+                "player controllable",
                 "player jump not",
                 "ellipse face left",
                 "text create tutorialText",
@@ -21,7 +21,7 @@
         },
         "cond_commands":{
             "testMoved": [
-                "player uncontrolled",
+                "player uncontrollable",
                 "player face right",
                 "text create ellipse",
                 "text ellipse change I am here to warn you...",
@@ -41,7 +41,7 @@
             "step4": [
                 "text ellipse hide",
                 "ellipse walk right",
-                "player controlled",
+                "player controllable",
                 "player jump can"
             ]
         }
@@ -58,7 +58,7 @@
         "time_commands": {
             "0": [
                 "player jump not",
-                "player controlled",
+                "player controllable",
                 "run corlenNotice"
             ]
         },
@@ -90,7 +90,7 @@
 
                 "run nextRoom",
                 
-                "player uncontrolled",
+                "player uncontrollable",
                 "delay 60 whoRU"
             ], "whoRU": [
                 "text corlen change Who are you?",
@@ -138,7 +138,7 @@
             ], "allowFollow": [
                 "text corlen hide",
                 "corlen walk right",
-                "player controlled",
+                "player controllable",
                 "run corlenStop",
                 "run playerMovingOn"
             ],
@@ -149,7 +149,7 @@
             ],
             
             "playerMovingOn": [
-                "player uncontrolled",
+                "player uncontrollable",
                 "text corlen move 118 170",
                 "text corlen change This is my humble abode.",
                 "text corlen display",
@@ -329,7 +329,7 @@
             ], "finish": [
                 "text corlen hide",
                 "corlen face right",
-                "player controlled",
+                "player controllable",
                 "player jump can"
             ]
         }
@@ -344,7 +344,7 @@
         },
         "time_commands": {
             "0": [
-                "player uncontrolled",
+                "player uncontrollable",
                 "delay 40 starty"
             ]
         },
@@ -395,7 +395,24 @@
             ], "ellipseSecondRight": [
                 "ellipse face right",
                 "text ellipse hide",
-                "player controlled"
+                "delay 50 thinking"
+            ], "thinking": [
+                "corlen face left",
+                "text corlen display",
+                "text corlen move 68 155",
+                "text corlen change Human, I think\nthis is...",
+                "delay 140 won'tSay"
+            ], "won'tSay": [
+                "text corlen move 68 170",
+                "text corlen change No, I won't say it.",
+                "delay 150 continue"
+            ], "continue": [
+                "corlen face right",
+                "text corlen change Let's continue.",
+                "player controllable",
+                "delay 130 hideyTexty"
+            ], "hideyTexty": [
+                "text corlen hide"
             ]
         }
     },
@@ -408,7 +425,7 @@
         },
         "time_commands": {
             "0": [
-                "player controlled",
+                "player controllable",
                 "player jump not",
                 "run playerMoved"
             ]
@@ -421,7 +438,7 @@
         },
         "cond_commands": {
             "playerMoved": [
-                "player uncontrolled",
+                "player uncontrollable",
                 
                 "text create corlen",
                 "text corlen color 252 227 3",
@@ -493,7 +510,7 @@
                 "delay 80 end"
             ], "end": [
                 "text corlen hide",
-                "player controlled",
+                "player controllable",
                 "player jump can"
             ]
         }

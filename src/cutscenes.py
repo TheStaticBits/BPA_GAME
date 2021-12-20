@@ -150,10 +150,10 @@ class Cutscenes(src.scene_base.SceneBase):
                     elif comm[1] == "room":
                         self.objects[comm[0]]["obj"].room = int(comm[2])
                     
-                    elif comm[1] == "controlled":
+                    elif comm[1] == "controllable":
                         self.playerControlled = True
                     
-                    elif comm[1] == "uncontrolled":
+                    elif comm[1] == "uncontrollable":
                         self.playerControlled = False
                         self.objects["player"]["obj"].xVelocity = 0
                     

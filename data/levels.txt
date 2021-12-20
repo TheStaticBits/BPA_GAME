@@ -631,6 +631,26 @@ d><^v
                         
 ------------------------
 
+background = d
+music = Darkened
+cutscene = Into Darkness
+------------------------
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+                        
+                        
+                        
+                        
+                        
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+------------------------
+
 background = e
 music = Darkened
 button 0, 17, 2 = 6
@@ -1009,3 +1029,24 @@ e><^v
                         
                         
                         
+------------------------
+
+background = e
+music = Blue
+cutscene = Light Returns
+------------------------
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+                        
+                        
+                        
+                        
+                        
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+------------------------
