@@ -27,9 +27,9 @@ class SceneBase:
         self.logger.info("Initiating Scene...")
 
 
-    def update(self):
+    def update(self): # Called by base classes 
         self.logger.info("Updating Scene...")
 
 
-    def render(self):
+    def render(self): # Called by base classes 
         self.logger.info("Rendering Scene...")

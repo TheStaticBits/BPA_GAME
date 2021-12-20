@@ -13,7 +13,7 @@ and render tiles with animations through render_tiles_with_anims()
 after you've initialized the tiles through setup_room_tile_anims()
 """
 class TileRenderer:
-    def __init__(self):
+    def __init__(self): # Loads tile images
         self.load_tiles()
         self.load_tile_anims()
 

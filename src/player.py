@@ -5,7 +5,13 @@ import src.utility as utility
 import src.object_base
 import src.animation
 
+"""
+Handles everything that goes on with the player character
+Inherits from the ObjectBase class, which handles collisions
+and rendering of the object
+"""
 class Player(src.object_base.ObjectBase):
+    # Loads the images and sets up default variables
     def __init__(
         self, 
         startPos, 
@@ -24,7 +30,7 @@ class Player(src.object_base.ObjectBase):
 
         self.dirMoved = 0
     
-
+    # Changes the player's data to the given info
     def reset(self, pos, yVelocity, xVelocity):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
@@ -33,6 +39,8 @@ class Player(src.object_base.ObjectBase):
         self.facing = 1
     
 
+    # Updates the player, with its inputs, movement,
+    # collisions, and gravity
     def update(
         self, 
         room, # List of tiles in the current room
@@ -113,12 +121,15 @@ class Player(src.object_base.ObjectBase):
             if (self.gravityDir == 1 and self.yVelocity > 0) or (self.gravityDir == -1 and self.yVelocity < 0):
                 self.yVelocity = 0
         
+        # If the player is currently falling, they cannot jump
         if (self.gravityDir == 1 and round(self.yVelocity < -1)) or (self.gravityDir == -1 and round(self.yVelocity > 1)):
             self.canJump = False
 
         super().update_y_pos()
 
         result = super().update_y_collision(room, roomNumber, level, tileRenderer, globalGravity, gravBeamYPos)
+
+        # Combining the special tile results from both x and y collision updates
         for tile, tilePos in result.items():
             specialTiles[tile] = tilePos
 
@@ -132,7 +143,7 @@ class Player(src.object_base.ObjectBase):
             elif tile in ("c", "g", "m"): # Crystal or gravity orb
                 return (tile, position)
             
-            elif tile in constants.SPIKE_ROTATIONS:
+            elif tile in constants.SPIKE_ROTATIONS: # Hit a spike
                 return "dead"
             
             else:
@@ -140,6 +151,7 @@ class Player(src.object_base.ObjectBase):
                     return (tile, position)
 
 
+        # Checking if the player went off screen (if they were moving in a given direction)
         if inputs["right"]:
             if self.rect.x >= constants.TILE_SIZE[0] * constants.SCREEN_TILE_SIZE[0] - constants.PLAYER_WIDTH:
                 return "right"

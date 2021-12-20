@@ -4,6 +4,9 @@ import src.button
 import src.constants as constants
 import src.scene_base
 
+"""
+Handles the entire pause menu, including the pause button on other scenes
+"""
 class PauseMenu(src.scene_base.SceneBase):
     def __init__(self):
         super().__init__(__name__)

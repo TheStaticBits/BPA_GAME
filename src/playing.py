@@ -11,8 +11,13 @@ import src.tile_renderer
 import src.utility as utility
 import src.constants as constants
 
+"""
+This class, Playing, handles everything that goes on
+within normal levels. It uses things from the BaseLevel class
+which are also used by the boss level handler.
+"""
 class Playing(src.base_level.BaseLevel):
-    def __init__(self):
+    def __init__(self): # Initializes all
         super().__init__(__name__)
 
         self.font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Setting up the font
@@ -61,8 +66,13 @@ class Playing(src.base_level.BaseLevel):
         self.load_room()
         
 
+    # Loads the rendered tiles in the room,
+    # while also setting up the animated tiles in the tile renderer
     def load_room(self):
         self.get_text()
+        # This is done so that the tile renderer doesn't have to rerender tiles every frame
+        # (for performance)
+        # Instead, the tiles on screen are saved and rendered from that
         self.tileSurface.fill(constants.BLACK)
         self.tileRenderer.draw_tiles(
             self.levels[self.level][self.room], 
@@ -72,18 +82,19 @@ class Playing(src.base_level.BaseLevel):
         self.tileRenderer.setup_room_tile_anims(self.levels[self.level][self.room])
     
     
+    # Sets up the text in the room if there is any given in the level data
     def get_text(self):
         self.text = None
         self.textWavX = 0
 
         try:
-            if self.levelData[self.level][f"text {self.room}"] != "":
-                self.text = self.levelData[self.level][f"text {self.room}"]
+            self.text = self.levelData[self.level][f"text {self.room}"]
 
         except KeyError: # If that room doesn't have text 
             pass
 
 
+    # Updates the player
     def update(self, window):
         inputs = window.inputs # Dictionary of keys pressed
         mousePos = window.mousePos # Position of the mouse
@@ -98,7 +109,7 @@ class Playing(src.base_level.BaseLevel):
             if self.room == 0: # If it switched to a new level
                 return self.level
         
-        if result in ("right", "left"):
+        if result in ("right", "left"): # If the player moved to a new room in the level
             self.load_room()
         
         elif result == "dead":
@@ -108,8 +119,8 @@ class Playing(src.base_level.BaseLevel):
         elif result == "crystal":
             return "crystal"
 
+        # Updates all tiles that have animations (such as orbs)
         self.tileRenderer.update_tiles_with_anims()
-
 
         """  Mouse Inputs for Editor  """
         # The position of the tile that the mouse is hovering over
