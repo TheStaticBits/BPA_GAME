@@ -27,7 +27,7 @@ class PauseMenu(src.scene_base.SceneBase):
                 values[0],
                 fontObj = font,
                 text = values[1],
-                textOffset = 2
+                textOffset = 1
             )
         
         self.pauseButton = src.button.Button(
