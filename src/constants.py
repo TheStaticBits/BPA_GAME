@@ -79,7 +79,7 @@ MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 DEFAULT_SAVE = {
     "levels": "11111111111111111111111111111",
     "level": 0,
-    "crystals": "00000000000000000"
+    "crystals": "00000000000000000000"
 }
 
 # Solid Tiles
