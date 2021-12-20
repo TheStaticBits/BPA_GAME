@@ -514,5 +514,110 @@
                 "player jump can"
             ]
         }
+    },
+
+    "Into Darkness": {
+        "start": {
+            "player": {"pos": [0, 128]},
+            "corlen": {"pos": [-24, 128], "room": 0},
+            "ellipse": {"pos": [-48, 128], "room": 0}
+        },
+        "time_commands": {
+            "0": [
+                "player walk right",
+                "ellipse walk right",
+                "corlen walk right",
+                "run playerStop"
+            ]
+        },
+        "conditionals": {
+            "playerStop": "player x > 100",
+            "ellipseStop": "ellipse x > 76",
+            "corlenStop": "corlen x > 124"
+        },
+        "cond_commands": {
+            "playerStop": [
+                "player walk still",
+                "run ellipseStop",
+                "run corlenStop"
+            ],
+
+            "ellipseStop": ["ellipse walk still"],
+
+            "corlenStop": [
+                "corlen walk still",
+                "corlen face left",
+
+                "text create corlen",
+                "text corlen color 252 227 3",
+                "text corlen move 134 106",
+                "text corlen change Wow, that was disturbing.",
+                "text corlen display",
+
+                "delay 130 stopity"
+            ], "stopity": [
+                "text corlen hide",
+                "delay 20 teethy"
+            ], "teethy": [
+                "text corlen change Did you see its teeth??",
+                "text corlen display",
+                "delay 130 ellipseDotsss"
+            ], "ellipseDotsss": [
+                "text corlen hide",
+
+                "text create ellipse",
+                "text ellipse move 86 106",
+                "text ellipse change ...",
+                "text ellipse display",
+                
+                "delay 160 neverAgain"
+            ], "neverAgain": [
+                "text corlen change I never want to go there again...",
+                
+                "text corlen display",
+                "text ellipse hide",
+
+                "delay 130 smoahDots"
+            ], "smoahDots": [
+                "text ellipse display",
+                "text corlen hide",
+
+                "delay 160 turnRight"
+            ], "turnRight": [
+                "text ellipse hide",
+                "corlen face right",
+                "text corlen change The next area looks...",
+                "text corlen display",
+                "delay 120 difficult"
+            ], "difficult": [
+                "text corlen change Difficult.",
+                "delay 80 careful"
+            ], "careful": [
+                "corlen face left",
+                "text corlen change We should be careful.",
+                "delay 140 never"
+            ], "never": [
+                "text corlen change I've never been this\nfar from home before.",
+                "text corlen move 134 91",
+                "delay 150 finishUp"
+            ], "finishUp": [
+                "text corlen hide",
+                "corlen face right",
+                "player controllable"
+            ]
+        }
+    },
+
+    "Light Returns": {
+        "start": {
+            "player": {"pos": [0, 128]},
+            "corlen": {"pos": [-16, 128], "room": 0},
+            "ellipse": {"pos": [-32, 128], "room": 0}
+        },
+        "time_commands": {
+            "0": [
+                "player walk right"
+            ]
+        }
     }
 }

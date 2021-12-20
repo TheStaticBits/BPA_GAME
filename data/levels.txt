@@ -1035,18 +1035,17 @@ background = e
 music = Blue
 cutscene = Light Returns
 ------------------------
-dddddddddddddddddddddddd
-dddddddddddddddddddddddd
-dddddddddddddddddddddddd
-dddddddddddddddddddddddd
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
                         
                         
                         
                         
                         
-dddddddddddddddddddddddd
-dddddddddddddddddddddddd
-dddddddddddddddddddddddd
-dddddddddddddddddddddddd
-dddddddddddddddddddddddd
-------------------------
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
