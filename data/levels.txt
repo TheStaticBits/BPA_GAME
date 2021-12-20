@@ -1382,15 +1382,15 @@ cutscene = Signs
 ------------------------
 ssssssssssssssssssssssss
 ssssssssssssssssssssssss
-ssssssssssssssssssssssss
-ssssssssssssssssssssssss
+sssssssssssssssssssssss 
+sssssssssssssssssssss   
                         
                         
                         
                         
                         
-ssssssssssssssssssssssss
-ssssssssssssssssssssssss
-ssssssssssssssssssssssss
+                        
+sssssssssssssssssssss   
+sssssssssssssssssssssss 
 ssssssssssssssssssssssss
 ssssssssssssssssssssssss

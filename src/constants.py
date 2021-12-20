@@ -30,7 +30,7 @@ PAUSE_BUTTON_PATH = "res/misc/pause_button.png"
 
 BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower buttons fills up when hovering a mouse over it.
 
-SCREEN_SHAKE_POWER = 3 # How intense screenshakes are (in cutscenes)
+SCREEN_SHAKE_POWER = 2 # How intense screenshakes are (in cutscenes)
 
 POPUP_TEXT_DURATION = 60
 POPUP_TEXT_FADE_SPEED = 4

@@ -682,5 +682,102 @@
                 "player controllable"
             ]
         }
+    },
+
+    "Signs": {
+        "start": {
+            "player": {"pos": [0, 144]},
+            "corlen": {"pos": [-24, 144], "room": 0},
+            "ellipse": {"pos": [-48, 144], "room": 0}
+        },
+        "time_commands": {
+            "0": [
+                "player walk right",   "run playerStop",
+                "ellipse walk right",  "run ellipseStop",
+                "corlen walk right",   "run corlenStop"
+            ]
+        },
+        "conditionals": {
+            "playerStop": "player x > 192",
+            "corlenStop": "corlen x > 288",
+            "ellipseStop": "ellipse x > 264"
+        },
+        "cond_commands": {
+            "playerStop": ["player walk still"],
+            "ellipseStop": ["ellipse walk still"],
+            "corlenStop": [
+                "corlen walk still",
+                "delay 40 rumbleOne"
+            ], "rumbleOne": [
+                "shake start",
+                "delay 30 stopRumbleOne"
+            ], "stopRumbleOne": [
+                "shake stop",
+                "delay 20 rumbleTwice"
+            ], "rumbleTwice": [
+                "shake start",
+                "delay 30 stopRumbleTwice"
+            ], "stopRumbleTwice": [
+                "shake stop",
+                "delay 30 thisIt"
+            ], "thisIt": [
+                "corlen face left",
+                
+                "text create corlen",
+                "text corlen color 252 227 3",
+                "text corlen move 296 122",
+                "text corlen change This could be it.",
+                "text corlen display",
+
+                "delay 130 somethingAhead"
+            ], "somethingAhead": [
+                "corlen face left",
+                "text corlen move 296 107",
+                "text corlen change There's something, or\nseveral somethings up ahead",
+                "delay 160 turnBack?"
+            ], "turnBack?": [
+                "text corlen move 296 122",
+                "text corlen change Should we turn back?",
+                "delay 130 noResponse"
+            ], "noResponse": [
+                "text corlen hide",
+                "delay 120 oof."
+            ], "oof.": [
+                "text corlen change Sigh.",
+                "text corlen display",
+                "delay 80 lastChance"
+            ], "lastChance": [
+                "text corlen move 296 107",
+                "text corlen change This is our last\nchance to turn back.",
+                "delay 140 emptiness"
+            ], "emptiness": [
+                "text corlen hide",
+                "delay 120 ellipseTalks"
+            ], "ellipseTalks": [
+                "text create ellipse",
+                "text ellipse move 274 122",
+                "text ellipse change ...",
+                "text ellipse display",
+                "delay 160 stillNothing"
+            ], "stillNothing": [
+                "text ellipse hide",
+                "text corlen change Still won't say\nanything, huh?",
+                "text corlen display",
+                "delay 130 againDots"
+            ], "againDots": [
+                "text ellipse display",
+                "text corlen hide",
+                "delay 160 thingsNeverChange"
+            ], "thingsNeverChange": [
+                "corlen face right",
+                "text ellipse hide",
+                "text corlen change Well, some things\nnever change",
+                "text corlen display",
+                "delay 140 finish"
+            ], "finish": [
+                "player controllable",
+                "text corlen hide"
+            ]
+        }
     }
 }
