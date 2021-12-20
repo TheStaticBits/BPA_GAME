@@ -120,7 +120,14 @@ class MainMenu(src.scene_base.SceneBase):
             button.render(window)
         
         self.render_text(window, "Level Selector", (255, constants.SCREEN_SIZE[1] / 2 + 5))
-        self.render_text(window, f"Level: {self.lvlsIndex + 1}", (255, constants.SCREEN_SIZE[1] / 2 + 20))
+        
+
+        if self.levelsList[self.lvlsIndex] != "Cutscene":
+            text = f"Level: {self.remove_cutscenes(self.lvlsIndex) + 1}"
+        else:
+            text = self.levelData[self.lvlsIndex]["cutscene"]
+
+        self.render_text(window, text, (255, constants.SCREEN_SIZE[1] / 2 + 20))    
         self.render_text(window, self.levelsList[self.lvlsIndex], (255, constants.SCREEN_SIZE[1] / 2 + 30))
 
         levelStatus, color = self.get_status(self.lvlsIndex)
@@ -130,6 +137,5 @@ class MainMenu(src.scene_base.SceneBase):
         if "cutscene" not in self.levelData[self.lvlsIndex]:
             if self.crystals[self.remove_cutscenes(self.lvlsIndex)]:
                 window.blit(self.crystal_check, (218, constants.SCREEN_SIZE[1] / 2 + 22))
-            
             else:
                 window.blit(self.crystal_x, (218, constants.SCREEN_SIZE[1] / 2 + 22))
