@@ -683,14 +683,14 @@ eeeeeeeeeeeeeeeee
 
 background = w
 music = Darkened
-button 0, 15, 5 = -2
+button 0, 14, 5 = -2
 ------------------------
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 e               ee      
 e               ee      
-e p             ee      
-e             m ee      
+e               ee      
+e p           m ee      
 eeeee   eeeeeeeeee      
 eeeee   eeeeevvvee  eeee
 eeeee          cee  eeee

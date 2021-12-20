@@ -19,6 +19,7 @@ class TileRenderer:
 
         # Loading spike tile
         self.spikeTile = pygame.image.load(constants.SPIKE_PATH).convert_alpha()
+        self.brightSpike = pygame.image.load(constants.BRIGHT_SPIKE_PATH).convert_alpha()
 
         # If the tile being checked is on the screen and transparent, used when drawing edges to the screen
         self.check_tile = lambda room, x, y: utility.check_between((x, y), (0, 0), constants.SCREEN_TILE_SIZE) and room[y][x] in constants.TRANSPARENT_TILES
@@ -185,8 +186,8 @@ class TileRenderer:
         roomNumber = None
         ):
         # Setting up background tile
-        backgroundTile = self.tileKey[backgroundTile]["tile"].copy()
-        backgroundTile.set_alpha(150)
+        bgTileImg = self.tileKey[backgroundTile]["tile"].copy()
+        bgTileImg.set_alpha(150)
 
         # Iterating through all of the tiles in the current room
         for y, row in enumerate(room): 
@@ -299,7 +300,7 @@ class TileRenderer:
 
                     # Drawing the background tile
                     surface.blit(
-                        backgroundTile,
+                        bgTileImg,
                         (x * constants.TILE_SIZE[0],
                         y * constants.TILE_SIZE[1])
                     )
@@ -308,8 +309,14 @@ class TileRenderer:
                     if tile in constants.SPIKE_ROTATIONS:
                         # Draw the spike with rotation based on the tile
                         # For example, a tile which is a greater than sign (>) will be a spike rotated to face the right.
+
+                        if backgroundTile in constants.TILES_USING_BRIGHT_SPIKE:
+                            spikeImg = self.brightSpike
+                        else:
+                            spikeImg = self.spikeTile
+
                         surface.blit(
-                            pygame.transform.rotate(self.spikeTile, constants.SPIKE_ROTATIONS[tile]),
+                            pygame.transform.rotate(spikeImg, constants.SPIKE_ROTATIONS[tile]),
                             (x * constants.TILE_SIZE[0],
                             y * constants.TILE_SIZE[1])
                         )

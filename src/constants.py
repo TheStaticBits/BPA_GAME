@@ -124,12 +124,17 @@ HOLDABLE_TILES = (
 )
 
 # Other tiles
-SPIKE_PATH = "res/misc/spike.png"
+SPIKE_PATH = "res/tiles/solid/spike/dark.png"
+BRIGHT_SPIKE_PATH = "res/tiles/solid/spike/bright.png"
 SPIKE_ROTATIONS = {
     "^": 0,
     "<": 90,
     "v": 180,
     ">": 270
+}
+
+TILES_USING_BRIGHT_SPIKE = {
+    "e" 
 }
 
 # These tiles have animations
