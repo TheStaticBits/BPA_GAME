@@ -178,6 +178,7 @@ class BossLevel(src.base_level.BaseLevel):
 
             if dead: 
                 self.restart_level()
+                self.popup("You Died!")
                 break
     
     
