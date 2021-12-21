@@ -51,6 +51,9 @@ class FollowObject(src.object_base.ObjectBase):
         gravBeamYPos,
         globalGravity
         ):
+        self.test_grav_line(globalGravity, gravBeamYPos)
+        self.update_animation()
+
         if len(playerPositions) > self.followDistance: 
             self.level, self.room = playerLevelAndRoom[self.followDistance - self.followContinueFrames] # Setting level and room
 
@@ -65,9 +68,6 @@ class FollowObject(src.object_base.ObjectBase):
                 if self.followContinueFrames > 0:
                     if self.rect.y == playerPositions[0][1] or self.check_below(levels[self.level]): # If the entity is not in need of changing
                         self.followContinueFrames -= 1
-
-            self.test_grav_line(globalGravity, gravBeamYPos)
-            self.update_animation()
 
             xMoved = (playerPositions[self.followDistance - self.followContinueFrames][0] - self.rect.x - (constants.PLAYER_WIDTH // 2))
             
