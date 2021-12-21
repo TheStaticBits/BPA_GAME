@@ -55,7 +55,7 @@ class FollowObject(src.object_base.ObjectBase):
         self.update_animation()
 
         if len(playerPositions) > self.followDistance: 
-            self.level, self.room = playerLevelAndRoom[self.followDistance - self.followContinueFrames] # Setting level and room
+            self.level, self.room = playerLevelAndRoom[self.followDistance] # Setting level and room
 
             self.facing = playerFacing[self.followDistance - self.followContinueFrames] # Setting facing
             
