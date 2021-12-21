@@ -703,7 +703,8 @@ eeeeeeeeeeeeeeeee
 
 background = w
 music = Darkened
-button 0, 14, 5 = -2
+button 0, 14, 5 = 2
+button 2, 9, 11 = -4
 ------------------------
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
@@ -711,94 +712,93 @@ e               ee
 e               ee      
 e               ee      
 e p           m ee      
-eeeee   eeeeeeeeee      
-eeeee   eeeeevvvee  eeee
-eeeee          cee  eeee
-eeeee           ee  eeee
-eeeee   eeeee^^^ee  eeee
 eeeee   eeeeeeeeee  eeee
+eeeee   eeeeeevvvv  vvvv
+eeeee   eee c           
+eeeee   eee             
+eeeee   eeeeee^^^^  ^^^^
+eeeee   eeeeeeeeee  eeee
+eeeee         eeee  eeee
 eeeee               eeee
-eeeee               eeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+e><^veee      e         
+eeeeeeee      e         
+      ee      e         
+      ee      e     eeee
+      ee      e     eeee
+  ee        eeeee   eeee
+eeee        eeeee   eeee
+vv    eeee  eeeee   eeee
+      eeee  eeeee   eeee
+  eeeeeeee  eeeee   eeee
+^^eeeeeeee  veeee   eeee
+eeeeeeeeee          eeee
+eeeeee              eeee
+eeeeee              eeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+ ><^  ee              ee
+      ee              ee
+      ee              ee
+eee   vv              ee
+eee             eee   ee
+eee   ee        eee   ee
+eee   ee        eee   ee
+eee   eeeeeeee  eee   ee
+eee   eeeeeeee  eee     
+eee   eeeeeeee  eee     
+eee   eeeeeeee  eee     
+eee   ee m      eeeeeeee
+eee   ee        eeeeeeee
+eee   ee        eeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+e><     eeeeeeeeee  eeee
+e^v     eeeeeeeeee  eeee
+eee     eeeeeeeeee  eeee
+eee     eevvvvvvvv  eeee
+eee                 eeee
+eee                   ee
+eee  ^    ^^^^^^^^    ee
+eee  e    eeeeeeee      
+     e    eeeeeeee      
+     e    eeeeeeee      
+     e    eeeeeeee      
+eee  e    eeeeeeee      
+eee  e    eeeeeeeeeeeeee
+eee  e    eeeeeeeeeeeeee
 ------------------------
 
 background = e
 music = Darkened
-entities = none
 ------------------------
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeevvvvvvveee
+e      eeeeeee       eee
+e p    eeeeeee       eee
+eeee   eevvvvv       eee
+>^ge           j     eee
+<vje                 eee
+eeee             ^^  eee
+eeee             ee  eee
+eeee     ^^^^^   ee     
+eeee     eeeee   ee     
+eeee     eeeee   ee     
+eeee^^^^^eeeee^^^eeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+eeeeeeeeeeeeeeeeeeeeeeee
+e       ee              
+e       ee              
+e       ee              
+e  ^^   ee              
+e  vv   vv              
+e            m          
+e           eee         
+eee^^   ^^              
+  eee   ee              
+        ee              
+        ee              
+        ee              
+eeeeeeeeee              
 ||||||||||||||||||||||||
 e><^v                   
                         
