@@ -16,15 +16,13 @@ class FollowObject(src.object_base.ObjectBase):
         objSize,
         velocity = 0
         ):
-        super().__init__(animationList, objSize[0])
+        super().__init__(animationList, startPos, objSize)
 
         self.followDistance = followDistance
         self.followContinueFrames = 0
 
         self.room = room
         self.level = level
-
-        self.rect = pygame.Rect(startPos[0], startPos[1], objSize[0], objSize[1])
 
         self.yVelocity = velocity
 

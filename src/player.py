@@ -18,10 +18,11 @@ class Player(src.object_base.ObjectBase):
         yVelocity = 0,
         xVelocity = 0,
         ):
-        super().__init__(constants.PLAYER_ANIMATIONS, constants.PLAYER_WIDTH)
-        
-        # Used for collisions and keeping track of position
-        self.rect = pygame.Rect(startPos[0], startPos[1], constants.PLAYER_WIDTH, constants.TILE_SIZE[1])
+        super().__init__(
+            constants.PLAYER_ANIMATIONS, 
+            startPos,
+            (constants.PLAYER_WIDTH, constants.TILE_SIZE[1]) # Size
+        )
 
         self.yVelocity = yVelocity
         self.xVelocity = xVelocity
@@ -99,6 +100,7 @@ class Player(src.object_base.ObjectBase):
             gravBeamYPos
         )
 
+        # Switching animations based on if the player moved
         if self.dirMoved == 0:
             self.switch_anim("idle")
             
