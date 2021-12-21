@@ -875,17 +875,17 @@ ee      ^     ^      ^ee
 ee      eeeeeeeeeeeeeeee
         eeeeeeeeeeeeeeee
         eeevvvveeeeeeeee
-^^             eevvvv   
+^^             eevvvv  e
 ee                      
 ee                      
-ee             ee^^^^   
+ee             ee^^^^  e
 eeeeeeeeeee^^^^eeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
 e><^veeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 e                    eee
-e c          ee      eee
+e            ee      eee
 e            ee       ee
 eeee         ee       ee
 eeee         vv        e
