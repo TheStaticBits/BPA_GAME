@@ -701,7 +701,7 @@ eee   e   eeeeeee
 eeeeeeeeeeeeeeeee       
 ------------------------
 
-background = w
+background = e
 music = Darkened
 button 0, 14, 5 = 2
 button 2, 9, 11 = -4
@@ -788,9 +788,9 @@ eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
 eeeeeeeeeeeeeeeeeeeeeeee
 e       ee          vvee
-e       ee              
-e       ee              
-e  ^^   ee              
+        ee              
+        ee              
+   ^^   ee              
 e  vv   vv              
 e            m   ^^     
 eee         eee  ee   ee
@@ -904,8 +904,8 @@ entities = none
 ------------------------
 e><^v                   
                         
-                        
-                        
+  p                     
+  e                     
                         
                         
                         
