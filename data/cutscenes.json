@@ -796,7 +796,8 @@
         },
         "conditionals": {
             "playerStop": "player x > 150",
-            "ellipseHeadDone": "fade done"
+            "ellipseHeadDone": "fade done",
+            "finish": "fade done"
         },
         "cond_commands": {
             "playerStop": [
@@ -864,9 +865,11 @@
                 "ellipse teleport 130 200",
                 "delay 20 AHHHH"
             ], "AHHHH": [
-                "ellipse teleport 230 130"
+                "ellipse teleport 230 130",
+                "delay 20 finalTeleport"
+            ], "finalTeleport": [
+                "ellipse teleport -16 -16"
             ],
-
 
             "ellipseHeadDone": [
                 "text ellipse move 192 175",
@@ -877,12 +880,20 @@
                 "text ellipse change Collect all crystals...",
                 "delay 150 restarting"
             ], "restarting": [
-                "text ellipse change Restarting...",
+                "text ellipse move 192 160",
+                "text ellipse change It's the only way\nto destroy them...",
+                "delay 130 fadeClear"
+            ], "fadeClear": [
+                "fade clear",
+                "text ellipse hide",
                 "shake start",
-                "delay 130 finish"
-            ], "finish": [
-                "restart"
-            ]
+                "delay 50 fadeBlack"
+            ], "fadeBlack": [
+                "fade 2 0 0 0",
+                "run finish"
+            ],
+
+            "finish": ["restart"]
         }
     },
 

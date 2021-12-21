@@ -195,7 +195,7 @@ class Cutscenes(src.scene_base.SceneBase):
                         elif len(comm) == 5: # If it gives a solid color
                             rect = pygame.Rect(0, 0, constants.SCREEN_SIZE[0], constants.SCREEN_SIZE[1])
                             self.fadeImage = pygame.Surface(constants.SCREEN_SIZE)
-                            pygame.draw.rect(self.fadeImage, (comm[2], comm[3], comm[4]), rect)
+                            pygame.draw.rect(self.fadeImage, (int(comm[2]), int(comm[3]), int(comm[4])), rect)
                         
                         self.fadeProgress = 0
                         self.fadeSpeed = int(comm[1])
