@@ -234,7 +234,6 @@ class Loop(src.scene_base.SceneBase):
 
         if self.scene not in ("startup", "pauseMenu", "mainMenu"):
             if self.scenes["pauseMenu"].check_for_pause(
-                self.scene, 
                 self.window.inputs, 
                 self.window.mousePos, 
                 self.window.mousePressed
