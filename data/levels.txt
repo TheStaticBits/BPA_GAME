@@ -736,15 +736,15 @@ eeeeeeeeee          eeee
 eeeeee              eeee
 eeeeee              eeee
 ||||||||||||||||||||||||
- ><^  ee              ee
+      ee              ee
       ee              ee
       ee              ee
 eee   vv              ee
 eee             eee   ee
-eee   ee        eee   ee
-eee   ee        eee   ee
-eee   eeeeeeee  eee   ee
-eee   eeeeeeee  eee     
+>ee   ee        eee   ee
+<ee   ee        eee   ee
+^ee   eeeeeeee  eee   ee
+vee   eeeeeeee  eee     
 eee   eeeeeeee  eee     
 eee   eeeeeeee  eee     
 eee   ee m      eeeeeeee
@@ -769,6 +769,7 @@ eee  e    eeeeeeeeeeeeee
 
 background = e
 music = Darkened
+button 1, 13, 6 = -3
 ------------------------
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeevvvvvvveee
@@ -782,53 +783,53 @@ eeee             ee  eee
 eeee     ^^^^^   ee     
 eeee     eeeee   ee     
 eeee     eeeee   ee     
-eeee^^^^^eeeee^^^eeeeeee
+eeee     eeeee^^^eeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
 eeeeeeeeeeeeeeeeeeeeeeee
-e       ee              
+e       ee          vvee
 e       ee              
 e       ee              
 e  ^^   ee              
 e  vv   vv              
-e            m          
-e           eee         
-eee^^   ^^              
-  eee   ee              
-        ee              
-        ee              
-        ee              
-eeeeeeeeee              
+e            m   ^^     
+eee         eee  ee   ee
+eee^^   ^^  eee  ee^^^ee
+  eee   ee  eee^^eeeeeee
+  eee   ee^^eeeeeeeeeeee
+        eeeeeeeeeeeeeeee
+        eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+e><^veeeeeeeeeeeeeeeeeee
+eeeeee       eeeevvveeee
+  eeee       vv     eevv
+  eeee                  
+     v                  
+         ^^         ee^^
+         ee      ^^^eeee
+ee       ee      eeeeeee
+ee^^^^^^^ee^^^^^^eeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+e><^veeeeeeeeeeeeeeeeeee
+eeeeeee    ee eeeeee    
+eeeeeee    vv eeeeee    
+   eeee       eeeeee    
+     ee         eeee  ee
+e    eeee  ^^   eeee  ee
+e      ee  ee     ee  ee
+eee        ee     ee  ee
+eee        ee         ee
+eee        ee         ee
+eee^^^^^^^^ee         ee
+eeeeeeeeeeeee         ee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ------------------------
 
 background = e
