@@ -17,6 +17,8 @@ class MainMenu(src.scene_base.SceneBase):
         self.remove_cutscenes = remove_cutscenes # Function to remove cutscenes from a number
         self.lvlsIndex = int(save["level"])
 
+        self.ending = int(save["unlockedEnding"])
+
         self.crystal_check = pygame.image.load(constants.CRYSTAL_CHECK_PATH).convert_alpha()
         self.crystal_x = pygame.image.load(constants.CRYSTAL_X_PATH).convert_alpha()
 
@@ -86,14 +88,26 @@ class MainMenu(src.scene_base.SceneBase):
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs):
                 if key == "left":
-                    self.lvlsIndex -= 1
-                    if self.lvlsIndex < 0:
-                        self.lvlsIndex = len(self.levelsList) - 1
+                    if self.lvlsIndex == len(self.levelsList) - 1 - self.ending:
+                        self.lvlsIndex = len(self.levelsList) - 1 - constants.AMOUNT_OF_ENDINGS
+                    else:
+                        self.lvlsIndex -= 1
+                        if self.lvlsIndex < 0:
+                            if self.ending == -1:
+                                self.lvlsIndex = len(self.levelsList) - 1 - constants.AMOUNT_OF_ENDINGS
+                            else:
+                                self.lvlsIndex = len(self.levelsList) - 1 - self.ending
                 
                 elif key == "right":
-                    self.lvlsIndex += 1
-                    if self.lvlsIndex >= len(self.levelsList):
+                    if self.lvlsIndex == len(self.levelsList) - 1 - self.ending:
                         self.lvlsIndex = 0
+                    else:
+                        self.lvlsIndex += 1
+                        if self.lvlsIndex >= len(self.levelsList) - constants.AMOUNT_OF_ENDINGS:
+                            if self.ending == -1:
+                                self.lvlsIndex = 0
+                            else:
+                                self.lvlsIndex = len(self.levelsList) - 1 - self.ending
                     
                 elif key == "play":
                     if self.get_status(self.lvlsIndex)[0] != "Locked":

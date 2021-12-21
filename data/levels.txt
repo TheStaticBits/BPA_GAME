@@ -834,7 +834,6 @@ eeeeeeeeeeeeeeeeeeeeeeee
 
 background = e
 music = Darkened
-entities = none
 ------------------------
 e><^v                   
                         
@@ -899,7 +898,6 @@ e><^v
 
 background = e
 music = Darkened
-entities = none
 ------------------------
 e><^v                   
                         
@@ -1054,7 +1052,6 @@ eeeeeeeeeeeeeeeeeeeeeeee
 
 background = o
 music = Blue
-entities = none
 ------------------------
 o><^v                   
                         
@@ -1119,7 +1116,6 @@ o><^v
 
 background = o
 music = Blue
-entities = none
 ------------------------
 o><^v                   
                         
@@ -1184,7 +1180,6 @@ o><^v
 
 background = o
 music = Blue
-entities = none
 ------------------------
 o><^v                   
                         
@@ -1249,7 +1244,6 @@ o><^v
 
 background = o
 music = Blue
-entities = none
 ------------------------
 o><^v                   
                         
@@ -1314,7 +1308,6 @@ o><^v
 
 background = o
 music = Blue
-entities = none
 ------------------------
 o><^v                   
                         
@@ -1395,3 +1388,112 @@ sssssssssssssssssssss
 sssssssssssssssssssssss 
 ssssssssssssssssssssssss
 ssssssssssssssssssssssss
+------------------------
+
+background = o
+music = FINALE
+boss = Belloq, Red Stare, Big Bite
+------------------------
+o><^v                   
+                        
+                        
+p                       
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+o><^v                   
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+o><^v                   
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+||||||||||||||||||||||||
+o><^v                   
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+------------------------
+
+background = W
+music = voiD
+cutscene = Void
+ending = not all crystals
+------------------------
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+WWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWW
+------------------------
+
+background = W
+music = OneLastDayInParadiseV2
+cutscene = Nothing There Is
+ending = all crystals
+------------------------
+
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        

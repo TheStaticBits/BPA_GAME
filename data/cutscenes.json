@@ -779,5 +779,114 @@
                 "text corlen hide"
             ]
         }
+    },
+
+    "Void": {
+        "start": {
+            "player": {"pos": [0, 128]},
+            "corlen": {"pos": [-24, 128], "room": 0},
+            "ellipse": {"pos": [-48, 128], "room": 0}
+        },
+        "time_commands": {
+            "0": [
+                "player walk right",   "run playerStop",
+                "ellipse walk right",
+                "corlen walk right"
+            ]
+        },
+        "conditionals": {
+            "playerStop": "player x > 150",
+            "ellipseHeadDone": "fade done"
+        },
+        "cond_commands": {
+            "playerStop": [
+                "player walk still",
+                "ellipse walk still",
+                "corlen walk still",
+
+                "text create corlen",
+                "text corlen move 134 106",
+                "text corlen color 252 227 3",
+                "text corlen change Where are we?",
+                "text corlen display",
+
+                "delay 20 corlenLeft"
+            ], "corlenLeft": [
+                "corlen face left",
+                "delay 40 corlenRight"
+            ], "corlenRight": [
+                "corlen face right",
+                "delay 60 ellipseDots"
+            ], "ellipseDots": [
+                "text corlen hide",
+
+                "text create ellipse",
+                "text ellipse move 110 106",
+                "text ellipse change ...",
+                "text ellipse display",
+
+                "delay 160 somethingWrong"
+            ], "somethingWrong": [
+                "text ellipse hide",
+                "text corlen change I think we did something wrong.",
+                "text corlen display",
+                "delay 130 nothing"
+            ], "nothing": [
+                "text corlen change There is nothing out here.",
+                "delay 140 waitForIt"
+            ], "waitForIt": [
+                "text corlen hide",
+                "delay 60 ellipseFreakOut"
+            ], "ellipseFreakOut": [
+                "fade 2 res/characters/ellipse/big_head.png",
+                "run ellipseHeadDone",
+                "ellipse teleport 0 20",
+                "delay 20 anotherFreakOut"
+            ], "anotherFreakOut": [
+                "ellipse teleport 230 70",
+                "delay 20 wooAnother"
+            ], "wooAnother": [
+                "ellipse teleport 134 39",
+                "delay 20 weeee"
+            ], "weeee": [
+                "ellipse teleport 29 100",
+                "delay 20 anotheree"
+            ], "anotheree": [
+                "ellipse teleport 300 60", 
+                "delay 20 eee"
+            ], "eee": [
+                "ellipse teleport 50 200",
+                "delay 20 sad"
+            ], "sad": [
+                "ellipse teleport 260 92",
+                "delay 20 MORERANDOM"
+            ], "MORERANDOM": [
+                "ellipse teleport 130 200",
+                "delay 20 AHHHH"
+            ], "AHHHH": [
+                "ellipse teleport 230 130"
+            ],
+
+
+            "ellipseHeadDone": [
+                "text ellipse move 192 175",
+                "text ellipse change You have failed...",
+                "text ellipse display",
+                "delay 130 crystals"
+            ], "crystals": [
+                "text ellipse change Collect all crystals...",
+                "delay 150 restarting"
+            ], "restarting": [
+                "text ellipse change Restarting...",
+                "shake start",
+                "delay 130 finish"
+            ], "finish": [
+                "restart"
+            ]
+        }
+    },
+
+    "Nothing There Is": {
+        
     }
 }

@@ -187,7 +187,10 @@ class TileRenderer:
         ):
         # Setting up background tile
         bgTileImg = self.tileKey[backgroundTile]["tile"].copy()
-        bgTileImg.set_alpha(150)
+
+        # If the tile is supposed to have shading when it's used as a background
+        if backgroundTile not in constants.TILES_WITHOUT_SHADING:
+            bgTileImg.set_alpha(150)
 
         # Iterating through all of the tiles in the current room
         for y, row in enumerate(room): 
