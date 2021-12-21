@@ -16,7 +16,7 @@ Base classes will have to create their own update() functions
 """
 class ObjectBase:
     # Initiates rectangles, animations, and other variables
-    def __init__(self, animationData, startPos, size)):
+    def __init__(self, animationData, startPos, size):
         # Used for collisions and keeping track of position
         self.rect = pygame.Rect(startPos[0], startPos[1], size[0], size[1])
 

@@ -50,7 +50,7 @@ class PauseMenu(src.scene_base.SceneBase):
 
     # Returns true if escape or the pause button has been pressed
     def check_for_pause(self, inputs, mousePos, mouseInputs) -> bool:
-        return inputs["esc"] or self.pauseButton.update(mousePos, mouseInputs):
+        return inputs["esc"] or self.pauseButton.update(mousePos, mouseInputs)
 
     
     # Changes the background which is rendered behind the pause menu
