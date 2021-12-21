@@ -110,15 +110,15 @@ class TileRenderer:
         image = self.individualTileAnims[position]["animationObject"].get_frame()
         tile = self.individualTileAnims[position]["tile"]
 
-        if tile != "m":
+        if tile not in constants.NO_ROTATE_TILES:
             flip = position[1] >= gravBeamYPos
+            
+            # If the global gravity is reversed, also reverse the tile's image
+            if globalGravity == -1: 
+                flip = not flip
         
         else:
             flip = position[1] >= constants.GRAV_BEAM_TILE_Y_POS
-
-        # If the global gravity is reversed, also reverse the tile's image
-        if globalGravity == -1: 
-            flip = not flip
 
         return pygame.transform.flip(image, False, flip)
 

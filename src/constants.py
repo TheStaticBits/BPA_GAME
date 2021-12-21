@@ -141,9 +141,13 @@ SPIKE_ROTATIONS = {
 TILES_USING_BRIGHT_SPIKE = (
     "e"
 )
-# Tiles that do not have shading when used as a backgroundd tile
+# Tiles that do not have shading when used as a background tile
 TILES_WITHOUT_SHADING = (
     "W"
+)
+# Animated tiles whos animations don't flip when gravity changes
+NO_ROTATE_TILES = (
+    "m"
 )
 
 # These tiles have animations
