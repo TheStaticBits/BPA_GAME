@@ -479,7 +479,7 @@
             ],
 
             "showYou": [
-                "text ellipse change I shall show you",
+                "text ellipse change I shall show you.",
                 "delay 140 backToNormal"
             ], "backToNormal": [
                 "fade clear",
