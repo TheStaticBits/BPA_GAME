@@ -215,8 +215,8 @@ class Cutscenes(src.scene_base.SceneBase):
                 elif comm[0] == "delay": # Starts a delay
                     self.delays[comm[2]] = int(comm[1])
                 
-                elif comm[0] == "end":
-                    return "end"
+                elif comm[0] in ("end", "restart"):
+                    return comm[0]
 
         except Exception as exc:
             raise Exception(f"Error occured in command: {command}\nCommand: {exc}")
@@ -280,6 +280,8 @@ class Cutscenes(src.scene_base.SceneBase):
 
         inputs = window.inputs
 
+        commandsToBeRun = []
+
         if self.backgroundAnim is not None:
             if self.room == self.cutsceneData["backgroundAnim"]["room"]:
                 self.backgroundAnim.update()
@@ -287,18 +289,13 @@ class Cutscenes(src.scene_base.SceneBase):
         # Interpretting and running timed commands
         for time, commands in self.cutsceneData["time_commands"].items():
             if self.timer == int(time):
-                result = self.interpret_commands(commands)
-                if result == "end":
-                    return "end"
+                commandsToBeRun.append(commands)
         
         # Running conditionals
         for condName in self.runningConditionals:
             if self.run_conditional(self.cutsceneData["conditionals"][condName]):
                 self.runningConditionals.remove(condName)
-                
-                result = self.interpret_commands(self.cutsceneData["cond_commands"][condName])
-                if result == "end":
-                    return "end"
+                commandsToBeRun.append(self.cutsceneData["cond_commands"][condName])
             
             elif condName in self.onceConditionals:
                 self.runningConditionals.remove(condName)
@@ -308,11 +305,17 @@ class Cutscenes(src.scene_base.SceneBase):
         for delayName in list(self.delays):
             if self.delays[delayName] == 0 or inputs["enter"]:
                 del self.delays[delayName]
-                self.interpret_commands(self.cutsceneData["cond_commands"][delayName])
+                commandsToBeRun.append(self.cutsceneData["cond_commands"][delayName])
 
             else:
                 self.delays[delayName] -= 1
 
+        # Running commands
+        for command in commandsToBeRun:
+            result = self.interpret_commands(command)
+            if result is not None:
+                return result
+        
         # Moving objects
         for obj in self.objects:
             object = self.objects[obj]["obj"]

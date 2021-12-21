@@ -79,8 +79,11 @@ MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 DEFAULT_SAVE = {
     "levels": "11111111111111111111111111111",
     "level": 0,
-    "crystals": "00000000000000000000"
+    "crystals": "000000000000000000000",
+    "unlockedEnding": "1"
 }
+
+AMOUNT_OF_ENDINGS = 2
 
 # Solid Tiles
 # first value indicating the string in the level layout
@@ -92,7 +95,8 @@ TILE_KEYS = {
     "d": "dirt",
     "e": "blank",
     "b": "darkness",
-    "l": "blue"
+    "l": "blue",
+    "W": "white"
 }
 
 # These tiles are the ones which are not solid
@@ -133,9 +137,18 @@ SPIKE_ROTATIONS = {
     ">": 270
 }
 
-TILES_USING_BRIGHT_SPIKE = {
-    "e" 
-}
+# Tiles which when used as the background tile, use a bright spike
+TILES_USING_BRIGHT_SPIKE = (
+    "e"
+)
+# Tiles that do not have shading when used as a background tile
+TILES_WITHOUT_SHADING = (
+    "W"
+)
+# Animated tiles whos animations don't flip when gravity changes
+NO_ROTATE_TILES = (
+    "m"
+)
 
 # These tiles have animations
 TILES_WITH_ANIMATIONS = utility.load_json("res/tiles/animated/anim_dat.json")
