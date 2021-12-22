@@ -35,11 +35,13 @@ class FollowObject(src.object_base.ObjectBase):
     # Check if the object is on a platform
     def check_below(self, level): 
         self.yVelocity -= self.gravityDir
+        
         self.update_y_pos() # Changes y position based on yVelocity
-        self.yVelocity = 0 # Reset yVelocity
 
         # Uses yVelocity and checks if there is a tile below without moving the object
         result = super().update_y_collision(level[self.room], self.room, level, modif = False) 
+        
+        self.yVelocity = 0 # Reset yVelocity
         
         return result is True # If there was a collision below the object
 
