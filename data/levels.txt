@@ -1454,6 +1454,21 @@ o><^v
                         
                         
                         
+||||||||||||||||||||||||
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+                        
+                        
+                        
+                        
+                c       
+                        
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
 ------------------------
 
 background = W
@@ -1483,18 +1498,17 @@ music = OneLastDayInParadiseV2
 cutscene = Nothing There Is
 ending = all crystals
 ------------------------
-
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
                         
                         
                         
                         
                         
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo

@@ -31,6 +31,7 @@ class Player(src.object_base.ObjectBase):
 
         self.dirMoved = 0
     
+    
     # Changes the player's data to the given info
     def reset(self, pos, yVelocity, xVelocity):
         self.rect.x = pos[0]

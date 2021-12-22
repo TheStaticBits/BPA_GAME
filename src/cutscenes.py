@@ -23,6 +23,19 @@ class Cutscenes(src.scene_base.SceneBase):
         self.room = 0
         self.timer = 0
 
+        self.entitiesAnimList = {
+            "corlen": utility.load_animations_dict(constants.CORLEN_ANIMATIONS),
+            "ellipse": utility.load_animations_dict(constants.ELLIPSE_ANIMATIONS),
+
+            "Belloq": utility.load_animations_dict(constants.BELLOQ_ANIMATIONS)["idle"],
+            "Big Bite": src.animation.Animation(
+                constants.BIG_BITE_DELAY,
+                path = constants.BIG_BITE_ANIM_PATH,
+                frames = constants.BIG_BITE_TOTAL_FRAMES
+            ),
+            "Red Stare": utility.load_animations_dict(constants.RED_STARE_ANIMATIONS)
+        }
+
 
     def setup(self, scene, level):
         self.scene = scene
@@ -31,25 +44,40 @@ class Cutscenes(src.scene_base.SceneBase):
         self.cutsceneData = utility.load_json("data/cutscenes.json")[scene]
         
         self.objects = {}
+        self.tileObjects = []
 
         for name, position in self.cutsceneData["start"].items():
             if name == "player":
                 self.objects[name] = {
                     "obj": src.player.Player(position["pos"]),
+                    "facing": "right",
+                    "pos": position["pos"],
                     "movement": "still"
                 }
             
-            elif name == "ellipse":
+            elif name in self.entitiesAnimList:
                 self.objects[name] = {
-                    "obj": eac.create_entity("ellipse", position["pos"], position["room"], 0), # Since each cutscene is one level, the level number doesn't matter
+                    "anim": self.entitiesAnimList[name],
+                    "facing": "right",
+                    "pos": position["pos"],
+                    "room": position["room"],
                     "movement": "still"
                 }
+
+                # If there's a dictionary of animations
+                if isinstance(self.entitiesAnimList[name], dict):
+                    self.objects[name]["playingAnim"] = "idle"
+                
+            elif name in self.tileRenderer.tileAnims:
+                self.tileObjects.append({
+                    "anim": self.tileRenderer.tileAnims[name]["default"],
+                    "pos": position["pos"],
+                    "moveTo": position["pos"],
+                })
             
-            elif name == "corlen":
-                self.objects[name] = {
-                    "obj": eac.create_entity("corlen", position["pos"], position["room"], 0),
-                    "movement": "still"
-                }
+            else:
+                raise Exception(f"Error: Unknown entity {name}")
+                
 
         levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
         self.level = levels[self.levelNum]
@@ -138,20 +166,19 @@ class Cutscenes(src.scene_base.SceneBase):
                         self.objects[comm[0]]["movement"] = comm[2]
                     
                     elif comm[1] == "face":
-                        if comm[2] == "right":
-                            self.objects[comm[0]]["obj"].facing = 1
-                        else:
-                            self.objects[comm[0]]["obj"].facing = -1
+                        self.objects[comm[0]]["facing"] = comm[2]
 
                     elif comm[1] == "teleport":
-                        self.objects[comm[0]]["obj"].rect.x = int(comm[2])
-                        self.objects[comm[0]]["obj"].rect.y = int(comm[3])
+                        self.objects[comm[0]]["pos"][0] = int(comm[2])
+                        self.objects[comm[0]]["pos"][1] = int(comm[3])
                     
                     elif comm[1] == "room":
-                        self.objects[comm[0]]["obj"].room = int(comm[2])
+                        self.objects[comm[0]]["room"] = int(comm[2])
                     
                     elif comm[1] == "controllable":
                         self.playerControlled = True
+                        self.objects["player"]["obj"].rect.x = self.objects[comm[0]]["pos"][0]
+                        self.objects["player"]["obj"].rect.y = self.objects[comm[0]]["pos"][1]
                     
                     elif comm[1] == "uncontrollable":
                         self.playerControlled = False
@@ -229,15 +256,13 @@ class Cutscenes(src.scene_base.SceneBase):
 
             # If the command is asking for the data of an entity
             if len(cond) == 4:
-                checking = self.objects[cond[0]]["obj"]
-
                 if cond[1] == "x":
-                    checking = checking.rect.x
+                    checking = self.objects[cond[0]]["pos"][0]
                 elif cond[1] == "y":
-                    checking = checking.rect.y
+                    checking = self.objects[cond[0]]["pos"][1]
                 
                 elif cond[1] == "room":
-                    checking = checking.room
+                    checking = self.objects[cond[0]]["room"]
                 
                 command = " ".join(cond[2:])
 
@@ -273,6 +298,15 @@ class Cutscenes(src.scene_base.SceneBase):
                     return False
             
             return True
+    
+
+    def get_anim_obj(self, name, data) -> "src.animation.Animation":
+        if name == "player":
+            return data["obj"].animations[data["obj"].currentAnim]
+        elif "playingAnim" in data:
+            return data["anim"][data["playingAnim"]]
+        else:
+            return data["anim"]
 
 
     def update(self, window):
@@ -317,15 +351,18 @@ class Cutscenes(src.scene_base.SceneBase):
                 return result
         
         # Moving objects
-        for obj in self.objects:
-            object = self.objects[obj]["obj"]
-            movement = self.objects[obj]["movement"]
+        for name, dat in self.objects.items():
+            if name != "player":
+                if "playingAnim" in dat:
+                    dat["anim"][dat["playingAnim"]].update()
+                else:
+                    dat["anim"].update()
 
-            if obj == "player" and self.playerControlled:
+            if name == "player" and self.playerControlled:
                 if not self.playerCanJump:
                     inputs["up"] = False
 
-                result = object.update(
+                result = dat["obj"].update(
                     self.level[self.room], 
                     self.room,
                     self.level,
@@ -333,65 +370,88 @@ class Cutscenes(src.scene_base.SceneBase):
                 )
 
                 if result == "right":
-                    try:
-                        object.rect.x -= constants.SCREEN_SIZE[0]
-                        self.room += 1
-                        self.rerender_tiles()
+                    dat["obj"].rect.x -= constants.SCREEN_SIZE[0]
+                    self.room += 1
 
-                    except IndexError:
-                        # Once the player has reached the end of the level, the cutscene ends
+                    if self.room == len(self.level):
                         return "end"
+                    else:
+                        self.rerender_tiles()
+                        
                 
                 elif result == "left":
                     if self.room > 0:
-                        object.rect.x += constants.SCREEN_SIZE[0]
+                        dat["obj"].rect.x += constants.SCREEN_SIZE[0]
                         self.room -= 1
                         self.rerender_tiles()
                 
-                continue
+                
+                dat["pos"] = dat["obj"].rect.topleft
 
 
-            if movement != "still":
-                object.switch_anim("walk")
+            elif dat["movement"] != "still":
+                if "playingAnim" in dat:
+                    if dat["playingAnim"] != "walk":
+                        dat["anim"]["walk"].reset()
+                        dat["playingAnim"] = "walk"
+                elif name == "player":
+                    dat["obj"].switch_anim("walk")
+                
+                width = self.get_anim_obj(name, dat).get_image_width()
 
-                if movement == "right":
-                    object.rect.x += constants.MAX_SPEED
-                    object.facing = 1
+                if dat["movement"] == "right":
+                    dat["pos"][0] += constants.MAX_SPEED
+                    dat["facing"] = "right"
                     
-                    if object.rect.x >= (constants.SCREEN_SIZE[0]):
-                        if obj == "player":
-                            try:
-                                object.rect.x = -constants.PLAYER_WIDTH
-                                self.room += 1
-                                self.rerender_tiles()
+                    if dat["pos"][0] >= (constants.SCREEN_SIZE[0]):
+                        dat["pos"][0] = -width
 
-                            except IndexError:
+                        if name == "player":
+                            self.room += 1
+                            if self.room == len(self.level):
                                 return "end"
+                            else:
+                                self.rerender_tiles()
                         
                         else:
-                            object.rect.x = -object.rect.width
-                            object.room += 1
+                            dat["room"] += 1
 
-                if movement == "left":
-                    object.rect.x -= constants.MAX_SPEED
-                    object.facing = -1
+                elif dat["movement"] == "left":
+                    dat["pos"][0] -= constants.MAX_SPEED
+                    dat["facing"] = "left"
 
-                    if object.rect.x <= -object.rect.width:
-                        if obj == "player":
+                    if dat["pos"][0] <= -width:
+                        if name == "player":
                             if self.room > 0:
                                 self.room -= 1
                                 self.rerender_tiles()
                         
                         else:
-                            object.room -= 1
+                            dat["room"] -= 1
                         
-                        object.rect.x += constants.SCREEN_SIZE[0]
+                        dat["pos"][0] += constants.SCREEN_SIZE[0]
 
 
             else:
-                object.switch_anim("idle")
-            
-            object.update_animation()
+                if "playingAnim" in dat:
+                    if dat["playingAnim"] != "idle":
+                        dat["anim"]["idle"].reset()
+                        dat["playingAnim"] = "idle"
+                elif name == "player":
+                    dat["obj"].switch_anim("idle")
+        
+        # Moving and updating tile objects
+        for t in self.tileObjects:
+            t["anim"].update_animation()
+
+            if t["pos"] != t["moveTo"]:
+                degrees = utility.angle_to(t["pos"], t["moveTo"])
+                
+                t["pos"][0] += math.cos(degrees)
+                t["pos"][1] += math.sin(degrees)
+
+                if utility.distance(t["pos"], t["moveTo"]) < 1:
+                    t["pos"] = t["moveTo"]
             
         self.timer += 1
 
@@ -405,12 +465,21 @@ class Cutscenes(src.scene_base.SceneBase):
             if self.room == self.cutsceneData["backgroundAnim"]["room"]:
                 self.backgroundAnim.render(self.screen, (0, 0))
         
-        self.objects["player"]["obj"].render(self.screen)
+        for name, dat in self.objects.items():
+            if name == "player" and not self.playerControlled or name != "player":
+                if name == "player" or dat["room"] == self.room:
+                    image = self.get_anim_obj(name, dat).get_frame()
+                    
+                    image = pygame.transform.flip(image, dat["facing"] == "left", False)
 
-        for obj in self.objects:
-            if obj != "player":
-                self.objects[obj]["obj"].render_with_check(self.room, 0, self.screen)
+                    self.screen.blit(image, dat["pos"])
+            
+            else:    
+                self.objects["player"]["obj"].render(self.screen)
+
         
+        for dat in self.tileObjects:
+            dat["anim"].render(self.screen, dat["pos"])
 
         if self.fadeImage is not None:
             if not self.fadeDone:
