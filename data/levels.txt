@@ -900,20 +900,20 @@ eeeeeeeeeeeeeeeeeeeeeeee
 background = e
 music = Darkened
 ------------------------
-e><^v                   
-                        
-  p                     
-  e                     
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+e><^veeeeeeeeeeeeeeeeeee
+e     eev    veeeeeeeeee
+e p   ee      ee      ee
+e     ee      ee      ee
+eeee  ee      ee      ee
+eeee  ee      ee  ee  ee
+eeee  vv      ee  ee  ee
+eeee      ^^      ee  ee
+eeee      ee      ee    
+eeee      ee      ee    
+eeee      ee      eeeeee
+eeee      ee      eeeeee
+eeee^    ^ee^    ^eeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
 e><^v                   
                         
