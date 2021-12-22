@@ -292,7 +292,7 @@ class ObjectBase:
                             
                             break
                     
-                        else: # If modif was excplicitely set to be false
+                        else: # If modif was explicitly set to be false
                             if result is not False:
                                 return True
                     

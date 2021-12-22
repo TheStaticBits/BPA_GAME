@@ -1,5 +1,4 @@
 import pygame
-import os
 
 import src.scene_base
 import src.constants as constants
