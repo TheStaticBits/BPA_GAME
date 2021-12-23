@@ -1,4 +1,3 @@
-import pygame
 import logging
 import os
 

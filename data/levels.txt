@@ -1395,6 +1395,7 @@ ssssssssssssssssssssssss
 background = o
 music = FINALE
 boss = Belloq, Red Stare, Big Bite
+crystal moves on = all crystals
 ------------------------
 o><^v                   
                         
@@ -1459,11 +1460,11 @@ o><^v
                ooooooooo
                ooooooooo
                ooooooooo
+                        
+                   c    
+                        
                ooooooooo
                ooooooooo
-                        
-                    c   
-                        
                ooooooooo
                ooooooooo
                ooooooooo
@@ -1494,22 +1495,38 @@ WWWWWWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWWWWWW
 ------------------------
 
-background = W
-music = OneLastDayInParadiseV2
-cutscene = Nothing There Is
+background = o
+music = FINALE
+cutscene = True Ending
 ending = all crystals
 ------------------------
-oooooooooooooooooooooooo
-oooooooooooooooooooooooo
+               ooooooooo
+               ooooooooo
+               ooooooooo
+                        
+                   c    
+                        
+               ooooooooo
+               ooooooooo
+               ooooooooo
+               ooooooooo
+               ooooooooo
+               ooooooooo
+               ooooooooo
+               ooooooooo
+||||||||||||||||||||||||
+
                         
                         
                         
                         
                         
                         
-oooooooooooooooooooooooo
-oooooooooooooooooooooooo
-oooooooooooooooooooooooo
-oooooooooooooooooooooooo
-oooooooooooooooooooooooo
-oooooooooooooooooooooooo
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+wwwwwwwwwwwwwwwwwwwwwwww

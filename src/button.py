@@ -1,5 +1,4 @@
 import pygame
-from pygame import pixelarray
 
 import src.constants as constants
 

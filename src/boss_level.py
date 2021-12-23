@@ -38,14 +38,16 @@ class BossLevel(src.base_level.BaseLevel):
         self.bossName = None
 
 
-    def setup(self, boss, level, crystal):
+    def setup(self, boss, level, crystals, crystalIndex):
         # Sets up the boss level with a given boss and level
         # It also starts the music and loads the room images.
 
         self.level = level
 
-        if crystal: super().remove_crystal(level)
-        else: super().reset_crystal(level)
+        super().reset_crystal(level)
+        if "crystal moves on" not in self.levelData[level]:
+            if crystals[crystalIndex]: 
+                super().remove_crystal(level)
         
         super().reset_all()
         super().check_entity_rendering()
@@ -111,23 +113,23 @@ class BossLevel(src.base_level.BaseLevel):
     def update(self, window):
         # Updates everything in the boss level, such as the boss object, the player, and the tile rendering offset
 
-        playerState = super().update(
+        result = super().update(
             window.inputs, 
             self.tileRenderers[self.playerRoomIndex],
             playerSpawnOffset = 0 # change maybe soon
         )
 
-        if playerState == "right": # If the player moved to the next room or level
+        if result == "right": # If the player moved to the next room or level
             # If the room variable was reset (by the BaseLevel class), meaning the player moved to the next level
             if self.room == 0: 
                 return self.level
         
-        elif playerState == "dead":
+        elif result == "dead":
             self.restart_level()
             self.popup("You Died!")
         
-        elif playerState == "crystal":
-            return "crystal"
+        elif result == "crystal" or result == "crystal mid-level":
+            return result
 
         self.tilesOffset = -(self.player.rect.x + (constants.PLAYER_WIDTH // 2) - (constants.SCREEN_SIZE[0] // 2))
 

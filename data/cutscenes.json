@@ -840,6 +840,7 @@
                 "delay 60 ellipseFreakOut"
             ], "ellipseFreakOut": [
                 "fade 2 res/characters/ellipse/big_head.png",
+                "shake start",
                 "run ellipseHeadDone",
                 "ellipse teleport 0 20",
                 "delay 20 anotherFreakOut"
@@ -886,7 +887,6 @@
             ], "fadeClear": [
                 "fade clear",
                 "text ellipse hide",
-                "shake start",
                 "delay 50 fadeBlack"
             ], "fadeBlack": [
                 "fade 2 0 0 0",
@@ -897,7 +897,123 @@
         }
     },
 
-    "Nothing There Is": {
-        
+    "True Ending": {
+        "backgroundAnim": {"path": "res/cutscenes/corlen's_house.png", "room": 1},
+        "start": {
+            "player": {"pos": [314, 80]},
+            "corlen": {"pos": [334, 80], "room": 0},
+            "ellipse": {"pos": [358, 80], "room": 0},
+
+            "belloq": {"pos": [-70, 5], "room": 0},
+            "bigBite": {"pos": [-70, 75], "room": 0},
+            "redStare": {"pos": [-81, 160], "room": 0},
+
+            "c1": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c2": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c3": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c4": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c5": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c6": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c7": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c8": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c9": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c10": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c11": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c12": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c13": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c14": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c15": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c16": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c17": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c18": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c19": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c20": {"pos": [-16, -16], "room": 0, "tile": "c"},
+            "c21": {"pos": [-16, -16], "room": 0, "tile": "c"}        
+        },
+        "time_commands": {
+            "0": [
+                "ellipse face left",
+                "corlen face left",
+
+                "belloq walk right",
+                "run belloqDoneWalking"
+            ],
+            "20": [
+                "bigBite walk right",
+                "run bigBiteDoneWalking"
+            ],
+            "40": [
+                "redStare walk right",
+                "run redStareDoneWalking"
+            ]
+        },
+        "conditionals": {
+            "belloqDoneWalking": "belloq x > 20",
+            "bigBiteDoneWalking": "bigBite x > 20",
+            "redStareDoneWalking": "redStare x > 20"
+        },
+        "cond_commands": {
+            "belloqDoneWalking": ["belloq walk still"],
+            "bigBiteDoneWalking": ["bigBite walk still"],
+            "redStareDoneWalking": [
+                "redStare walk still",
+
+                "c1 teleport 314 80",
+                "c1 moveTo 176 0",
+                "delay 10 c2Move"
+            ], "c2Move": [
+                "c2 teleport 314 80",
+                "c2 moveTo 176 16",
+                "delay 10 c3Move"
+            ], "c3Move": [
+                "c3 teleport 314 80",
+                "c3 moveTo 176 32",
+                "delay 10 c4Move"
+            ], "c4Move": [
+                "c4 teleport 314 80",
+                "c4 moveTo 176 48",
+                "delay 10 c5Move"
+            ], "c5Move": [
+                "c5 teleport 314 80",
+                "c5 moveTo 176 64",
+                "delay 10 c6Move"
+            ], "c6Move": [
+                "c6 teleport 314 80",
+                "c6 moveTo 176 80",
+                "delay 10 c7Move"
+            ], "c7Move": [
+                "c7 teleport 314 80",
+                "c7 moveTo 176 96",
+                "delay 10 c8Move"
+            ], "c8Move": [
+                "c8 teleport 314 80",
+                "c8 moveTo 176 112",
+                "delay 10 c9Move"
+            ], "c9Move": [
+                "c9 teleport 314 80",
+                "c9 moveTo 176 128",
+                "delay 10 c10Move"
+            ], "c10Move": [
+                "c10 teleport 314 80",
+                "c10 moveTo 176 144",
+                "delay 10 c11Move"
+            ], "c11Move": [
+                "c11 teleport 314 80",
+                "c11 moveTo 176 160",
+                "delay 10 c12Move"
+            ], "c12Move": [
+                "c12 teleport 314 80",
+                "c12 moveTo 176 176",
+                "delay 10 c13Move"
+            ], "c13Move": [
+                "c13 teleport 314 80",
+                "c13 moveTo 176 192",
+                "delay 10 c14Move"
+            ], "c14Move": [
+                "c14 teleport 314 80",
+                "c14 moveTo 176 208",
+                "delay 10 c15Move"
+            ], "c15Move": []
+        }
     }
 }
