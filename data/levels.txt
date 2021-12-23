@@ -899,9 +899,10 @@ eeeeeeeeeeeeeeeeeeeeeeee
 
 background = e
 music = Darkened
+button 1, 16, 6 = -1
 ------------------------
 e><^veeeeeeeeeeeeeeeeeee
-e     eev    veeeeeeeeee
+eeeeeeeev    veeeeeeeeee
 e p   ee      ee      ee
 e     ee      ee      ee
 eeee  ee      ee      ee
@@ -915,20 +916,20 @@ eeee      ee      eeeeee
 eeee^    ^ee^    ^eeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeee  vvvveeeevvveee
+eeee            ee      
+eeee  ee        m       
+eeee  ee      eeee ^^eee
+      ee      eeee eeeee
+      ee  ^^^^eeee^eeeee
+eeeeeeee  eeeeeeeeeeeeee
+eeeeeeee^^eeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
 e><^v                   
                         
