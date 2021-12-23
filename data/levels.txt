@@ -589,7 +589,7 @@ d><^v
                         
                         
           p             
-                        
+        ddddd           
                         
                         
                         
@@ -925,41 +925,41 @@ eeee            ee
 eeee  ee        m       
 eeee  ee      eeee ^^eee
       ee      eeee eeeee
-      ee  ^^^^eeee^eeeee
-eeeeeeee  eeeeeeeeeeeeee
+      ee  ^^^^eeee^ec   
+eeeeeeee  eeeeeeeeee    
 eeeeeeee^^eeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeee   eeee
+eeeeeeeee       e       
+e               e j     
+e    ee         e     ee
+     ee    ^    e     ee
+   eeee    e    v     ee
+eeeeeee    e          ee
+eeeeeee    e          ee
+           e          ee
+           eeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+e><^eeeeeeeeeeeeeeeeeeee
+eeee    e     e     e   
+        e     e     e   
+        e     e     e   
+eeeeee  e  ^  e  ^  e   
+eveeee  e  e  e  e  e  e
+eeeeee  e  e  e  e  e  e
+eeeeee  v  e  v  e  v  e
+eeeeee     e     e     e
+eeeeee     e     e     e
+eeeeee     e     e     e
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 ------------------------
 
 background = s
@@ -988,8 +988,8 @@ boss = Red Stare
 ------------------------
 e><^v                   
                         
-                        
-                        
+     p                  
+   eeeee                
                         
                         
                         
@@ -1052,23 +1052,23 @@ eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ------------------------
 
-background = o
+background = b
 music = Blue
 ------------------------
 o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o                       
+o p                     
+oooo                    
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
 ||||||||||||||||||||||||
 o><^v                   
                         
