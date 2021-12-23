@@ -5,8 +5,8 @@ import src.utility as utility
 SAVE_PATH = "saves/save.db"
 EVENT_LOG_PATH = "saves/events.log"
 
-CTM_LOGO_PATH = "res/misc/CTM_logo.png" # Cognitive Thought Media (Company Logo)
-TIN_LOGO_PATH = "res/misc/TIN_logo.png" # There Is Nothing (Game Logo)
+CTM_LOGO_PATH = "res/ui/CTM_logo.png" # Cognitive Thought Media (Company Logo)
+TIN_LOGO_PATH = "res/ui/TIN_logo.png" # There Is Nothing (Game Logo)
 
 FONT_PATH = "res/font/monogram.ttf"
 FONT_SIZE = 15
@@ -21,12 +21,12 @@ EMAIL_PWD_PATH = "data/emailpassword.txt"
 
 MUSIC_FOLDER = "res/sound"
 
-SCREEN_SHADOW_PATH = "res/misc/shadow.png"
+SCREEN_SHADOW_PATH = "res/game/shadow.png"
 
-CRYSTAL_CHECK_PATH = "res/misc/crystal_check.png"
-CRYSTAL_X_PATH = "res/misc/crystal_x.png"
+CRYSTAL_CHECK_PATH = "res/ui/crystal_check.png"
+CRYSTAL_X_PATH = "res/ui/crystal_x.png"
 
-PAUSE_BUTTON_PATH = "res/misc/pause_button.png"
+PAUSE_BUTTON_PATH = "res/ui/pause_button.png"
 
 BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower buttons fills up when hovering a mouse over it.
 
@@ -192,7 +192,7 @@ RED_STARE_MOUTH_OFFSET = (23, -21) # The offset of the mouth from the top left o
 RED_STARE_MOUTH_SPEED = 1
 
 # Gravity beam data
-GRAV_BEAM_PATH = "res/misc/grav_beam.png"
+GRAV_BEAM_PATH = "res/game/grav_beam.png"
 GRAV_BEAM_DELAY = 2 # Delay between each frame of the beam
 GRAV_BEAM_WIDTH = 8 # Width of the beam
 
