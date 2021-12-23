@@ -28,13 +28,13 @@ class Cutscenes(src.scene_base.SceneBase):
             "corlen": utility.load_animations_dict(constants.CORLEN_ANIMATIONS),
             "ellipse": utility.load_animations_dict(constants.ELLIPSE_ANIMATIONS),
 
-            "Belloq": utility.load_animations_dict(constants.BELLOQ_ANIMATIONS)["idle"],
-            "Big Bite": src.animation.Animation(
+            "belloq": utility.load_animations_dict(constants.BELLOQ_ANIMATIONS)["idle"],
+            "bigBite": src.animation.Animation(
                 constants.BIG_BITE_DELAY,
                 path = constants.BIG_BITE_ANIM_PATH,
                 frames = constants.BIG_BITE_TOTAL_FRAMES
             ),
-            "Red Stare": utility.load_animations_dict(constants.RED_STARE_ANIMATIONS)
+            "redStare": utility.load_animations_dict(constants.RED_STARE_ANIMATIONS)
         }
 
 
@@ -407,6 +407,7 @@ class Cutscenes(src.scene_base.SceneBase):
                         dat["playingAnim"] = "walk"
                 elif name == "player":
                     dat["obj"].switch_anim("walk")
+                    dat["obj"].update_animation()
                 
                 width = self.get_anim_obj(name, dat).get_image_width()
 
@@ -450,6 +451,7 @@ class Cutscenes(src.scene_base.SceneBase):
                         dat["playingAnim"] = "idle"
                 elif name == "player":
                     dat["obj"].switch_anim("idle")
+                    dat["obj"].update_animation()
         
         # Moving and updating tile objects
         for t in self.tileObjects:
