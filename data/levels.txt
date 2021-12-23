@@ -1497,7 +1497,7 @@ WWWWWWWWWWWWWWWWWWWWWWWW
 
 background = o
 music = OneLastDayInParadiseV2
-cutscene = Nothing There Is
+cutscene = True Ending
 ending = all crystals
 ------------------------
                ooooooooo
