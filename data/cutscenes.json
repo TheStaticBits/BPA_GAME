@@ -338,9 +338,9 @@
     "Ruins": {
         "backgroundAnim": {"path": "res/cutscenes/ruins.png", "room": 0},
         "start": {
-            "player": {"pos": [0, 192]},
             "ellipse": {"pos": [0, 192], "room": 0},
-            "corlen": {"pos": [0, 192], "room": 0}
+            "corlen": {"pos": [0, 192], "room": 0},
+            "player": {"pos": [0, 192]}
         },
         "time_commands": {
             "0": [

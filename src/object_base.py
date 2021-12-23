@@ -37,14 +37,9 @@ class ObjectBase:
         self.gravityDir = None
         
         self.currentAnim = "idle"
-        self.animations = {}
-        # Creating animation objects from the anim. data
-        for name, data in animationData.items():
-            self.animations[name] = src.animation.Animation(
-                data["delay"],
-                path = data["path"],
-                width = size[0]
-            )
+        # Loads all animations into a dictionary
+        # With keys being the names of each animation
+        self.animations = utility.load_animations_dict(animationData)
         
         # Direction the object is facing (used in rendering)
         # 1 is right, -1 is left
@@ -292,7 +287,7 @@ class ObjectBase:
                             
                             break
                     
-                        else: # If modif was excplicitely set to be false
+                        else: # If modif was explicitly set to be false
                             if result is not False:
                                 return True
                     

@@ -44,11 +44,13 @@ class Loop(src.scene_base.SceneBase):
             self.startupSound = pygame.mixer.Sound("res/sound/intro.wav")
 
             self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
+            # Level data is the stuff about the level
             self.levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
             self.levelsList = self.gen_levels_list()
 
             save = self.load_save()
 
+            # Setting up scenes
             self.scenes = {
                 "playing": src.playing.Playing(),
                 "bossLevel": src.boss_level.BossLevel(),
@@ -60,6 +62,8 @@ class Loop(src.scene_base.SceneBase):
             self.prevScene = self.scene # For the pause menu resuming
         
         except Exception:
+            # logging error and opening error box
+
             err = traceback.format_exc()
             print(err)
             self.logger.critical("ERROR WHILE STARTING UP: ")
@@ -70,6 +74,7 @@ class Loop(src.scene_base.SceneBase):
             self.errorSettingUp = True
 
     
+    # Loads a save, while also setting up the crystals and levelsCompleted variables
     def load_save(self) -> dict:
         save = utility.load_save()
 
@@ -82,6 +87,7 @@ class Loop(src.scene_base.SceneBase):
         return save
 
 
+    # Makes a list filled with the type of level the level is
     def gen_levels_list(self):
         levelList = []
 
@@ -107,8 +113,8 @@ class Loop(src.scene_base.SceneBase):
             self.framerate = 0
 
 
+    # This handles the main game loop, along with any errors that occur in the game.
     def run_game(self):
-        # This handles the main game loop, along with any errors that occur in the game.
         if not self.errorSettingUp: # If there was no error while setting up
             # Starting FPS counter
             framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
@@ -132,6 +138,8 @@ class Loop(src.scene_base.SceneBase):
                 self.save_and_exit()
 
             except Exception:
+                # handles errors that occured in game
+                # logging and giving an error popup box
                 err = traceback.format_exc()
                 print(err)
                 self.logger.critical("ERROR WHILE PLAYING: ")
@@ -142,21 +150,22 @@ class Loop(src.scene_base.SceneBase):
                 self.save_and_exit()
                 
 
+    # Sets the level to completed and adds one to the current level index
     def increment_index(self):
         self.levelsCompleted[self.level] = 1
         self.level += 1
 
 
+    # Takes a level number and subtracts one for every cutscene before the level number given
     def remove_cutscenes(self, levelNum):
-        level = levelNum
-
-        for lvl in range(levelNum):
-            if self.levelsList[lvl] == "Cutscene":
-                level -= 1
+        for testLevel in range(levelNum):
+            if self.levelsList[testLevel] == "Cutscene":
+                levelNum -= 1
         
-        return level
+        return levelNum
     
 
+    # Restarts the game, creating a new save and updating everything that uses the save data
     def restart(self):
         if os.path.exists(constants.SAVE_PATH):
             os.remove(constants.SAVE_PATH)
@@ -166,14 +175,15 @@ class Loop(src.scene_base.SceneBase):
         self.scenes["cutscene"].update_crystals(self.crystals)
 
 
+    # This method updates the scene the game is in, along with the window class.
     def update(self):
-        # This method updates the scene the game is in, along with the window class.
         super().update() # Logging
 
         self.window.update_inputs()
 
         if self.scene == "startup":
-            if not self.startupAnim.update(): # If the startup finished
+            # Startup animation scene
+            if not self.startupAnim.update(): # If the startup animation finished
                 self.scene = "mainMenu"
                 self.scenes["mainMenu"].start_music()
                 del self.startupAnim
@@ -182,17 +192,12 @@ class Loop(src.scene_base.SceneBase):
         elif self.scene == "mainMenu":
             result = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
 
-
             if result is not None:
-                if result == "play":
+                if result == "play": # "Play" button pressed
                     self.level = self.scenes["mainMenu"].lvlsIndex
                 
-                elif result == "newSave":
+                elif result == "newSave": # "Restart" button pressed
                     self.restart()
-
-                elif result == "help":
-                    # Potentially moves to a help level or a help cutscene
-                    pass
 
                 self.switch_to_new_scene(self.level)
                 self.update()
@@ -208,18 +213,21 @@ class Loop(src.scene_base.SceneBase):
             if result != "pause":
                 self.window.inputs["esc"] = False
                 
-                if result == "resume":
+                if result == "resume": # "Resume" button pressed
                     self.scene = self.prevScene
                 
-                elif result == "restart":
+                elif result == "restart": # "Restart Level" button pressed
+                    # Resets level
                     self.scene = self.prevScene
                     self.scenes[self.scene].restart_level()
                 
-                elif result == "mainMenu":
+                elif result == "mainMenu": # "Main Menu" button pressed
+                    # Sets up main menu
                     self.scene = "mainMenu"
                     self.scenes["mainMenu"].start_music()
                     self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
 
+                    # Tells these that the music has stopped
                     self.scenes["playing"].music_stopped()
                     self.scenes["bossLevel"].music_stopped()
         
@@ -228,15 +236,18 @@ class Loop(src.scene_base.SceneBase):
             result = self.scenes[self.scene].update(self.window)
 
             if result is not None:
-                if result == "crystal":
-                    crystalCount = self.remove_cutscenes(self.level)
+                if result == "crystal": # Crystal collected
+                    # Gets the crystal id of the level
+                    # Getting rid of cutscenes from the level id because cutscenes
+                    # don't have crystals
+                    crystalCount = self.remove_cutscenes(self.level) 
                     self.crystals[crystalCount] = 1
                 
-                if result != "restart":
+                if result != "restart": # Increments level and switches to new level
                     self.increment_index()
                     self.switch_to_new_scene(self.level)
                 
-                else:
+                else: # Restarts game
                     self.restart()
                     self.switch_to_new_scene(self.level)
 
@@ -246,17 +257,18 @@ class Loop(src.scene_base.SceneBase):
                 self.window.inputs, 
                 self.window.mousePos, 
                 self.window.mousePressed
-                ):
+                ): # If the escape button or the pause button has been pressed
                 self.prevScene = self.scene
 
+                # Gets the background for the pause menu
                 self.scenes[self.scene].render(self.window.miniWindow)
                 self.scenes["pauseMenu"].update_background(self.window.miniWindow)
                 
                 self.scene = "pauseMenu"
     
 
+    # This method renders all objects, based on the current scene 
     def render(self) -> "pygame.Surface":
-        # This method renders all objects, based on the current scene 
         super().render()
 
         if self.scene == "startup":
@@ -266,44 +278,60 @@ class Loop(src.scene_base.SceneBase):
             self.scenes[self.scene].render(self.window.miniWindow)
 
             if self.scene not in ("mainMenu", "pauseMenu"):
+                # Rendering pause button
                 self.scenes["pauseMenu"].render_pause_button(self.window.miniWindow)
 
         return self.window.miniWindow
 
 
+    # Switches to a new scene based on the level id it's given to switch to
     def switch_to_new_scene(self, level):
-        if "ending" in self.levelData[level]:
-            for lvl in range(len(self.levelsList) - level):
-                allCrystalsCheck = self.levelData[level + lvl]["ending"] == "all crystals" and 0 not in self.crystals
-                notAllCrystalsCheck = self.levelData[level + lvl]["ending"] == "not all crystals" and 0 in self.crystals
+        # Checking if the level is an ending
+        if level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
+            # Iterating through from 0 to the amount of endings there are
+            for lvl in range(constants.AMOUNT_OF_ENDINGS):
+                # level being checked
+                levelID = len(self.levels) - constants.AMOUNT_OF_ENDINGS + lvl
+                # If the ending wants all crystals to have been collected
+                # and there are no missing crystals
+                allCrystalsCheck = self.levelData[levelID]["ending"] == "all crystals" and 0 not in self.crystals
+                # If the ending wants not all crystals to have been collected
+                # and there is at least one missing crystal
+                notAllCrystalsCheck = self.levelData[levelID]["ending"] == "not all crystals" and 0 in self.crystals
 
                 if allCrystalsCheck or notAllCrystalsCheck:
-                    level += lvl
-                    utility.modif_save({"unlockedEnding": lvl + 1})
+                    level += lvl # Setting to that ending
+                    utility.modif_save({"unlockedEnding": lvl + 1}) # Saving the ending
                     self.scenes["mainMenu"].ending = lvl + 1
                     break
 
 
         if self.levelsList[level] == "Normal Level":
+            # Sets up normal level
             self.scene = "playing"
             self.scenes["playing"].setup(level, self.crystals[self.remove_cutscenes(level)])
             self.scenes["playing"].popup(f"Level {self.remove_cutscenes(level) + 1}")
             self.scenes["bossLevel"].music_stopped()
         
         elif self.levelsList[level] == "Boss Level":
+            # Sets up boss level
             self.scene = "bossLevel"
             self.scenes["bossLevel"].setup(self.levelData[level]["boss"], level, self.crystals[self.remove_cutscenes(level)])
             self.scenes["bossLevel"].popup(f"Level {self.remove_cutscenes(level) + 1}")
             self.scenes["playing"].music_stopped()
 
         elif self.levelsList[level] == "Cutscene":
+            # Sets up cutscene
             self.scene = "cutscene"
             self.scenes["cutscene"].setup(self.levelData[level]["cutscene"], level)
 
+            # Tells these that the music has stopped
+            self.scenes["playing"].music_stopped()
+            self.scenes["bossLevel"].music_stopped()
 
-    def save_and_exit(self):
-        # This method saves all data to a database for later playing
-        
+
+    # This method saves all data to a database for later playing
+    def save_and_exit(self):    
         self.logger.info("Saving game state...")
 
         # Saves the game's data

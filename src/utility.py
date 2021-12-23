@@ -31,7 +31,7 @@ def get_file(filePath) -> str:
 
 
 # Finds the angle from one point to the next in radians
-def angle_to(pos1, pos2):
+def angle_to(pos1, pos2) -> float:
     xDiff = pos2[0] - pos1[0]
     yDiff = pos2[1] - pos1[1]
 
@@ -236,10 +236,18 @@ def play_music(musicName) -> bool: # Successful or not
 def load_animations_dict(animations) -> dict:
     animation = {}
     for name, data in animations.items():
+        # Getting either the frames or the width of the animation to load it
+        frames = None
+        width = None
+        if "frames" in data: frames = data["frames"]
+        elif "width" in data: width = data["width"]
+        else: raise Exception(f"Neither frames nor width in data; unable to load animation \"{name}\"")
+
         animation[name] = src.animation.Animation(
             data["delay"],
             path = data["path"],
-            frames = data["frames"]
+            frames = frames,
+            width = width
         )
     return animation
 
