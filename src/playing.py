@@ -35,19 +35,18 @@ class Playing(src.base_level.BaseLevel):
 
         self.tilesChanged = False
 
-        self.crystal = False # If the crystal has been collected in the level
-
         # EDITOR CONTROLS:
         self.placeTile = "c" # Tile to be placed when you click
     
     
     # Calls a bunch of other functions which sets up the world with all the aspects of it
-    def setup(self, level, crystal):
+    def setup(self, level, crystals, crystalIndex):
         self.level = level
-        self.crystal = crystal
 
-        if crystal: super().remove_crystal(level)
-        else: super().reset_crystal(level)
+        super().reset_crystal(level)
+        if "crystal moves on" not in self.levelData[level]:
+            if crystals[crystalIndex]: 
+                super().remove_crystal(level)
         
         super().reset_all()
         super().check_entity_rendering()
@@ -116,8 +115,8 @@ class Playing(src.base_level.BaseLevel):
             self.restart_level()
             self.popup("You Died!")
         
-        elif result == "crystal":
-            return "crystal"
+        elif result == "crystal" or result == "crystal mid-level":
+            return result
 
         # Updates all tiles that have animations (such as orbs)
         self.tileRenderer.update_tiles_with_anims()

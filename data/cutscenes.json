@@ -840,6 +840,7 @@
                 "delay 60 ellipseFreakOut"
             ], "ellipseFreakOut": [
                 "fade 2 res/characters/ellipse/big_head.png",
+                "shake start",
                 "run ellipseHeadDone",
                 "ellipse teleport 0 20",
                 "delay 20 anotherFreakOut"
@@ -886,7 +887,6 @@
             ], "fadeClear": [
                 "fade clear",
                 "text ellipse hide",
-                "shake start",
                 "delay 50 fadeBlack"
             ], "fadeBlack": [
                 "fade 2 0 0 0",
@@ -898,6 +898,15 @@
     },
 
     "Nothing There Is": {
-        
+        "start": {
+            "player": {"pos": [320, 64]},
+            "corlen": {"pos": [296, 80], "room": 0},
+            "ellipse": {"pos": [272, 80], "room": 0}
+        },
+        "time_commands": {
+            "0": [
+                "player controllable"
+            ]
+        }
     }
 }

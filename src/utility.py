@@ -45,6 +45,13 @@ def distance_to(pos1, pos2):
     return math.sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2)
 
 
+# Finds the last item of a type given in a list and returns the index of the item
+def find_last_item(list, item) -> int:
+    for i in range(len(list) - 1, -1, -1):
+        if list[i] == item:
+            return i
+
+
 # Loads the levels from a given path
 def load_levels(levelPath) -> list:
     file = get_file(levelPath)

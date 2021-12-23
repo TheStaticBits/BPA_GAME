@@ -73,17 +73,12 @@ class BaseLevel(src.scene_base.SceneBase):
 
 
     def remove_crystal(self, level):
-        # Goes through and removes all crystals that have already been collected.
-        done = False
+        # Goes through and removes crystals in the level
         for roomNum, room in enumerate(self.levels[level]):
             for y, row in enumerate(room):
                 for x, tile in enumerate(row):
                     if tile == "c":
                         self.levels[level][roomNum][y][x] = " "
-                        done = True
-                        break
-                if done: break
-            if done: break
 
 
     def reset_crystal(self, level):
@@ -243,6 +238,9 @@ class BaseLevel(src.scene_base.SceneBase):
                     self.levels[self.level][self.room][playerState[1][1]][playerState[1][0]] = " " # Removing the tile
 
                     self.currentCrystal = True
+
+                    if "crystal moves on" in self.levelData[self.level]:
+                        return "crystal mid-level"
                 
                 elif playerState[0] == "m": # Gravity Line Button
                     # Changes the gravity beam position by a specified

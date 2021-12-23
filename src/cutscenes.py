@@ -43,14 +43,14 @@ class Cutscenes(src.scene_base.SceneBase):
         self.cutsceneData = utility.load_json("data/cutscenes.json")[scene]
         
         self.objects = {}
-        self.tileObjects = []
+        self.tileObjects = {}
 
-        for name, position in self.cutsceneData["start"].items():
+        for name, data in self.cutsceneData["start"].items():
             if name == "player":
                 self.objects[name] = {
-                    "obj": src.player.Player(position["pos"]),
+                    "obj": src.player.Player(data["pos"]),
                     "facing": "right",
-                    "pos": position["pos"],
+                    "pos": data["pos"],
                     "movement": "still"
                 }
             
@@ -58,8 +58,8 @@ class Cutscenes(src.scene_base.SceneBase):
                 self.objects[name] = {
                     "anim": self.entitiesAnimList[name],
                     "facing": "right",
-                    "pos": position["pos"],
-                    "room": position["room"],
+                    "pos": data["pos"],
+                    "room": data["room"],
                     "movement": "still"
                 }
 
@@ -67,12 +67,12 @@ class Cutscenes(src.scene_base.SceneBase):
                 if isinstance(self.entitiesAnimList[name], dict):
                     self.objects[name]["playingAnim"] = "idle"
                 
-            elif name in self.tileRenderer.tileAnims:
-                self.tileObjects.append({
-                    "anim": self.tileRenderer.tileAnims[name]["default"],
-                    "pos": position["pos"],
-                    "moveTo": position["pos"],
-                })
+            elif data["tile"] in self.tileRenderer.tileAnims:
+                self.tileObjects[name] = {
+                    "anim": self.tileRenderer.tileAnims[data["tile"]]["default"],
+                    "pos": data["pos"],
+                    "moveTo": data["pos"]
+                }
             
             else:
                 raise Exception(f"Error: Unknown entity {name}")
@@ -185,6 +185,16 @@ class Cutscenes(src.scene_base.SceneBase):
                     
                     elif comm[1] == "jump":
                         self.playerCanJump = (comm[2] == "can")
+                
+                elif comm[0] in self.tileObjects:
+                    if comm[1] == "moveTo":
+                        self.tileObjects[comm[0]]["moveTo"] = (int(comm[2]), int(comm[3]))
+                    
+                    elif comm[1] == "teleport":
+                        self.tileObjects[comm[0]]["pos"] = (int(comm[2]), int(comm[3]))
+
+                        if comm[4] == "moveTo":
+                            self.tileObjects[comm[0]]["moveTo"] = (int(comm[2]), int(comm[3]))
 
                 elif comm[0] == "text":
                     if comm[1] == "create":

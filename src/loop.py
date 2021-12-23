@@ -173,6 +173,15 @@ class Loop(src.scene_base.SceneBase):
         self.load_save()
         self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
         self.scenes["cutscene"].update_crystals(self.crystals)
+    
+
+    # Returns a result given a command
+    # Checks if there are still missing crystals
+    def check_crystals(self, command) -> bool:
+        if command == "all crystals":
+            return 0 not in self.crystals
+        elif command == "not all crystals":
+            return 0 in self.crystals
 
 
     # This method updates the scene the game is in, along with the window class.
@@ -236,12 +245,19 @@ class Loop(src.scene_base.SceneBase):
             result = self.scenes[self.scene].update(self.window)
 
             if result is not None:
+                if result == "crystal mid-level":
+                    if self.check_crystals(self.levelData[self.level]["crystal moves on"]):
+                        result = "crystal"
+                    else:
+                        return None # Doesn't run the rest of the code
+
                 if result == "crystal": # Crystal collected
                     # Gets the crystal id of the level
                     # Getting rid of cutscenes from the level id because cutscenes
                     # don't have crystals
-                    crystalCount = self.remove_cutscenes(self.level) 
-                    self.crystals[crystalCount] = 1
+                    if "crystal moves on" not in self.levelData[self.level]:
+                        crystalCount = self.remove_cutscenes(self.level)
+                        self.crystals[crystalCount] = 1
                 
                 if result != "restart": # Increments level and switches to new level
                     self.increment_index()
@@ -288,35 +304,31 @@ class Loop(src.scene_base.SceneBase):
     def switch_to_new_scene(self, level):
         # Checking if the level is an ending
         if level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
-            # Iterating through from 0 to the amount of endings there are
-            for lvl in range(constants.AMOUNT_OF_ENDINGS):
-                # level being checked
-                levelID = len(self.levels) - constants.AMOUNT_OF_ENDINGS + lvl
-                # If the ending wants all crystals to have been collected
-                # and there are no missing crystals
-                allCrystalsCheck = self.levelData[levelID]["ending"] == "all crystals" and 0 not in self.crystals
-                # If the ending wants not all crystals to have been collected
-                # and there is at least one missing crystal
-                notAllCrystalsCheck = self.levelData[levelID]["ending"] == "not all crystals" and 0 in self.crystals
-
-                if allCrystalsCheck or notAllCrystalsCheck:
-                    level += lvl # Setting to that ending
-                    utility.modif_save({"unlockedEnding": lvl + 1}) # Saving the ending
-                    self.scenes["mainMenu"].ending = lvl + 1
-                    break
+            # If the player hasn't unlocked an ending yet
+            if utility.load_save()["unlockedEnding"] == -1:
+                # Iterating through from 0 to the amount of endings there are
+                for lvl in range(constants.AMOUNT_OF_ENDINGS):
+                    # level being checked
+                    levelID = len(self.levels) - constants.AMOUNT_OF_ENDINGS + lvl
+                    
+                    if self.check_crystals(self.levelData[levelID]["ending"]):
+                        level += lvl # Setting to that ending
+                        utility.modif_save({"unlockedEnding": lvl + 1}) # Saving the ending
+                        self.scenes["mainMenu"].ending = lvl + 1
+                        break
 
 
         if self.levelsList[level] == "Normal Level":
             # Sets up normal level
             self.scene = "playing"
-            self.scenes["playing"].setup(level, self.crystals[self.remove_cutscenes(level)])
+            self.scenes["playing"].setup(level, self.crystals, self.remove_cutscenes(level))
             self.scenes["playing"].popup(f"Level {self.remove_cutscenes(level) + 1}")
             self.scenes["bossLevel"].music_stopped()
         
         elif self.levelsList[level] == "Boss Level":
             # Sets up boss level
             self.scene = "bossLevel"
-            self.scenes["bossLevel"].setup(self.levelData[level]["boss"], level, self.crystals[self.remove_cutscenes(level)])
+            self.scenes["bossLevel"].setup(self.levelData[level]["boss"], level, self.crystals, self.remove_cutscenes(level))
             self.scenes["bossLevel"].popup(f"Level {self.remove_cutscenes(level) + 1}")
             self.scenes["playing"].music_stopped()
 

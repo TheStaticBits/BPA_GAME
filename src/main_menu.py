@@ -102,34 +102,40 @@ class MainMenu(src.scene_base.SceneBase):
         # Iterating through all buttons
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs): # If the button was pressed
+                # Finds the last normal level's id
+                last_normal_level = max(
+                    utility.find_last_item(self.levelsList, "Boss Level"), 
+                    utility.find_last_item(self.levelsList, "Normal Level")
+                )
+                
                 if key == "left": # If the button was the left arrow in the level selector
                     # If the level displayed is one of the endings, set it to the last non-ending level
-                    if self.lvlsIndex == len(self.levelsList) - 1 - self.ending:
-                        self.lvlsIndex = len(self.levelsList) - 1 - constants.AMOUNT_OF_ENDINGS
+                    if self.lvlsIndex > last_normal_level:
+                        self.lvlsIndex = last_normal_level
                     else:
                         self.lvlsIndex -= 1
                         # If it went below zero
                         if self.lvlsIndex < 0:
                             if self.ending == -1: # If the player has not gotten to an ending
                                 # setting it to the last level that is not an ending
-                                self.lvlsIndex = len(self.levelsList) - 1 - constants.AMOUNT_OF_ENDINGS
+                                self.lvlsIndex = last_normal_level
                             else:
                                 # Setting it to the ending the player got
-                                self.lvlsIndex = len(self.levelsList) - 1 - self.ending
+                                self.lvlsIndex = last_normal_level + self.ending
                 
                 elif key == "right": # if the button pressed was the right arrow
                     # If the level selected at the time was an ending, set it to the first level
-                    if self.lvlsIndex == len(self.levelsList) - 1 - self.ending:
+                    if self.lvlsIndex > last_normal_level:
                         self.lvlsIndex = 0
                     else:
                         self.lvlsIndex += 1
                         # If the new level is an ending
-                        if self.lvlsIndex >= len(self.levelsList) - constants.AMOUNT_OF_ENDINGS:
+                        if self.lvlsIndex > last_normal_level:
                             if self.ending == -1: # If the player hasn't gotten an ending
                                 self.lvlsIndex = 0 # Setting to first level
                             else:
                                 # Setting to the ending the player got
-                                self.lvlsIndex = len(self.levelsList) - 1 - self.ending
+                                self.lvlsIndex = last_normal_level + self.ending
                     
                 elif key == "play":
                     if self.get_status(self.lvlsIndex)[0] != "Locked":
@@ -180,7 +186,7 @@ class MainMenu(src.scene_base.SceneBase):
         self.render_text(window, levelStatus, (255, constants.SCREEN_SIZE[1] / 2 + 45), color)
 
         # If the level isn't a cutscene
-        if "cutscene" not in self.levelData[self.lvlsIndex]:
+        if "cutscene" not in self.levelData[self.lvlsIndex]and "crystal moves on" not in self.levelData[self.lvlsIndex]:
             # Rendering the little crystal icon for whether you've gotten it or not
             if self.crystals[self.remove_cutscenes(self.lvlsIndex)]:
                 window.blit(self.crystal_check, (218, constants.SCREEN_SIZE[1] / 2 + 22))
