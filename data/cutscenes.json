@@ -897,15 +897,16 @@
         }
     },
 
-    "Nothing There Is": {
+    "True Ending": {
         "start": {
-            "player": {"pos": [320, 64]},
+            "player": {"pos": [320, 80]},
             "corlen": {"pos": [296, 80], "room": 0},
-            "ellipse": {"pos": [272, 80], "room": 0}
+            "ellipse": {"pos": [272, 80], "room": 0},
+            "bigBite": {"pos": [-50, 20], "room": 0}
         },
         "time_commands": {
             "0": [
-                "run bosses come"
+                "bigBite walk right"
             ]
         }
     }
