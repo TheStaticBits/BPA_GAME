@@ -1496,7 +1496,7 @@ WWWWWWWWWWWWWWWWWWWWWWWW
 ------------------------
 
 background = o
-music = OneLastDayInParadiseV2
+music = FINALE
 cutscene = True Ending
 ending = all crystals
 ------------------------
@@ -1514,3 +1514,19 @@ ending = all crystals
                ooooooooo
                ooooooooo
                ooooooooo
+||||||||||||||||||||||||
+
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+wwwwwwwwwwwwwwwwwwwwwwww

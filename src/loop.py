@@ -316,6 +316,10 @@ class Loop(src.scene_base.SceneBase):
                         utility.modif_save({"unlockedEnding": lvl + 1}) # Saving the ending
                         self.scenes["mainMenu"].ending = lvl + 1
                         break
+            
+            else:
+                # Setting the level to the ending that was unlocked
+                level = len(self.levels) - constants.AMOUNT_OF_ENDINGS + int(utility.load_save()["unlockedEnding"]) - 1
 
 
         if self.levelsList[level] == "Normal Level":

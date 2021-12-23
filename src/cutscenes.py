@@ -71,7 +71,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 
             elif data["tile"] in self.tileRenderer.tileAnims:
                 self.tileObjects[name] = {
-                    "anim": self.tileRenderer.tileAnims[data["tile"]]["default"],
+                    "anim": self.tileRenderer.tileAnims[data["tile"]]["default"].copy(),
                     "pos": data["pos"],
                     "moveTo": data["pos"]
                 }
@@ -193,9 +193,9 @@ class Cutscenes(src.scene_base.SceneBase):
                         self.tileObjects[comm[0]]["moveTo"] = (int(comm[2]), int(comm[3]))
                     
                     elif comm[1] == "teleport":
-                        self.tileObjects[comm[0]]["pos"] = (int(comm[2]), int(comm[3]))
+                        self.tileObjects[comm[0]]["pos"] = [int(comm[2]), int(comm[3])]
 
-                        if comm[4] == "moveTo":
+                        if len(comm) == 5 and comm[4] == "moveTo":
                             self.tileObjects[comm[0]]["moveTo"] = (int(comm[2]), int(comm[3]))
 
                 elif comm[0] == "text":
@@ -242,13 +242,15 @@ class Cutscenes(src.scene_base.SceneBase):
                 
                 elif comm[0] == "shake":
                     self.screenShake = (comm[1] == "start")
-
                 
                 elif comm[0] == "run": # Runs a conditional
                     self.runningConditionals.append(comm[1])
                     
                     if "once" in comm:
                         self.onceConditionals.append(comm[1])
+                
+                elif comm[0] == "music":
+                    utility.play_music(comm[1])
                 
                 elif comm[0] == "delay": # Starts a delay
                     self.delays[comm[2]] = int(comm[1])
@@ -257,7 +259,7 @@ class Cutscenes(src.scene_base.SceneBase):
                     return comm[0]
 
         except Exception as exc:
-            raise Exception(f"Error occured in command: {command}\nCommand: {exc}")
+            raise Exception(f"Error occured in cutscene command: {command}\nCommand: {exc}")
 
 
     def run_conditional(self, conditional):
@@ -314,6 +316,8 @@ class Cutscenes(src.scene_base.SceneBase):
     def get_anim_obj(self, name, data) -> "src.animation.Animation":
         if name == "player":
             return data["obj"].animations[data["obj"].currentAnim]
+        elif name == "redStare":
+            return data["anim"]["body"]
         elif "playingAnim" in data:
             return data["anim"][data["playingAnim"]]
         else:
@@ -366,8 +370,12 @@ class Cutscenes(src.scene_base.SceneBase):
 
         # Moving objects
         for name, dat in self.objects.items():
+            # Updating animations of the objects
             if name != "player":
-                if "playingAnim" in dat:
+                if name == "redStare":
+                    dat["anim"]["body"].update()
+                    dat["anim"]["mouth"].update()
+                elif "playingAnim" in dat:
                     dat["anim"][dat["playingAnim"]].update()
                 else:
                     dat["anim"].update()
@@ -403,8 +411,8 @@ class Cutscenes(src.scene_base.SceneBase):
                 dat["pos"] = dat["obj"].rect.topleft
 
 
-            elif dat["movement"] != "still":
-                if "playingAnim" in dat:
+            if dat["movement"] != "still":
+                if "playingAnim" in dat and name != "redStare":
                     if dat["playingAnim"] != "walk":
                         dat["anim"]["walk"].reset()
                         dat["playingAnim"] = "walk"
@@ -447,7 +455,7 @@ class Cutscenes(src.scene_base.SceneBase):
 
 
             else:
-                if "playingAnim" in dat:
+                if "playingAnim" in dat and name != "redStare":
                     if dat["playingAnim"] != "idle":
                         dat["anim"]["idle"].reset()
                         dat["playingAnim"] = "idle"
@@ -455,16 +463,16 @@ class Cutscenes(src.scene_base.SceneBase):
                     dat["obj"].switch_anim("idle")
         
         # Moving and updating tile objects
-        for t in self.tileObjects:
-            t["anim"].update_animation()
+        for t in self.tileObjects.values():
+            t["anim"].update()
 
             if t["pos"] != t["moveTo"]:
                 degrees = utility.angle_to(t["pos"], t["moveTo"])
                 
-                t["pos"][0] += math.cos(degrees)
-                t["pos"][1] += math.sin(degrees)
+                t["pos"][0] += math.cos(degrees) * 2
+                t["pos"][1] += math.sin(degrees) * 2
 
-                if utility.distance(t["pos"], t["moveTo"]) < 1:
+                if utility.distance_to(t["pos"], t["moveTo"]) < 1:
                     t["pos"] = t["moveTo"]
             
         self.timer += 1
@@ -482,17 +490,26 @@ class Cutscenes(src.scene_base.SceneBase):
         for name, dat in self.objects.items():
             if name == "player" and not self.playerControlled or name != "player":
                 if name == "player" or dat["room"] == self.room:
-                    image = self.get_anim_obj(name, dat).get_frame()
-                    
-                    image = pygame.transform.flip(image, dat["facing"] == "left", False)
+                    if name != "redStare":
+                        image = self.get_anim_obj(name, dat).get_frame()
+                        
+                        image = pygame.transform.flip(image, dat["facing"] == "left", False)
 
-                    self.screen.blit(image, dat["pos"])
+                        self.screen.blit(image, dat["pos"])
+                    
+                    else:
+                        dat["anim"]["body"].render(self.screen, dat["pos"])
+                        dat["anim"]["mouth"].render(
+                            self.screen, 
+                            (dat["pos"][0] + constants.RED_STARE_MOUTH_OFFSET[0], 
+                             dat["pos"][1] + constants.RED_STARE_MOUTH_OFFSET[1])
+                        )
             
             else:    
                 self.objects["player"]["obj"].render(self.screen)
 
         
-        for dat in self.tileObjects:
+        for dat in self.tileObjects.values():
             dat["anim"].render(self.screen, dat["pos"])
 
         if self.fadeImage is not None:
