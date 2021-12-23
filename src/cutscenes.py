@@ -19,6 +19,8 @@ class Cutscenes(src.scene_base.SceneBase):
 
         self.tileRenderer = src.tile_renderer.TileRenderer()
         
+        self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
+        
         self.room = 0
         self.timer = 0
 
@@ -527,3 +529,5 @@ class Cutscenes(src.scene_base.SceneBase):
         
         else:
             window.blit(self.screen, (0, 0))
+        
+        window.blit(self.screenShadow, (0, 0))
