@@ -4,7 +4,6 @@ import math
 
 import src.scene_base
 import src.player
-import src.ellipse_and_corlen as eac
 import src.utility as utility
 import src.constants as constants
 import src.animation

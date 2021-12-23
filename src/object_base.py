@@ -3,7 +3,6 @@ from math import floor
 
 import src.constants as constants
 import src.utility as utility
-import src.animation
 
 """
 Base object class
