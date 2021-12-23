@@ -361,6 +361,9 @@ class Cutscenes(src.scene_base.SceneBase):
             if result is not None:
                 return result
         
+        # Updating player animation
+        self.objects["player"]["obj"].update_animation()
+
         # Moving objects
         for name, dat in self.objects.items():
             if name != "player":
@@ -369,7 +372,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 else:
                     dat["anim"].update()
 
-            if name == "player" and self.playerControlled:
+            elif name == "player" and self.playerControlled:
                 if not self.playerCanJump:
                     inputs["up"] = False
 
@@ -407,7 +410,6 @@ class Cutscenes(src.scene_base.SceneBase):
                         dat["playingAnim"] = "walk"
                 elif name == "player":
                     dat["obj"].switch_anim("walk")
-                    dat["obj"].update_animation()
                 
                 width = self.get_anim_obj(name, dat).get_image_width()
 
@@ -451,7 +453,6 @@ class Cutscenes(src.scene_base.SceneBase):
                         dat["playingAnim"] = "idle"
                 elif name == "player":
                     dat["obj"].switch_anim("idle")
-                    dat["obj"].update_animation()
         
         # Moving and updating tile objects
         for t in self.tileObjects:
