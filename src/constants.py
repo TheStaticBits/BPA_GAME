@@ -88,6 +88,7 @@ AMOUNT_OF_ENDINGS = 2
 # Solid Tiles
 # first value indicating the string in the level layout
 # second value is the folder name of the tile
+# (solid tiles are stored in res/tiles/solid/[tile name]/)
 TILE_KEYS = {
     "w": "default",
     "o": "crystal",
@@ -95,6 +96,7 @@ TILE_KEYS = {
     "d": "dirt",
     "e": "blank",
     "b": "darkness",
+    "u": "blumech",
     "l": "blue",
     "W": "white"
 }
