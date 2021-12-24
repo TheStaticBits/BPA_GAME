@@ -1055,20 +1055,20 @@ eeeeeeeeeeeeeeeeeeeeeeee
 background = b
 music = Blue
 ------------------------
-o><^v                   
-o                       
-o p                     
-oooo                    
-o                       
-o                       
-o                       
-o                       
-o                       
-o                       
-o                       
-o                       
-o                       
-o                       
+o><^v    oo             
+o        oo             
+o        oo             
+o        oo             
+o p  ^^  oo  oo         
+ooooooo  oo  oo         
+ooooooo  oo  oo         
+ooooooo  oo  oo         
+o        vv  oo         
+o            oo         
+o            oo         
+o            oo         
+ooooooooooooooo         
+ooooooooooooooo         
 ||||||||||||||||||||||||
 o><^v                   
                         

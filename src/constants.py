@@ -139,7 +139,8 @@ SPIKE_ROTATIONS = {
 
 # Tiles which when used as the background tile, use a bright spike
 TILES_USING_BRIGHT_SPIKE = (
-    "e"
+    "e",
+    "b"
 )
 # Tiles that do not have shading when used as a background tile
 TILES_WITHOUT_SHADING = (
