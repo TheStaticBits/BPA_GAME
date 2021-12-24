@@ -116,9 +116,10 @@ class Cutscenes(src.scene_base.SceneBase):
         self.defaultText = {
             "text": "",
             "show": False,
-            "position": (0, 0),
+            "pos": [0, 0],
             "color": constants.WHITE,
-            "displayWaveX": 0
+            "displayWaveX": 0,
+            "movable": False
         }
 
         self.fadeImage = None
@@ -202,6 +203,12 @@ class Cutscenes(src.scene_base.SceneBase):
                     if comm[1] == "create":
                         self.texts[comm[2]] = self.defaultText.copy()
                     
+                    elif comm[1] == "createMovable":
+                        self.texts[comm[2]] = self.defaultText.copy()
+                        del self.texts[comm[2]]["displayWaveX"]
+                        self.texts[comm[2]]["movable"] = True
+                        self.texts[comm[2]]["moveTo"] = self.texts[comm[2]]["pos"]
+                    
                     else:
                         key = comm[1]
 
@@ -213,9 +220,11 @@ class Cutscenes(src.scene_base.SceneBase):
                         elif comm[2] == "change":
                             self.texts[key]["text"] = " ".join(comm[3:])
                         elif comm[2] == "move":
-                            self.texts[key]["position"] = (int(comm[3]), int(comm[4])) 
+                            self.texts[key]["pos"] = [int(comm[3]), int(comm[4])]
                         elif comm[2] == "color":
                             self.texts[key]["color"] = (int(comm[3]), int(comm[4]), int(comm[5]))
+                        elif comm[2] == "travel":
+                            self.texts["moveTo"] = (int(comm[3]), int(comm[4]))
                 
 
                 # The fade command fades an image slowly onto the screen until the transparency is 255
@@ -322,6 +331,19 @@ class Cutscenes(src.scene_base.SceneBase):
             return data["anim"][data["playingAnim"]]
         else:
             return data["anim"]
+    
+
+    def move(self, position, moveTo, speed) -> list:
+        degrees = utility.angle_to(position, moveTo)
+        
+        position[0] += math.cos(degrees) * speed
+        position[1] += math.sin(degrees) * speed
+
+        if utility.distance_to(position, moveTo) < 1:
+            position = moveTo
+
+        return position
+
 
 
     def update(self, window):
@@ -467,13 +489,12 @@ class Cutscenes(src.scene_base.SceneBase):
             t["anim"].update()
 
             if t["pos"] != t["moveTo"]:
-                degrees = utility.angle_to(t["pos"], t["moveTo"])
-                
-                t["pos"][0] += math.cos(degrees) * 2
-                t["pos"][1] += math.sin(degrees) * 2
-
-                if utility.distance_to(t["pos"], t["moveTo"]) < 1:
-                    t["pos"] = t["moveTo"]
+                t["pos"] = self.move(t["pos"], t["moveTo"], 2)
+        
+        # Moving text that is still
+        for text in self.texts.values():
+            if text["movable"]:
+                text["pos"] = self.move(text["pos"], text["moveTo"], 0.5)
             
         self.timer += 1
 
@@ -526,15 +547,20 @@ class Cutscenes(src.scene_base.SceneBase):
         # Going through all text objects and rendering them
         for text in self.texts.values():
             if text["show"]:
-                text["displayWaveX"] += 0.05
+                if not text["movable"]:
+                    text["displayWaveX"] += 0.05
 
-                textYOffset = math.sin(text["displayWaveX"]) * 5
+                    textYOffset = math.sin(text["displayWaveX"]) * 5
+                
+                else:
+                    textYOffset = 0
+
                 fullText = text["text"].split("\n")
 
                 for count, t in enumerate(fullText):
                     renderText = self.textObject.render(t, False, text["color"])
 
-                    position = (text["position"][0] - renderText.get_width() / 2, text["position"][1] + textYOffset + count * 12)
+                    position = (text["pos"][0] - renderText.get_width() / 2, text["pos"][1] + textYOffset + count * 12)
 
                     utility.draw_text_with_border(self.screen, position, t, self.textObject, text["color"], renderText = renderText)
         
