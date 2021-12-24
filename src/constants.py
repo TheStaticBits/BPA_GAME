@@ -2,6 +2,7 @@ import pygame
 
 import src.utility as utility
 
+"""  File paths for multiple things  """
 SAVE_PATH = "saves/save.db"
 EVENT_LOG_PATH = "saves/events.log"
 
@@ -28,13 +29,15 @@ CRYSTAL_X_PATH = "res/ui/crystal_x.png"
 
 PAUSE_BUTTON_PATH = "res/ui/pause_button.png"
 
+
 BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower buttons fills up when hovering a mouse over it.
 
 SCREEN_SHAKE_POWER = 2 # How intense screenshakes are (in cutscenes)
 
-POPUP_TEXT_DURATION = 60
-POPUP_TEXT_FADE_SPEED = 4
+POPUP_TEXT_DURATION = 60 # How long the popup text stays on screen until it starts fading
+POPUP_TEXT_FADE_SPEED = 4 # How quickly the popup text fades out
 
+# Color constants for easy access
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
@@ -83,7 +86,7 @@ DEFAULT_SAVE = {
     "unlockedEnding": -1
 }
 
-AMOUNT_OF_ENDINGS = 2
+AMOUNT_OF_ENDINGS = 2 # How many endings there are
 
 # Solid Tiles
 # first value indicating the string in the level layout
@@ -156,12 +159,12 @@ NO_ROTATE_TILES = (
 # These tiles have animations
 TILES_WITH_ANIMATIONS = utility.load_json("res/tiles/animated/anim_dat.json")
 
+# Animation data for the Player, Ellipse, and Corlen
 PLAYER_ANIMATIONS = utility.load_json("res/characters/player/animations.json")
-PLAYER_WIDTH = 8
-
 ELLIPSE_ANIMATIONS = utility.load_json("res/characters/ellipse/animations.json")
-
 CORLEN_ANIMATIONS = utility.load_json("res/characters/corlen/animations.json")
+
+PLAYER_WIDTH = 8 # In pixels
 
 # The Belloq is the first boss
 # This holds the animations for the Belloq, their paths, frames, and delays
@@ -170,15 +173,15 @@ BELLOQ_SPEED = 0.5 # Pixels moved per frame
 BELLOQ_COOLDOWN = 80 # Frames between lazers
 BELLOQ_LAZER_OFFSET = (33, 17) # Position of the eye in relation to the top left of the sprite
 # Where the lazer fires from
+
 BELLOQ_LAZER_ACCURACY = 0.2 # A random number chosen between the negative of this number and the positive of this number will be added onto the lazer's direction
 # Can only be up to the hundreths in decimal places
 # Is in randians
 # If it's zero, it will have perfect accuracy
 
-# Belloq boss constants
-LAZER_SPEED = 2
-LAZER_LENGTH = 20
-LAZER_COLOR = (255, 255, 0)
+LAZER_SPEED = 2 # Pixels moved per frame
+LAZER_LENGTH = 20 # Length of each lazer in pixels
+LAZER_COLOR = (255, 255, 0) # Color of the lazer
 
 # Big Bite Boss constants
 BIG_BITE_ANIM_PATH = "res/characters/big_bite/anim.png"
