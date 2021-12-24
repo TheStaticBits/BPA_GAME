@@ -950,7 +950,10 @@
         "conditionals": {
             "belloqDoneWalking": "belloq x > 20",
             "bigBiteDoneWalking": "bigBite x > 20",
-            "redStareDoneWalking": "redStare x > 20"
+            "redStareDoneWalking": "redStare x > 20",
+            "fadeBlueDone": "fade done",
+            "corlenOffscreen": "corlen room == 1",
+            "corlenBack": "corlen room == 0 and corlen x <= 334"
         },
         "cond_commands": {
             "belloqDoneWalking": ["belloq walk still"],
@@ -964,8 +967,31 @@
             ], "c2Move": [
                 "c2 teleport 314 80",
                 "c2 moveTo 176 16",
+
+                "text create corlen",
+                "text corlen color 252 227 3",
+                "text corlen move 342 68",
+                "text corlen change What's going on??",
+                "text corlen display",
+
+                "delay 120 ellipseTalk",
                 "delay 10 c3Move"
-            ], "c3Move": [
+            ], 
+            
+            "ellipseTalk": [
+                "text corlen hide",
+
+                "text create ellipse",
+                "text ellipse move 366 68",
+                "text ellipse change ...",
+                "text ellipse display",
+
+                "delay 120 ellipseHide"
+            ], "ellipseHide": [
+                "text ellipse hide"
+            ],
+            
+            "c3Move": [
                 "c3 teleport 314 80",
                 "c3 moveTo 176 32",
                 "delay 10 c4Move"
@@ -1013,7 +1039,107 @@
                 "c14 teleport 314 80",
                 "c14 moveTo 176 208",
                 "delay 10 c15Move"
-            ], "c15Move": []
+            ], "c15Move": [
+                "c15 teleport 314 80",
+                "c15 moveTo 192 0",
+                "delay 10 c16Move"
+            ], "c16Move": [
+                "c16 teleport 314 80",
+                "c16 moveTo 192 32",
+                "delay 10 c17Move"
+            ], "c17Move": [
+                "c17 teleport 314 80",
+                "c17 moveTo 192 64",
+                "delay 10 c18Move"
+            ], "c18Move": [
+                "c18 teleport 314 80",
+                "c18 moveTo 192 96",
+                "delay 10 c19Move"
+            ], "c19Move": [
+                "c19 teleport 314 80",
+                "c19 moveTo 192 128",
+                "delay 10 c20Move"
+            ], "c20Move": [
+                "c20 teleport 314 80",
+                "c20 moveTo 192 160",
+                "delay 10 c21Move"
+            ], "c21Move": [
+                "c18 teleport 314 80",
+                "c18 moveTo 192 192",
+
+                "delay 10 fadeBlue"
+            ],
+
+            "fadeBlue": [
+                "fade 2 59 129 255",
+                "run fadeBlueDone"
+            ],
+
+            "fadeBlueDone": [
+                "belloq teleport -70 5",
+                "bigBite teleport -70 75",
+                "redStare teleport -80 160",
+                "delay 30 clear"
+            ], "clear": [
+                "fade clear",
+                "delay 30 didWe"
+            ], "didWe": [
+                "text corlen change Did we-",
+                "text corlen display",
+
+                "delay 60 hidey"
+            ], "hidey": [
+                "text corlen hide",
+                "delay 10 didWeJust"
+            ], "didWeJust": [
+                "text corlen change Did we just...",
+                "text corlen display",
+
+                "delay 60 anotherHidey"
+            ], "anotherHidey": [
+                "text corlen hide",
+                "delay 10 defeatBelloq"
+            ], "defeatBelloq": [
+                "text corlen change Defeat the Belloq??",
+                "text corlen display",
+                "delay 130 ellipseeedot"
+            ], "ellipseeedot": [
+                "text corlen hide", 
+                "text ellipse display",
+                "delay 160 didIt!"
+            ], "didIt!": [
+                "text corlen change We... We did it!",
+                "text corlen display",
+                "delay 130 ellipseExclamationMark"
+            ], "ellipseExclamationMark": [
+                "text corlen hide",
+                "text ellipse change ..!",
+                "text ellipse display",
+                "delay wait"
+            ], "wait": [
+                "corlen face right",
+                "text corlen change Wait,",
+                "text corlen display",
+                "delay whatOutThere"
+            ], "whatOutThere": [
+                "text corlen change What's out there?",
+                "delay 140 checky"
+            ], "checky": [
+                "text corlen hide",
+                "corlen walk right",
+                "run corlenOffscreen"
+            ],
+
+            "corlenOffscreen": [
+                "corlen walk left",
+                "run corlenBack"
+            ],
+
+            "corlenBack": [
+                "text corlen change There is nothing,\njust an endless void.",
+                "text corlen move 342 53",
+                "text corlen display"
+            ]
         }
     }
 }
