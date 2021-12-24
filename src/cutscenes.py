@@ -532,16 +532,6 @@ class Cutscenes(src.scene_base.SceneBase):
         
         for dat in self.tileObjects.values():
             dat["anim"].render(self.screen, dat["pos"])
-
-        if self.fadeImage is not None:
-            if not self.fadeDone:
-                self.fadeProgress += self.fadeSpeed
-
-                if self.fadeProgress >= 255:
-                    self.fadeDone = True
-            
-            self.fadeImage.set_alpha(self.fadeProgress)
-            self.screen.blit(self.fadeImage, (0, 0))
         
 
         # Going through all text objects and rendering them
@@ -577,3 +567,13 @@ class Cutscenes(src.scene_base.SceneBase):
             window.blit(self.screen, (0, 0))
         
         window.blit(self.screenShadow, (0, 0))
+
+        if self.fadeImage is not None:
+            if not self.fadeDone:
+                self.fadeProgress += self.fadeSpeed
+
+                if self.fadeProgress >= 255:
+                    self.fadeDone = True
+            
+            self.fadeImage.set_alpha(self.fadeProgress)
+            window.blit(self.fadeImage, (0, 0))

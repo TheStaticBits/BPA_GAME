@@ -970,7 +970,7 @@
 
                 "text create corlen",
                 "text corlen color 252 227 3",
-                "text corlen move 342 68",
+                "text corlen move 342 58",
                 "text corlen change What's going on??",
                 "text corlen display",
 
@@ -982,7 +982,7 @@
                 "text corlen hide",
 
                 "text create ellipse",
-                "text ellipse move 366 68",
+                "text ellipse move 366 58",
                 "text ellipse change ...",
                 "text ellipse display",
 
@@ -1041,37 +1041,37 @@
                 "delay 10 c15Move"
             ], "c15Move": [
                 "c15 teleport 314 80",
-                "c15 moveTo 192 0",
+                "c15 moveTo 192 8",
                 "delay 10 c16Move"
             ], "c16Move": [
                 "c16 teleport 314 80",
-                "c16 moveTo 192 32",
+                "c16 moveTo 192 40",
                 "delay 10 c17Move"
             ], "c17Move": [
                 "c17 teleport 314 80",
-                "c17 moveTo 192 64",
+                "c17 moveTo 192 72",
                 "delay 10 c18Move"
             ], "c18Move": [
                 "c18 teleport 314 80",
-                "c18 moveTo 192 96",
+                "c18 moveTo 192 104",
                 "delay 10 c19Move"
             ], "c19Move": [
                 "c19 teleport 314 80",
-                "c19 moveTo 192 128",
+                "c19 moveTo 192 136",
                 "delay 10 c20Move"
             ], "c20Move": [
                 "c20 teleport 314 80",
-                "c20 moveTo 192 160",
+                "c20 moveTo 192 168",
                 "delay 10 c21Move"
             ], "c21Move": [
-                "c18 teleport 314 80",
-                "c18 moveTo 192 192",
+                "c21 teleport 314 80",
+                "c21 moveTo 192 200",
 
-                "delay 10 fadeBlue"
+                "delay 100 fadeBlue"
             ],
 
             "fadeBlue": [
-                "fade 2 59 129 255",
+                "fade 3 59 129 255",
                 "run fadeBlueDone"
             ],
 
@@ -1102,12 +1102,13 @@
             ], "defeatBelloq": [
                 "text corlen change Defeat the Belloq??",
                 "text corlen display",
-                "delay 130 ellipseeedot"
+                "delay 150 ellipseeedot"
             ], "ellipseeedot": [
                 "text corlen hide", 
                 "text ellipse display",
                 "delay 160 didIt!"
             ], "didIt!": [
+                "text ellipse hide",
                 "text corlen change We... We did it!",
                 "text corlen display",
                 "delay 130 ellipseExclamationMark"
@@ -1115,12 +1116,13 @@
                 "text corlen hide",
                 "text ellipse change ..!",
                 "text ellipse display",
-                "delay wait"
+                "delay 150 wait"
             ], "wait": [
+                "text ellipse hide",
                 "corlen face right",
                 "text corlen change Wait,",
                 "text corlen display",
-                "delay whatOutThere"
+                "delay 100 whatOutThere"
             ], "whatOutThere": [
                 "text corlen change What's out there?",
                 "delay 140 checky"
@@ -1131,13 +1133,16 @@
             ],
 
             "corlenOffscreen": [
+                "delay 60 walkBack"
+            ], "walkBack": [
                 "corlen walk left",
                 "run corlenBack"
             ],
 
             "corlenBack": [
+                "corlen walk still",
                 "text corlen change There is nothing,\njust an endless void.",
-                "text corlen move 342 53",
+                "text corlen move 342 43",
                 "text corlen display"
             ]
         }
