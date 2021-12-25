@@ -633,7 +633,7 @@ d><^v
 
 background = d
 music = Darkened
-cutscene = Into Darkness
+cutscene = Into Dark
 ------------------------
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
@@ -1034,7 +1034,7 @@ e><^v
 
 background = e
 music = Blue
-cutscene = Light Returns
+cutscene = Light Ahead
 ------------------------
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee

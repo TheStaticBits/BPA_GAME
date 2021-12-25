@@ -516,7 +516,7 @@
         }
     },
 
-    "Into Darkness": {
+    "Into Dark": {
         "start": {
             "player": {"pos": [0, 128]},
             "corlen": {"pos": [-24, 128], "room": 0},
@@ -601,7 +601,7 @@
         }
     },
 
-    "Light Returns": {
+    "Light Ahead": {
         "start": {
             "player": {"pos": [0, 128]},
             "corlen": {"pos": [-24, 128], "room": 0},

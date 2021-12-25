@@ -20,7 +20,7 @@ MAIN_MENU_LEVEL_PATH = "data/menu_level.txt"
 
 EMAIL_PWD_PATH = "data/emailpassword.txt"
 
-MUSIC_FOLDER = "res/sound"
+MUSIC_FOLDER = "res/sound/music"
 
 SCREEN_SHADOW_PATH = "res/game/shadow.png"
 
