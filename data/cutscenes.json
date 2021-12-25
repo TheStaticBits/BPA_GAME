@@ -1073,7 +1073,7 @@
             ],
 
             "fadeBlue": [
-                "fade 3 59 129 255",
+                "fade 3 166 198 255",
                 "run fadeBlueDone"
             ],
 
