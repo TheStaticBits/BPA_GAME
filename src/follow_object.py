@@ -61,10 +61,6 @@ class FollowObject(src.object_base.ObjectBase):
         super().update_animation()
 
         if len(playerPositions) > self.followDistance: # If the player has moved far enough for the object to start following 
-            self.level, self.room = playerLevelAndRoom[self.followDistance] # Setting level and room
-
-            self.facing = playerFacing[self.followDistance - self.followContinueFrames] # Setting facing
-            
             if not playerMoved: # If the player hasn't moved
                 # self.followDistance is a variable which describes how far 
                 # forward the object is in frames from where it was before the player
@@ -83,6 +79,10 @@ class FollowObject(src.object_base.ObjectBase):
                 if self.followContinueFrames > 0:
                     if self.rect.y == playerPositions[0][1] or self.check_below(levels[self.level]): # If the entity is not in need of changing
                         self.followContinueFrames -= 1
+            
+            self.level, self.room = playerLevelAndRoom[self.followDistance - self.followContinueFrames] # Setting level and room
+
+            self.facing = playerFacing[self.followDistance - self.followContinueFrames] # Setting facing
 
             # Distance the object moved
             xMoved = (
