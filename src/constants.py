@@ -30,6 +30,14 @@ CRYSTAL_X_PATH = "res/ui/crystal_x.png"
 PAUSE_BUTTON_PATH = "res/ui/pause_button.png"
 
 
+# Level editing in normal levels
+LEVEL_EDITING = True
+# Controls for level editing in normal levels:
+# Right click: Changes tile the mouse is hovering over to air
+# Middle click: Copies tile the mouse is hovering over, so it places that tile when you left click
+# Left click: Fills the tile the mouse is hovering over to the tile that you have copied
+# Space: Save room (BE CAREFUL, if you have collected the crystal in the given level, it may REMOVE the crystal from the level data) 
+
 BUTTON_HIGHLIGHT_SPEED = 10 # The higher this goes, the slower buttons fills up when hovering a mouse over it.
 
 SCREEN_SHAKE_POWER = 2 # How intense screenshakes are (in cutscenes)

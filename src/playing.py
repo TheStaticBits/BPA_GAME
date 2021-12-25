@@ -36,7 +36,7 @@ class Playing(src.base_level.BaseLevel):
         self.tilesChanged = False
 
         # EDITOR CONTROLS:
-        self.placeTile = "c" # Tile to be placed when you click
+        self.placeTile = "w" # Tile to be placed when you click
     
     
     # Calls a bunch of other functions which sets up the world with all the aspects of it
@@ -121,31 +121,31 @@ class Playing(src.base_level.BaseLevel):
         # Updates all tiles that have animations (such as orbs)
         self.tileRenderer.update_tiles_with_anims()
 
-        """  Mouse Inputs for Editor  """
-        # The position of the tile that the mouse is hovering over
-        tilePos = (
-            mousePos[0] // constants.TILE_SIZE[0],
-            mousePos[1] // constants.TILE_SIZE[1]
-        )
+        if constants.LEVEL_EDITING:
+            """  Mouse Inputs for Editor  """
+            # The position of the tile that the mouse is hovering over
+            tilePos = (
+                mousePos[0] // constants.TILE_SIZE[0],
+                mousePos[1] // constants.TILE_SIZE[1]
+            )
 
-        if mousePressed["left"]: # If left clicked
-            if self.levels[self.level][self.room][tilePos[1]][tilePos[0]] != self.placeTile:
-                # Sets the tile the mouse is hovering over to the placeTile
-                self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = self.placeTile # placeTile is the tile to be placed
-                self.tilesChanged = True # Sets the tiles to be rerendered, since they changed
-        
-        if mousePressed["center"]: # If center clicked
-            self.placeTile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]] # Changing the placeTile to the one the mouse is hovering over
+            if mousePressed["left"]: # If left clicked
+                if self.levels[self.level][self.room][tilePos[1]][tilePos[0]] != self.placeTile:
+                    # Sets the tile the mouse is hovering over to the placeTile
+                    self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = self.placeTile # placeTile is the tile to be placed
+                    self.tilesChanged = True # Sets the tiles to be rerendered, since they changed
+            
+            if mousePressed["center"]: # If center clicked
+                self.placeTile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]] # Changing the placeTile to the one the mouse is hovering over
 
-        if mousePressed["right"]: # If right clicked
-            if self.levels[self.level][self.room][tilePos[1]][tilePos[0]] != " ":
-                # Sets the tile the mouse is hovering over to air
-                self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
-                self.tilesChanged = True # Sets the tiles to be rerendered
-        
-        # Other editor inputs
-        if inputs["space"]:
-            utility.save_room(self.level, self.room, self.levels[self.level][self.room], constants.LEVELS_PATH) # Saves the room to the levels.txt file
+            if mousePressed["right"]: # If right clicked
+                if self.levels[self.level][self.room][tilePos[1]][tilePos[0]] != " ":
+                    # Sets the tile the mouse is hovering over to air
+                    self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
+                    self.tilesChanged = True # Sets the tiles to be rerendered
+            
+            if inputs["space"]:
+                utility.save_room(self.level, self.room, self.levels[self.level][self.room], constants.LEVELS_PATH) # Saves the room to the levels.txt file
 
 
     # Renders everything to the screen
