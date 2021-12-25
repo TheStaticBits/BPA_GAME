@@ -49,9 +49,7 @@ class BossLevel(src.base_level.BaseLevel):
                 super().remove_crystal(level)
         
         super().reset_all()
-        super().check_entity_rendering()
         self.load_rooms()
-        super().start_music()
 
         self.bosses = {}
 

@@ -49,10 +49,8 @@ class Playing(src.base_level.BaseLevel):
                 super().remove_crystal(level)
         
         super().reset_all()
-        super().check_entity_rendering()
         self.get_text()
         self.load_room()
-        super().start_music()
     
     
     # Restarts the level the player is in

@@ -146,8 +146,13 @@ class BaseLevel(src.scene_base.SceneBase):
     def reset_all(self):
         self.room = 0 # Resetting the room number
         
+        self.start_music()
+
         self.setup_player()
-        self.setup_entities(self.player.rect.topleft)
+        self.check_entity_rendering()
+        
+        if self.showEntities:
+            self.setup_entities(self.player.rect.topleft)
         
         self.gravityDir = 1 # Resetting gravity pull
         self.gravBeamYPos = constants.GRAV_BEAM_TILE_Y_POS
@@ -222,11 +227,6 @@ class BaseLevel(src.scene_base.SceneBase):
                 # Resetting the room number and incrementing the level number
                 self.room = 0
                 self.level += 1
-                
-                self.start_music()
-                self.setup_player()
-                self.setup_entities(self.player.rect.topleft)
-                self.check_entity_rendering()
 
                 if self.currentCrystal: # If a crystal was collected while playing the level
                     self.currentCrystal = False
