@@ -113,7 +113,7 @@ class Playing(src.base_level.BaseLevel):
         
         elif result == "dead":
             self.restart_level()
-            self.popup("You Died!")
+            super().popup("You Died!")
         
         elif result == "crystal" or result == "crystal mid-level":
             return result
