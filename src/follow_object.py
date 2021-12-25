@@ -125,7 +125,6 @@ class FollowObject(src.object_base.ObjectBase):
                 self.switch_anim("idle")
 
     # Render the object without a check for room and level
-    # Used for boss levels
     def render_move_over(self, surface, playerRoomNum, offset = 0):
         if playerRoomNum != self.room:
             # Finds the room offset

@@ -3,6 +3,11 @@ This game was made for the BPA (Business Professionals of America) Software Engi
 
 Development started in October of 2021 and will end in January of 2022.
 
+## Team Members:
+ - Nolan Kennedy
+ - Matthew Jia
+ - Andrew Jia
+
 ## Programming:
  - Lead: Matthew
  - Nolan
@@ -28,6 +33,6 @@ Development started in October of 2021 and will end in January of 2022.
     - A snarky English dog
     - With a zero dimensional personality
  - Ellipse
-    - A cat that cannot speak
+    - A cat that cannot speak (or can she?)
  - The player
     - An idiot (you)

@@ -38,10 +38,9 @@ class BossLevel(src.base_level.BaseLevel):
         self.bossName = None
 
 
+    # Sets up the boss level with a given boss and level
+    # It also starts the music and loads the room images.
     def setup(self, boss, level, crystals, crystalIndex):
-        # Sets up the boss level with a given boss and level
-        # It also starts the music and loads the room images.
-
         self.level = level
 
         super().reset_crystal(level)
@@ -71,6 +70,7 @@ class BossLevel(src.base_level.BaseLevel):
         # This is minimum because the tileOffset goes negative, not positive.
     
 
+    # Resets the level
     def restart_level(self):
         if self.currentCrystal: super().reset_crystal(self.level)
 
@@ -82,16 +82,20 @@ class BossLevel(src.base_level.BaseLevel):
         self.load_rooms()
 
     
+    # Renders the rooms to a Pygame Surface and adds that to the tileSurface list
     def load_rooms(self):
-        # Renders the rooms to a Pygame Surface and adds that to the tileSurface list
-
         self.tileSurfaces.clear()
 
         # iterating through the tileRenderer objects
         for count, tr in enumerate(self.tileRenderers):
             # self.room is the room that the player is in
+            
+            # self.playerRoomIndex is either one or zero, where when it's zero,
+            # then the player is in the room on the left side of the screen,
+            # And if it's one, the player is on the room on the right side of the screen
             room = self.room + count - self.playerRoomIndex
 
+            # Locking it if the player has reached the end of the level
             if room > len(self.levels[self.level]) - 1:
                 room = len(self.levels[self.level]) - 1
 
@@ -110,9 +114,8 @@ class BossLevel(src.base_level.BaseLevel):
             tr.setup_room_tile_anims(self.levels[self.level][room])
 
     
+    # Updates everything in the boss level, such as the boss object, the player, and the tile rendering offset
     def update(self, window):
-        # Updates everything in the boss level, such as the boss object, the player, and the tile rendering offset
-
         result = super().update(
             window.inputs, 
             self.tileRenderers[self.playerRoomIndex],
@@ -124,36 +127,40 @@ class BossLevel(src.base_level.BaseLevel):
             if self.room == 0: 
                 return self.level
         
-        elif result == "dead":
+        elif result == "dead": # dead oof
             self.restart_level()
-            self.popup("You Died!")
+            super().popup("You Died!")
         
         elif result == "crystal" or result == "crystal mid-level":
-            return result
+            return result # Lets the main loop deal with this happening
 
+        # Centers the tile offset onto the player
+        # The tile offset is the offset of the ROOM THE PLAYER IS IN. Not the entire level's offset.
         self.tilesOffset = -(self.player.rect.x + (constants.PLAYER_WIDTH // 2) - (constants.SCREEN_SIZE[0] // 2))
 
+        # Tile offset of the ENTIRE LEVEL to check
         checkTileOffset = self.tilesOffset - (constants.SCREEN_SIZE[0] * self.room)
 
-        if checkTileOffset > 0:
+        if checkTileOffset > 0: # Reached the start of the level
             self.tilesOffset = 0
 
-        elif checkTileOffset < self.minOffset:
+        elif checkTileOffset < self.minOffset: # Reached the end of the level
             self.tilesOffset = self.minOffset + (constants.SCREEN_SIZE[0] * self.room)
         
-        if self.playerRoomIndex == 1:
-            if self.tilesOffset <= 0:
+        if self.playerRoomIndex == 1: # Player is on the room displayed to the right of the screen
+            if self.tilesOffset <= 0: # Needs to render the room to the right, so the player is now considered in the room to the left of the screen 
                 self.playerRoomIndex = 0
                 self.load_rooms()
         
-        elif self.playerRoomIndex == 0:
-            if self.tilesOffset > 0:
+        elif self.playerRoomIndex == 0: # Player is on the room displayed to the left of the screen
+            if self.tilesOffset > 0: # Needs to render the room to the left, so the player is considered residing in the room to the right
                 self.playerRoomIndex = 1
                 self.load_rooms()
                 
         for tr in self.tileRenderers:
             tr.update_tiles_with_anims() # Update any tiles that have animations
         
+        # Going through all bosses and updating them
         for name, boss in self.bosses.items():
             if name == "Belloq":
                 dead = boss.update(
@@ -180,11 +187,13 @@ class BossLevel(src.base_level.BaseLevel):
 
             if dead: 
                 self.restart_level()
-                self.popup("You Died!")
+                super().popup("You Died!")
                 break
     
     
+    # Renders everything in the boss level to the screen.
     def render(self, window):
+        # Rendering the tiles of the room the player is in
         window.blit(self.tileSurfaces[self.playerRoomIndex], (self.tilesOffset, 0))
         self.tileRenderers[self.playerRoomIndex].render_tiles_with_anims(window, self.gravityDir, self.gravBeamYPos, offset = self.tilesOffset)
 
@@ -194,21 +203,24 @@ class BossLevel(src.base_level.BaseLevel):
         else:
             otherRoomIndex = 0
             otherRoomX = self.tilesOffset - constants.SCREEN_SIZE[0]
-            
+        
+        # Rendering the tiles of the other room on screen if there is one
         window.blit(self.tileSurfaces[otherRoomIndex], (otherRoomX, 0))
         self.tileRenderers[otherRoomIndex].render_tiles_with_anims(window, self.gravityDir, self.gravBeamYPos, offset = otherRoomX)
 
-        entitiesSurf = self.empty_surf.copy()
+        entitiesSurf = self.empty_surf.copy() # Surface for entities to render to
         super().render(
             entitiesSurf, 
             offset = self.tilesOffset, 
             renderWithCheck = (self.tilesOffset == 0)
-        )
-        window.blit(entitiesSurf, (0, 0))
+        ) # Renders entities with the tile offset onto the entities surface
+        window.blit(entitiesSurf, (0, 0)) # Rendering entities surf onto the screen
 
+        # Rendering bosses
         for boss in self.bosses.values():
             boss.render(window, self.tilesOffset, self.room)
 
+        # Rendering other things
         super().render_grav_beam(window)
         super().render_screen_shadow(window)
         super().render_popup(window)

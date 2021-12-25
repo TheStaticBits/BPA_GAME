@@ -104,9 +104,9 @@ class Loop(src.scene_base.SceneBase):
         return levelList
 
 
+    # Is run in the background.
+    # Manages the framerate and prints it out to the console every second.
     def run_framerate(self):
-        # Is run in the background.
-        # Manages the framerate and prints it out to the console every second.
         while not self.window.closeWindow:
             sleep(1)
             print(self.framerate, "FPS")
@@ -268,7 +268,7 @@ class Loop(src.scene_base.SceneBase):
                     self.switch_to_new_scene(self.level)
 
 
-        if self.scene not in ("startup", "pauseMenu", "mainMenu"):
+        if self.scene not in ("startup", "pauseMenu", "mainMenu"): # Scenes without a pause button
             if self.scenes["pauseMenu"].check_for_pause(
                 self.window.inputs, 
                 self.window.mousePos, 
