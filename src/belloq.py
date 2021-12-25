@@ -10,33 +10,32 @@ This class, lazer, manages the lazers that the Belloq fires.
 It has several functions that can check collisions with the player, check if it's offscreen, and more.
 """
 class Lazer:
+    # Sets the default vars
     def __init__(
         self, 
         degreesFacing, # What direction it's facing in radians 
         startPos 
         ):
-        # Sets the default vars
         self.degreesFacing = degreesFacing
         self.position = list(startPos)
     
     
+    # Gets the lessor of the two points, for the top left
     def get_top_left(self, position):
-        # Gets the lessor of the two points, for the top left
         topLeftX = position[0] if position[0] < self.endPoint[0] else self.endPoint[0]
         topLeftY = position[1] if position[1] < self.endPoint[1] else self.endPoint[1]
         return (topLeftX, topLeftY)
     
 
+    # Gets the greater of the two points, for the bottom right
     def get_bottom_right(self, position):
-        # Gets the greater of the two points, for the bottom right
         bottomRightX = position[0] if position[0] > self.endPoint[0] else self.endPoint[0]
         bottomRightY = position[1] if position[1] > self.endPoint[1] else self.endPoint[1]
         return(bottomRightX, bottomRightY)
     
 
+    # Updates the lazer, returning True if it has collided with the player
     def update(self, playerMask, playerPos, playerRoom, tilesOffset) -> bool:
-        # Updates the lazer, returning True if it has collided with the player
-
         # Moves the lazer in the direction it's moving
         self.position[0] += math.cos(self.degreesFacing) * constants.LAZER_SPEED
         self.position[1] += math.sin(self.degreesFacing) * constants.LAZER_SPEED
@@ -70,6 +69,7 @@ class Lazer:
 
         lineMask = pygame.mask.from_surface(collisionSurface)
 
+        # Checking collisions between the lazer and the player
         collided = lineMask.overlap(
             playerMask,
             (playerPos[0] - topLeftX + tilesOffset,
@@ -79,9 +79,8 @@ class Lazer:
         return collided
     
 
+    # Checks if it's off the screen of the entire level
     def check_offscreen(self, rooms):
-        # Checks if it's off the screen of the entire level
-
         topLeftX, topLeftY = self.get_top_left(self.position)
         bottomRightX, bottomRightY = self.get_bottom_right(self.position)
 
@@ -93,8 +92,8 @@ class Lazer:
         return xOffScreen or yOffScreen
 
     
+    # Draws the line to the screen, from the starting position to the ending position
     def render(self, window):
-        # Draws the line to the screen, from the starting position to the ending position
         pygame.draw.line(
             window, 
             constants.LAZER_COLOR,
@@ -107,6 +106,7 @@ This manages the Belloq boss, creating lazers, moving it,
 checking collisions with the player, and rendering it.
 """
 class Belloq:
+    # Loads animation, sets default variables
     def __init__(self):
         self.lazers = []
         self.cooldown = constants.BELLOQ_COOLDOWN
@@ -116,6 +116,7 @@ class Belloq:
         self.reset()
 
 
+    # Resets the boss to its default position and state, clearing lazers
     def reset(self):
         self.switchAnim("idle")
         self.position = [
@@ -126,12 +127,15 @@ class Belloq:
         self.cooldown = constants.BELLOQ_COOLDOWN
 
     
+    # Switches to a new animation if the previous animation wasn't playing
     def switchAnim(self, newAnim):
         if newAnim != self.currentAnim:
             self.currentAnim = newAnim
             self.animation[self.currentAnim].reset()
 
 
+    # Creates a lazer object, 
+    # starting at the eye and pointing in the direction of the player with a random offset
     def create_lazer(self, player, playerScreenX, screenPos):
         playerCenter = (
             playerScreenX + constants.PLAYER_WIDTH // 2,
@@ -148,6 +152,8 @@ class Belloq:
             screenPos[1] + constants.BELLOQ_LAZER_OFFSET[1]
         )
         
+        # Gets a random decimal (multiplies by 100 to choose a random integer and then divides the result by 100)
+        # Since the degrees is in radians
         randomOffsetDegrees = random.randrange(
             -constants.BELLOQ_LAZER_ACCURACY * 100, 
             constants.BELLOQ_LAZER_ACCURACY * 100
@@ -164,6 +170,7 @@ class Belloq:
         ))
 
     
+    # Updates everything, moving towards the player, the cooldown for lazers, and more
     def update(self, player, playerRoom, amountOfRooms, tilesOffset):
         screenPos = self.position.copy()
         screenPos[0] += tilesOffset
@@ -171,12 +178,15 @@ class Belloq:
 
         playerScreenX = player.rect.x + tilesOffset
 
+        # If the player has moved BEHIND the Belloq
         if playerScreenX < screenPos[0] + (self.animation[self.currentAnim].get_image_width() / 2):
+            # Moves towards the player quickly, and when reaching the player, slows down
+            # Gets the distance between them and divides by 25
             self.position[1] += (player.rect.y - (screenPos[1] + self.animation[self.currentAnim].get_image_height() / 2)) / 25
-            
             self.position[0] += (playerScreenX - (screenPos[0] + self.animation[self.currentAnim].get_image_width() / 2)) / 25
         
         else:
+            # Inch the Belloq forward
             self.position[0] += constants.BELLOQ_SPEED
 
         self.cooldown -= 1
@@ -187,12 +197,13 @@ class Belloq:
 
         animationContinue = self.animation[self.currentAnim].update() 
         if not animationContinue: # If the animation finished
-
+            # Fires a lazer at the end of the attack animation
             if self.currentAnim == "attack":
                 self.switchAnim("idle")
 
                 self.create_lazer(player, playerScreenX, screenPos)
         
+        # Checking lazer collisions with the player
         for lazer in self.lazers:
             if lazer.update(player.get_mask(), player.rect.topleft, playerRoom, tilesOffset):
                 # Collided with player
@@ -215,6 +226,7 @@ class Belloq:
             return True
     
 
+    # Renders animation frame and lazers
     def render(self, window, tilesOffset, playerRoom):
         self.animation[self.currentAnim].render(
             window, 
