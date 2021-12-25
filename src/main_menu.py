@@ -27,6 +27,8 @@ class MainMenu(src.scene_base.SceneBase):
         self.crystal_check = pygame.image.load(constants.CRYSTAL_CHECK_PATH).convert_alpha()
         self.crystal_x = pygame.image.load(constants.CRYSTAL_X_PATH).convert_alpha()
 
+        arrow = pygame.image.load(constants.ARROW_PATH).convert_alpha()
+
         self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
         self.logo = pygame.image.load(constants.TIN_LOGO_PATH).convert_alpha()
 
@@ -50,8 +52,8 @@ class MainMenu(src.scene_base.SceneBase):
             "start": (120, constants.SCREEN_SIZE[1] / 2, "Continue"),
             "newSave": (120, constants.SCREEN_SIZE[1] / 2 + 30, "Restart"), 
             "help": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Help"), 
-            "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, "<"), 
-            "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, ">"),
+            "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, pygame.transform.flip(arrow, True, False)), 
+            "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, arrow),
             "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
         }
 
@@ -59,13 +61,19 @@ class MainMenu(src.scene_base.SceneBase):
         fontObj = pygame.font.Font(constants.FONT_PATH, 30)
         self.buttons = {}
         for key, value in buttons.items():
-            self.buttons[key] = src.button.Button(
-                value[0], # x
-                value[1], # y
-                fontObj = fontObj,
-                text = value[2],
-                textOffset = 2
-            )
+            if isinstance(value[2], str):
+                self.buttons[key] = src.button.Button(
+                    value[0], # x
+                    value[1], # y
+                    fontObj = fontObj,
+                    text = value[2],
+                    textOffset = 2
+                )
+            else:
+                self.buttons[key] = src.button.Button(
+                    value[0], value[1],
+                    image = value[2]
+                )
 
         # For nonbutton text
         self.otherTextFont = pygame.font.Font(constants.FONT_PATH, 15)

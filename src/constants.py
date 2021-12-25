@@ -27,6 +27,8 @@ SCREEN_SHADOW_PATH = "res/game/shadow.png"
 CRYSTAL_CHECK_PATH = "res/ui/crystal_check.png"
 CRYSTAL_X_PATH = "res/ui/crystal_x.png"
 
+ARROW_PATH = "res/ui/arrow.png"
+
 PAUSE_BUTTON_PATH = "res/ui/pause_button.png"
 
 

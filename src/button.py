@@ -1,4 +1,5 @@
 import pygame
+import math
 
 import src.constants as constants
 
@@ -19,7 +20,8 @@ class Button:
         textOffset = None, # Amount rectangle expands backwards behind the text
         
         # If the button is being created from an image
-        imagePath = None,
+        imagePath = None, # or
+        image = None
         ):
 
         self.isText = text is not None
@@ -43,7 +45,10 @@ class Button:
             # This image needs to have the contents of the button,
             # (what is displayed when the button is idling), as white
             # while the background should be black
-            self.image = pygame.image.load(imagePath).convert()
+            if image is not None:
+                self.image = image
+            else:
+                self.image = pygame.image.load(imagePath).convert()
 
             # Centers x, gets width and height of the image as the rect for the button
             self.rect = pygame.Rect((
@@ -96,11 +101,12 @@ class Button:
     # Renders the button.
     def render(self, window):
         if round(self.highlightYPos) != 0: # If it's highlighted at least partially
+            cielHYPos = math.ceil(self.highlightYPos) # Rounded up highlighted y position
 
             # Top section of the button, the "normal" part
-            topHalf = pygame.Surface((self.rect.width, self.rect.height - self.highlightYPos))
+            topHalf = pygame.Surface((self.rect.width, self.rect.height - cielHYPos))
             # Bottom section, the reversed and "highlighted" part
-            highlighted = pygame.Surface((self.rect.width, self.highlightYPos), flags = pygame.SRCALPHA)
+            highlighted = pygame.Surface((self.rect.width, cielHYPos), flags = pygame.SRCALPHA)
 
             if self.isText:
                 # Text
@@ -112,7 +118,7 @@ class Button:
                 # Getting the text surface but black
                 blackFont = self.fontObj.render(self.text, False, constants.BLACK)
                 # Rendering onto the highlighted surface, up above it so it only shows the bottom section (or however much is highlighted) of the text
-                highlighted.blit(blackFont, (self.textOffset, -(self.rect.height - self.highlightYPos)))
+                highlighted.blit(blackFont, (self.textOffset, -(self.rect.height - cielHYPos)))
                 highlighted.set_colorkey(constants.BLACK) # Makes the text part transparent
             
             else:
@@ -136,12 +142,12 @@ class Button:
                 del pixelArr
 
                 # Drawing onto the highlighted section
-                highlighted.blit(reversed, (0, -(self.rect.height - self.highlightYPos)))
+                highlighted.blit(reversed, (0, -(self.rect.height - cielHYPos)))
                 
 
             # Rendering both sections
             window.blit(topHalf, self.rect.topleft)
-            window.blit(highlighted, (self.rect.x, self.rect.y + (self.rect.height - self.highlightYPos)))
+            window.blit(highlighted, (self.rect.x, self.rect.y + (self.rect.height - cielHYPos)))
 
         
         else:
