@@ -954,7 +954,8 @@
             "fadeBlueDone": "fade done",
             "corlenOffscreen": "corlen room == 1",
             "corlenBack": "corlen room == 0 and corlen x <= 334",
-            "fadeFinished": "fade done"
+            "fadeFinished": "fade done",
+            "fadeGoodbyeDone": "fade done"
         },
         "cond_commands": {
             "belloqDoneWalking": ["belloq walk still"],
@@ -1077,6 +1078,8 @@
             ],
 
             "fadeBlueDone": [
+                "c1 teleport -16 -16 moveTo", "c2 teleport -16 -16 moveTo", "c3 teleport -16 -16 moveTo", "c4 teleport -16 -16 moveTo", "c5 teleport -16 -16 moveTo", "c6 teleport -16 -16 moveTo", "c7 teleport -16 -16 moveTo", "c8 teleport -16 -16 moveTo", "c9 teleport -16 -16 moveTo", "c10 teleport -16 -16 moveTo", "c11 teleport -16 -16 moveTo", "c12 teleport -16 -16 moveTo", "c13 teleport -16 -16 moveTo", "c14 teleport -16 -16 moveTo", "c15 teleport -16 -16 moveTo", "c16 teleport -16 -16 moveTo", "c17 teleport -16 -16 moveTo", "c18 teleport -16 -16 moveTo", "c19 teleport -16 -16 moveTo", "c20 teleport -16 -16 moveTo", "c21 teleport -16 -16 moveTo",
+
                 "belloq teleport -70 5",
                 "bigBite teleport -70 75",
                 "redStare teleport -80 160",
@@ -1196,15 +1199,134 @@
 
                 "text corlen hide",
 
-                "play OneLastDayInParadiseV2",
+                "music OneLastDayInParadiseV2",
 
                 "ellipse room 1", "ellipse teleport 137 177",
                 "ellipse face right",
                 "corlen room 1", "corlen teleport 322 192",
                 "player room 1", "player teleport 141 192",
 
-                "c1 teleport -16 -16 moveTo", "c2 teleport -16 -16 moveTo", "c3 teleport -16 -16 moveTo", "c4 teleport -16 -16 moveTo", "c5 teleport -16 -16 moveTo", "c6 teleport -16 -16 moveTo", "c7 teleport -16 -16 moveTo", "c8 teleport -16 -16 moveTo", "c9 teleport -16 -16 moveTo", "c10 teleport -16 -16 moveTo", "c11 teleport -16 -16 moveTo", "c12 teleport -16 -16 moveTo", "c13 teleport -16 -16 moveTo", "c14 teleport -16 -16 moveTo", "c15 teleport -16 -16 moveTo", "c16 teleport -16 -16 moveTo", "c17 teleport -16 -16 moveTo", "c18 teleport -16 -16 moveTo", "c19 teleport -16 -16 moveTo", "c20 teleport -16 -16 moveTo", "c21 teleport -16 -16 moveTo"
-            ]
+                "text createMovable creditsTitle",
+                "text creditsTitle move 192 224",
+                "text creditsTitle change - Credits -",
+                "text creditsTitle moveTo 192 -20",
+                "text creditsTitle display",
+                
+                "delay 120 programmingCredits"
+            ], "programmingCredits": [
+                "text createMovable programming",
+                "text programming move 192 224",
+                "text programming color 0 255 0",
+                "text programming change - Programming -",
+                "text programming moveTo 192 -20",
+                "text programming display",
+
+                "delay 60 programmingNames"
+            ], "programmingNames": [
+                "text createMovable programNames",
+                "text programNames move 192 224",
+                "text programNames change Matthew J.",
+                "text programNames moveTo 192 -20",
+                "text programNames display",
+
+                "delay 100 levelDesign"
+            ], "levelDesign": [
+                "text createMovable lvlDesign",
+                "text lvlDesign move 192 224",
+                "text lvlDesign color 0 255 255",
+                "text lvlDesign change - Level Design -",
+                "text lvlDesign moveTo 192 -20",
+                "text lvlDesign display",
+
+                "delay 60 lvlDesignNames"
+            ], "lvlDesignNames": [
+                "text createMovable lvlDesignNames",
+                "text lvlDesignNames move 192 224",
+                "text lvlDesignNames change Nolan K.",
+                "text lvlDesignNames moveTo 192 -20",
+                "text lvlDesignNames display",
+
+                "delay 100 artwork"
+            ], "artwork": [
+                "text createMovable artwork",
+                "text artwork move 192 224",
+                "text artwork color 255 255 0",
+                "text artwork change - Artwork -",
+                "text artwork moveTo 192 -20",
+                "text artwork display",
+
+                "delay 60 artworkNames"
+            ], "artworkNames": [
+                "text createMovable artworkNames",
+                "text artworkNames move 192 224",
+                "text artworkNames change Lead: Andrew J.\nNolan K.\nMatthew J.",
+                "text artworkNames moveTo 192 -60",
+                "text artworkNames display",
+
+                "delay 170 music"
+            ], "music": [
+                "text createMovable music",
+                "text music move 192 224",
+                "text music color 255 255 0",
+                "text music change - Music/Audio - ",
+                "text music moveTo 192 -20",
+                "text music display",
+
+                "delay 60 musicNames"
+            ], "musicNames": [
+                "text createMovable musicNames",
+                "text musicNames move 192 224",
+                "text musicNames change Lead: Andrew\nNolan K.\nMatthew J.",
+                "text musicNames moveTo 192 -60",
+                "text musicNames display",
+
+                "delay 240 thankYou"
+            ], "thankYou": [
+                "text createMovable thanks",
+                "text thanks move 192 224",
+                "text thanks change - Thank you for playing! -",
+                "text thanks moveTo 192 -20",
+                "text thanks display",
+
+                "delay 730 adventureFinished"
+            ], "adventureFinished": [
+                "text corlen move 330 155",
+                "text corlen change That's this\nadventure finished.",
+                "text corlen display",
+
+                "delay 150 Fun"
+            ], "Fun": [
+                "text corlen change That was fun!",
+                "delay 130 ELLIPSETALKSWOOWOOWW"
+            ], "ELLIPSETALKSWOOWOOWW": [
+                "text corlen hide",
+
+                "text ellipse move 145 155",
+                "text ellipse change Yeah it was!",
+                "text ellipse display",
+
+                "delay 140 corlenExclamationMarks"
+            ], "corlenExclamationMarks": [
+                "text ellipse hide",
+
+                "text corlen move 330 170",
+                "text corlen change !!!",
+                "text corlen display",
+
+                "delay 150 nextOne??"
+            ], "nextOne??": [
+                "text corlen hide",
+
+                "text ellipse change Time for the next one...",
+                "text ellipse display",
+
+                "delay 130 fadeGoodbye"
+            ], "fadeGoodbye": [
+                "fade 2 0 0 0",
+                "run fadeGoodbyeDone"
+            ],
+
+            "fadeGoodbyeDone": ["end"]
         }
     }
 }

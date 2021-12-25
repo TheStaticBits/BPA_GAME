@@ -302,7 +302,16 @@ class Loop(src.scene_base.SceneBase):
 
 
     # Switches to a new scene based on the level id it's given to switch to
-    def switch_to_new_scene(self, level):
+    def switch_to_new_scene(self, level):        
+        if level >= len(self.levelsList):
+            # Sets up main menu
+            self.scene = "mainMenu"
+            self.scenes["mainMenu"].start_music()
+            self.scenes["playing"].music_stopped()
+            self.scenes["bossLevel"].music_stopped()
+
+            return None # Exits without running the rest
+
         # Checking if the level is an ending
         if level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
             # If the player hasn't unlocked an ending yet
