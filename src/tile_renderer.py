@@ -179,13 +179,20 @@ class TileRenderer:
     # This function renders the SOLID tiles onto a given surface
     def draw_tiles(
         self, 
-        room, 
+        room, roomNum,
         surface, 
         backgroundTile,
         level = None, # If it needs to be drawn over multiple levels, with the edges and corners being accurate with the other rooms in the level
         roomNumber = None
         ):
         # Setting up background tile
+        backgroundTile = backgroundTile.split(", ")
+        if len(backgroundTile) == 1: # if it provides one bg tile for the whole level
+            backgroundTile = backgroundTile[0]
+        else:
+            backgroundTile = backgroundTile[roomNum]
+        
+        # Sets up the image
         bgTileImg = self.tileKey[backgroundTile]["tile"].copy()
 
         # If the tile is supposed to have shading when it's used as a background

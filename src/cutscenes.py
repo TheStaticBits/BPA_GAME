@@ -148,9 +148,9 @@ class Cutscenes(src.scene_base.SceneBase):
     def rerender_tiles(self):
         self.tiles.fill(constants.BLACK)
         self.tileRenderer.draw_tiles(
-            self.level[self.room], 
+            self.level[self.room], self.room,
             self.tiles, 
-            self.levelData[self.levelNum]["background"]    
+            self.levelData[self.levelNum]["background"]
         )
         self.tileRenderer.setup_room_tile_anims(self.level[self.room])
 
@@ -175,7 +175,12 @@ class Cutscenes(src.scene_base.SceneBase):
                         self.objects[comm[0]]["pos"][1] = int(comm[3])
                     
                     elif comm[1] == "room":
-                        self.objects[comm[0]]["room"] = int(comm[2])
+                        if comm[0] == "player":
+                            self.room = int(comm[2])
+                            self.rerender_tiles()
+
+                        else:
+                            self.objects[comm[0]]["room"] = int(comm[2])
                     
                     elif comm[1] == "controllable":
                         self.playerControlled = True
@@ -351,6 +356,8 @@ class Cutscenes(src.scene_base.SceneBase):
 
         inputs = window.inputs
 
+        self.tileRenderer.update_tiles_with_anims()
+
         commandsToBeRun = []
 
         if self.backgroundAnim is not None:
@@ -503,6 +510,8 @@ class Cutscenes(src.scene_base.SceneBase):
         super().render()
 
         self.screen.blit(self.tiles, (0, 0))
+
+        self.tileRenderer.render_tiles_with_anims(self.screen, 1, constants.SCREEN_TILE_SIZE[1])
 
         if self.backgroundAnim is not None:
             if self.room == self.cutsceneData["backgroundAnim"]["room"]:

@@ -74,7 +74,7 @@ class Playing(src.base_level.BaseLevel):
         # Instead, the tiles on screen are saved and rendered from that
         self.tileSurface.fill(constants.BLACK)
         self.tileRenderer.draw_tiles(
-            self.levels[self.level][self.room], 
+            self.levels[self.level][self.room], self.room,
             self.tileSurface, 
             self.levelData[self.level]["background"]
         )

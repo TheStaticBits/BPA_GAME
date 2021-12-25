@@ -98,7 +98,7 @@ class BossLevel(src.base_level.BaseLevel):
             surf = pygame.Surface(constants.SCREEN_SIZE)
 
             tr.draw_tiles(
-                self.levels[self.level][room], 
+                self.levels[self.level][room], room,
                 surf, 
                 self.levelData[self.level]["background"],
                 level = self.levels[self.level],

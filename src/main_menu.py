@@ -38,7 +38,7 @@ class MainMenu(src.scene_base.SceneBase):
         tileRenderer = src.tile_renderer.TileRenderer()
         self.background = pygame.Surface(constants.SCREEN_SIZE)
         tileRenderer.draw_tiles(
-            mainMenuLevel[0][0],
+            mainMenuLevel[0][0], 0,
             self.background, # Surface
             mainMenuLevelData[0]["background"], # Background tile
         )

@@ -953,7 +953,8 @@
             "redStareDoneWalking": "redStare x > 20",
             "fadeBlueDone": "fade done",
             "corlenOffscreen": "corlen room == 1",
-            "corlenBack": "corlen room == 0 and corlen x <= 334"
+            "corlenBack": "corlen room == 0 and corlen x <= 334",
+            "fadeFinished": "fade done"
         },
         "cond_commands": {
             "belloqDoneWalking": ["belloq walk still"],
@@ -970,7 +971,7 @@
 
                 "text create corlen",
                 "text corlen color 252 227 3",
-                "text corlen move 342 58",
+                "text corlen move 330 58",
                 "text corlen change What's going on??",
                 "text corlen display",
 
@@ -1041,15 +1042,15 @@
                 "delay 10 c15Move"
             ], "c15Move": [
                 "c15 teleport 314 80",
-                "c15 moveTo 192 8",
+                "c15 moveTo 192 200",
                 "delay 10 c16Move"
             ], "c16Move": [
                 "c16 teleport 314 80",
-                "c16 moveTo 192 40",
+                "c16 moveTo 192 168",
                 "delay 10 c17Move"
             ], "c17Move": [
                 "c17 teleport 314 80",
-                "c17 moveTo 192 72",
+                "c17 moveTo 192 136",
                 "delay 10 c18Move"
             ], "c18Move": [
                 "c18 teleport 314 80",
@@ -1057,15 +1058,15 @@
                 "delay 10 c19Move"
             ], "c19Move": [
                 "c19 teleport 314 80",
-                "c19 moveTo 192 136",
+                "c19 moveTo 192 72",
                 "delay 10 c20Move"
             ], "c20Move": [
                 "c20 teleport 314 80",
-                "c20 moveTo 192 168",
+                "c20 moveTo 192 40",
                 "delay 10 c21Move"
             ], "c21Move": [
                 "c21 teleport 314 80",
-                "c21 moveTo 192 200",
+                "c21 moveTo 192 8",
 
                 "delay 100 fadeBlue"
             ],
@@ -1084,6 +1085,7 @@
                 "fade clear",
                 "delay 30 didWe"
             ], "didWe": [
+                "text corlen move 342 58",
                 "text corlen change Did we-",
                 "text corlen display",
 
@@ -1100,15 +1102,17 @@
                 "text corlen hide",
                 "delay 10 defeatBelloq"
             ], "defeatBelloq": [
+                "text corlen move 327 58",
                 "text corlen change Defeat the Belloq??",
                 "text corlen display",
-                "delay 150 ellipseeedot"
+                "delay 160 ellipseeedot"
             ], "ellipseeedot": [
                 "text corlen hide", 
                 "text ellipse display",
                 "delay 160 didIt!"
             ], "didIt!": [
                 "text ellipse hide",
+                "text corlen move 335 58",
                 "text corlen change We... We did it!",
                 "text corlen display",
                 "delay 130 ellipseExclamationMark"
@@ -1120,10 +1124,12 @@
             ], "wait": [
                 "text ellipse hide",
                 "corlen face right",
+                "text corlen move 342 58",
                 "text corlen change Wait,",
                 "text corlen display",
                 "delay 100 whatOutThere"
             ], "whatOutThere": [
+                "text corlen move 328 58",
                 "text corlen change What's out there?",
                 "delay 140 checky"
             ], "checky": [
@@ -1141,9 +1147,63 @@
 
             "corlenBack": [
                 "corlen walk still",
+                "text corlen move 323 43",
                 "text corlen change There is nothing,\njust an endless void.",
-                "text corlen move 342 43",
-                "text corlen display"
+                "text corlen display",
+
+                "delay 170 dots"
+            ], "dots": [
+                "text ellipse change ...",
+                "text corlen hide",
+                "text ellipse display",
+                
+                "delay 140 whatDoNow"
+            ], "whatDoNow": [
+                "text ellipse hide",
+                "text corlen move 330 43",
+                "text corlen change So what should\nwe do now?",
+                "text corlen display",
+
+                "delay 150 moreDots"
+            ], "moreDots": [
+                "corlen face right",
+                "text corlen hide",
+                "text ellipse display",
+
+                "delay 150 neitherTalk"
+            ], "neitherTalk": [
+                "text ellipse hide",
+                "text corlen move 325 43",
+                "text corlen change Right, I forgot\nneither of you talk.",
+                "text corlen display",
+
+                "delay 150 myPlace"
+            ], "myPlace": [
+                "text ellipse hide",
+                "corlen face left",
+                "text corlen move 323 28",
+                "text corlen change I guess we should\njust head back to\nmy place then...",
+                "text corlen display",
+
+                "delay 150 fadeBlack"
+            ], "fadeBlack": [
+                "fade 2 0 0 0",
+                "run fadeFinished"
+            ],
+
+            "fadeFinished": [
+                "fade clear",
+
+                "text corlen hide",
+
+                "play OneLastDayInParadiseV2",
+
+                "ellipse room 1", "ellipse teleport 137 177",
+                "ellipse face right",
+                "corlen room 1", "corlen teleport 322 192",
+                "player room 1", "player teleport 141 192",
+
+                "c1 teleport -16 -16 moveTo", "c2 teleport -16 -16 moveTo", "c3 teleport -16 -16 moveTo", "c4 teleport -16 -16 moveTo", "c5 teleport -16 -16 moveTo", "c6 teleport -16 -16 moveTo", "c7 teleport -16 -16 moveTo", "c8 teleport -16 -16 moveTo", "c9 teleport -16 -16 moveTo", "c10 teleport -16 -16 moveTo", "c11 teleport -16 -16 moveTo", "c12 teleport -16 -16 moveTo", "c13 teleport -16 -16 moveTo", "c14 teleport -16 -16 moveTo", "c15 teleport -16 -16 moveTo", "c16 teleport -16 -16 moveTo", "c17 teleport -16 -16 moveTo", "c18 teleport -16 -16 moveTo", "c19 teleport -16 -16 moveTo", "c20 teleport -16 -16 moveTo", "c21 teleport -16 -16 moveTo"
             ]
         }
     }
