@@ -51,7 +51,7 @@ class MainMenu(src.scene_base.SceneBase):
         buttons = {
             "start": (120, constants.SCREEN_SIZE[1] / 2, "Continue"),
             "newSave": (120, constants.SCREEN_SIZE[1] / 2 + 30, "Restart"), 
-            "help": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Help"), 
+            "quit": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Quit"), 
             "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, pygame.transform.flip(arrow, True, False)), 
             "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, arrow),
             "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),

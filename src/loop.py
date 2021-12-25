@@ -208,6 +208,10 @@ class Loop(src.scene_base.SceneBase):
                 
                 elif result == "newSave": # "Restart" button pressed
                     self.restart()
+                
+                elif result == "quit":
+                    self.window.closeWindow = True
+                    return None # Prevents from running the rest of the code
 
                 self.switch_to_new_scene(self.level)
                 self.update()
