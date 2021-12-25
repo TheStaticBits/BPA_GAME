@@ -2,18 +2,26 @@ import pygame
 
 import src.constants as constants
 
+"""
+Button class, for all buttons on screen. 
+Handles updating/checking, and rendering.
+"""
 class Button:
+    # Initiates all general variables, also creating the rectangle used.
     def __init__(
         self, 
-        centerX, 
-        y,
+        centerX, # Position where the button will be centered on
+        y, # Y position
+        
         # If the button is being created from text
-        fontObj = None,
+        fontObj = None, 
         text = None,
         textOffset = None, # Amount rectangle expands backwards behind the text
+        
         # If the button is being created from an image
         imagePath = None,
         ):
+
         self.isText = text is not None
 
         if self.isText:
@@ -23,6 +31,7 @@ class Button:
             self.textOffset = textOffset
 
             self.fontRendered = fontObj.render(text, False, constants.WHITE) # Used to get the width of the text area
+            # Creating rectangle getting width and height from the rendered text
             self.rect = pygame.Rect((
                 centerX - (self.fontRendered.get_width() + self.textOffset) / 2,
                 y,
@@ -36,6 +45,7 @@ class Button:
             # while the background should be black
             self.image = pygame.image.load(imagePath).convert()
 
+            # Centers x, gets width and height of the image as the rect for the button
             self.rect = pygame.Rect((
                 centerX - self.image.get_width() / 2,
                 y,
@@ -43,15 +53,19 @@ class Button:
                 self.image.get_height()
             ))
 
-        self.reset()
+        self.reset() # Sets up other variables to default states
 
     
+    # Resets button to the default state
     def reset(self):
         self.selected = False # If the mouse is hovering over the button
         self.clicked = False # The button activates when you let go of it
         self.highlightYPos = 0
 
     
+    # Updates and checks for a collision
+    # Returns True if the user clicked and then let go
+    # Also updates the animation that plays for the button
     def update(self, mousePos, mouseInputs) -> bool:
         self.selected = self.rect.collidepoint(mousePos)
 
@@ -68,36 +82,51 @@ class Button:
             self.clicked = False
 
         if self.selected and not self.clicked:
+            # Increases the y position rapidly if it's far away from the top
+            # and slowly as it gets to the top
             self.highlightYPos += (self.rect.height - self.highlightYPos) / constants.BUTTON_HIGHLIGHT_SPEED
         
         else:
+            # Reverse effect, goes to zero
             self.highlightYPos -= self.highlightYPos / constants.BUTTON_HIGHLIGHT_SPEED
         
         return False
 
-    def render(self, window):
-        if round(self.highlightYPos) != 0:
 
+    # Renders the button.
+    def render(self, window):
+        if round(self.highlightYPos) != 0: # If it's highlighted at least partially
+
+            # Top section of the button, the "normal" part
             topHalf = pygame.Surface((self.rect.width, self.rect.height - self.highlightYPos))
+            # Bottom section, the reversed and "highlighted" part
             highlighted = pygame.Surface((self.rect.width, self.highlightYPos), flags = pygame.SRCALPHA)
 
             if self.isText:
-                topHalf.blit(self.fontRendered, (self.textOffset, 0))
+                # Text
+                topHalf.blit(self.fontRendered, (self.textOffset, 0)) # Rendering text
                 topHalf.set_colorkey(constants.BLACK) # Removes black background
 
                 highlighted.fill(constants.WHITE)
 
+                # Getting the text surface but black
                 blackFont = self.fontObj.render(self.text, False, constants.BLACK)
+                # Rendering onto the highlighted surface, up above it so it only shows the bottom section (or however much is highlighted) of the text
                 highlighted.blit(blackFont, (self.textOffset, -(self.rect.height - self.highlightYPos)))
-                highlighted.set_colorkey(constants.BLACK) # Makes the text transparent
+                highlighted.set_colorkey(constants.BLACK) # Makes the text part transparent
             
             else:
+                # Image
+
+                # Normal top section rendering
                 topHalf.blit(self.image, (0, 0))
                 topHalf.set_colorkey(constants.BLACK)
 
+                # Copies image and makes the white part transparent
                 noWhite = self.image.copy()
                 noWhite.set_colorkey(constants.WHITE)
 
+                # Creates a copy of the image with no white, but this time solidifying the colorkey so the pixelarray doesn't see the white section of the image
                 reversed = pygame.Surface(noWhite.get_size(), flags = pygame.SRCALPHA)
                 reversed.blit(noWhite, (0, 0))
 
@@ -106,9 +135,11 @@ class Button:
                 pixelArr.replace(constants.BLACK, constants.WHITE)
                 del pixelArr
 
+                # Drawing onto the highlighted section
                 highlighted.blit(reversed, (0, -(self.rect.height - self.highlightYPos)))
                 
 
+            # Rendering both sections
             window.blit(topHalf, self.rect.topleft)
             window.blit(highlighted, (self.rect.x, self.rect.y + (self.rect.height - self.highlightYPos)))
 
@@ -117,9 +148,11 @@ class Button:
             # Rendering normally
 
             if self.isText:
+                # Text
                 window.blit(self.fontRendered, (self.rect.x + self.textOffset, self.rect.y))
             
             else:
-                noBG = self.image.copy()
+                # Image
+                noBG = self.image.copy() # Copying
                 noBG.set_colorkey(constants.BLACK) # Setting the background to transparent
                 window.blit(noBG, self.rect.topleft)

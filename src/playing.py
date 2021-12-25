@@ -44,7 +44,7 @@ class Playing(src.base_level.BaseLevel):
         self.level = level
 
         super().reset_crystal(level)
-        if "crystal moves on" not in self.levelData[level]:
+        if "crystal moves on" not in self.levelData[level]: # If the crystal isn't required for the level
             if crystals[crystalIndex]: 
                 super().remove_crystal(level)
         
