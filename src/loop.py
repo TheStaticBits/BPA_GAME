@@ -83,6 +83,7 @@ class Loop(src.scene_base.SceneBase):
         self.crystals = [int(x) for x in list(save["crystals"])]
 
         self.level = int(save["level"])
+        self.ending = int(save["unlockedEnding"])
 
         return save
 
@@ -171,7 +172,7 @@ class Loop(src.scene_base.SceneBase):
             os.remove(constants.SAVE_PATH)
             
         self.load_save()
-        self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
+        self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.ending, self.crystals)
         self.scenes["cutscene"].update_crystals(self.crystals)
     
 
@@ -234,7 +235,7 @@ class Loop(src.scene_base.SceneBase):
                     # Sets up main menu
                     self.scene = "mainMenu"
                     self.scenes["mainMenu"].start_music()
-                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.crystals)
+                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.ending, self.crystals)
 
                     # Tells these that the music has stopped
                     self.scenes["playing"].music_stopped()
@@ -305,7 +306,7 @@ class Loop(src.scene_base.SceneBase):
         # Checking if the level is an ending
         if level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
             # If the player hasn't unlocked an ending yet
-            if utility.load_save()["unlockedEnding"] == -1:
+            if int(utility.load_save()["unlockedEnding"]) == -1:
                 # Iterating through from 0 to the amount of endings there are
                 for lvl in range(constants.AMOUNT_OF_ENDINGS):
                     # level being checked
@@ -313,6 +314,8 @@ class Loop(src.scene_base.SceneBase):
                     
                     if self.check_crystals(self.levelData[levelID]["ending"]):
                         level += lvl # Setting to that ending
+                        self.level = level
+                        self.ending = lvl + 1
                         utility.modif_save({"unlockedEnding": lvl + 1}) # Saving the ending
                         self.scenes["mainMenu"].ending = lvl + 1
                         break

@@ -85,9 +85,10 @@ class MainMenu(src.scene_base.SceneBase):
 
 
     # Updates information given data
-    def update_info(self, level, levelsCompleted, crystals):
+    def update_info(self, level, levelsCompleted, ending, crystals):
         self.lvlsIndex = level
         self.levelsCompleted = levelsCompleted
+        self.ending = ending
         self.crystals = crystals
     
 
