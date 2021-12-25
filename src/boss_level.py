@@ -212,7 +212,7 @@ class BossLevel(src.base_level.BaseLevel):
         super().render(
             entitiesSurf, 
             offset = self.tilesOffset, 
-            renderWithCheck = (self.tilesOffset == 0)
+            renderWithCheck = False
         ) # Renders entities with the tile offset onto the entities surface
         window.blit(entitiesSurf, (0, 0)) # Rendering entities surf onto the screen
 
