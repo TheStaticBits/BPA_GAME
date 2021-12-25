@@ -143,7 +143,7 @@ class Player(src.object_base.ObjectBase):
                     self.yVelocity = constants.JUMP_FORCE * self.gravityDir
                     return (tile, position)
                 
-            elif tile in ("c", "g", "m"): # Crystal or gravity orb
+            elif tile in ("c", "g", "m"): # Crystal, gravity orb, or gravity button
                 return (tile, position)
             
             elif tile in constants.SPIKE_ROTATIONS: # Hit a spike

@@ -5,8 +5,13 @@ import src.constants as constants
 import src.utility as utility
 import src.ellipse_and_corlen as eac
 
+"""
+The base level! Playing.py (normal levels) and boss_level.py (boss levels) inherit from this.
+Handles Ellipse and Corlen following the player, 
+"""
 class BaseLevel(src.scene_base.SceneBase):
-    def __init__(self, name):
+    # Loads level data, sets up entities, and sets up default variables
+    def __init__(self, name): 
         super().__init__(name)
 
         self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
@@ -62,18 +67,20 @@ class BaseLevel(src.scene_base.SceneBase):
         self.popupTextAlpha = 255
 
 
+    # Plays the music that the level has if it isn't already playing
     def start_music(self):
         if self.playingSong != self.levelData[self.level]["music"]:
             utility.play_music(self.levelData[self.level]["music"])
             self.playingSong = self.levelData[self.level]["music"]
     
 
+    # Call this if the music stopped, to allow other songs play if later comes back to this scene.
     def music_stopped(self):
         self.playingSong = None
 
 
+    # Goes through and removes all crystals in a given level
     def remove_crystal(self, level):
-        # Goes through and removes crystals in the level
         for roomNum, room in enumerate(self.levels[level]):
             for y, row in enumerate(room):
                 for x, tile in enumerate(row):
@@ -81,6 +88,7 @@ class BaseLevel(src.scene_base.SceneBase):
                         self.levels[level][roomNum][y][x] = " "
 
 
+    # Resets the level from the level data, in the process resetting the crystal in the level
     def reset_crystal(self, level):
         levels = utility.load_levels(constants.LEVELS_PATH)[0]
 
@@ -122,6 +130,7 @@ class BaseLevel(src.scene_base.SceneBase):
             self.player.reset(playerStart, yVelocity, xVelocity) # Resetting the player's position and velocity
 
 
+    # Creates Ellipse and Corlen and updates their data to match the player's data
     def setup_entities(self, position):
         self.entities = []
 
@@ -133,6 +142,7 @@ class BaseLevel(src.scene_base.SceneBase):
             ent.gravityDir = self.player.gravityDir
 
 
+    # Resets data to default variables
     def reset_all(self):
         self.room = 0 # Resetting the room number
         
@@ -147,11 +157,13 @@ class BaseLevel(src.scene_base.SceneBase):
         
         self.currentCrystal = False
 
+        # Ellipse and Corlen data clearing
         self.playerPositions.clear()
         self.playerLevelAndRoom.clear()
         self.playerFacing.clear()
     
 
+    # Sets up a popup with the given text
     def popup(self, text):
         self.popupText = text
         self.popupRendered = self.popupFont.render(text, False, constants.WHITE)
@@ -159,6 +171,7 @@ class BaseLevel(src.scene_base.SceneBase):
         self.popupTextAlpha = 255
 
 
+    # Checks if the level data wants to render and update Corlen and Ellipse
     def check_entity_rendering(self):
         if "entities" in self.levelData[self.level]:
             self.showEntities = self.levelData[self.level]["entities"] != "none"
@@ -166,6 +179,7 @@ class BaseLevel(src.scene_base.SceneBase):
             self.showEntities = True
 
 
+    # Updates the player, Ellipse, and Corlen (and any popups)
     def update(
         self, 
         inputs, # Dictionary of keys pressed
@@ -180,6 +194,7 @@ class BaseLevel(src.scene_base.SceneBase):
                 self.popupTextTimer -= 1
             
             else:
+                # Fading away
                 self.popupTextAlpha -= constants.POPUP_TEXT_FADE_SPEED
 
                 if self.popupTextAlpha <= 0:
@@ -213,21 +228,25 @@ class BaseLevel(src.scene_base.SceneBase):
                 self.setup_entities(self.player.rect.topleft)
                 self.check_entity_rendering()
 
-                if self.currentCrystal:
+                if self.currentCrystal: # If a crystal was collected while playing the level
                     self.currentCrystal = False
                     return "crystal"
 
             else:
-                self.player.rect.x = -constants.PLAYER_WIDTH - playerSpawnOffset # Moving the player to the complete other side of the room
+                # Moving the player to the complete other side of the room
+                self.player.rect.x = -constants.PLAYER_WIDTH - playerSpawnOffset 
 
         # If the player moved to the far left of the screen
         elif playerState == "left":
             if self.room > 0: # If it isn't the start of a level
                 self.room -= 1
 
-                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) + playerSpawnOffset # Moving the player to the opposite side of the screen
+                # Moving the player to the opposite side of the screen
+                self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) + playerSpawnOffset 
         
         # If the return result was of a tile
+        # This means that the player hit a tile that has an animation
+        # (and a special effect)
         # Play the "struck" animation for the tile
         elif isinstance(playerState, tuple):
             if tileRenderer.change_tile_anim(playerState[0], playerState[1], "struck"):
@@ -246,11 +265,18 @@ class BaseLevel(src.scene_base.SceneBase):
                     # Changes the gravity beam position by a specified
                     # amount in the level data, in levels.txt
                     # Which is specified as:
-                    # button room, buttonX, buttonY = yPosMoved
+                    # button [room], [buttonX], [buttonY] = [yPosMoved]
                     # where those are all integers besides "button"
+                    # (room starts at zero)
                     
                     key = f"button {self.room}, {playerState[1][0]}, {playerState[1][1]}"
+                    
+                    # If the gravity button in the level is missing data
+                    if key not in self.levelData[self.level]:
+                        raise Exception(f"Error: No data for gravity button located at {playerState[1]} in room {self.room}")
 
+                    # The variable self.pressedButton is used so that when you step on it once, it moves the gravity beam, 
+                    # but the second time you step on it, the gravity beam moves back to where it started.
                     if self.pressedButton != playerState[1]:
                         self.gravBeamYPos += int(self.levelData[self.level][key])
                         self.pressedButton = playerState[1]
@@ -261,13 +287,16 @@ class BaseLevel(src.scene_base.SceneBase):
 
             
         if self.showEntities:
+            # Updating the data for the follow objects to use (Ellipse and Corlen)
             if self.playerPositions == [] or self.playerPositions[0] != self.player.rect.topleft: # If the player moved
                 playerMoved = True
 
-                self.playerPositions.insert(0, self.player.rect.topleft) # inserts at the front of the list
+                # inserts at the front of the list
+                self.playerPositions.insert(0, self.player.rect.topleft)
                 self.playerLevelAndRoom.insert(0, (self.level, self.room))
                 self.playerFacing.insert(0, self.player.facing)
                 
+                # Removing excess data
                 if len(self.playerPositions) > constants.MAX_FOLLOW_DISTANCE + 1:
                     self.playerPositions.pop(-1)
                     self.playerLevelAndRoom.pop(-1)
@@ -293,6 +322,7 @@ class BaseLevel(src.scene_base.SceneBase):
         return playerState
     
     
+    # Renders all entities to the given surface with an offset
     def render(self, surface, offset = 0, renderWithCheck = True):
         super().render() # For logging
 
@@ -300,17 +330,19 @@ class BaseLevel(src.scene_base.SceneBase):
             # Drawing Ellipse and Corlen
             for ent in self.entities:
                 if renderWithCheck:
+                    # Renders only if the room and level match
                     ent.render_with_check(self.room, self.level, surface, offset = offset)
                 
                 else:
+                    # Renders follow object in other rooms as well (used for boss levels)
                     ent.render_move_over(surface, self.room, offset = offset)
         
         # Rendering the player
         self.player.render(surface, offset = offset)
     
 
+    # Drawing gravity beam
     def render_grav_beam(self, surface):
-        # Drawing gravity beam
         for x in range(constants.SCREEN_SIZE[0] // constants.GRAV_BEAM_WIDTH): # Goes through the center of the screen
             # Draws the gravity beam
             self.gravityBeam.render(
@@ -320,6 +352,7 @@ class BaseLevel(src.scene_base.SceneBase):
             )
     
 
+    # Draws the popup text centered and with a border
     def render_popup(self, surface):
         if self.popupText is not None:
             utility.draw_text_with_border(
@@ -334,5 +367,6 @@ class BaseLevel(src.scene_base.SceneBase):
             )
     
     
+    # Renders the shadow over the screen
     def render_screen_shadow(self, surface):
         surface.blit(self.screenShadow, (0, 0))

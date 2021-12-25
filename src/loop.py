@@ -245,9 +245,9 @@ class Loop(src.scene_base.SceneBase):
             result = self.scenes[self.scene].update(self.window)
 
             if result is not None:
-                if result == "crystal mid-level":
+                if result == "crystal mid-level": # If the level potentially wants it to move onto the next level when a crystal was collected
                     if self.check_crystals(self.levelData[self.level]["crystal moves on"]):
-                        result = "crystal"
+                        result = "crystal" # Collects the crystal and moves onto the next level
                     else:
                         return None # Doesn't run the rest of the code
 
