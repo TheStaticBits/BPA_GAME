@@ -226,10 +226,10 @@ class Cutscenes(src.scene_base.SceneBase):
                             self.texts[key]["text"] = " ".join(comm[3:])
                         elif comm[2] == "move":
                             self.texts[key]["pos"] = [int(comm[3]), int(comm[4])]
+                        elif comm[2] == "moveTo":
+                            self.texts[key]["moveTo"] = (int(comm[3]), int(comm[4]))
                         elif comm[2] == "color":
                             self.texts[key]["color"] = (int(comm[3]), int(comm[4]), int(comm[5]))
-                        elif comm[2] == "travel":
-                            self.texts["moveTo"] = (int(comm[3]), int(comm[4]))
                 
 
                 # The fade command fades an image slowly onto the screen until the transparency is 255
@@ -339,13 +339,13 @@ class Cutscenes(src.scene_base.SceneBase):
     
 
     def move(self, position, moveTo, speed) -> list:
+        if utility.distance_to(position, moveTo) < 1:
+            return list(moveTo)
+        
         degrees = utility.angle_to(position, moveTo)
         
         position[0] += math.cos(degrees) * speed
         position[1] += math.sin(degrees) * speed
-
-        if utility.distance_to(position, moveTo) < 1:
-            position = moveTo
 
         return position
 
@@ -394,8 +394,8 @@ class Cutscenes(src.scene_base.SceneBase):
             if result is not None:
                 return result
         
-        # Updating player animation
-        self.objects["player"]["obj"].update_animation()
+        if not self.playerControlled:
+            self.objects["player"]["obj"].update_animation()
 
         # Moving objects
         for name, dat in self.objects.items():
@@ -438,6 +438,8 @@ class Cutscenes(src.scene_base.SceneBase):
                 
                 
                 dat["pos"] = dat["obj"].rect.topleft
+
+                continue
 
 
             if dat["movement"] != "still":
@@ -501,7 +503,7 @@ class Cutscenes(src.scene_base.SceneBase):
         # Moving text that is still
         for text in self.texts.values():
             if text["movable"]:
-                text["pos"] = self.move(text["pos"], text["moveTo"], 0.5)
+                text["pos"] = self.move(text["pos"], text["moveTo"], 0.3)
             
         self.timer += 1
 
