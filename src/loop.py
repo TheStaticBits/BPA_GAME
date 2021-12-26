@@ -126,12 +126,9 @@ class Loop(src.scene_base.SceneBase):
 
             self.startupSound.play()
 
-            try:
-                while not self.window.closeWindow:
-                    with open(constants.EVENT_LOG_PATH, "w"):
-                        # Clearing the events.log file
-                        pass
-
+            # Main Loop
+            while not self.window.closeWindow:
+                try:
                     self.window.flip()
 
                     self.framerate += 1
@@ -139,18 +136,17 @@ class Loop(src.scene_base.SceneBase):
                     self.update()
                     self.render()
 
-            except Exception:
-                # handles errors that occured in game
-                # logging and giving an error popup box
-                err = traceback.format_exc()
-                print(err)
-                self.logger.critical(f"ERROR WHILE PLAYING: {err}")
+                except Exception:
+                    # handles errors that occured in game
+                    # logging and giving an error popup box
+                    err = traceback.format_exc()
+                    print(err)
+                    self.logger.critical(f"ERROR WHILE PLAYING: {err}")
 
-                utility.error_box(err)
-
-            finally:
-                self.save_and_exit()    
-
+                    utility.error_box(err)
+            
+            self.save_and_exit()
+            
     # Sets the level to completed and adds one to the current level index
     def increment_index(self):
         self.levelsCompleted[self.level] = 1
