@@ -40,6 +40,12 @@ class PauseMenu(src.scene_base.SceneBase):
             imagePath = constants.PAUSE_BUTTON_PATH,
         )
 
+        # Used for transitions
+        self.transitionPos = -constants.SCREEN_SIZE[1] # For sliding down and up
+        self.transitionMode = "Into"
+        self.transitionAlpha = 255
+        self.transitionSceneTo = None
+
         self.background = None
     
 
@@ -57,7 +63,38 @@ class PauseMenu(src.scene_base.SceneBase):
     # Pass in a surface with the point at which it paused at
     def update_background(self, background):
         self.background = background.copy()
-        self.background.set_alpha(100) # Alpha 
+        # self.background.set_alpha(100) # Alpha
+
+        self.transitionMode = "into" 
+    
+
+    # Transition out of the pause menu
+    def transition_out(self, scene):
+        self.transitionMode = "out"
+        self.transitionSceneTo = scene
+    
+    
+    # Updating transition
+    # Returns true when finishing transitioning out
+    def update_transition(self) ->:
+        if self.transitionMode == "into":
+            self.transitionAlpha -= constants.TRANSITION_SPEED
+            self.transitionPos += constants.SCREEN_SIZE[1] / (155 / constants.TRANSITION_SPEED)
+
+            if self.transitionAlpha <= 100:
+                self.transitionPos = 0
+                self.transitionAlpha = 100
+        
+        elif self.transitionMode == "out":
+            self.transitionAlpha += constants.TRANSITION_SPEED
+            self.transitionPos -= constants.SCREEN_SIZE[1] / (155 / constants.TRANSITION_SPEED)
+
+            if self.transitionAlpha >= 255:
+                self.transitionPos = -constants.SCREEN_SIZE[1]
+                self.transitionAlpha = 255
+                return True
+        
+        return False
     
 
     # Updates the buttons, returning the button pressed
@@ -65,12 +102,15 @@ class PauseMenu(src.scene_base.SceneBase):
     def update(self, inputs, mousePos, mouseInputs) -> str:
         super().update()
 
+        if self.update_transition():
+            return self.transitionSceneTo
+
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs):
                 return key
         
         if inputs["esc"]:
-            return "resume"
+            self.transition_out("resume")
         
         return "pause"
 
@@ -79,11 +119,15 @@ class PauseMenu(src.scene_base.SceneBase):
     def render(self, window):
         super().render()
 
+        # Setting background
+        self.background.set_alpha(self.transitionAlpha)
         window.blit(self.background, (0, 0))
+
+        surf = pygame.Surface(constants.SCREEN_SIZE)
 
         # Rendering buttons
         for button in self.buttons.values():
-            button.render(window)
+            button.render(surf)
         
         # Rendering logo centered on the x axis
-        window.blit(self.logo, (constants.SCREEN_SIZE[0] / 2 - self.logo.get_width() / 2, 15))
+        surf.blit(self.logo, (constants.SCREEN_SIZE[0] / 2 - self.logo.get_width() / 2, 15))
