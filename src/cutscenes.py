@@ -1,8 +1,8 @@
 import pygame
+import logger
 import random
 import math
 
-import src.scene_base
 import src.player
 import src.utility as utility
 import src.constants as constants
@@ -16,7 +16,7 @@ updates and displays everything to the screen.
 class Cutscenes(src.scene_base.SceneBase):
     # Setting up default information and variables
     def __init__(self, removeCutscenes, crystals):
-        super().__init__(__name__)
+        self.logger = logging.getLogger(__name__)
 
         self.remove_cutscenes = removeCutscenes # Takes a level number and removes numbers with cutscenes
         
@@ -46,6 +46,8 @@ class Cutscenes(src.scene_base.SceneBase):
 
     # Sets up the given level and scene,
     def setup(self, scene, level):
+        self.logger.info(f"Setting up cutscene {scene}, at level {level}")
+
         self.scene = scene
         self.levelNum = level
 
@@ -153,6 +155,8 @@ class Cutscenes(src.scene_base.SceneBase):
 
     
     def rerender_tiles(self):
+        self.logger.info("Rendering background tiles")
+
         self.tiles.fill(constants.BLACK)
         self.tileRenderer.draw_tiles(
             self.level[self.room], self.room,
@@ -168,6 +172,8 @@ class Cutscenes(src.scene_base.SceneBase):
         # LOok inside data/cutscenes.json for more examples
         try:
             for command in commands:
+                self.logger.debug(f"Running cutscene command: {command}")
+
                 comm = command.split(" ")
 
                 if comm[0] in self.objects:
@@ -322,8 +328,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 return eval(f"{result} {command}")
             
             else:
-                print("Error: Unknown conditional")
-                print(conditional)
+                self.logger.error(f"Unknown cutscene conditional {conditional}")
 
         else:
             # Goes through and runs all conditionals in the list
@@ -428,10 +433,12 @@ class Cutscenes(src.scene_base.SceneBase):
                 )
 
                 if result == "right":
+                    self.logger.info("Player walked to the next room")
                     dat["obj"].rect.x -= constants.SCREEN_SIZE[0]
                     self.room += 1
 
                     if self.room == len(self.level):
+                        self.logger.info("Player walked off cutscene")
                         return "end"
                     else:
                         self.rerender_tiles()
@@ -439,6 +446,7 @@ class Cutscenes(src.scene_base.SceneBase):
                 
                 elif result == "left":
                     if self.room > 0:
+                        self.logger.info("Player walked back a room")
                         dat["obj"].rect.x += constants.SCREEN_SIZE[0]
                         self.room -= 1
                         self.rerender_tiles()
@@ -464,6 +472,8 @@ class Cutscenes(src.scene_base.SceneBase):
                     dat["facing"] = "right"
                     
                     if dat["pos"][0] >= (constants.SCREEN_SIZE[0]):
+                        self.logger.info(f"Entity {name} walked into the next room")
+
                         dat["pos"][0] = -width
 
                         if name == "player":
@@ -481,6 +491,8 @@ class Cutscenes(src.scene_base.SceneBase):
                     dat["facing"] = "left"
 
                     if dat["pos"][0] <= -width:
+                        self.logger.info(f"Entity {name} walked into the previous room")
+
                         if name == "player":
                             if self.room > 0:
                                 self.room -= 1

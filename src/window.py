@@ -1,4 +1,5 @@
 import pygame
+import logging
 import src.constants as constants
 
 """
@@ -14,6 +15,9 @@ class Window:
     def __init__(self):
         # Creates the window, the miniwindow, sets up other Pygame things, and inputs.
 
+        self.logger = logging.getLogger(__name__)
+
+        self.logger.info("Setting up window...")
         self.window = pygame.display.set_mode(self.WINDOW_SIZE, pygame.DOUBLEBUF)
         self.miniWindow = pygame.Surface((
             self.WINDOW_SIZE[0] / constants.PX_SCALE_FACTOR,

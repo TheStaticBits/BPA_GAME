@@ -3,16 +3,37 @@ This file contains functions for things such as saving and loading, loading spri
 """
 
 import pygame
+import time
 import math
 import sqlite3
 import os
 import win32api
+import logging
 import smtplib, ssl
 import json
 import base64
 
 import src.constants as constants
 import src.animation
+
+"""  Setting up root logger (and default configuration for future loggers)  """
+rLogger = logging.getLogger(name) # Creating root logger
+rLogger.setLevel(logging.DEBUG) # Sets the level to debug so all logs will show
+# Setting up formatters. Console format is simpler
+fileFormatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s - %(message)s")
+consoleFormatter = logging.Formatter("%(levelname)s:%(name)s - %(message)s")
+# If the folder that the event.log is in does not exist, create it
+if not os.path.exists(constants.EVENT_LOG_PATH.split("/")[0]):
+    os.makedirs(constants.EVENT_LOG_PATH.split("/")[0])
+# Creating handlers
+handler = logging.FileHandler(constants.EVENT_LOG_PATH)
+console = logging.SteamHandler()
+# Setting formatters
+handler.setFormatter(fileFormatter)
+console.setFormatter(consoleFormatter)
+# Adding handlers
+rLogger.addHandler(handler)
+rLogger.addHandler(console)
 
 
 # Locks a number to 1, 0, or -1 and returns that number
@@ -328,12 +349,28 @@ def modif_save(dict):
 
 
 # This is the error box which pops up when there is an error
+# Also creates a crash report and reports crashes if the user says yes to doing so
 def error_box(error):
     pygame.quit() # Closes window
+
+
+    # Generating crash report file
+    t = time.localtime()
+    crashReport = f"Generated at {t}\n\nError:\n{error}"
+    crashFilePath = constants.CRASH_REPORT_PATH + t
     
+    # Creating crash report folder if it doesn't exist
+    if not os.path.exists(constants.CRASH_REPORT_PATH.split("/")[1]):
+        os.makedirs(constants.CRASH_REPORT_PATH.split("/")[1])
+
+    # Writing to crash report file
+    with open(crashFilePath, "w") as file:
+        file.write(crashReport)
+
+
     result = win32api.MessageBox(
         None, 
-        f"""Game crashed. See saves/events.log for more information.
+        f"""Game ERROR. This is an unrecoverable state.
 
 Error:
 ----------------------
@@ -352,9 +389,8 @@ Would you like to report this crash?""",
 
         connection = ssl.create_default_context() # Creating a connection
         
-        # Reading and decoding password
-        with open(constants.EMAIL_PWD_PATH, "r") as file:
-            password = base64.b64decode(file.read()).decode("utf-8")
+        # Decoding password
+        password = base64.b64decode("cmVwb3J0dGhvc2VjcmFzaGVz").decode("utf-8")
 
         with smtplib.SMTP_SSL("smtp.gmail.com", context=connection) as s: # Connecting to the server
             s.login("reporterofcrashes@gmail.com", password)

@@ -1,4 +1,5 @@
 import pygame
+import logging
 import random
 import math
 
@@ -108,6 +109,8 @@ checking collisions with the player, and rendering it.
 class Belloq:
     # Loads animation, sets default variables
     def __init__(self):
+        self.logger = logging.getLogger(__name__)
+
         self.lazers = []
         self.cooldown = constants.BELLOQ_COOLDOWN
 
@@ -118,6 +121,8 @@ class Belloq:
 
     # Resets the boss to its default position and state, clearing lazers
     def reset(self):
+        self.logger.info("Resetting Belloq boss")
+
         self.switchAnim("idle")
         self.position = [
             -self.animation[self.currentAnim].get_image_width(), 
@@ -137,6 +142,8 @@ class Belloq:
     # Creates a lazer object, 
     # starting at the eye and pointing in the direction of the player with a random offset
     def create_lazer(self, player, playerScreenX, screenPos):
+        self.logger.info("Creating lazer")
+
         playerCenter = (
             playerScreenX + constants.PLAYER_WIDTH // 2,
             player.rect.y + player.rect.height // 2
@@ -192,6 +199,7 @@ class Belloq:
         self.cooldown -= 1
 
         if self.cooldown <= 0:
+            self.logger.info("Starting attack")
             self.cooldown = constants.BELLOQ_COOLDOWN
             self.switchAnim("attack")
 

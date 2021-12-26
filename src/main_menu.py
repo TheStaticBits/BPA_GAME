@@ -1,6 +1,6 @@
 import pygame
+import logging
 
-import src.scene_base
 import src.constants as constants
 import src.utility as utility
 import src.button
@@ -10,10 +10,10 @@ import src.tile_renderer
 Handles the buttons on the main menu, rendering of main menu, 
 and also the level selector on the main menu.
 """
-class MainMenu(src.scene_base.SceneBase):
+class MainMenu():
     # Sets up variables to default and loading images used on the menu
     def __init__(self, save, levelsList, levelsCompleted, crystals, remove_cutscenes):
-        super().__init__(__name__) # Logging
+        self.logger = logging.getLogger(__name__) # Logging
 
         self.levelsList = levelsList
         self.levelsCompleted = levelsCompleted
@@ -106,8 +106,6 @@ class MainMenu(src.scene_base.SceneBase):
 
     # Updates buttons, returning a string for the result of which button was pressed
     def update(self, mousePos, mouseInputs):
-        super().update()
-
         # Iterating through all buttons
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs): # If the button was pressed
@@ -118,6 +116,7 @@ class MainMenu(src.scene_base.SceneBase):
                 )
                 
                 if key == "left": # If the button was the left arrow in the level selector
+                    self.logger.info("Left button pressed")
                     # If the level displayed is one of the endings, set it to the last non-ending level
                     if self.lvlsIndex > last_normal_level:
                         self.lvlsIndex = last_normal_level
@@ -133,6 +132,7 @@ class MainMenu(src.scene_base.SceneBase):
                                 self.lvlsIndex = last_normal_level + self.ending
                 
                 elif key == "right": # if the button pressed was the right arrow
+                    self.logger.info("Right button pressed")
                     # If the level selected at the time was an ending, set it to the first level
                     if self.lvlsIndex > last_normal_level:
                         self.lvlsIndex = 0
@@ -148,6 +148,7 @@ class MainMenu(src.scene_base.SceneBase):
                     
                 elif key == "play":
                     if self.get_status(self.lvlsIndex)[0] != "Locked":
+                        self.logger.info(f"Playing level {self.lvlsIndex}")
                         return "play"
 
                 else:
@@ -162,8 +163,6 @@ class MainMenu(src.scene_base.SceneBase):
     
     # Renders everything in the scene to the window
     def render(self, window):
-        super().render()
-        
         window.blit(self.background, (0, 0))
         window.blit(self.screenShadow, (0, 0))
 

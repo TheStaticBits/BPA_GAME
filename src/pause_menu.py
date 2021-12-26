@@ -1,15 +1,15 @@
 import pygame
+import logging
 
 import src.button
 import src.constants as constants
-import src.scene_base
 
 """
 Handles the entire pause menu, including the pause button on other scenes
 """
-class PauseMenu(src.scene_base.SceneBase):
+class PauseMenu():
     def __init__(self): # Sets up logger and buttons
-        super().__init__(__name__) # Logger
+        self.logger = logging.getLogger(__name__) # Logger
 
         font = pygame.font.Font(constants.FONT_PATH, 25)
 
@@ -63,13 +63,13 @@ class PauseMenu(src.scene_base.SceneBase):
     # Updates the buttons, returning the button pressed
     # Also returns "resume" if the escape button has been pressed
     def update(self, inputs, mousePos, mouseInputs) -> str:
-        super().update()
-
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs):
+                self.logger.info(f"Pressed {key}")
                 return key
         
         if inputs["esc"]:
+            self.logger.info("Resuming")
             return "resume"
         
         return "pause"
@@ -77,8 +77,6 @@ class PauseMenu(src.scene_base.SceneBase):
     
     # Renders buttons, background, and logo to the screen
     def render(self, window):
-        super().render()
-
         window.blit(self.background, (0, 0))
 
         # Rendering buttons

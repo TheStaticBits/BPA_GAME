@@ -1,4 +1,5 @@
 import pygame
+import logging
 import random
 import math
 
@@ -12,6 +13,8 @@ Instance of this is created in the boss_level.py file
 class RedStare:
     # Sets up variables and loads animations
     def __init__(self): 
+        self.logger = logging.getLogger(__name__)
+
         self.animations = utility.load_animations_dict(constants.RED_STARE_ANIMATIONS)
 
         self.reset()
@@ -19,6 +22,7 @@ class RedStare:
     
     # Resets the mouth related variables
     def reset_mouth(self): 
+        self.logger.info("Resetting mouth")
         self.mouthStart = None
         self.mouthGoTo = None
         self.mouthDegree = None
@@ -28,6 +32,7 @@ class RedStare:
     
     # Resets all general variables to the default state
     def reset(self):
+        self.logger.info("Resetting Red Stare boss")
         self.poppedUp = False
         self.bodyPos = None
         self.cooldown = constants.RED_STARE_COOLDOWN
@@ -50,6 +55,8 @@ class RedStare:
                 self.cooldown -= 1
 
                 if self.cooldown <= 0: # If the boss is now going to activate and move up
+                    self.logger.info("Popping up")
+
                     self.poppedUp = True
 
                     # Since the player.rect.x is the x position of the player in the given "room",
@@ -97,6 +104,7 @@ class RedStare:
 
                 if round(currDis) == 0: # If the mouth reached its end point
                     if not self.mouthGoingBack:
+                        self.logger.info("Reversing direction")
                         # If the mouth needs to turn back to the body
                         self.mouthGoingBack = True
 
@@ -110,6 +118,8 @@ class RedStare:
                         self.mouthDegree = utility.angle_to(self.mouthPos, self.mouthGoTo)
                     
                     else: # If the mouth's attack has finished
+                        self.logger.info("Mouth attack finished")
+
                         # Resetting
                         self.reset_mouth()
                         
@@ -123,6 +133,7 @@ class RedStare:
 
                 # If the body has fully appeared on screen
                 if self.bodyPos[1] <= constants.SCREEN_SIZE[1] - self.animations["body"].get_image_height():
+                    self.logger.info("Mouth attack started")
                     self.mouthMoving = True
 
                     # Used for determining speed later

@@ -1,4 +1,5 @@
 import pygame
+import logging
 import os
 import traceback
 from time import sleep
@@ -7,7 +8,6 @@ import threading
 import src.window
 import src.playing
 import src.utility as utility
-import src.scene_base
 import src.constants as constants
 import src.animation
 import src.tile_renderer
@@ -24,7 +24,7 @@ This class creates and manages all of the scenes, the window, and the main game 
 It also sets up the game.
 After the game closes, this class takes all game data and calls a function located in src/utility.py which serializes all of the data to a database.
 """
-class Loop(src.scene_base.SceneBase):
+class Loop():
     def __init__(self):
         # Initializes all of the classes, with error handling.
         super().__init__(__name__)

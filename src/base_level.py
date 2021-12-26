@@ -1,6 +1,6 @@
 import pygame
+import logging
 
-import src.scene_base
 import src.constants as constants
 import src.utility as utility
 import src.ellipse_and_corlen as eac
@@ -9,10 +9,10 @@ import src.ellipse_and_corlen as eac
 The base level! Playing.py (normal levels) and boss_level.py (boss levels) inherit from this.
 Handles Ellipse and Corlen following the player, 
 """
-class BaseLevel(src.scene_base.SceneBase):
+class BaseLevel():
     # Loads level data, sets up entities, and sets up default variables
     def __init__(self, name): 
-        super().__init__(name)
+        self.logger = logging.getLogger(name) # Creating logger
 
         self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
 
@@ -70,6 +70,7 @@ class BaseLevel(src.scene_base.SceneBase):
     # Plays the music that the level has if it isn't already playing
     def start_music(self):
         if self.playingSong != self.levelData[self.level]["music"]:
+            self.logger.info(f"Playing song {self.levelData[self.level]["music"]}")
             utility.play_music(self.levelData[self.level]["music"])
             self.playingSong = self.levelData[self.level]["music"]
     
@@ -81,6 +82,7 @@ class BaseLevel(src.scene_base.SceneBase):
 
     # Goes through and removes all crystals in a given level
     def remove_crystal(self, level):
+        self.logger.info(f"Removing crystal in level {level}")
         for roomNum, room in enumerate(self.levels[level]):
             for y, row in enumerate(room):
                 for x, tile in enumerate(row):
@@ -90,6 +92,7 @@ class BaseLevel(src.scene_base.SceneBase):
 
     # Resets the level from the level data, in the process resetting the crystal in the level
     def reset_crystal(self, level):
+        self.logger.info(f"Resetting crystal in level {level}")
         levels = utility.load_levels(constants.LEVELS_PATH)[0]
 
         self.levels[level] = levels[level]
@@ -104,6 +107,7 @@ class BaseLevel(src.scene_base.SceneBase):
         xVelocity = 0,
         new = False
         ):
+        self.logger.info("Setting up player")
 
         # If there was no data passed in, set the position to the tile "p" in the level
         if playerX == -1 and playerY == -1:
@@ -132,6 +136,8 @@ class BaseLevel(src.scene_base.SceneBase):
 
     # Creates Ellipse and Corlen and updates their data to match the player's data
     def setup_entities(self, position):
+        self.logger.info("Setting up entities")
+
         self.entities = []
 
         self.entities.append(eac.create_entity("ellipse", position, self.room, self.level))
@@ -144,6 +150,8 @@ class BaseLevel(src.scene_base.SceneBase):
 
     # Resets data to default variables
     def reset_all(self):
+        self.logger.info("Resetting all")
+
         self.room = 0 # Resetting the room number
         
         self.start_music()
@@ -170,6 +178,8 @@ class BaseLevel(src.scene_base.SceneBase):
 
     # Sets up a popup with the given text
     def popup(self, text):
+        self.logger.info(f"Creating popup \"{text}\"")
+
         self.popupText = text
         self.popupRendered = self.popupFont.render(text, False, constants.WHITE)
         self.popupTextTimer = constants.POPUP_TEXT_DURATION
@@ -191,8 +201,6 @@ class BaseLevel(src.scene_base.SceneBase):
         tileRenderer,
         playerSpawnOffset = 0, # Offset for when the player switches levels/rooms
         ):
-        super().update()
-
         # Updating the popup text if there is any
         if self.popupText is not None:
             if self.popupTextTimer > 0:
@@ -221,9 +229,12 @@ class BaseLevel(src.scene_base.SceneBase):
         # If the player moved to the far right of the screen
         if playerState == "right":
             self.room += 1
+            self.logger.info(f"Player traveled to the next room into room {self.room}")
             
             # If the room number has hit the end of the level
-            if self.room >= len(self.levels[self.level]):                
+            if self.room >= len(self.levels[self.level]):
+                self.logger.info("Player traveled to the next level")
+
                 # Resetting the room number and incrementing the level number
                 self.room = 0
                 self.level += 1
@@ -240,6 +251,7 @@ class BaseLevel(src.scene_base.SceneBase):
         elif playerState == "left":
             if self.room > 0: # If it isn't the start of a level
                 self.room -= 1
+                self.logger.info(f"Player traveled left one room into room {self.room}")
 
                 # Moving the player to the opposite side of the screen
                 self.player.rect.x += constants.SCREEN_TILE_SIZE[0] * (constants.TILE_SIZE[0]) + playerSpawnOffset 
@@ -250,6 +262,8 @@ class BaseLevel(src.scene_base.SceneBase):
         # Play the "struck" animation for the tile
         elif isinstance(playerState, tuple):
             if tileRenderer.change_tile_anim(playerState[0], playerState[1], "struck"):
+                self.logger.info(f"Player activated special tile {playerState[0]} at {playerState[1]}")
+
                 if playerState[0] == "g": # Gravity orb
                     self.gravityDir *= -1 # Changing the gravity direction
                 
@@ -324,8 +338,6 @@ class BaseLevel(src.scene_base.SceneBase):
     
     # Renders all entities to the given surface with an offset
     def render(self, surface, offset = 0, renderWithCheck = True):
-        super().render() # For logging
-
         if self.showEntities:
             # Drawing Ellipse and Corlen
             for ent in self.entities:

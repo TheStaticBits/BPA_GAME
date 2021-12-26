@@ -5,7 +5,6 @@ This file includes the class which manages the playing scene, which includes til
 import pygame
 import math
 
-import src.scene_base
 import src.base_level
 import src.tile_renderer
 import src.utility as utility
@@ -24,16 +23,11 @@ class Playing(src.base_level.BaseLevel):
         self.get_text() # Getting the text for the current room
         
         # Setup tile drawing surface
-        self.tileSurface = pygame.Surface((
-            constants.SCREEN_SIZE[0],
-            constants.SCREEN_SIZE[1]
-        ))
+        self.tileSurface = pygame.Surface(constants.SCREEN_SIZE)
 
         self.tileRenderer = src.tile_renderer.TileRenderer()
         
         self.load_room() # Drawing the tiles onto the tile surface
-
-        self.tilesChanged = False
 
         # EDITOR CONTROLS:
         self.placeTile = "w" # Tile to be placed when you click
@@ -41,6 +35,8 @@ class Playing(src.base_level.BaseLevel):
     
     # Calls a bunch of other functions which sets up the world with all the aspects of it
     def setup(self, level, crystals, crystalIndex):
+        self.logger.info(f"Setting up level {level}")
+
         self.level = level
 
         super().reset_crystal(level)
@@ -55,6 +51,8 @@ class Playing(src.base_level.BaseLevel):
     
     # Restarts the level the player is in
     def restart_level(self):
+        self.logger.info("Restarting")
+
         # If the player has previously collected a crystal, it will be reset
         if self.currentCrystal: super().reset_crystal(self.level)
         
@@ -66,6 +64,8 @@ class Playing(src.base_level.BaseLevel):
     # Loads the rendered tiles in the room,
     # while also setting up the animated tiles in the tile renderer
     def load_room(self):
+        self.logger.info("Loading tiles in room")
+        
         self.get_text()
         # This is done so that the tile renderer doesn't have to rerender tiles every frame
         # (for performance)
@@ -128,7 +128,7 @@ class Playing(src.base_level.BaseLevel):
                 if self.levels[self.level][self.room][tilePos[1]][tilePos[0]] != self.placeTile:
                     # Sets the tile the mouse is hovering over to the placeTile
                     self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = self.placeTile # placeTile is the tile to be placed
-                    self.tilesChanged = True # Sets the tiles to be rerendered, since they changed
+                    self.load_room()
             
             if mousePressed["center"]: # If center clicked
                 self.placeTile = self.levels[self.level][self.room][tilePos[1]][tilePos[0]] # Changing the placeTile to the one the mouse is hovering over
@@ -137,19 +137,15 @@ class Playing(src.base_level.BaseLevel):
                 if self.levels[self.level][self.room][tilePos[1]][tilePos[0]] != " ":
                     # Sets the tile the mouse is hovering over to air
                     self.levels[self.level][self.room][tilePos[1]][tilePos[0]] = " "
-                    self.tilesChanged = True # Sets the tiles to be rerendered
+                    self.load_room()
             
             if inputs["space"]:
+                self.logger.info("Saving room")
                 utility.save_room(self.level, self.room, self.levels[self.level][self.room], constants.LEVELS_PATH) # Saves the room to the levels.txt file
 
 
     # Renders everything to the screen
-    def render(self, window):
-        if self.tilesChanged: # If the tiles have changed, rerender them
-            self.load_room()
-
-            self.tilesChanged = False
-        
+    def render(self, window):        
         # Drawing tiles
         window.blit(self.tileSurface, (0, 0))
 

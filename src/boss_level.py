@@ -41,6 +41,8 @@ class BossLevel(src.base_level.BaseLevel):
     # Sets up the boss level with a given boss and level
     # It also starts the music and loads the room images.
     def setup(self, boss, level, crystals, crystalIndex):
+        self.logger.info(f"Setting up level {level}")
+
         self.level = level
 
         super().reset_crystal(level)
@@ -70,6 +72,8 @@ class BossLevel(src.base_level.BaseLevel):
 
     # Resets the level
     def restart_level(self):
+        self.logger.info("Restarting level")
+
         if self.currentCrystal: super().reset_crystal(self.level)
 
         super().reset_all()
@@ -82,6 +86,8 @@ class BossLevel(src.base_level.BaseLevel):
     
     # Renders the rooms to a Pygame Surface and adds that to the tileSurface list
     def load_rooms(self):
+        self.logger.info("Loading tiles in surrounding rooms")
+
         self.tileSurfaces.clear()
 
         # iterating through the tileRenderer objects
