@@ -199,15 +199,17 @@ class Loop(src.scene_base.SceneBase):
         self.window.update_inputs()
 
         if self.transitionImg is not None:
-            if self.transitionMode == "into":
+            # Updating transition alpha if currently in a transition
+            if self.transitionMode == "into": # Fading to black
                 self.transitionAlpha -= constants.TRANSITION_SPEED
 
-                if self.transitionAlpha <= 0:
+                if self.transitionAlpha <= 0: # Reached full dark
                     self.transitionAlpha = constants.TRANSITION_SPEED
                     self.transitionMode = "out"
-                    self.transitionImg = self.render(withoutTransition = True, draw = False).copy() # Gets the new scene
+                    # Gets the new scene
+                    self.transitionImg = self.render(withoutTransition = True, draw = False).copy() 
             
-            elif self.transitionMode == "out":
+            elif self.transitionMode == "out": # Fading out of black
                 self.transitionAlpha += constants.TRANSITION_SPEED
 
                 if self.transitionAlpha >= 255:
@@ -223,7 +225,7 @@ class Loop(src.scene_base.SceneBase):
                 self.scenes["mainMenu"].start_music()
                 del self.startupAnim
         
-        elif self.scene == "mainMenu":
+        elif self.scene == "mainMenu": # Updating main menu
             result = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
 
             if result is not None:
@@ -241,7 +243,7 @@ class Loop(src.scene_base.SceneBase):
                 self.update()
 
         
-        elif self.scene == "pauseMenu":
+        elif self.scene == "pauseMenu": # Updating pause menu
             result = self.scenes["pauseMenu"].update(
                 self.window.inputs, 
                 self.window.mousePos, 
