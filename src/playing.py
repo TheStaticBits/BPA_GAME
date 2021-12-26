@@ -175,7 +175,7 @@ class Playing(src.base_level.BaseLevel):
 
                     position = (
                         constants.SCREEN_SIZE[0] / 2 - renderText.get_width() / 2, # Centering text on screen 
-                        50 + math.sin(self.textWavX) * 5 + count * 12
+                        20 + math.sin(self.textWavX) * 5 + count * 12
                     )
 
                     utility.draw_text_with_border(window, position, text, self.font, constants.WHITE, renderText = renderText)
