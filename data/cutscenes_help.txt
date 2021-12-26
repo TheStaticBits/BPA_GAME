@@ -41,6 +41,8 @@ player jump [can/not]
  - tile travels to the given x and y, not instantaneously
 [tileName] teleport [x] [y]
  - tile teleports to the given x and y
+[tileName] teleport [x] [y] moveTo
+ - tile teleports to the given x and y, and also changes the moveTo position to the same x and y
 
 text create [textName]
  - creates a text object with the given name
