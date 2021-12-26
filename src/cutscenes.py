@@ -9,7 +9,12 @@ import src.constants as constants
 import src.animation
 import src.tile_renderer
 
+"""
+Manages cutscenes. Interprets cutscene commands and
+updates and displays everything to the screen. 
+"""
 class Cutscenes(src.scene_base.SceneBase):
+    # Setting up default information and variables
     def __init__(self, removeCutscenes, crystals):
         super().__init__(__name__)
 
@@ -24,6 +29,7 @@ class Cutscenes(src.scene_base.SceneBase):
         self.room = 0
         self.timer = 0
 
+        # Animations used for entities
         self.entitiesAnimList = {
             "corlen": utility.load_animations_dict(constants.CORLEN_ANIMATIONS),
             "ellipse": utility.load_animations_dict(constants.ELLIPSE_ANIMATIONS),
@@ -38,6 +44,7 @@ class Cutscenes(src.scene_base.SceneBase):
         }
 
 
+    # Sets up the given level and scene,
     def setup(self, scene, level):
         self.scene = scene
         self.levelNum = level
@@ -273,7 +280,7 @@ class Cutscenes(src.scene_base.SceneBase):
                     return comm[0]
 
         except Exception as exc:
-            raise Exception(f"Error occured in cutscene command: {command}\nCommand: {exc}")
+            self.logger.error(f"Error occured in cutscene command: {command}\nCommand: {exc}")
 
 
     def run_conditional(self, conditional):

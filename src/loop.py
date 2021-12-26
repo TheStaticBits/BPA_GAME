@@ -66,8 +66,7 @@ class Loop(src.scene_base.SceneBase):
 
             err = traceback.format_exc()
             print(err)
-            self.logger.critical("ERROR WHILE STARTING UP: ")
-            self.logger.critical(err)
+            self.logger.critical(f"ERROR WHILE STARTING UP: {err}")
 
             utility.error_box(err)
 
@@ -136,20 +135,17 @@ class Loop(src.scene_base.SceneBase):
                     self.update()
                     self.render()
 
-                self.save_and_exit()
-
             except Exception:
                 # handles errors that occured in game
                 # logging and giving an error popup box
                 err = traceback.format_exc()
                 print(err)
-                self.logger.critical("ERROR WHILE PLAYING: ")
-                self.logger.critical(err)
+                self.logger.critical(f"ERROR WHILE PLAYING: {err}")
 
                 utility.error_box(err)
-            
-                self.save_and_exit()
-                
+
+            finally:
+                self.save_and_exit()    
 
     # Sets the level to completed and adds one to the current level index
     def increment_index(self):

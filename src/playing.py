@@ -84,11 +84,8 @@ class Playing(src.base_level.BaseLevel):
         self.text = None
         self.textWavX = 0
 
-        try:
+        if f"text {self.room}" in self.levelData[self.level]:
             self.text = self.levelData[self.level][f"text {self.room}"]
-
-        except KeyError: # If that room doesn't have text 
-            pass
 
 
     # Updates the player
