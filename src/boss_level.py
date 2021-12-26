@@ -7,13 +7,13 @@ import src.big_bite
 import src.red_stare
 import src.constants as constants
 
-"""
-This class, BossLevel, inherits all of the base level functionality from the BaseLevel class.
-It adds onto the BaseLevel class by handling screen scrolling and the boss objects
-"""
 class BossLevel(src.base_level.BaseLevel):
+    """
+    This class, BossLevel, inherits all of the base level functionality from the BaseLevel class.
+    It extends the BaseLevel class by handling screen scrolling and the boss objects.
+    """
     def __init__(self):
-        # Initializes all class variables
+        """Initializes all class variables"""
 
         super().__init__(__name__) # Initializes the entities, player, gravity beam, and more
 
@@ -38,9 +38,8 @@ class BossLevel(src.base_level.BaseLevel):
         self.bossName = None
 
 
-    # Sets up the boss level with a given boss and level
-    # It also starts the music and loads the room images.
     def setup(self, boss, level, crystals, crystalIndex):
+        """Sets up the boss level with a given boss and level. It also starts the music and loads the room images."""
         self.logger.info(f"Setting up level {level}")
 
         self.level = level
@@ -70,8 +69,8 @@ class BossLevel(src.base_level.BaseLevel):
         # This is minimum because the tileOffset goes negative, not positive.
     
 
-    # Resets the level
     def restart_level(self):
+        """Resets the level and all of the variables"""
         self.logger.info("Restarting level")
 
         if self.currentCrystal: super().reset_crystal(self.level)
@@ -84,8 +83,8 @@ class BossLevel(src.base_level.BaseLevel):
         self.load_rooms()
 
     
-    # Renders the rooms to a Pygame Surface and adds that to the tileSurface list
     def load_rooms(self):
+        """Renders the rooms to a Pygame Surface and adds that to the tileSurface list"""
         self.logger.info("Loading tiles in surrounding rooms")
 
         self.tileSurfaces.clear()
@@ -118,8 +117,8 @@ class BossLevel(src.base_level.BaseLevel):
             tr.setup_room_tile_anims(self.levels[self.level][room])
 
     
-    # Updates everything in the boss level, such as the boss object, the player, and the tile rendering offset
     def update(self, window):
+        """Updates everything in the boss level, such as the boss object, the player, and the tile rendering offset"""
         result = super().update(
             window.inputs, 
             self.tileRenderers[self.playerRoomIndex],
@@ -195,8 +194,8 @@ class BossLevel(src.base_level.BaseLevel):
                 break
     
     
-    # Renders everything in the boss level to the screen.
     def render(self, window):
+        """Renders everything in the boss level to the screen"""
         # Rendering the tiles of the room the player is in
         window.blit(self.tileSurfaces[self.playerRoomIndex], (self.tilesOffset, 0))
         self.tileRenderers[self.playerRoomIndex].render_tiles_with_anims(window, self.gravityDir, self.gravBeamYPos, offset = self.tilesOffset)

@@ -6,37 +6,37 @@ import math
 import src.constants as constants
 import src.utility as utility
 
-"""
-This class, lazer, manages the lazers that the Belloq fires.
-It has several functions that can check collisions with the player, check if it's offscreen, and more.
-"""
 class Lazer:
-    # Sets the default vars
+    """
+    This class, lazer, manages the lazers that the Belloq fires.
+    It has several functions that can check collisions with the player, check if it's offscreen, and more.
+    """
     def __init__(
         self, 
         degreesFacing, # What direction it's facing in radians 
         startPos 
         ):
+        """Sets the default vars"""
         self.degreesFacing = degreesFacing
         self.position = list(startPos)
     
     
-    # Gets the lessor of the two points, for the top left
     def get_top_left(self, position):
+        """Gets the lessor of the two points, for the top left"""
         topLeftX = position[0] if position[0] < self.endPoint[0] else self.endPoint[0]
         topLeftY = position[1] if position[1] < self.endPoint[1] else self.endPoint[1]
         return (topLeftX, topLeftY)
     
 
-    # Gets the greater of the two points, for the bottom right
     def get_bottom_right(self, position):
+        """Gets the greater of the two points, for the bottom right"""
         bottomRightX = position[0] if position[0] > self.endPoint[0] else self.endPoint[0]
         bottomRightY = position[1] if position[1] > self.endPoint[1] else self.endPoint[1]
         return(bottomRightX, bottomRightY)
     
 
-    # Updates the lazer, returning True if it has collided with the player
     def update(self, playerMask, playerPos, playerRoom, tilesOffset) -> bool:
+        """Updates the lazer, returning True if it has collided with the player"""
         # Moves the lazer in the direction it's moving
         self.position[0] += math.cos(self.degreesFacing) * constants.LAZER_SPEED
         self.position[1] += math.sin(self.degreesFacing) * constants.LAZER_SPEED
@@ -80,8 +80,8 @@ class Lazer:
         return collided
     
 
-    # Checks if it's off the screen of the entire level
-    def check_offscreen(self, rooms):
+    def check_offscreen(self, rooms) -> bool:
+        """Checks if it's off the screen of the entire level and returns True if it is"""
         topLeftX, topLeftY = self.get_top_left(self.position)
         bottomRightX, bottomRightY = self.get_bottom_right(self.position)
 
@@ -93,8 +93,8 @@ class Lazer:
         return xOffScreen or yOffScreen
 
     
-    # Draws the line to the screen, from the starting position to the ending position
     def render(self, window):
+        """Draws the line to the screen, from the starting position to the ending position"""
         pygame.draw.line(
             window, 
             constants.LAZER_COLOR,
@@ -102,13 +102,14 @@ class Lazer:
             self.endPoint
         )
 
-"""
-This manages the Belloq boss, creating lazers, moving it, 
-checking collisions with the player, and rendering it.
-"""
+
 class Belloq:
-    # Loads animation, sets default variables
+    """
+    This manages the Belloq boss, creating lazers, moving it, 
+    checking collisions with the player, and rendering it.
+    """
     def __init__(self):
+        """Loads animation, sets default variables"""
         self.logger = logging.getLogger(__name__)
 
         self.lazers = []
@@ -119,8 +120,8 @@ class Belloq:
         self.reset()
 
 
-    # Resets the boss to its default position and state, clearing lazers
     def reset(self):
+        """Resets the boss to its default position and state, clearing lazers"""
         self.logger.info("Resetting Belloq boss")
 
         self.switchAnim("idle")
@@ -132,16 +133,15 @@ class Belloq:
         self.cooldown = constants.BELLOQ_COOLDOWN
 
     
-    # Switches to a new animation if the previous animation wasn't playing
     def switchAnim(self, newAnim):
+        """Switches to a new animation if the previous animation wasn't the same"""
         if newAnim != self.currentAnim:
             self.currentAnim = newAnim
             self.animation[self.currentAnim].reset()
 
 
-    # Creates a lazer object, 
-    # starting at the eye and pointing in the direction of the player with a random offset
     def create_lazer(self, player, playerScreenX, screenPos):
+        """Creates a lazer object, starting at the eye and pointing in the direction of the player with a random offset"""
         self.logger.info("Creating lazer")
 
         playerCenter = (
@@ -177,8 +177,8 @@ class Belloq:
         ))
 
     
-    # Updates everything, moving towards the player, the cooldown for lazers, and more
     def update(self, player, playerRoom, amountOfRooms, tilesOffset):
+        """Updates everything, moves the boss towards the player, the cooldown for lazers, and updating lazers and removing ones offscreen."""
         screenPos = self.position.copy()
         screenPos[0] += tilesOffset
         screenPos[0] -= playerRoom * constants.SCREEN_SIZE[0]
@@ -234,8 +234,8 @@ class Belloq:
             return True
     
 
-    # Renders animation frame and lazers
     def render(self, window, tilesOffset, playerRoom):
+        """Renders animation frame and lazers"""
         self.animation[self.currentAnim].render(
             window, 
             (self.position[0] + tilesOffset - (playerRoom * constants.SCREEN_SIZE[0]),

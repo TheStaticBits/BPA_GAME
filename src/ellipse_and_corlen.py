@@ -1,8 +1,8 @@
 import src.follow_object
 import src.constants as constants
 
-# Creates a follow object with the default Corlen or Ellipse data
 def create_entity(entity, startPos, room, level, velocity = 0) -> "src.follow_object.FollowObject":
+    """Creates a follow object with the default Corlen or Ellipse data"""
     if entity == "ellipse":
         followDist = constants.ELLIPSE_FOLLOW_DISTANCE
         anim = constants.ELLIPSE_ANIMATIONS

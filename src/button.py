@@ -3,12 +3,11 @@ import math
 
 import src.constants as constants
 
-"""
-Button class, for all buttons on screen. 
-Handles updating/checking, and rendering.
-"""
 class Button:
-    # Initiates all general variables, also creating the rectangle used.
+    """
+    Button class, for all buttons on screen. 
+    Handles updating/checking, and rendering.
+    """
     def __init__(
         self, 
         centerX, # Position where the button will be centered on
@@ -23,6 +22,7 @@ class Button:
         imagePath = None, # or
         image = None
         ):
+        """Initiates all general variables, also creating the rectangle used for collision"""
 
         self.isText = text is not None
 
@@ -61,17 +61,15 @@ class Button:
         self.reset() # Sets up other variables to default states
 
     
-    # Resets button to the default state
     def reset(self):
+        """Resets button to the default state"""
         self.selected = False # If the mouse is hovering over the button
         self.clicked = False # The button activates when you let go of it
         self.highlightYPos = 0
 
     
-    # Updates and checks for a collision
-    # Returns True if the user clicked and then let go
-    # Also updates the animation that plays for the button
     def update(self, mousePos, mouseInputs) -> bool:
+        """Updates and checks for a collision. Returns True if the user clicked and then let go. Also updates the animation that plays for the button."""
         self.selected = self.rect.collidepoint(mousePos)
 
         if self.selected:
@@ -98,8 +96,8 @@ class Button:
         return False
 
 
-    # Renders the button.
     def render(self, window):
+        """Renders the button with its highlight effect"""
         if round(self.highlightYPos) != 0: # If it's highlighted at least partially
             cielHYPos = math.ceil(self.highlightYPos) # Rounded up highlighted y position
 

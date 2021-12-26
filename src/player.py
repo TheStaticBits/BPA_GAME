@@ -5,19 +5,19 @@ import src.utility as utility
 import src.object_base
 import src.animation
 
-"""
-Handles everything that goes on with the player character
-Inherits from the ObjectBase class, which handles collisions
-and rendering of the object
-"""
 class Player(src.object_base.ObjectBase):
-    # Loads the images and sets up default variables
+    """
+    Handles everything that goes on with the player character. 
+    Inherits from the ObjectBase class, which handles collisions
+    and rendering of the object.
+    """
     def __init__(
         self, 
         startPos, 
         yVelocity = 0,
         xVelocity = 0,
         ):
+        """Loads the images and sets up default variables"""
         super().__init__(
             constants.PLAYER_ANIMATIONS, 
             startPos,
@@ -32,8 +32,8 @@ class Player(src.object_base.ObjectBase):
         self.dirMoved = 0
     
     
-    # Changes the player's data to the given info
     def reset(self, pos, yVelocity, xVelocity):
+        """Changes the player's data to the given info"""
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.yVelocity = yVelocity
@@ -41,8 +41,6 @@ class Player(src.object_base.ObjectBase):
         self.facing = 1
     
 
-    # Updates the player, with its inputs, movement,
-    # collisions, and gravity
     def update(
         self, 
         room, # List of tiles in the current room
@@ -53,6 +51,7 @@ class Player(src.object_base.ObjectBase):
         globalGravity = None, # The gravity of the world
         tileRenderer = None
         ) -> str:
+        """Updates the player, with its inputs, movement, collisions, and gravity"""
 
         super().update_animation()
 

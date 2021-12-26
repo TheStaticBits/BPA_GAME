@@ -19,14 +19,14 @@ import src.pause_menu
 # Initializing Pygame
 pygame.init()
 
-"""
-This class creates and manages all of the scenes, the window, and the main game loop. 
-It also sets up the game.
-After the game closes, this class takes all game data and calls a function located in src/utility.py which serializes all of the data to a database.
-"""
 class Loop():
-    # Initializes all of the classes
+    """
+    This class creates and manages all of the scenes, the window, and the main game loop. 
+    It also sets up the game.
+    After the game closes, this class takes all game data and calls a function located in src/utility.py which serializes all of the data to a database.
+    """
     def __init__(self):
+        """Initializes all of the classes and variables needed to run the game"""
         utility.setup_loggers()
         self.logger = logging.getLogger(__name__)
 
@@ -78,8 +78,8 @@ class Loop():
             self.errorSettingUp = True
 
     
-    # Loads a save, while also setting up the crystals and levelsCompleted variables
     def load_save(self) -> dict:
+        """Loads a save, while also setting up the crystals and levelsCompleted variables"""
         save = utility.load_save()
 
         # Converts string of ones and zeros into lists of integers
@@ -92,8 +92,8 @@ class Loop():
         return save
 
 
-    # Makes a list filled with the type of level the level is
     def gen_levels_list(self):
+        """Makes a list filled with the type of level the level is"""
         levelList = []
 
         for level in range(len(self.levels)):
@@ -109,17 +109,16 @@ class Loop():
         return levelList
 
 
-    # Is run in the background.
-    # Manages the framerate and prints it out to the console every second.
     def run_framerate(self):
+        """Is run in the background. Manages the framerate and prints it out to the console every second."""
         while not self.window.closeWindow:
             sleep(1)
             print(self.framerate, "FPS")
             self.framerate = 0
 
 
-    # This handles the main game loop, along with any errors that occur in the game.
     def run_game(self):
+        """This handles the main game loop, along with any errors that occur in the game"""
         if not self.errorSettingUp: # If there was no error while setting up
             # Starting FPS counter
             framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
@@ -148,14 +147,15 @@ class Loop():
             
             self.save_and_exit()
             
-    # Sets the level to completed and adds one to the current level index
+
     def increment_index(self):
+        """Sets the level to completed and adds one to the current level index"""
         self.levelsCompleted[self.level] = 1
         self.level += 1
 
 
-    # Takes a level number and subtracts one for every cutscene before the level number given
     def remove_cutscenes(self, levelNum):
+        """Takes a level number and subtracts one for every cutscene before the level number given"""
         for testLevel in range(levelNum):
             if self.levelsList[testLevel] == "Cutscene":
                 levelNum -= 1
@@ -163,8 +163,8 @@ class Loop():
         return levelNum
     
 
-    # Restarts the game, creating a new save and updating everything that uses the save data
     def restart(self):
+        """Restarts the game, creating a new save and updating everything that uses the save data"""
         if os.path.exists(constants.SAVE_PATH):
             os.remove(constants.SAVE_PATH)
             
@@ -173,24 +173,23 @@ class Loop():
         self.scenes["cutscene"].update_crystals(self.crystals)
     
 
-    # Returns a result given a command
-    # Checks if there are still missing crystals
     def check_crystals(self, command) -> bool:
+        """Returns a result given a command. Checks if there are still missing crystals"""
         if command == "all crystals":
             return 0 not in self.crystals
         elif command == "not all crystals":
             return 0 in self.crystals
     
 
-    # Sets up transition variables
     def start_transition(self):
+        """Sets up transition variables"""
         self.transitionImg = self.render().copy()
         self.transitionMode = "into"
         self.transitionAlpha = 255
         
 
-    # This method updates the scene the game is in, along with the window class.
     def update(self):
+        """This method updates the scene the game is in, along with the window class"""
         self.window.update_inputs()
 
         if self.transitionImg is not None:
@@ -312,8 +311,8 @@ class Loop():
                 self.scene = "pauseMenu"
     
 
-    # This method renders all objects, based on the current scene 
     def render(self, withoutTransition = False, draw = True) -> "pygame.Surface":
+        """This method renders all objects, based on the current scene """
         surf = pygame.Surface(constants.SCREEN_SIZE)
 
         if self.transitionImg is None or withoutTransition:
@@ -337,8 +336,8 @@ class Loop():
         return surf
 
 
-    # Switches to a new scene based on the level id it's given to switch to
     def switch_to_new_scene(self, level):
+        """Switches to a new scene based on the level id it's given to switch to"""
         self.start_transition()
 
         if level >= len(self.levelsList):
@@ -396,8 +395,8 @@ class Loop():
             self.scenes["bossLevel"].music_stopped()
 
 
-    # This method saves all data to a database for later playing
-    def save_and_exit(self):    
+    def save_and_exit(self):
+        """This method saves all data to a database for later playing"""
         self.logger.info("Saving game state...")
 
         # Saves the game's data

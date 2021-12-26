@@ -4,11 +4,12 @@ import logging
 import src.button
 import src.constants as constants
 
-"""
-Handles the entire pause menu, including the pause button on other scenes
-"""
 class PauseMenu():
-    def __init__(self): # Sets up logger and buttons
+    """
+    Handles the entire pause menu, including the pause button on other scenes
+    """
+    def __init__(self):
+        """Sets up logger and buttons and other variables"""
         self.logger = logging.getLogger(__name__) # Logger
 
         font = pygame.font.Font(constants.FONT_PATH, 25)
@@ -43,26 +44,24 @@ class PauseMenu():
         self.background = None
     
 
-    # Renders the pause button to the window
     def render_pause_button(self, window):
+        """Renders the pause button to the window"""
         self.pauseButton.render(window)
 
 
-    # Returns true if escape or the pause button has been pressed
     def check_for_pause(self, inputs, mousePos, mouseInputs) -> bool:
+        """Returns true if escape or the pause button has been pressed"""
         return inputs["esc"] or self.pauseButton.update(mousePos, mouseInputs)
 
     
-    # Changes the background which is rendered behind the pause menu
-    # Pass in a surface with the point at which it paused at
     def update_background(self, background):
+        """Changes the background which is rendered behind the pause menu. Pass in a surface with the point at which the game was paused at."""
         self.background = background.copy()
         self.background.set_alpha(100) # Alpha 
     
 
-    # Updates the buttons, returning the button pressed
-    # Also returns "resume" if the escape button has been pressed
     def update(self, inputs, mousePos, mouseInputs) -> str:
+        """Updates the buttons, returning the button pressed. Also returns "resume" if the escape button has been pressed."""
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs):
                 self.logger.info(f"Pressed {key}")
@@ -75,8 +74,8 @@ class PauseMenu():
         return "pause"
 
     
-    # Renders buttons, background, and logo to the screen
     def render(self, window):
+        """Renders buttons, background, and logo to the screen"""
         window.blit(self.background, (0, 0))
 
         # Rendering buttons

@@ -5,15 +5,16 @@ import src.animation
 import src.constants as constants
 import src.utility as utility
 
-"""
-This class handles all of the rendering of tiles, whether they have animations
-or not. It loads all tile images and animations as well.
-Render tiles without animations through draw_tiles()
-and render tiles with animations through render_tiles_with_anims()
-after you've initialized the tiles through setup_room_tile_anims()
-"""
 class TileRenderer:
-    def __init__(self): # Loads tile images
+    """
+    This class handles all of the rendering of tiles, whether they have animations or not. 
+    It loads all tile images and animations as well.
+    Render tiles without animations through draw_tiles()
+    and render tiles with animations through render_tiles_with_anims()
+    after you've initialized the tiles through setup_room_tile_anims()
+    """
+    def __init__(self):
+        """Initializes and loads tile images and animations"""
         self.load_tiles()
         self.load_tile_anims()
 
@@ -26,7 +27,7 @@ class TileRenderer:
     
 
     def check_tile_across_rooms(self, roomNumber, level, x, y):
-        # Finds the x position of the tile on the screen next to the one being checked, flipping it over to the other side of the screen
+        """Finds the x position of the tile on the screen next to the one being checked, flipping it over to the other side of the screen"""
         if x >= constants.SCREEN_TILE_SIZE[0]:
             checkRoomX = 0
             checkRoomNum = roomNumber + 1
@@ -46,8 +47,7 @@ class TileRenderer:
         return False
 
     def load_tiles(self):
-        # Creating a dictionary
-        # Keys are the letter used to represent the tile
+        """Creating a dictionary of tiles and their images. Keys are the letter used to represent the tile."""
         self.tileKey = {}
 
         for tileKey in constants.TILE_KEYS:
@@ -68,10 +68,9 @@ class TileRenderer:
     
 
     def load_tile_anims(self):
-        # Loads all the animations that tiles could have
-        # creates a dictionary, tileAnim, that can be accessed through:
-        # self.tileAnims[tileLetter][animationName]
-        # Where tileLetter is the letter that represents the tile, such as "j" for jump orbs
+        """Loads all the animations that tiles could have. Creates a dictionary, tileAnim, that can be accessed through:
+        self.tileAnims[tileLetter][animationName]
+        Where tileLetter is the letter that represents the tile, such as "j" for jump orbs"""
 
         self.tileAnims = {}
 
@@ -87,7 +86,7 @@ class TileRenderer:
 
 
     def setup_room_tile_anims(self, room):
-        # Sets up the animation objects for the given room's data
+        """Sets up the animation objects for the given room's data"""
 
         self.individualTileAnims = {} # A dictionary of all INDIVIDUAL tile's animation objects
 
@@ -105,7 +104,7 @@ class TileRenderer:
 
 
     def get_tile_anim_frame(self, position, globalGravity, gravBeamYPos) -> "pygame.Surface":
-        # Gets the frame that the tile is currently in
+        """Gets the frame that the tile is currently in"""
         
         image = self.individualTileAnims[position]["animationObject"].get_frame()
         tile = self.individualTileAnims[position]["tile"]
@@ -124,8 +123,7 @@ class TileRenderer:
 
 
     def render_tiles_with_anims(self, window, globalGravity, gravBeamYPos, offset = 0):
-        # Renders all tiles with animations
-        # Renders the tiles flipped if they're bellow the gravity line
+        """Renders all tiles with animations. Renders the tiles flipped if they're bellow the gravity line."""
 
         for tilePos in self.individualTileAnims:
             frame = self.get_tile_anim_frame(tilePos, globalGravity, gravBeamYPos)
@@ -138,8 +136,7 @@ class TileRenderer:
 
 
     def update_tiles_with_anims(self):
-        # Updating all individual tile's animations
-        # Removes all crystals after they're done playing the "struck" animation
+        """Updating all individual tile's animations. Removes all crystals after they're done playing the "struck" animation."""
         removeTiles = [] # List of tiles to remove from the individualTileAnims dictionary
         for tilePos, anim in self.individualTileAnims.items():
             result = anim["animationObject"].update()
@@ -159,9 +156,7 @@ class TileRenderer:
 
 
     def change_tile_anim(self, tile, pos, animationName) -> bool:
-        # Changes the tile's animation at a given position
-        # Returns True if it wasn't already the animation it was changing it to
-        # Or the tile was a holdable tile
+        """Changes the tile's animation at a given position. Returns True if it wasn't already the animation it was changing it to. If it was a holdable tile, continuously resets the animation."""
 
         ifNewAnim = self.individualTileAnims[pos]["animationName"] != animationName
         ifHoldable = self.individualTileAnims[pos]["tile"] in constants.HOLDABLE_TILES
@@ -176,7 +171,6 @@ class TileRenderer:
         return False
 
 
-    # This function renders the SOLID tiles onto a given surface
     def draw_tiles(
         self, 
         room, roomNum,
@@ -185,6 +179,7 @@ class TileRenderer:
         level = None, # If it needs to be drawn over multiple levels, with the edges and corners being accurate with the other rooms in the level
         roomNumber = None
         ):
+        """This function renders the SOLID tiles onto a given surface. It's not very efficient, and shouldn't be called every frame."""
         # Setting up background tile
         backgroundTile = backgroundTile.split(", ")
         if len(backgroundTile) == 1: # if it provides one bg tile for the whole level
