@@ -86,7 +86,8 @@ class Cutscenes():
                 }
             
             else:
-                raise Exception(f"Error: Unknown entity {name}")
+                self.logger.error(f"Error: Unknown entity {name} in cutscene {self.scene}")
+                utility.warning_box(f"Error: Unknown entity {name} in cutscene {self.scene}")
                 
 
         levels, self.levelData = utility.load_levels(constants.LEVELS_PATH)
@@ -287,6 +288,7 @@ class Cutscenes():
 
         except Exception as exc:
             self.logger.error(f"Error occured in cutscene command: {command}\nCommand: {exc}")
+            utility.warning_box(f"Error occured in cutscene command: {command}\nCommand: {exc}")
 
 
     def run_conditional(self, conditional):
@@ -329,6 +331,7 @@ class Cutscenes():
             
             else:
                 self.logger.error(f"Unknown cutscene conditional {conditional}")
+                utility.warning_box(f"Unknown cutscene conditional {conditional}")
 
         else:
             # Goes through and runs all conditionals in the list

@@ -369,19 +369,13 @@ def error_box(error):
     with open(crashFilePath, "w") as file:
         file.write(crashReport)
 
+    errorMessage = f"Game ERROR. This is an unrecoverable state.\n\nError:\n----------------------\n{error}----------------------\n\n\nWould you like to report this crash?"
 
-    result = win32api.MessageBox(
-        None, 
-        f"""Game ERROR. This is an unrecoverable state.
-
-Error:
-----------------------
-{error}----------------------
-
-Would you like to report this crash?""", 
-        "ERROR", 
-        1
-    ) # Generates a popup box with the error
+    # Generates a popup box with the error
+    result = win32api.MessageBox(None, 
+                                errorMessage, 
+                                "ERROR",
+                                1)
 
     if result == 1: # If the user wants to report the crash
         with open(constants.EVENT_LOG_PATH, "r") as file: # Opens the file
@@ -398,3 +392,13 @@ Would you like to report this crash?""",
             s.login("reporterofcrashes@gmail.com", password)
 
             s.sendmail("reporterofcrashes@gmail.com", "reporterofcrashes@gmail.com", contents) # Sends the email
+
+
+def warning_box(message):
+    """
+    Generates a popup box with the message formatted and passed in
+    """
+    errorMessage = f"Game WARNING. This is a recoverable state.\n\nWarning:\n----------------------\n{message}\n----------------------"
+    win32api.MessageBox(None, 
+                        errorMessage, 
+                        "WARNING")
