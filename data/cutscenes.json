@@ -1276,7 +1276,7 @@
             ], "musicNames": [
                 "text createMovable musicNames",
                 "text musicNames move 192 224",
-                "text musicNames change Lead: Andrew\nNolan K.\nMatthew J.",
+                "text musicNames change Lead: Andrew J.\nNolan K.\nMatthew J.",
                 "text musicNames moveTo 192 -60",
                 "text musicNames display",
 
