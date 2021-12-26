@@ -25,9 +25,10 @@ It also sets up the game.
 After the game closes, this class takes all game data and calls a function located in src/utility.py which serializes all of the data to a database.
 """
 class Loop():
+    # Initializes all of the classes
     def __init__(self):
-        # Initializes all of the classes, with error handling.
-        super().__init__(__name__)
+        utility.setup_loggers()
+        self.logger = logging.getLogger(__name__)
 
         self.scene = "startup"
         self.framerate = 0
@@ -190,8 +191,6 @@ class Loop():
 
     # This method updates the scene the game is in, along with the window class.
     def update(self):
-        super().update() # Logging
-
         self.window.update_inputs()
 
         if self.transitionImg is not None:
@@ -315,8 +314,6 @@ class Loop():
 
     # This method renders all objects, based on the current scene 
     def render(self, withoutTransition = False, draw = True) -> "pygame.Surface":
-        super().render()
-
         surf = pygame.Surface(constants.SCREEN_SIZE)
 
         if self.transitionImg is None or withoutTransition:

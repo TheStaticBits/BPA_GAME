@@ -1,5 +1,5 @@
 import pygame
-import logger
+import logging
 import random
 import math
 
@@ -13,7 +13,7 @@ import src.tile_renderer
 Manages cutscenes. Interprets cutscene commands and
 updates and displays everything to the screen. 
 """
-class Cutscenes(src.scene_base.SceneBase):
+class Cutscenes():
     # Setting up default information and variables
     def __init__(self, removeCutscenes, crystals):
         self.logger = logging.getLogger(__name__)

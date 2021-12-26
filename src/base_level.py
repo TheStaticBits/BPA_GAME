@@ -1,6 +1,7 @@
 import pygame
 import logging
 
+import src.player
 import src.constants as constants
 import src.utility as utility
 import src.ellipse_and_corlen as eac
@@ -70,9 +71,10 @@ class BaseLevel():
     # Plays the music that the level has if it isn't already playing
     def start_music(self):
         if self.playingSong != self.levelData[self.level]["music"]:
-            self.logger.info(f"Playing song {self.levelData[self.level]["music"]}")
-            utility.play_music(self.levelData[self.level]["music"])
-            self.playingSong = self.levelData[self.level]["music"]
+            music = self.levelData[self.level]["music"]
+            self.logger.info(f"Playing song {music}")
+            utility.play_music(music)
+            self.playingSong = music
     
 
     # Call this if the music stopped, to allow other songs play if later comes back to this scene.

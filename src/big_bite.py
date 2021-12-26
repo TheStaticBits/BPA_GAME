@@ -67,8 +67,6 @@ class BigBite:
 
             # If the animation is on the frame where the Big Bite attacks
             if self.animation.frame == constants.BIG_BITE_ATTACK_FRAME:
-                self.logger.info("Attacking")
-
                 # Mask from the animation
                 bbMask = pygame.mask.from_surface(self.animation.get_frame())
 
