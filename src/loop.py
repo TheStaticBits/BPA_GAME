@@ -187,7 +187,7 @@ class Loop(src.scene_base.SceneBase):
 
     # Sets up transition variables
     def start_transition(self):
-        self.transitionImg = self.window.miniWindow
+        self.transitionImg = self.render().copy()
         self.transitionMode = "into"
         self.transitionAlpha = 255
         
@@ -203,8 +203,9 @@ class Loop(src.scene_base.SceneBase):
                 self.transitionAlpha -= constants.TRANSITION_SPEED
 
                 if self.transitionAlpha <= 0:
+                    self.transitionAlpha = constants.TRANSITION_SPEED
                     self.transitionMode = "out"
-                    self.transitionImg = self.render().copy() # Gets the new scene
+                    self.transitionImg = self.render(withoutTransition = True, draw = False).copy() # Gets the new scene
             
             elif self.transitionMode == "out":
                 self.transitionAlpha += constants.TRANSITION_SPEED
@@ -217,10 +218,10 @@ class Loop(src.scene_base.SceneBase):
         elif self.scene == "startup":
             # Startup animation scene
             if not self.startupAnim.update(): # If the startup animation finished
+                self.start_transition()
                 self.scene = "mainMenu"
                 self.scenes["mainMenu"].start_music()
                 del self.startupAnim
-                self.update()
         
         elif self.scene == "mainMenu":
             result = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
@@ -312,28 +313,36 @@ class Loop(src.scene_base.SceneBase):
     
 
     # This method renders all objects, based on the current scene 
-    def render(self) -> "pygame.Surface":
+    def render(self, withoutTransition = False, draw = True) -> "pygame.Surface":
         super().render()
 
-        if self.scene == "startup": # Startup animation
-            self.startupAnim.render(self.window.miniWindow, (0, 0))
+        surf = pygame.Surface(constants.SCREEN_SIZE)
 
-        elif self.transitionImg is not None: # Normal scenes
-            self.scenes[self.scene].render(self.window.miniWindow)
+        if self.transitionImg is None or withoutTransition:
+            if self.scene == "startup": # Startup animation
+                self.startupAnim.render(surf, (0, 0))
+            
+            else: # Normal scenes
+                self.scenes[self.scene].render(surf)
 
-            if self.scene not in ("mainMenu", "pauseMenu"):
-                # Rendering pause button
-                self.scenes["pauseMenu"].render_pause_button(self.window.miniWindow)
+                if self.scene not in ("mainMenu", "pauseMenu"):
+                    # Rendering pause button
+                    self.scenes["pauseMenu"].render_pause_button(surf)
         
         else: # Render transition
             self.transitionImg.set_alpha(self.transitionAlpha)
-            self.window.miniWindow.blit(self.transitionImg, (0, 0))
+            surf.blit(self.transitionImg, (0, 0))
+        
+        if draw:
+            self.window.miniWindow.blit(surf, (0, 0))
 
-        return self.window.miniWindow
+        return surf
 
 
     # Switches to a new scene based on the level id it's given to switch to
-    def switch_to_new_scene(self, level):        
+    def switch_to_new_scene(self, level):
+        self.start_transition()
+
         if level >= len(self.levelsList):
             # Sets up main menu
             self.scene = "mainMenu"
@@ -387,8 +396,6 @@ class Loop(src.scene_base.SceneBase):
             # Tells these that the music has stopped
             self.scenes["playing"].music_stopped()
             self.scenes["bossLevel"].music_stopped()
-
-        self.start_transition()
 
 
     # This method saves all data to a database for later playing
