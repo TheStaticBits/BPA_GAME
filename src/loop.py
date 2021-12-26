@@ -33,6 +33,10 @@ class Loop(src.scene_base.SceneBase):
         self.framerate = 0
         self.errorSettingUp = False
 
+        self.transitionImg = None
+        self.transitionMode = None
+        self.transitionAlpha = 255
+
         try:
             self.window = src.window.Window()
 
@@ -179,7 +183,14 @@ class Loop(src.scene_base.SceneBase):
             return 0 not in self.crystals
         elif command == "not all crystals":
             return 0 in self.crystals
+    
 
+    # Sets up transition variables
+    def start_transition(self):
+        self.transitionImg = self.window.miniWindow
+        self.transitionMode = "into"
+        self.transitionAlpha = 255
+        
 
     # This method updates the scene the game is in, along with the window class.
     def update(self):
@@ -187,7 +198,23 @@ class Loop(src.scene_base.SceneBase):
 
         self.window.update_inputs()
 
-        if self.scene == "startup":
+        if self.transitionImg is not None:
+            if self.transitionMode == "into":
+                self.transitionAlpha -= constants.TRANSITION_SPEED
+
+                if self.transitionAlpha <= 0:
+                    self.transitionMode = "out"
+                    self.transitionImg = self.render().copy() # Gets the new scene
+            
+            elif self.transitionMode == "out":
+                self.transitionAlpha += constants.TRANSITION_SPEED
+
+                if self.transitionAlpha >= 255:
+                    self.transitionImg = None # Stop transition
+
+            return None # Doesn't update anything else while transitioning
+
+        elif self.scene == "startup":
             # Startup animation scene
             if not self.startupAnim.update(): # If the startup animation finished
                 self.scene = "mainMenu"
@@ -288,15 +315,19 @@ class Loop(src.scene_base.SceneBase):
     def render(self) -> "pygame.Surface":
         super().render()
 
-        if self.scene == "startup":
+        if self.scene == "startup": # Startup animation
             self.startupAnim.render(self.window.miniWindow, (0, 0))
 
-        else:
+        elif self.transitionImg is not None: # Normal scenes
             self.scenes[self.scene].render(self.window.miniWindow)
 
             if self.scene not in ("mainMenu", "pauseMenu"):
                 # Rendering pause button
                 self.scenes["pauseMenu"].render_pause_button(self.window.miniWindow)
+        
+        else: # Render transition
+            self.transitionImg.set_alpha(self.transitionAlpha)
+            self.window.miniWindow.blit(self.transitionImg, (0, 0))
 
         return self.window.miniWindow
 
@@ -356,6 +387,8 @@ class Loop(src.scene_base.SceneBase):
             # Tells these that the music has stopped
             self.scenes["playing"].music_stopped()
             self.scenes["bossLevel"].music_stopped()
+
+        self.start_transition()
 
 
     # This method saves all data to a database for later playing

@@ -47,6 +47,8 @@ SCREEN_SHAKE_POWER = 2 # How intense screenshakes are (in cutscenes)
 POPUP_TEXT_DURATION = 60 # How long the popup text stays on screen until it starts fading
 POPUP_TEXT_FADE_SPEED = 4 # How quickly the popup text fades out
 
+TRANSITION_SPEED = 6 # Transition speed for general transitions
+
 # Color constants for easy access
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
