@@ -1,0 +1,100 @@
+Each cutscene in the data/cutscenes.json file is a key, being the name of the cutscene, which has to be the same as the one given in the level data of the cutscene's level, and the value as a dictionary with the following dictionaries:
+
+--- "start" (dictionary) ---
+Start is a dictionary, with the keys being the entity, and the values being a dictionary with the keys "pos" and "room". (you don't need "room" for the player)
+For example: "start": {"ellipse": {"pos": [0, 0], "room": 0}}
+
+--- "time_commands" (dictionary) ---
+Time Commands is a dictionary, with a string of an integer as the key, and a list of commands as the value.
+The integer key is the time stamp the command is run at in the cutscene. Each increment is 1/60th of a second.
+For example: "time_commands": {"0": ["ellipse move right", "corlen walk left"]}
+Leading into the "conditionals" section, using the command "run [conditionalName]" will run the conditional with the given name.
+
+--- "conditionals" (dictionary) ---
+Conditionals is a dictionary, with a string of an integer as the key, and the specified conditional in a string as the value. The key is the name of the conditional, which is what is passed in as the second value of "run [conditionalName]" in commands.
+Commands are run forever until resulting in true, unless specified like so: "run [conditionalName] once" with a "once" at the end.
+You can link multiple conditionals together with the "and" keyword.
+For example: "conditionals": {"ellipseOnScreen": "ellipse x > 0"}
+
+--- "cond_commands: (dictionary) ---
+Conditional Commands is a dictionary, with a string of an integer as the key, and a list of commands as the value. When a conditional has a result of true, the commands are run in the same key in this dictionary.
+For example: "cond_commands": {"ellipseRight": ["ellipse move right"]}
+
+--- POSSIBLE COMMANDS ---
+[entity] walk [left/right/still]
+ - entity walks left/right forever, until still is passed in
+[entity] face [left/right]
+ - entity faces left/right
+[entity] teleport [x] [y]
+ - entity teleports to the given x and y
+[entity] room [number]
+ - entity teleports to the given room
+
+player controllable
+ - player is now controlled by the user
+player uncontrollable
+ - player is no longer controlled by the user, and can be moved using the above "walk" command
+player jump [can/not]
+ - player can/can't jump
+
+[tileName] moveTo [x] [y]
+ - tile travels to the given x and y, not instantaneously
+[tileName] teleport [x] [y]
+ - tile teleports to the given x and y
+
+text create [textName]
+ - creates a text object with the given name
+text createMovable [textName]
+ - creates a movable text object with the given name. It can move slowly towards positions given, and does not bob up and down
+text [textName] display
+ - text now is shown on screen
+text [textName] hide
+ - text now is hidden, and will not display on screen
+text [textName] change [text]
+ - changes the text to the given text. Text can contain spaces
+text [textName] move [x] [y]
+ - teleports the text object to the given x and y. It is centered on the x position
+text [textName] moveTo [x] [y]
+ - only works for movable text objects. It moves the text object to the given x and y, not instantaneously
+text [textName] color [r] [g] [b]
+ - changes the color of the text object to the given r, g, and b
+
+fade clear
+ - clears any images or colors that have been faded onto the screen
+fade [speed] [filePath]
+ - loads the image at the file path and fades it in at the given speed (how much it adds to the alpha value per frame, which is from 0 to 255)
+fade [speed] [r] [g] [b]
+ - fades the screen to the given color at the given speed
+
+shake start
+ - starts the screen shaking
+shake stop
+ - stops the screen shaking
+
+run [conditionalName]
+ - finds the given conditional in the conditionals dictionary, and runs the conditional endlessly until the result is true
+run [conditionalName] once
+ - finds the given conditional in the conditionals dictionary, and runs the conditional once
+
+music [musicName]
+ - finds the music in the res/sound/music folder, adds .wav onto the end of the music name, and plays that music
+
+delay [time] [commandKey]
+ - waits the given time (amount of frames), and then looks into the "cond_commands" dictionary, running the corresponding commands
+
+end
+ - ends the cutscene. Player moves onto the next level
+restart
+ - ends the cutscene and removes all save data, starting back at level/cutscene 0.
+
+
+---- CONDITIONALS ----
+[entity] [x/y/room] [operator] [number]
+ - compares the entity's x/y/room number with the operator on the given number. Example: ellipse x > 90
+room [operator] [number]
+ - compares the room number with the operator on the given number
+crystal [operator] [number]
+ - crystal is a booleen, whether all crystals up to the cutscene have been collected or not. Compares it with the operator on the given number
+
+fade done
+ - checks if the fade has finished
