@@ -255,11 +255,13 @@ class Loop(src.scene_base.SceneBase):
                     self.scene = self.prevScene
                 
                 elif result == "restart": # "Restart Level" button pressed
+                    self.start_transition()
                     # Resets level
                     self.scene = self.prevScene
                     self.scenes[self.scene].restart_level()
                 
                 elif result == "mainMenu": # "Main Menu" button pressed
+                    self.start_transition()
                     # Sets up main menu
                     self.scene = "mainMenu"
                     self.scenes["mainMenu"].start_music()
@@ -303,6 +305,7 @@ class Loop(src.scene_base.SceneBase):
                 self.window.mousePos, 
                 self.window.mousePressed
                 ): # If the escape button or the pause button has been pressed
+
                 self.prevScene = self.scene
 
                 # Gets the background for the pause menu
