@@ -45,8 +45,9 @@ class BossLevel(src.base_level.BaseLevel):
         self.level = level
 
         super().reset_crystal(level)
-        if "crystal moves on" not in self.levelData[level]:
-            if crystals[crystalIndex]: 
+        if "crystal moves on" not in self.levelData[level]: # If the level does not require the crystal
+            if crystals[crystalIndex]: # If the crystal has been collected
+                # Remove crystal
                 super().remove_crystal(level)
         
         super().reset_all()
@@ -54,6 +55,7 @@ class BossLevel(src.base_level.BaseLevel):
 
         self.bosses = {}
 
+        # Creating bosses
         if "Belloq" in boss:
             self.bosses["Belloq"] = src.belloq.Belloq()
         
@@ -104,6 +106,7 @@ class BossLevel(src.base_level.BaseLevel):
 
             surf = pygame.Surface(constants.SCREEN_SIZE)
 
+            # Rendering the tiles to the surface
             tr.draw_tiles(
                 self.levels[self.level][room], room,
                 surf, 

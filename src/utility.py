@@ -255,11 +255,11 @@ def play_music(musicName) -> bool: # Successful or not
         
         # Starting music
         pygame.mixer.music.play(-1)
-
         return True
 
     except pygame.error:
-        # If there wasn't an audio device found, 
+        # If there wasn't an audio device found
+        warning_box("Audio device not found.")
         return False
 
 

@@ -224,6 +224,7 @@ class Belloq:
         belloqMask = pygame.mask.from_surface(self.animation[self.currentAnim].get_frame())
         playerMask = player.get_mask()
 
+        # Checking collision
         collided = belloqMask.overlap(
             playerMask,
             (playerScreenX - screenPos[0],
@@ -241,6 +242,6 @@ class Belloq:
             (self.position[0] + tilesOffset - (playerRoom * constants.SCREEN_SIZE[0]),
              self.position[1])
         )
-
+        # Rendering lazers
         for lazer in self.lazers:
             lazer.render(window)

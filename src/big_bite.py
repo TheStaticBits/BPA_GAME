@@ -73,7 +73,7 @@ class BigBite:
                 # Position on screen
                 onScreenX = self.position[0] + tilesOffset - ((room - self.room) * constants.SCREEN_SIZE[0])
                 
-                # COllision CHECKING yay
+                # COllision CHECKING
                 collided = bbMask.overlap(
                     playerMask, 
                     (playerPosition[0] + tilesOffset - onScreenX, 

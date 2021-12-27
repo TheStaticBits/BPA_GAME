@@ -75,7 +75,7 @@ class Loop():
 
             utility.error_box(err)
 
-            self.errorSettingUp = True
+            self.errorSettingUp = True # Prevents from later running the game
 
     
     def load_save(self) -> dict:
@@ -341,6 +341,8 @@ class Loop():
         self.start_transition()
 
         if level >= len(self.levelsList):
+            self.logger.info("Reached the end of all levels")
+
             # Sets up main menu
             self.scene = "mainMenu"
             self.scenes["mainMenu"].start_music()
@@ -397,7 +399,7 @@ class Loop():
 
     def save_and_exit(self):
         """This method saves all data to a database for later playing"""
-        self.logger.info("Saving game state...")
+        self.logger.info("Saving game...")
 
         # Saves the game's data
         utility.modif_save({
