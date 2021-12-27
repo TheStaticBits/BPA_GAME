@@ -1139,50 +1139,50 @@ o       ooooooo     oooo
 o^^     ooooooo     oooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^vo                oo
+oooooo ooooooooooo    oo
+oooooocooooooooooooo    
+oooooo oooooo     oo j  
+o      oo         oo    
+o      oo      ^  oo    
+oj     oo  ooooo  oo  oo
+v      oo  ooooo  oo  oo
+       oo  ooooo  oo  oo
+   oo  oo  ooooo  oo  oo
+^oooo  vv  ooooo  vv  oo
+ooooo      ooooo      oo
+ooooo      ooooo      oo
+ooooo      ooooo      oo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
+   ooooooooooooooooooooo
+   ooooooooooooooooooooo
+   oooo        oooo     
+   oooo        oooo     
+o  oooo        oooo     
+o  oooo  ^  ^  oooo  ^  
+o  oooo  oooo  oooo  ooo
+o  oooo  oooo  oooo  ooo
+o  v  v  oooo  v  v  ooo
+o        oooo        ooo
+o        oooo        ooo
+o        oooo        ooo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+    oooooooooooooooooooo
+    oooooooooooooooooooo
+    ooooooooooooo     vv
+    g   o     ooo       
+oo      v     ooo       
+oo   ^     ^  ooo       
+oo   o     o   g   ^^   
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
 ------------------------
 
 background = b
