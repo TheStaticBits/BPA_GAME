@@ -6,13 +6,14 @@ import src.utility as utility
 import src.button
 import src.tile_renderer
 
-"""
-Handles the buttons on the main menu, rendering of main menu, 
-and also the level selector on the main menu.
-"""
+
 class MainMenu():
-    # Sets up variables to default and loading images used on the menu
+    """
+    Handles the buttons on the main menu, rendering of main menu, 
+    and also the level selector on the main menu.
+    """
     def __init__(self, save, levelsList, levelsCompleted, crystals, remove_cutscenes):
+        """Sets up variables to default and loading images used on the menu"""
         self.logger = logging.getLogger(__name__) # Logging
 
         self.levelsList = levelsList
@@ -79,22 +80,24 @@ class MainMenu():
         self.otherTextFont = pygame.font.Font(constants.FONT_PATH, 15)
 
 
-    # Plays music
     def start_music(self):
+        """Plays main menu music"""
         utility.play_music(self.music)
 
 
-    # Updates information given data
     def update_info(self, level, levelsCompleted, ending, crystals):
+        """Updates information given data"""
         self.lvlsIndex = level
         self.levelsCompleted = levelsCompleted
         self.ending = ending
         self.crystals = crystals
     
 
-    # Looks inside the levelsCompleted variable and returns a tuple
-    # (level completed or not, rga value) 
-    def get_status(self, level):
+    def get_status(self, level) -> tuple:
+        """
+        Looks inside the levelsCompleted variable and returns a tuple related to the information found. In this form:
+        (level completed or not (bool), rga value (tuple))
+        """
         if self.levelsCompleted[level] == 1:
             return "Completed", constants.GREEN
         # If the level before this one was completed
@@ -104,8 +107,8 @@ class MainMenu():
             return "Locked", constants.RED
 
 
-    # Updates buttons, returning a string for the result of which button was pressed
     def update(self, mousePos, mouseInputs):
+        """Updates buttons, returning a string for the result of which button was pressed"""
         # Iterating through all buttons
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs): # If the button was pressed
@@ -155,14 +158,14 @@ class MainMenu():
                     return key
 
 
-    # Renders text centered on the x position
     def render_text(self, window, text, position, color = constants.WHITE):
+        """Renders text centered on the x position"""
         surf = self.otherTextFont.render(text, False, color) # Rendering to a surface
         window.blit(surf, (position[0] - surf.get_width() / 2, position[1])) # Centered
 
     
-    # Renders everything in the scene to the window
     def render(self, window):
+        """Renders everything in the scene to the window"""
         window.blit(self.background, (0, 0))
         window.blit(self.screenShadow, (0, 0))
 

@@ -172,7 +172,7 @@ class Cutscenes():
         self.tiles.fill(constants.BLACK)
         self.tileRenderer.draw_tiles(
             self.level[self.room], self.room,
-            self.tiles, 
+            self.tiles,
             self.levelData[self.levelNum]["background"]
         )
         self.tileRenderer.setup_room_tile_anims(self.level[self.room])
