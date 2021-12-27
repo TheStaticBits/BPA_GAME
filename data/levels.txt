@@ -22,9 +22,9 @@ ssssssssssssssssssssssss
 background = w
 music = ThereIsSomethingV2
 text 0 = Use W or UP to Jump
-text 1 = Gravity pulls towards the gravity line\n\n\n\n\n\n\n\n\n\n\n\n\n\nAvoid spikes! They're dangerous
+text 1 = Gravity pulls towards the gravity line\n\n\n\n\n\n\n\n\n\n\n\n\n\nAvoid spikes! Touching one\ncauses you to restart the level.
 text 2 = Tip: Press escape to open the pause menu!
-text 3 = Your pull towards the line stays the same!
+text 3 = You don't lose momentum when switching gravity!
 entities = none
 ------------------------
 wwwwwwwwwwwwwwwwwwwwwwww
@@ -91,6 +91,7 @@ wwwwwwwwwwwww     wwwwww
 background = w
 music = ThereIsSomethingV2
 entities = none
+text 3 = \n\n\n\n\n\n\n\n\n\n\nBeware the upcoming boss...\nDon't get zapped by its lazers!
 ------------------------
 w^><wwwww           wwww
 wwwwwwwww           wwww
@@ -241,7 +242,8 @@ wwwwwwwwwwwwwwwwwwwwwwww
 
 background = d
 music = DeepBelow
-text 0 = Jump again while touching the orb!
+text 0 = Jump while touching\nthe orb to JUMP MIDAIR!
+text 1 = Jump orbs also work\nbelow the gravity line!
 ------------------------
 v^><jddddddddddddddddddd
 dddddddddddddddddddddddd
@@ -454,7 +456,7 @@ dddddddddddddddddddddddd
 
 background = d
 music = DeepBelow
-text 0 = Touch gravity orbs to reverse\nthe effects of the gravity line!
+text 0 = Touch gravity orbs to reverse\nthe gravity direction!
 ------------------------
 dddddddddddddddddddddddd
 dvvv         ddddddddddd
@@ -519,6 +521,7 @@ dddddddddddddddddddddddd
 
 background = d
 music = DeepBelow
+text 0 = Use all of these features to your advantage!
 ------------------------
 v^><dcjgdddddddddd      
 dddddddddddddddddd      
@@ -654,6 +657,7 @@ dddddddddddddddddddddddd
 background = e
 music = Darkened
 button 0, 17, 2 = 6
+text 0 = Press buttons to move the gravity line!
 ------------------------
 egj^><veeeeeeeeeeeeeeeee
 e                  e    
