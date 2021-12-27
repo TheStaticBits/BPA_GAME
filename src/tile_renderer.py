@@ -184,6 +184,8 @@ class TileRenderer:
         # Creating transparent surface for tiles
         surface = pygame.Surface(constants.SCREEN_SIZE, flags = pygame.SRCALPHA)
 
+        self.backgroundTiles.fill((0, 0, 0))
+
         # Setting up background tile
         backgroundTile = backgroundTile.split(", ")
         if len(backgroundTile) == 1: # if it provides one bg tile for the whole level
@@ -338,17 +340,9 @@ class TileRenderer:
         Should call this every frame.
         """
 
-        # Point opposite on the screen from the point and offscreen in the top left
-        start = (
-            constants.SCREEN_SIZE[0] - point[0] - constants.SCREEN_SIZE[0]
-            constants.SCREEN_SIZE[1] - point[1] - constants.SCREEN_SIZE[1]
-        )
+        # Point moving backwards from the given point
+        xPos = (constants.SCREEN_SIZE[0] - point[0] - constants.SCREEN_SIZE[0]) / 4
 
         # Drawing in a 2x2 grid of background tiles to fill the screen completely
-        for y in range(2):
-            for x in range(2):
-                surface.blit(
-                    self.backgroundTiles,
-                    (start[0] + x * constants.SCREEN_SIZE[0]
-                     start[1] + x * constants.SCREEN_SIZE[1])
-                )
+        for x in range(2):
+            surface.blit(self.backgroundTiles, (xPos + x * constants.SCREEN_SIZE[0], 0))

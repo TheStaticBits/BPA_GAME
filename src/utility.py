@@ -359,10 +359,11 @@ def error_box(error):
     # Generating crash report file
     t = time.strftime("%Y-%m-%d %H:%M:%S")
     crashReport = f"Generated at {t}\n\nError:\n{error}"
-    crashFilePath = constants.CRASH_REPORT_PATH + t
+    crashFilePath = constants.CRASH_REPORT_PATH + t + ".txt"
     
     # Creating crash report folder if it doesn't exist
     if not os.path.exists(constants.CRASH_REPORT_PATH.split("/")[1]):
+        print(constants.CRASH_REPORT_PATH.split("/")[1])
         os.makedirs(constants.CRASH_REPORT_PATH.split("/")[1])
 
     # Writing to crash report file

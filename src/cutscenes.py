@@ -171,7 +171,6 @@ class Cutscenes():
 
         self.tiles = self.tileRenderer.draw_tiles(
             self.level[self.room], self.room,
-            self.tiles, 
             self.levelData[self.levelNum]["background"]
         )
         self.tileRenderer.setup_room_tile_anims(self.level[self.room])
@@ -587,6 +586,8 @@ class Cutscenes():
 
     def render(self, window):
         """Renders everything within the cutscene, including the background/tiles, objects, and text"""
+        # Background tiles
+        self.tileRenderer.draw_bg_parallax(window, self.objects["player"]["pos"])
         # Tiles
         self.screen.blit(self.tiles, (0, 0))
         # Tiles with animations

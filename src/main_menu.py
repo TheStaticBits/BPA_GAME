@@ -161,10 +161,10 @@ class MainMenu():
         window.blit(surf, (position[0] - surf.get_width() / 2, position[1])) # Centered
 
     
-    def render(self, window):
+    def render(self, window, mousePos):
         """Renders everything in the scene to the window"""
         # Drawing background tiles
-        self.tileRenderer.draw_bg_parallax(window, window.mousePos)
+        self.tileRenderer.draw_bg_parallax(window, mousePos)
         window.blit(self.background, (0, 0)) # Drawing solid background tiles
         window.blit(self.screenShadow, (0, 0))
 
