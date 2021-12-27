@@ -6,13 +6,12 @@ import src.constants as constants
 import src.utility as utility
 import src.ellipse_and_corlen as eac
 
-"""
-The base level! Playing.py (normal levels) and boss_level.py (boss levels) inherit from this.
-Handles Ellipse and Corlen following the player, 
-"""
 class BaseLevel():
-    # Loads level data, sets up entities, and sets up default variables
-    def __init__(self, name): 
+    """
+    Handles Ellipse and Corlen following the player, and some other things in levels, such as the gravity beam and loading the level data. 
+    """
+    def __init__(self, name):
+        """Loads level data, sets up entities, and sets up default variables""" 
         self.logger = logging.getLogger(name) # Creating logger
 
         self.cutsceneData = utility.load_json(constants.CUTSCENE_DATA_PATH)
@@ -68,8 +67,8 @@ class BaseLevel():
         self.popupTextAlpha = 255
 
 
-    # Plays the music that the level has if it isn't already playing
     def start_music(self):
+        """Plays the music that the level has if it isn't already playing"""
         if self.playingSong != self.levelData[self.level]["music"]:
             music = self.levelData[self.level]["music"]
             self.logger.info(f"Playing song {music}")
@@ -77,13 +76,13 @@ class BaseLevel():
             self.playingSong = music
     
 
-    # Call this if the music stopped, to allow other songs play if later comes back to this scene.
     def music_stopped(self):
+        """Call this if the music stopped, to allow other songs play if later comes back to this scene"""
         self.playingSong = None
 
 
-    # Goes through and removes all crystals in a given level
     def remove_crystal(self, level):
+        """Goes through and removes all crystals in a given level"""
         self.logger.info(f"Removing crystal in level {level}")
         for roomNum, room in enumerate(self.levels[level]):
             for y, row in enumerate(room):
@@ -92,15 +91,14 @@ class BaseLevel():
                         self.levels[level][roomNum][y][x] = " "
 
 
-    # Resets the level from the level data, in the process resetting the crystal in the level
     def reset_crystal(self, level):
+        """Resets the level to the level data, in the process resetting the crystal in the level"""
         self.logger.info(f"Resetting crystal in level {level}")
         levels = utility.load_levels(constants.LEVELS_PATH)[0]
 
         self.levels[level] = levels[level]
 
 
-    # Sets up the player, given a position or using the level to find the starting position
     def setup_player(
         self, 
         playerX = -1, 
@@ -109,6 +107,7 @@ class BaseLevel():
         xVelocity = 0,
         new = False
         ):
+        """Sets up the player, given a position or using the level to find the starting position"""
         self.logger.info("Setting up player")
 
         # If there was no data passed in, set the position to the tile "p" in the level
@@ -136,8 +135,8 @@ class BaseLevel():
             self.player.reset(playerStart, yVelocity, xVelocity) # Resetting the player's position and velocity
 
 
-    # Creates Ellipse and Corlen and updates their data to match the player's data
     def setup_entities(self, position):
+        """Creates Ellipse and Corlen and updates their data to match the player's data"""
         self.logger.info("Setting up entities")
 
         self.entities = []
@@ -150,8 +149,8 @@ class BaseLevel():
             ent.gravityDir = self.player.gravityDir
 
 
-    # Resets data to default variables
     def reset_all(self):
+        """Resets data to default variables"""
         self.logger.info("Resetting all")
 
         self.room = 0 # Resetting the room number
@@ -178,8 +177,8 @@ class BaseLevel():
         self.playerFacing.clear()
     
 
-    # Sets up a popup with the given text
     def popup(self, text):
+        """Sets up a popup with the given text to appear on the screeen"""
         self.logger.info(f"Creating popup \"{text}\"")
 
         self.popupText = text
@@ -188,21 +187,21 @@ class BaseLevel():
         self.popupTextAlpha = 255
 
 
-    # Checks if the level data wants to render and update Corlen and Ellipse
     def check_entity_rendering(self):
+        """Checks if the level data wants to render and update Corlen and Ellipse setting self.showEntities accordingly"""
         if "entities" in self.levelData[self.level]:
             self.showEntities = self.levelData[self.level]["entities"] != "none"
         else:
             self.showEntities = True
 
 
-    # Updates the player, Ellipse, and Corlen (and any popups)
     def update(
         self, 
         inputs, # Dictionary of keys pressed
         tileRenderer,
         playerSpawnOffset = 0, # Offset for when the player switches levels/rooms
         ):
+        """Updates the player, Ellipse, and Corlen (and any popups)"""
         # Updating the popup text if there is any
         if self.popupText is not None:
             if self.popupTextTimer > 0:
@@ -338,8 +337,8 @@ class BaseLevel():
         return playerState
     
     
-    # Renders all entities to the given surface with an offset
     def render(self, surface, offset = 0, renderWithCheck = True):
+        """Renders all entities to the given surface with an offset"""
         if self.showEntities:
             # Drawing Ellipse and Corlen
             for ent in self.entities:
@@ -355,8 +354,8 @@ class BaseLevel():
         self.player.render(surface, offset = offset)
     
 
-    # Drawing gravity beam
     def render_grav_beam(self, surface):
+        """Renders the gravity beam/line across the screen"""
         for x in range(constants.SCREEN_SIZE[0] // constants.GRAV_BEAM_WIDTH): # Goes through the center of the screen
             # Draws the gravity beam
             self.gravityBeam.render(
@@ -366,8 +365,8 @@ class BaseLevel():
             )
     
 
-    # Draws the popup text centered and with a border
     def render_popup(self, surface):
+        """Draws the popup text centered and with a border"""
         if self.popupText is not None:
             utility.draw_text_with_border(
                 surface,
@@ -381,6 +380,6 @@ class BaseLevel():
             )
     
     
-    # Renders the shadow over the screen
     def render_screen_shadow(self, surface):
+        """Renders the shadow at the edges onto the screen"""
         surface.blit(self.screenShadow, (0, 0))

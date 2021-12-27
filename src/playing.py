@@ -10,13 +10,14 @@ import src.tile_renderer
 import src.utility as utility
 import src.constants as constants
 
-"""
-This class, Playing, handles everything that goes on
-within normal levels. It uses things from the BaseLevel class
-which are also used by the boss level handler.
-"""
 class Playing(src.base_level.BaseLevel):
-    def __init__(self): # Initializes all
+    """
+    Handles everything that goes on
+    within normal levels. Uses things from the BaseLevel class
+    which are also used by the boss level handler.
+    """
+    def __init__(self):
+        """Initializes all the variables for the playing scene"""
         super().__init__(__name__)
 
         self.font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Setting up the font
@@ -33,8 +34,8 @@ class Playing(src.base_level.BaseLevel):
         self.placeTile = "w" # Tile to be placed when you click
     
     
-    # Calls a bunch of other functions which sets up the world with all the aspects of it
     def setup(self, level, crystals, crystalIndex):
+        """Calls a bunch of other functions which sets up the world with all the aspects of it"""
         self.logger.info(f"Setting up level {level}")
 
         self.level = level
@@ -49,8 +50,8 @@ class Playing(src.base_level.BaseLevel):
         self.load_room()
     
     
-    # Restarts the level the player is in
     def restart_level(self):
+        """Restarts the entire level, setting the player to the start"""
         self.logger.info("Restarting")
 
         # If the player has previously collected a crystal, it will be reset
@@ -61,9 +62,8 @@ class Playing(src.base_level.BaseLevel):
         self.load_room()
         
 
-    # Loads the rendered tiles in the room,
-    # while also setting up the animated tiles in the tile renderer
     def load_room(self):
+        """Loads the rendered tiles in the room, while also setting up the animated tiles in the tile renderer"""
         self.logger.info("Loading tiles in room")
         
         self.get_text()
@@ -79,8 +79,8 @@ class Playing(src.base_level.BaseLevel):
         self.tileRenderer.setup_room_tile_anims(self.levels[self.level][self.room])
     
     
-    # Sets up the text in the room if there is any given in the level data
     def get_text(self):
+        """Sets up the text in the room if there is any given in the level data"""
         self.text = None
         self.textWavX = 0
 
@@ -88,8 +88,8 @@ class Playing(src.base_level.BaseLevel):
             self.text = self.levelData[self.level][f"text {self.room}"]
 
 
-    # Updates the player
     def update(self, window):
+        """Extends the update function from the base level class, adding level editing"""
         inputs = window.inputs # Dictionary of keys pressed
         mousePos = window.mousePos # Position of the mouse
         mousePressed = window.mousePressed # Which mouse buttons were pressed
@@ -144,8 +144,8 @@ class Playing(src.base_level.BaseLevel):
                 utility.save_room(self.level, self.room, self.levels[self.level][self.room], constants.LEVELS_PATH) # Saves the room to the levels.txt file
 
 
-    # Renders everything to the screen
-    def render(self, window):        
+    def render(self, window):
+        """Renders everything to the screen"""
         # Drawing tiles
         window.blit(self.tileSurface, (0, 0))
 

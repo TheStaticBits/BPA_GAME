@@ -5,12 +5,12 @@ import random
 import src.constants as constants
 import src.animation
 
-"""
-This class manages the Big Bite boss (second boss).
-"""
 class BigBite:
-    # Sets up the animation and the default variables
+    """
+    This class manages the Big Bite boss (second boss) and everything related to it.
+    """
     def __init__(self):
+        """Sets up the animation and the default variables"""
         self.logger = logging.getLogger(__name__)
 
         self.animation = src.animation.Animation(
@@ -22,8 +22,8 @@ class BigBite:
         self.reset()
     
 
-    # Resets the boss to default
     def reset(self):
+        """Resets the boss to the default state"""
         self.logger.info("Resetting Big Bite boss")
 
         self.delayCounter = random.randint(constants.BIG_BITE_ATTACK_DELAY[0], constants.BIG_BITE_ATTACK_DELAY[1]) # For counting the frames between the attacks
@@ -33,7 +33,6 @@ class BigBite:
         self.room = None # The room number the boss was created in
 
 
-    # Updates the boss, checking for collisions and also updating cooldowns
     def update(
         self, 
         playerMask, # The player's mask object
@@ -41,6 +40,7 @@ class BigBite:
         tilesOffset, # The offset of the level
         room # The room number the player is in
         ):
+        """Updates the boss, checking for collisions and also updating cooldowns"""
         if not self.attacking: # If the boss is not on screen
             self.delayCounter -= 1
 
@@ -73,7 +73,7 @@ class BigBite:
                 # Position on screen
                 onScreenX = self.position[0] + tilesOffset - ((room - self.room) * constants.SCREEN_SIZE[0])
                 
-                # COllision CHECKING yay
+                # COllision CHECKING
                 collided = bbMask.overlap(
                     playerMask, 
                     (playerPosition[0] + tilesOffset - onScreenX, 
@@ -83,8 +83,8 @@ class BigBite:
                 return collided
         
     
-    # Renders animation frame if the boss is attacking
     def render(self, window, tilesOffset, playerRoom):
+        """Renders animation frame if the boss is attacking"""
         if self.attacking:
             self.animation.render(
                 window, 

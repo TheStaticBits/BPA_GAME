@@ -5,12 +5,11 @@ import src.animation
 import src.utility as utility
 import src.constants as constants
 
-"""
-Handles an object which follows the player (such as Ellipse and Corlen ingame)
-Inherits from ObjectBase to get collision testing functionality
-"""
 class FollowObject(src.object_base.ObjectBase):
-    # Sets up variables and parent class
+    """
+    Handles an object which follows the player (such as Ellipse and Corlen ingame).
+    Inherits from ObjectBase to get collision testing functionality.
+    """
     def __init__(
         self, 
         startPos, 
@@ -21,6 +20,7 @@ class FollowObject(src.object_base.ObjectBase):
         objSize,
         velocity = 0
         ):
+        """Sets up variables and parent class"""
         super().__init__(animationList, startPos, objSize)
 
         self.followDistance = followDistance
@@ -32,8 +32,8 @@ class FollowObject(src.object_base.ObjectBase):
         self.yVelocity = velocity
 
 
-    # Check if the object is on a platform
     def check_below(self, level): 
+        """Check if the object is on a platform"""
         self.yVelocity -= self.gravityDir
         
         self.update_y_pos() # Changes y position based on yVelocity
@@ -46,7 +46,6 @@ class FollowObject(src.object_base.ObjectBase):
         return result is True # If there was a collision below the object
 
     
-    # Moves the follow object, updating animation and everything else
     def update(
         self, 
         levels, # List of all levels
@@ -57,6 +56,7 @@ class FollowObject(src.object_base.ObjectBase):
         gravBeamYPos,
         globalGravity
         ):
+        """Moves the follow object, updating animation and everything else"""
         super().test_grav_line(globalGravity, gravBeamYPos) # Updates the gravity direction
         super().update_animation()
 
@@ -124,8 +124,9 @@ class FollowObject(src.object_base.ObjectBase):
             else:
                 self.switch_anim("idle")
 
-    # Render the object without a check for room and level
+
     def render_move_over(self, surface, playerRoomNum, offset = 0):
+        """Render the object without a check for room and level"""
         if playerRoomNum != self.room:
             # Finds the room offset
             dir = 1 if playerRoomNum - self.room == -1 else -1
@@ -137,8 +138,7 @@ class FollowObject(src.object_base.ObjectBase):
             super().render(surface, offset = offset)
 
 
-    # Renders the object only if the room and level passed in are
-    # the same as the ones of this object
     def render_with_check(self, currentRoom, currentLevel, window, offset = 0):
+        """Renders the object only if the room and level passed in are the same as the ones of this object"""
         if currentRoom == self.room and currentLevel == self.level:
             super().render(window, offset = offset)

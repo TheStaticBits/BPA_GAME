@@ -6,13 +6,15 @@ import math
 import src.utility as utility
 import src.constants as constants
 
-"""
-Red Stare boss (appears in level 19)
-Instance of this is created in the boss_level.py file
-"""
 class RedStare:
-    # Sets up variables and loads animations
+    """
+    Red Stare boss (appears in level 19). 
+    Instance of this is created in the boss_level.py file.
+    Handles everything related to the boss.
+    """
+
     def __init__(self): 
+        """Sets up variables and loads animations"""
         self.logger = logging.getLogger(__name__)
 
         self.animations = utility.load_animations_dict(constants.RED_STARE_ANIMATIONS)
@@ -20,8 +22,8 @@ class RedStare:
         self.reset()
 
     
-    # Resets the mouth related variables
     def reset_mouth(self): 
+        """Resets the mouth related variables"""
         self.logger.info("Resetting mouth")
         self.mouthStart = None
         self.mouthGoTo = None
@@ -30,8 +32,8 @@ class RedStare:
         self.mouthMoving = False
 
     
-    # Resets all general variables to the default state
     def reset(self):
+        """Resets all general variables to the default state"""
         self.logger.info("Resetting Red Stare boss")
         self.poppedUp = False
         self.bodyPos = None
@@ -41,9 +43,8 @@ class RedStare:
         self.reset_mouth()
 
     
-    # Updates the boss, moving it if it is moving
-    # Also checks for collisions between the boss and the player
     def update(self, player, room, tilesOffset):
+        """Updates the boss, moving it if it is moving. Also checks for collisions between the boss and the player."""
         # Updating animations
         for anim in self.animations.values():
             anim.update()
@@ -169,8 +170,8 @@ class RedStare:
         return False
 
     
-    # Renders the boss along with its mouth on screen
     def render(self, window, tilesOffset, room):
+        """Renders the boss along with its mouth on screen"""
         if self.bodyPos is not None:
             offset = tilesOffset - room * constants.SCREEN_SIZE[0]
 

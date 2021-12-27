@@ -4,18 +4,17 @@ from math import floor
 import src.constants as constants
 import src.utility as utility
 
-"""
-Base object class
-Handles collisions through update_x_collision() and update_y_collision()
-Handles animations through switch_anim()
-Allows base classes to access directions in which they collided through
-the self.collisions dictionary
-Also handles rendering through the render() function
-Base classes will have to create their own update() functions
-"""
 class ObjectBase:
-    # Initiates rectangles, animations, and other variables
+    """
+    Base object class.
+    Handles collisions through update_x_collision() and update_y_collision().
+    Handles animations through switch_anim().
+    Allows base classes to access directions in which they collided through the self.collisions dictionary.
+    Also handles rendering through the render() function.
+    Child classes will have to create their own update() functions.
+    """
     def __init__(self, animationData, startPos, size):
+        """Initiates rectangles, animations, and other variables"""
         # Used for collisions and keeping track of position
         self.rect = pygame.Rect(startPos[0], startPos[1], size[0], size[1])
 
@@ -45,15 +44,15 @@ class ObjectBase:
         self.facing = 1
         
     
-    # Changes the animation if it's not already playing the animation given
     def switch_anim(self, newAnim):
+        """Changes the animation if it's not already playing the animation given"""
         if self.currentAnim != newAnim:
             self.currentAnim = newAnim
             self.animations[self.currentAnim].reset()
     
 
-    # Updates the currentTile variable (the tile that the center of the obj is on)
     def reset_current_tile(self):
+        """Updates the currentTile variable (the tile that the center of the obj is on)"""
         # Finds the coordinates of the center of the object
         centerX = self.rect.x + (self.rect.width / 2)
         centerY = self.rect.y + (self.rect.height / 2)
@@ -63,23 +62,23 @@ class ObjectBase:
         self.currentTile[1] = floor(centerY / constants.TILE_SIZE[1])
 
 
-    # Adds gravity to the object based on the direction of gravity
     def update_gravity(self):
+        """Adds gravity to the object based on the direction of gravity"""
         self.yVelocity -= constants.GRAVITY * self.gravityDir
 
 
-    # Update the actual y position with the y velocity
     def update_y_pos(self):
+        """Update the actual y position with the y velocity"""
         self.rect.y -= round(self.yVelocity)
 
     
-    # Updates the animation frame
     def update_animation(self):
+        """Updates the animation frame"""
         self.animations[self.currentAnim].update()
     
 
-    # Returns the mask of the current frame of the animation of the object
     def get_mask(self) -> "pygame.mask.Mask":
+        """Returns the mask of the current frame of the animation of the object"""
         objImage = self.animations[self.currentAnim].get_frame()
         # Flips if the gravity direction is opposite
         objImage = pygame.transform.flip(objImage, False, self.gravityDir == -1)
@@ -88,11 +87,6 @@ class ObjectBase:
         return objMask
         
     
-    # Used in collision testing
-    # Checks for collision between a tile and the object
-    # Returns a tuple of two elements
-    # First, whether it was a collision between a solid tile
-    # And then the tile rectangle if it was solid, the tile character if it wasn't solid, and False otherwise
     def check_tile(
         self, 
         room, 
@@ -104,6 +98,13 @@ class ObjectBase:
         gravityBeamYPos,
         offset = 0
         ):
+        """
+        Used in collision testing.
+        Checks for collision between a tile and the object.
+        Returns a tuple of two elements.
+        First, whether it was a collision between a solid tile,
+        and then the tile rectangle if it was solid, the tile character if it wasn't solid, and False otherwise.
+        """
 
         # Testing if the y or x positions of the given tile are on the screen
         yPosOnScreen = 0 <= tilePos[1] < constants.SCREEN_TILE_SIZE[1]
@@ -189,7 +190,6 @@ class ObjectBase:
         return False, False
 
 
-    # Checks for tiles around the object based on the direction moved
     def update_x_collision(
         self, 
         room, 
@@ -200,6 +200,9 @@ class ObjectBase:
         globalGravity = None, 
         gravityBeamYPos = None
         ) -> dict: # Returns any special tiles and their positions the object collided with
+        """
+        Checks for tiles around the object based on the direction moved.
+        """
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -244,7 +247,6 @@ class ObjectBase:
         return specialTiles
 
     
-    # Checks the tiles in the direction the object has moved (bases on the y velocity)
     def update_y_collision(
         self, 
         room, 
@@ -255,6 +257,7 @@ class ObjectBase:
         gravityBeamYPos = None, 
         modif = True
         ) -> dict: # Also returns a dictionary of special tiles touched and their positions
+        """Checks the tiles in the direction the object has moved (bases on the y velocity)"""
         self.reset_current_tile()
 
         # Resets the self.collisions dictionary
@@ -296,8 +299,8 @@ class ObjectBase:
         return specialTiles
     
 
-    # Tests the gravity line, changing the gravity direction based on the result
     def test_grav_line(self, globalGravity, gravBeamYPos):
+        """Tests the gravity line, changing the gravity direction based on the result"""
         # globalGravity, if -1, switches the gravity beam pull direction
         # (this is for functionality of the gravity orb)
 
@@ -309,8 +312,8 @@ class ObjectBase:
             self.gravityDir = -1 * globalGravity
     
 
-    # Renders to the screen, with a given offset (if provided one)
     def render(self, window, offset = 0):
+        """Renders to the screen, with a given offset (if provided one)"""
         frame = self.animations[self.currentAnim].get_frame()
 
         # Flips the image horizontally if the facing is the opposite direction

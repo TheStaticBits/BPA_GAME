@@ -2,18 +2,19 @@ import pygame
 import logging
 import src.constants as constants
 
-"""
-This class creates, manages, and updates the Pygame Window.
-It also manages the inputs from the user
-"""
 class Window:
+    """
+    This class creates, manages, and updates the Pygame Window.
+    It also manages the inputs from the user.
+    """
+
     WINDOW_SIZE = (
         constants.PX_SCALE_FACTOR * constants.SCREEN_SIZE[0],
         constants.PX_SCALE_FACTOR * constants.SCREEN_SIZE[1]
     ) # This is the size of the window
 
     def __init__(self):
-        # Creates the window, the miniwindow, sets up other Pygame things, and inputs.
+        """Creates the window, the miniwindow, sets up other Pygame things, and inputs"""
 
         self.logger = logging.getLogger(__name__)
 
@@ -56,7 +57,7 @@ class Window:
     
     
     def update_inputs(self):
-        # Resets inputs that are one time, iterates through Pygame events and takes note of inputs.
+        """Resets inputs that are one time, iterates through Pygame events and takes note of inputs"""
 
         # Resetting one-time inputs
         self.inputs["up"] = False
@@ -93,7 +94,7 @@ class Window:
 
 
     def flip(self):
-        # Scales up the miniwindow and updates the screen with it, stablizing frame rate and also clearing the miniwindow afterwards.
+        """Scales up the miniwindow and updates the screen with it, stablizing frame rate and also clearing the miniwindow afterwards"""
 
         scaledWindow = pygame.transform.scale(self.miniWindow, self.WINDOW_SIZE)
         self.window.blit(scaledWindow, (0, 0))

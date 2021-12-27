@@ -38,23 +38,23 @@ def setup_loggers():
     rLogger.addHandler(console)
 
 
-# Locks a number to 1, 0, or -1 and returns that number
 def lock_neg1_zero_pos1(number):
+    """Locks a number to 1, 0, or -1 and returns that number"""
     if number > 0: return 1
     elif number < 0: return -1
     else: return 0
 
 
-# Gets a file from the filePath
 def get_file(filePath) -> str:
+    """Gets a file from the filePath and returns it"""
     with open(filePath, "r") as file:
         text = file.read()
     
     return text
 
 
-# Finds the angle from one point to the next in radians
 def angle_to(pos1, pos2) -> float:
+    """Finds the angle from one point to the next in radians"""
     xDiff = pos2[0] - pos1[0]
     yDiff = pos2[1] - pos1[1]
 
@@ -63,20 +63,20 @@ def angle_to(pos1, pos2) -> float:
     return angle
 
 
-# Finds the distance between two points using the Pythagorean Theorem
 def distance_to(pos1, pos2):
+    """Finds the distance between two points using the Pythagorean Theorem"""
     return math.sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2)
 
 
-# Finds the last item of a type given in a list and returns the index of the item
 def find_last_item(list, item) -> int:
+    """Finds the last item of a type given in a list and returns the index of the item"""
     for i in range(len(list) - 1, -1, -1):
         if list[i] == item:
             return i
 
 
-# Loads the levels from a given path
 def load_levels(levelPath) -> list:
+    """Loads the levels from a given path and returns a list of the levels"""
     file = get_file(levelPath)
 
     levelData = []
@@ -125,14 +125,13 @@ def load_levels(levelPath) -> list:
     return returnLevels, levelData
 
 
-# Saves the room to the levels.txt file
-# This is for editing, will probably NOT be included in the final game
 def save_room(
     saveLevel, # Level number of the room being saved
     saveRoom, # Room number of the room being saved
     tiles, # The list of tiles that the room is being changed to
     filePath
     ):
+    """Saves the given room to the given file path"""
     levels, levelData = load_levels(filePath)
     
     with open(constants.LEVELS_PATH, "w") as file:
@@ -162,14 +161,16 @@ def save_room(
                         file.write("\n") # Add a new line
 
 
-# This function assumes the spritesheet is horizontal
-# It returns a list of all the frames of the spritesheet
 def load_spritesheet(
         filePath, # Path to the file
         width = None, # Width of each image
         frames = None # Frames in the animation
         # Choose either width or frames
     ): 
+    """
+    This function assumes the spritesheet is horizontal.
+    It returns a list of all the frames of the spritesheet.
+    """
 
     image = pygame.image.load(filePath).convert_alpha() # Loads the spritesheet from a file
 
@@ -195,22 +196,21 @@ def load_spritesheet(
     return result
     
 
-# Opens a json file and returns the dictionary
 def load_json(filePath) -> dict:
+    """Opens a json file and returns the dictionary it contains"""
     with open(filePath, "r") as file:
         return json.load(file)
 
 
-# Checks if a point is between the given minimum and maximums
 def check_between(
         vect,
         min,
         max
     ):
+    """Checks if a point is between the given minimum and maximums"""
     return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
 
 
-# Draws text on the screen with a black one pixel border
 def draw_text_with_border(
     window, 
     position, 
@@ -222,6 +222,7 @@ def draw_text_with_border(
     backgroundText = None, # Pygame Surface with the background text
     alpha = None
     ):
+    """Draws text on the screen with a black border"""
     if renderText is None:
         renderText = textObj.render(text, False, color)
     
@@ -245,8 +246,8 @@ def draw_text_with_border(
     window.blit(textSurf, (position[0] - borderWidth, position[1] - borderWidth)) # Blits the text to the screen
 
 
-# Plays music from the music folder in res
 def play_music(musicName) -> bool: # Successful or not
+    """Plays music from the music folder in "res". Returns a bool indicating if it was successful or not."""
     try:
         # Setting up music
         pygame.mixer.music.load(f"{constants.MUSIC_FOLDER}/{musicName}.wav")
@@ -254,16 +255,16 @@ def play_music(musicName) -> bool: # Successful or not
         
         # Starting music
         pygame.mixer.music.play(-1)
-
         return True
 
     except pygame.error:
-        # If there wasn't an audio device found, 
+        # If there wasn't an audio device found
+        warning_box("Audio device not found.")
         return False
 
 
-# Loads a dictionary with the animations, with the keys being the animation's name
 def load_animations_dict(animations) -> dict:
+    """Loads a dictionary with the animations, with the keys being the animation's name"""
     animation = {}
     for name, data in animations.items():
         # Getting either the frames or the width of the animation to load it
@@ -285,8 +286,8 @@ def load_animations_dict(animations) -> dict:
 """
 DATABASE HANDLING
 """
-# Creates a database assuming that there is none, from the default layout found in constants.py
 def create_default_database():
+    """Creates a database assuming that there is none, from the default layout found in constants.py"""
     conn = sqlite3.connect(constants.SAVE_PATH) # Creating a connection
     c = conn.cursor() # Creates the cursor
 
@@ -297,15 +298,15 @@ def create_default_database():
     # Sets up the default table with the default save
     for key, value in constants.DEFAULT_SAVE.items():
         c.execute("INSERT INTO data VALUES (?, ?)", 
-                    (key, value))
+                 (key, value))
 
     # Committing and closing
     conn.commit()
     conn.close()
 
 
-# Loads the save file, creating a default save file if it doesn't exist
 def load_save() -> dict:
+    """Loads the save file, creating a default save file if it doesn't exist"""
     if os.path.isfile(constants.SAVE_PATH): # If the file exists already
         result = {}
 
@@ -329,8 +330,8 @@ def load_save() -> dict:
         return constants.DEFAULT_SAVE # Returning the default save
 
 
-# Modifies the save with the corresponding keys and values passed in through the dictionary
 def modif_save(dict):
+    """Modifies the save with the corresponding keys and values passed in through the dictionary"""
     if os.path.isfile(constants.SAVE_PATH): # If the file doesn't exist
         # Creating a connection and cursor
         conn = sqlite3.connect(constants.SAVE_PATH)
@@ -350,9 +351,8 @@ def modif_save(dict):
         modif_save(dict) # Call this function to modify the changes
 
 
-# This is the error box which pops up when there is an error
-# Also creates a crash report and reports crashes if the user says yes to doing so
 def error_box(error):
+    """Creates an error box with the given error message, reporting the error if the user presses "ok"."""
     pygame.quit() # Closes window
 
 
