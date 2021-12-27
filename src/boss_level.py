@@ -104,9 +104,12 @@ class BossLevel(src.base_level.BaseLevel):
             if room > len(self.levels[self.level]) - 1:
                 room = len(self.levels[self.level]) - 1
 
-            # Rendering the tiles to a surface
-            surf = tr.draw_tiles(
+            surf = pygame.Surface(constants.SCREEN_SIZE)
+
+            # Rendering the tiles to the surface
+            tr.draw_tiles(
                 self.levels[self.level][room], room,
+                surf, 
                 self.levelData[self.level]["background"],
                 level = self.levels[self.level],
                 roomNumber = room

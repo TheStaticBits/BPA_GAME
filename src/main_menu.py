@@ -6,13 +6,13 @@ import src.utility as utility
 import src.button
 import src.tile_renderer
 
+"""
+Handles the buttons on the main menu, rendering of main menu, 
+and also the level selector on the main menu.
+"""
 class MainMenu():
-    """
-    Handles the buttons on the main menu, rendering of main menu, 
-    and also the level selector on the main menu.
-    """
+    # Sets up variables to default and loading images used on the menu
     def __init__(self, save, levelsList, levelsCompleted, crystals, remove_cutscenes):
-        """Sets up variables to default and loading images used on the menu"""
         self.logger = logging.getLogger(__name__) # Logging
 
         self.levelsList = levelsList
@@ -37,9 +37,11 @@ class MainMenu():
         mainMenuLevel, mainMenuLevelData = utility.load_levels(constants.MAIN_MENU_LEVEL_PATH)
 
         # Getting the background surface, drawing it once on a Pygame Surface
-        self.tileRenderer = src.tile_renderer.TileRenderer()
-        self.background = self.tileRenderer.draw_tiles(
+        tileRenderer = src.tile_renderer.TileRenderer()
+        self.background = pygame.Surface(constants.SCREEN_SIZE)
+        tileRenderer.draw_tiles(
             mainMenuLevel[0][0], 0,
+            self.background, # Surface
             mainMenuLevelData[0]["background"], # Background tile
         )
 
@@ -77,24 +79,22 @@ class MainMenu():
         self.otherTextFont = pygame.font.Font(constants.FONT_PATH, 15)
 
 
+    # Plays music
     def start_music(self):
-        """Plays main menu music"""
         utility.play_music(self.music)
 
 
+    # Updates information given data
     def update_info(self, level, levelsCompleted, ending, crystals):
-        """Updates information used on the main menu"""
         self.lvlsIndex = level
         self.levelsCompleted = levelsCompleted
         self.ending = ending
         self.crystals = crystals
     
 
+    # Looks inside the levelsCompleted variable and returns a tuple
+    # (level completed or not, rga value) 
     def get_status(self, level):
-        """
-        Looks inside the levelsCompleted variable and returns a tuple
-        in this format: (level completed or not (bool), rga value (tuple)) 
-        """
         if self.levelsCompleted[level] == 1:
             return "Completed", constants.GREEN
         # If the level before this one was completed
@@ -104,8 +104,8 @@ class MainMenu():
             return "Locked", constants.RED
 
 
+    # Updates buttons, returning a string for the result of which button was pressed
     def update(self, mousePos, mouseInputs):
-        """Updates buttons, returning a string for the result of which button was pressed"""
         # Iterating through all buttons
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs): # If the button was pressed
@@ -155,17 +155,15 @@ class MainMenu():
                     return key
 
 
+    # Renders text centered on the x position
     def render_text(self, window, text, position, color = constants.WHITE):
-        """Renders text centered on the x position"""
         surf = self.otherTextFont.render(text, False, color) # Rendering to a surface
         window.blit(surf, (position[0] - surf.get_width() / 2, position[1])) # Centered
 
     
-    def render(self, window, mousePos):
-        """Renders everything in the scene to the window"""
-        # Drawing background tiles
-        self.tileRenderer.draw_bg_parallax(window, mousePos)
-        window.blit(self.background, (0, 0)) # Drawing solid background tiles
+    # Renders everything in the scene to the window
+    def render(self, window):
+        window.blit(self.background, (0, 0))
         window.blit(self.screenShadow, (0, 0))
 
         # Centers logo on the x axis
