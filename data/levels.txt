@@ -1055,20 +1055,85 @@ eeeeeeeeeeeeeeeeeeeeeeee
 background = b
 music = Blue
 ------------------------
-o><^v    oo             
-o        oo             
-o        oo             
-o        oo             
-o p  ^^  oo  oo         
-ooooooo  oo  oo         
-ooooooo  oo  oo         
-ooooooo  oo  oo         
-o        vv  oo         
-o            oo         
-o            oo         
-o            oo         
-ooooooooooooooo         
-ooooooooooooooo         
+o><^v    oo       oooooo
+o        oo       oooooo
+o        oo       vvvvoo
+o        oo    ^      oo
+o p  ^^  oo  ooo      oo
+ooooooo  oo  ooo      oo
+ooooooo  oo  ooo  ^^  oo
+ooooooo  oo  ooo  oo    
+ovv  vv  vv  ooo  oo    
+o            ooo  oo    
+o            ooooooooooo
+o            ooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+||||||||||||||||||||||||
+o><^v         oooooooooo
+o             oooooooooo
+o             oooooooooo
+o     oo      oooooooooo
+o    ooo      oooovvvvoo
+o    ooo      oo      vv
+ooo> ooo      oo        
+     ooo      oo        
+     ooo^^^   vv  oo^^^^
+     oooooo       oooooo
+ooooooooooo       oooooo
+ooooooooooo       oooooo
+ooooooooooo       oooooo
+ooooooooooo       oooooo
+||||||||||||||||||||||||
+o          ooooooooooooo
+o          ooooooooooooo
+o  j       oo    oo     
+o          oo    oo     
+o                oo     
+v    oo  oooooo  oo  ooo
+     oo  oooooo  oo  ooo
+   oooo  oooooo  oo  ooo
+ooo><oo  oooooo  oo  ooo
+ooo^voo  oooooo  vv  ooo
+ooooooo  oooooo      ooo
+o c v    oooooo      ooo
+o        oooooo      ooo
+o        ooooooooooooooo
+||||||||||||||||||||||||
+o><^vooo        oooooooo
+oooooooo        oooooooo
+      oog   oo   ooooooo
+      oo    oo   ooooooo
+      oo    oo    oooooo
+oooo  oo  oooo    oooooo
+oooo  oo  oooo      v   
+oooo  oo  oooo^^^      ^
+oooo  vv  oooooooooooooo
+oooo      oooooooooooooo
+oooo      oooooooooooooo
+oooo      oooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+------------------------
+
+background = b
+music = Blue
+button 0, 16, 2 = 2
+------------------------
+oooooooooooooooooooooooo
+o       oooo     ooooooo
+o       o><o    mooooooo
+op      ov^o  oooooooooo
+oooo>  <ooooj    ooooooo
+oooo>   vvvv     ooooooo
+o                ooooooo
+o            oo  ooovvvv
+o       ^^^^^oo  v      
+o       ooooooo         
+o       ooooooo     ^^^^
+o       ooooooo     oooo
+o^^     ooooooo     oooo
+oooooooooooooooooooooooo
 ||||||||||||||||||||||||
 o><^v                   
                         
@@ -1116,7 +1181,7 @@ o><^v
                         
 ------------------------
 
-background = o
+background = b
 music = Blue
 ------------------------
 o><^v                   
@@ -1180,7 +1245,7 @@ o><^v
                         
 ------------------------
 
-background = o
+background = b
 music = Blue
 ------------------------
 o><^v                   
@@ -1244,71 +1309,7 @@ o><^v
                         
 ------------------------
 
-background = o
-music = Blue
-------------------------
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-------------------------
-
-background = o
+background = b
 music = Blue
 ------------------------
 o><^v                   
