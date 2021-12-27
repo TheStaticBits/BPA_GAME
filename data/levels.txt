@@ -21,8 +21,8 @@ ssssssssssssssssssssssss
 
 background = w
 music = ThereIsSomethingV2
-text 0 = Use W or UP to Jump
-text 1 = Gravity pulls towards the gravity line\n\n\n\n\n\n\n\n\n\n\n\n\n\nAvoid spikes! Touching one\ncauses you to restart the level.
+text 0 = Use W or UP to Jump.
+text 1 = Gravity pulls towards the gravity line.\n\n\n\n\n\n\n\n\n\n\n\n\n\nAvoid spikes! Touching one\ncauses you to restart the level.
 text 2 = Tip: Press escape to open the pause menu!
 text 3 = You don't lose momentum when switching gravity!
 entities = none

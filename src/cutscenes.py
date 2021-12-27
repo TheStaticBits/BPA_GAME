@@ -629,34 +629,6 @@ class Cutscenes():
         # Rendering tile objects
         for dat in self.tileObjects.values():
             dat["anim"].render(self.screen, dat["pos"])
-        
-        # Going through all text objects and rendering them with borders at their positions
-        for text in self.texts.values():
-            if text["show"]: # If the text is to be displayed
-                if not text["movable"]: # If the text isn't movable text
-                    # Adding to the sine wave counter
-                    text["displayWaveX"] += 0.05
-                    # Using the sine wave counter to get the new position of the text
-                    # (For bobbing up and down)
-                    textYOffset = math.sin(text["displayWaveX"]) * 5
-                
-                else: # Otherwise, set it to zero
-                    # (Movable text doesn't bob up/down)
-                    textYOffset = 0
-
-                fullText = text["text"].split("\n")
-
-                # Going through all rows of the text
-                for count, t in enumerate(fullText):
-                    # Getting text surface
-                    renderText = self.textObject.render(t, False, text["color"])
-
-                    # Getting position, centering it on the x position and moving it down by the y if there are multiple lines
-                    position = (text["pos"][0] - renderText.get_width() / 2, text["pos"][1] + textYOffset + count * 12)
-
-                    # Drawing the text 
-                    utility.draw_text_with_border(self.screen, position, t, self.textObject, text["color"], renderText = renderText)
-        
 
         if self.screenShake:
             # Creating a random offset for the entire screen
@@ -688,3 +660,30 @@ class Cutscenes():
             # Drawing the fade image with the current alpha value
             self.fadeImage.set_alpha(self.fadeProgress)
             window.blit(self.fadeImage, (0, 0))
+        
+        # Going through all text objects and rendering them with borders at their positions
+        for text in self.texts.values():
+            if text["show"]: # If the text is to be displayed
+                if not text["movable"]: # If the text isn't movable text
+                    # Adding to the sine wave counter
+                    text["displayWaveX"] += 0.05
+                    # Using the sine wave counter to get the new position of the text
+                    # (For bobbing up and down)
+                    textYOffset = math.sin(text["displayWaveX"]) * 5
+                
+                else: # Otherwise, set it to zero
+                    # (Movable text doesn't bob up/down)
+                    textYOffset = 0
+
+                fullText = text["text"].split("\n")
+
+                # Going through all rows of the text
+                for count, t in enumerate(fullText):
+                    # Getting text surface
+                    renderText = self.textObject.render(t, False, text["color"])
+
+                    # Getting position, centering it on the x position and moving it down by the y if there are multiple lines
+                    position = (text["pos"][0] - renderText.get_width() / 2, text["pos"][1] + textYOffset + count * 12)
+
+                    # Drawing the text 
+                    utility.draw_text_with_border(window, position, t, self.textObject, text["color"], renderText = renderText)
