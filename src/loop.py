@@ -320,10 +320,7 @@ class Loop():
                 self.startupAnim.render(surf, (0, 0))
             
             else: # Normal scenes
-                if self.scene != "mainMenu":
-                    self.scenes[self.scene].render(surf)
-                else:
-                    self.scenes[self.scene].render(surf, self.window.mousePos)
+                self.scenes[self.scene].render(surf)
 
                 if self.scene not in ("mainMenu", "pauseMenu"):
                     # Rendering pause button
