@@ -70,8 +70,7 @@ class Playing(src.base_level.BaseLevel):
         # This is done so that the tile renderer doesn't have to rerender tiles every frame
         # (for performance)
         # Instead, the tiles on screen are saved and rendered from that
-        self.tileSurface.fill(constants.BLACK)
-        self.tileRenderer.draw_tiles(
+        self.tileSurface = self.tileRenderer.draw_tiles(
             self.levels[self.level][self.room], self.room,
             self.tileSurface, 
             self.levelData[self.level]["background"]
@@ -146,6 +145,8 @@ class Playing(src.base_level.BaseLevel):
 
     def render(self, window):
         """Renders everything to the screen"""
+        # Drawing background tiles
+        self.tileRenderer.draw_bg_parallax(window, self.player.rect.topleft)
         # Drawing tiles
         window.blit(self.tileSurface, (0, 0))
 

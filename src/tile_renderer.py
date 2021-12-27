@@ -24,6 +24,8 @@ class TileRenderer:
 
         # If the tile being checked is on the screen and transparent, used when drawing edges to the screen
         self.check_tile = lambda room, x, y: utility.check_between((x, y), (0, 0), constants.SCREEN_TILE_SIZE) and room[y][x] in constants.TRANSPARENT_TILES
+
+        self.backgroundTiles = pygame.Surface(constants.SCREEN_SIZE)
     
 
     def check_tile_across_rooms(self, roomNumber, level, x, y):
@@ -174,12 +176,14 @@ class TileRenderer:
     def draw_tiles(
         self, 
         room, roomNum,
-        surface, 
         backgroundTile,
         level = None, # If it needs to be drawn over multiple levels, with the edges and corners being accurate with the other rooms in the level
         roomNumber = None
         ):
-        """This function renders the SOLID tiles onto a given surface. It's not very efficient, and shouldn't be called every frame."""
+        """This function renders the SOLID tiles onto a given surface and returns the surface. It's not very efficient, and shouldn't be called every frame."""
+        # Creating transparent surface for tiles
+        surface = pygame.Surface(constants.SCREEN_SIZE, flags = pygame.SRCALPHA)
+
         # Setting up background tile
         backgroundTile = backgroundTile.split(", ")
         if len(backgroundTile) == 1: # if it provides one bg tile for the whole level
@@ -301,15 +305,6 @@ class TileRenderer:
                                     surface.blit(image, pos)
 
                 elif tile in constants.TRANSPARENT_TILES: # If the tile is transparent
-                    # Transparent tiles also draw the background behind them, and may have special properties.
-
-                    # Drawing the background tile
-                    surface.blit(
-                        bgTileImg,
-                        (x * constants.TILE_SIZE[0],
-                        y * constants.TILE_SIZE[1])
-                    )
-
                     # If the tile is a spike
                     if tile in constants.SPIKE_ROTATIONS:
                         # Draw the spike with rotation based on the tile
@@ -325,3 +320,35 @@ class TileRenderer:
                             (x * constants.TILE_SIZE[0],
                             y * constants.TILE_SIZE[1])
                         )
+                
+                # Drawing the background tile to the background surface
+                self.backgroundTiles.blit(
+                    bgTileImg,
+                    (x * constants.TILE_SIZE[0],
+                    y * constants.TILE_SIZE[1])
+                )
+
+        return surface # Returning resulting tile surface
+
+
+    def draw_bg_parallax(self, surface, point):
+        """
+        Draws the background tiles with a parallax inversely related to the point given. 
+        The background tiles used are updated within the draw_tiles() function. 
+        Should call this every frame.
+        """
+
+        # Point opposite on the screen from the point and offscreen in the top left
+        start = (
+            constants.SCREEN_SIZE[0] - point[0] - constants.SCREEN_SIZE[0]
+            constants.SCREEN_SIZE[1] - point[1] - constants.SCREEN_SIZE[1]
+        )
+
+        # Drawing in a 2x2 grid of background tiles to fill the screen completely
+        for y in range(2):
+            for x in range(2):
+                surface.blit(
+                    self.backgroundTiles,
+                    (start[0] + x * constants.SCREEN_SIZE[0]
+                     start[1] + x * constants.SCREEN_SIZE[1])
+                )

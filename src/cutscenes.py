@@ -169,8 +169,7 @@ class Cutscenes():
         """Renders the tiles in the background to a surface that's stored and rendered every frame"""
         self.logger.info("Rendering background tiles")
 
-        self.tiles.fill(constants.BLACK)
-        self.tileRenderer.draw_tiles(
+        self.tiles = self.tileRenderer.draw_tiles(
             self.level[self.room], self.room,
             self.tiles, 
             self.levelData[self.levelNum]["background"]
