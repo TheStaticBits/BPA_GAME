@@ -16,9 +16,13 @@ Commands are run forever until resulting in true, unless specified like so: "run
 You can link multiple conditionals together with the "and" keyword.
 For example: "conditionals": {"ellipseOnScreen": "ellipse x > 0"}
 
---- "cond_commands: (dictionary) ---
+--- "cond_commands" (dictionary) ---
 Conditional Commands is a dictionary, with a string of an integer as the key, and a list of commands as the value. When a conditional has a result of true, the commands are run in the same key in this dictionary.
 For example: "cond_commands": {"ellipseRight": ["ellipse move right"]}
+
+--- "backgroundAnim" (dictionary ---
+An optional dictionary which contains the path to a horizontal spritesheet, and the room the animation is to be played continuously in the background in.
+For example: "backgroundAnim": {"path": "res/spritesheet.png", "room": 1}
 
 --- POSSIBLE COMMANDS ---
 [entity] walk [left/right/still]
