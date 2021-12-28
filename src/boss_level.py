@@ -38,19 +38,10 @@ class BossLevel(src.base_level.BaseLevel):
         self.bossName = None
 
 
-    def setup(self, boss, level, crystals, crystalIndex):
-        """Sets up the boss level with a given boss and level. It also starts the music and loads the room images."""
-        self.logger.info(f"Setting up level {level}")
+    def setup(self, boss, level, crystals, crystalIndex, entities = "check"):
+        """Extends the "setup" method from the BaseLevel class, setting up bosses as well."""
+        super().setup(level, crystals, crystalIndex, entities)
 
-        self.level = level
-
-        super().reset_crystal(level)
-        if "crystal moves on" not in self.levelData[level]: # If the level does not require the crystal
-            if crystals[crystalIndex]: # If the crystal has been collected
-                # Remove crystal
-                super().remove_crystal(level)
-        
-        super().reset_all()
         self.load_rooms()
 
         self.bosses = {}

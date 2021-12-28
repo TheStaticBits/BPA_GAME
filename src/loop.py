@@ -416,18 +416,22 @@ class Loop():
                 # Setting the level to the ending that was unlocked
                 level = len(self.levels) - constants.AMOUNT_OF_ENDINGS + int(utility.load_save()["unlockedEnding"]) - 1
 
+        if self.speedrun:
+            entities = False
+        else:
+            entities = "check"
 
         if self.levelsList[level] == "Normal Level":
             # Sets up normal level
             self.scene = "playing"
-            self.scenes["playing"].setup(level, self.crystals, self.remove_cutscenes(level))
+            self.scenes["playing"].setup(level, self.crystals, self.remove_cutscenes(level), entities = entities)
             self.scenes["playing"].popup(f"Level {self.remove_cutscenes(level) + 1}")
             self.scenes["bossLevel"].music_stopped()
         
         elif self.levelsList[level] == "Boss Level":
             # Sets up boss level
             self.scene = "bossLevel"
-            self.scenes["bossLevel"].setup(self.levelData[level]["boss"], level, self.crystals, self.remove_cutscenes(level))
+            self.scenes["bossLevel"].setup(self.levelData[level]["boss"], level, self.crystals, self.remove_cutscenes(level), entities = entities)
             self.scenes["bossLevel"].popup(f"Level {self.remove_cutscenes(level) + 1}")
             self.scenes["playing"].music_stopped()
 

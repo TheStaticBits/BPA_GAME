@@ -67,6 +67,25 @@ class BaseLevel():
         self.popupTextAlpha = 255
 
 
+    def setup(self, level, crystals, crystalIndex, entities):
+        """Sets up the given level, crystals, entities, and variables"""
+        self.logger.info(f"Setting up level {level}")
+
+        self.level = level
+
+        self.reset_crystal(level)
+        if "crystal moves on" not in self.levelData[level]: # If the crystal isn't required for the level
+            if crystals[crystalIndex]: 
+                self.remove_crystal(level)
+
+        if entities == "check":
+            self.check_entity_rendering()
+        else:
+            self.showEntities = False
+        
+        self.reset_all()
+
+
     def start_music(self):
         """Plays the music that the level has if it isn't already playing"""
         if self.playingSong != self.levelData[self.level]["music"]:
@@ -158,7 +177,6 @@ class BaseLevel():
         self.start_music()
 
         self.setup_player()
-        self.check_entity_rendering()
         
         if self.showEntities:
             self.setup_entities(self.player.rect.topleft)
@@ -178,7 +196,7 @@ class BaseLevel():
     
 
     def popup(self, text):
-        """Sets up a popup with the given text to appear on the screeen"""
+        """Sets up a popup with the given text to appear on the screen"""
         self.logger.info(f"Creating popup \"{text}\"")
 
         self.popupText = text

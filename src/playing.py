@@ -34,18 +34,10 @@ class Playing(src.base_level.BaseLevel):
         self.placeTile = "w" # Tile to be placed when you click
     
     
-    def setup(self, level, crystals, crystalIndex):
-        """Calls a bunch of other functions which sets up the world with all the aspects of it"""
-        self.logger.info(f"Setting up level {level}")
+    def setup(self, level, crystals, crystalIndex, entities = "check"):
+        """Extends the setup function from the base level class, setting up rendering for text and the room as well"""
+        super().setup(level, crystals, crystalIndex, entities)
 
-        self.level = level
-
-        super().reset_crystal(level)
-        if "crystal moves on" not in self.levelData[level]: # If the crystal isn't required for the level
-            if crystals[crystalIndex]: 
-                super().remove_crystal(level)
-        
-        super().reset_all()
         self.get_text()
         self.load_room()
     
