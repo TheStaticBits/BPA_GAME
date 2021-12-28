@@ -57,7 +57,7 @@ class MainMenu():
             "speedrun": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Speedrun"), 
             "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, pygame.transform.flip(arrow, True, False)), 
             "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, arrow),
-            "showText": (200, constants.SCREEN_SIZE[1] / 2, "check")
+            "showText": (200, constants.SCREEN_SIZE[1] / 2, "check"),
             "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
         }
 
