@@ -34,9 +34,15 @@ class Loop():
         self.framerate = 0
         self.errorSettingUp = False
 
+        # Transition variables (transition between scenes)
         self.transitionImg = None
         self.transitionMode = None
         self.transitionAlpha = 255
+
+        # Speedrun variables
+        self.speedrun = False
+        self.speedrunTime = 0
+        self.speedrunFont = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Font used for the speedrun timer
 
         try:
             self.window = src.window.Window()
@@ -77,9 +83,10 @@ class Loop():
             self.errorSettingUp = True # Prevents from later running the game
 
     
-    def load_save(self) -> dict:
+    def load_save(self, save = None) -> dict:
         """Loads a save, while also setting up the crystals and levelsCompleted variables"""
-        save = utility.load_save()
+        if save is None:
+            save = utility.load_save()
 
         # Converts string of ones and zeros into lists of integers
         self.levelsCompleted = [int(x) for x in list(save["levels"])]
@@ -159,14 +166,22 @@ class Loop():
         return levelNum
     
 
-    def restart(self):
+    def restart(self, save = None, speedrun = False):
         """Restarts the game, creating a new save and updating everything that uses the save data"""
-        if os.path.exists(constants.SAVE_PATH):
-            os.remove(constants.SAVE_PATH)
+        if save is None:
+            # Clearing save
+            if os.path.exists(constants.SAVE_PATH):
+                os.remove(constants.SAVE_PATH)
             
-        self.load_save()
-        self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.ending, self.crystals)
-        self.scenes["cutscene"].update_crystals(self.crystals)
+            # Loading default save
+            self.load_save()
+        else:
+            # Using save given
+            self.load_save(save = save)
+        
+        if not speedrun:
+            self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.ending, self.crystals)
+            self.scenes["cutscene"].update_crystals(self.crystals)
     
 
     def check_crystals(self, command) -> bool:
@@ -182,11 +197,15 @@ class Loop():
         self.transitionImg = self.render().copy()
         self.transitionMode = "into"
         self.transitionAlpha = 255
-        
+
 
     def update(self):
         """This method updates the scene the game is in, along with the window class"""
         self.window.update_inputs()
+
+        if self.speedrun and self.scene not in ("mainMenu", "pauseMenu"):
+            # Adding time to the speedrun timer
+            self.speedrunTime += 1/60 # Each frame is 1/60 of a second
 
         if self.transitionImg is not None:
             # Updating transition alpha if currently in a transition
@@ -221,13 +240,18 @@ class Loop():
             if result is not None:
                 if result == "play": # "Play" button pressed
                     self.level = self.scenes["mainMenu"].lvlsIndex
+                    self.speedrun = False
                 
                 elif result == "newSave": # "Restart" button pressed
                     self.restart()
+                    self.speedrun = False
                 
-                elif result == "quit":
-                    self.window.closeWindow = True
-                    return None # Prevents from running the rest of the code
+                elif result == "speedrun": # "Speedrun" button pressed
+                    # Setting up speedrun
+                    self.speedrun = True
+                    self.speedrunTime = 0
+                    self.restart(save = constants.DEFAULT_SAVE, speedrun = True) # Doesn't wipe save data
+                    self.level = 27
 
                 self.switch_to_new_scene(self.level)
                 self.update()
@@ -257,7 +281,9 @@ class Loop():
                     # Sets up main menu
                     self.scene = "mainMenu"
                     self.scenes["mainMenu"].start_music()
-                    self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.ending, self.crystals)
+                    
+                    if not self.speedrun:
+                        self.scenes["mainMenu"].update_info(self.level, self.levelsCompleted, self.ending, self.crystals)
 
                     # Tells these that the music has stopped
                     self.scenes["playing"].music_stopped()
@@ -321,6 +347,22 @@ class Loop():
                 if self.scene not in ("mainMenu", "pauseMenu"):
                     # Rendering pause button
                     self.scenes["pauseMenu"].render_pause_button(surf)
+
+                    # Rendering speedrun time
+                    if self.speedrun:
+                        time = utility.seconds_to_readable_time(self.speedrunTime)
+                        timeRender = self.speedrunFont.render(time, False, constants.WHITE) # Rendered surface
+                        # Centered on the x axis
+                        timePos = (constants.SCREEN_SIZE[0] / 2 - timeRender.get_width() / 2, 0)
+                        # Drawing with a black border
+                        utility.draw_text_with_border(
+                            surf, 
+                            timePos, 
+                            time, 
+                            self.speedrunFont, 
+                            constants.WHITE, 
+                            renderText = timeRender
+                        )
         
         else: # Render transition
             self.transitionImg.set_alpha(self.transitionAlpha)
@@ -336,8 +378,14 @@ class Loop():
         """Switches to a new scene based on the level id it's given to switch to"""
         self.start_transition()
 
-        if level >= len(self.levelsList):
+        # If reached the end of the levels or in speedrun mode and reached an ending cutscene
+        if level >= len(self.levels) or (self.speedrun and level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS):
             self.logger.info("Reached the end of all levels")
+
+            if self.speedrun:
+                # Setting new highscore if it is higher than the previous score
+                if utility.load_save()["speedrunHighscore"] < self.speedrunTime:
+                    utility.modif_save({"speedrunHighscore": self.speedrunTime})
 
             # Sets up main menu
             self.scene = "mainMenu"
@@ -384,25 +432,31 @@ class Loop():
             self.scenes["playing"].music_stopped()
 
         elif self.levelsList[level] == "Cutscene":
-            # Sets up cutscene
-            self.scene = "cutscene"
-            self.scenes["cutscene"].setup(self.levelData[level]["cutscene"], level)
+            if not self.speedrun:
+                # Sets up cutscene
+                self.scene = "cutscene"
+                self.scenes["cutscene"].setup(self.levelData[level]["cutscene"], level)
 
-            # Tells these that the music has stopped
-            self.scenes["playing"].music_stopped()
-            self.scenes["bossLevel"].music_stopped()
+                # Tells these that the music has stopped
+                self.scenes["playing"].music_stopped()
+                self.scenes["bossLevel"].music_stopped()
+            else:
+                # Skips cutscene if speedrunning
+                self.level = level + 1
+                self.switch_to_new_scene(level + 1)
 
 
     def save_and_exit(self):
         """This method saves all data to a database for later playing"""
         self.logger.info("Saving game...")
 
-        # Saves the game's data
-        utility.modif_save({
-            "levels": "".join([str(x) for x in self.levelsCompleted]),
-            "level": self.scenes["playing"].level,
-            "crystals": "".join([str(x) for x in self.crystals])
-        }) 
+        if not self.speedrun:
+            # Saves the game's data
+            utility.modif_save({
+                "levels": "".join([str(x) for x in self.levelsCompleted]),
+                "level": self.scenes["playing"].level,
+                "crystals": "".join([str(x) for x in self.crystals])
+            }) 
 
         self.logger.info("Exiting Pygame...")
         

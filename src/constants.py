@@ -93,10 +93,11 @@ MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 
 # Default save (for the database)
 DEFAULT_SAVE = {
-    "levels": "111111111111111111111111111111",
-    "level": 0,
-    "crystals": "00000000000000000000",
-    "unlockedEnding": -1
+    "levels": "111111111111111111111111111111", # Levels unlocked
+    "level": 0, # Selected level
+    "crystals": "00000000000000000000", # Crystals unlocked in normal levels
+    "unlockedEnding": -1, # Ending unlocked
+    "speedrunHighscore": "---" # Speedrun highscore!
 }
 
 AMOUNT_OF_ENDINGS = 2 # How many endings there are

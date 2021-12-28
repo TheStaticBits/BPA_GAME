@@ -25,6 +25,8 @@ class MainMenu():
 
         self.ending = int(save["unlockedEnding"])
 
+        self.speedrunHighscore = save["speedrunHighscore"]
+
         self.crystal_check = pygame.image.load(constants.CRYSTAL_CHECK_PATH).convert_alpha()
         self.crystal_x = pygame.image.load(constants.CRYSTAL_X_PATH).convert_alpha()
 
@@ -52,7 +54,7 @@ class MainMenu():
         buttons = {
             "start": (120, constants.SCREEN_SIZE[1] / 2, "Continue"),
             "newSave": (120, constants.SCREEN_SIZE[1] / 2 + 30, "Restart"), 
-            "quit": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Quit"), 
+            "speedrun": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Speedrun"), 
             "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, pygame.transform.flip(arrow, True, False)), 
             "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, arrow),
             "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
@@ -152,7 +154,12 @@ class MainMenu():
                 elif key == "play":
                     if self.get_status(self.lvlsIndex)[0] != "Locked":
                         self.logger.info(f"Playing level {self.lvlsIndex}")
-                        return "play"
+                        return key
+                
+                elif key == "speedrun":
+                    # Only allows you to enter this mode if you've reached an ending
+                    if self.ending != -1:
+                        return key
 
                 else:
                     return key
@@ -175,6 +182,16 @@ class MainMenu():
         # Rendering all buttons
         for button in self.buttons.values():
             button.render(window)
+        
+        # If the mouse is hovering over the Speedrun button, display some infromation underneath
+        if self.buttons["speedrun"].selected:
+            if self.ending != -1:
+                # Displaying highscore
+                highscore = utility.seconds_to_readable_time(float(self.speedrunHighscore))
+                self.render_text(window, "Highscore: " + highscore, (120, constants.SCREEN_SIZE[1] / 2 + 83))
+            else:
+                self.render_text(window, "Locked!", (120, constants.SCREEN_SIZE[1] / 2 + 83))
+
         
         # Draws the "level selector" text
         self.render_text(window, "Level Selector", (255, constants.SCREEN_SIZE[1] / 2 + 5))

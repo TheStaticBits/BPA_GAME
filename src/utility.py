@@ -75,6 +75,31 @@ def find_last_item(list, item) -> int:
             return i
 
 
+def seconds_to_readable_time(time) -> str:
+    """Converts seconds into a readable time"""
+    days = int(time / 86400)
+    hours = int(time / 3600)
+    minutes = int(time / 60)
+    seconds = int(time % 60 * 100) / 100
+
+    final = str(seconds)
+    
+    # If there is only one number after the decimal point
+    if len(final.split(".")[1]) == 1:
+        # Add a zero to the end
+        final += "0"
+
+    # Adding on minutes, hours, and days if they are greater than 0
+    if minutes > 0:
+        final = f"{minutes}:{final}"
+    if hours > 0:
+        final = f"{hours}:{final}"
+    if days > 0:
+        final = f"{days}:{final}"
+
+    return final
+
+
 def load_levels(levelPath) -> list:
     """Loads the levels from a given path and returns a list of the levels"""
     file = get_file(levelPath)
