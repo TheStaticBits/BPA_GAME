@@ -11,7 +11,7 @@
                 "ellipse face left",
                 "text create tutorialText",
                 "text tutorialText move 192 20",
-                "text tutorialText change Use W and D or LEFT and RIGHT to move",
+                "text tutorialText change Use W and D or LEFT and RIGHT to move!",
                 "text tutorialText display",
                 "run testMoved"
             ]
@@ -27,16 +27,23 @@
                 "text ellipse change I am here to warn you...",
                 "text ellipse move 264 120",
                 "text ellipse display",
-                "delay 165 step2"
+
+                "text create enterTutorial",
+                "text enterTutorial change Press enter to continue through dialogue!",
+                "text enterTutorial move 192 74",
+                "text enterTutorial display",
+
+                "wait step2"
             ],
             "step2": [
+                "text enterTutorial hide",
                 "text ellipse hide",
                 "delay 30 step3"
             ],
             "step3": [
                 "text ellipse change The Belloq are coming...",
                 "text ellipse display",
-                "delay 165 step4"
+                "wait step4"
             ],
             "step4": [
                 "text ellipse hide",
@@ -68,12 +75,9 @@
             "playerMovingOn": "room == 1 and player x >= 20",
             "ellipseStop": "ellipse x < 320",
             "corlenBehindPlayer": "corlen x < 4",
-            "corlenGoesBack": "corlen x > 110",
-            "nextRoom": "room == 1"
+            "corlenGoesBack": "corlen x > 110"
         },
         "cond_commands": {
-            "nextRoom": ["text pressEnterToSkip hide"],
-
             "corlenNotice": [
                 "text create corlen",
                 "text corlen color 252 227 3",
@@ -83,18 +87,11 @@
 
                 "corlen face left",
                 
-                "text create pressEnterToSkip",
-                "text pressEnterToSkip change Press enter to skip forward through text!",
-                "text pressEnterToSkip move 192 50",
-                "text pressEnterToSkip display",
-
-                "run nextRoom",
-                
                 "player uncontrollable",
-                "delay 60 whoRU"
+                "wait whoRU"
             ], "whoRU": [
                 "text corlen change Who are you?",
-                "delay 120 noResponse..."
+                "wait noResponse..."
             ], "noResponse...": [
                 "text corlen hide",
                 "delay 60 turnRound"
@@ -105,15 +102,15 @@
                 "corlen face left",
                 "text corlen display",
                 "text corlen change Not a big talker, huh?",
-                "delay 160 introducing"
+                "wait introducing"
             ], "introducing": [
                 "text corlen change Well, uh, I'm Corlen.",
                 "text corlen display",
-                "delay 150 randomHallway"
+                "wait randomHallway"
             ], "randomHallway": [
                 "text corlen move 218 155",
                 "text corlen change And this is a random\nhallway in the middle of nowhere.",
-                "delay 180 delayyy"
+                "wait delayyy"
             ], "delayyy": [
                 "text corlen hide",
                 "delay 80 newRoundHere"
@@ -121,20 +118,20 @@
                 "text corlen display",
                 "text corlen move 218 170",
                 "text corlen change You're new around here, aren't you?",
-                "delay 160 newbieFight"
+                "wait newbieFight"
             ], "newbieFight": [
                 "text corlen change Only a newbie would fight the Belloq like that.",
-                "delay 190 saysNothing"
+                "wait saysNothing"
             ], "saysNothing": [
                 "text corlen hide",
                 "delay 90 ropes"
             ], "ropes": [
                 "text corlen change Oh well, guess I'll show you the ropes.",
                 "text corlen display",
-                "delay 160 follow"
+                "wait follow"
             ], "follow": [
                 "text corlen change Follow me.",
-                "delay 120 allowFollow"
+                "wait allowFollow"
             ], "allowFollow": [
                 "text corlen hide",
                 "corlen walk right",
@@ -153,39 +150,39 @@
                 "text corlen move 118 170",
                 "text corlen change This is my humble abode.",
                 "text corlen display",
-                "delay 130 notMuch"
+                "wait notMuch"
             ], "notMuch": [
                 "text corlen move 118 155",
                 "text corlen change It's not much, but\nit's enough for me.",
-                "delay 140 silence."
+                "wait silence."
             ], "silence.": [
                 "text corlen hide",
                 "delay 60 thinking"
             ], "thinking": [
                 "text corlen display",
                 "text corlen change You may be thinking, \n\"What is this place?\"",
-                "delay 170 assuming"
+                "wait assuming"
             ], "assuming": [
                 "text corlen change I'm assuming you're thinking that\nbecause you haven't said a word yet.",
-                "delay 190 goodQuestion"
+                "wait goodQuestion"
             ], "goodQuestion": [
                 "text corlen move 118 170",
                 "text corlen change That's a good question.",
-                "delay 130 dunnoMan"
+                "wait dunnoMan"
             ], "dunnoMan": [
                 "text corlen change But I don't know either.",
-                "delay 130 noOneElse"
+                "wait noOneElse"
             ], "noOneElse": [
                 "text corlen move 118 155",
                 "text corlen change There's no one else around\nbesides you and me,",
-                "delay 140 allTheRest"
+                "wait allTheRest"
             ], "allTheRest": [
                 "text corlen change and those crazy monsters\ncalled the Belloq.",
-                "delay 70 ellipseAppears"
+                "wait ellipseAppears"
             ], "ellipseAppears": [
                 "ellipse walk left",
                 "run ellipseStop",
-                "delay 140 AHHHHH"
+                "delay 60 AHHHHH"
             ], 
             
             "ellipseStop": ["ellipse walk still"],
@@ -194,11 +191,11 @@
                 "text corlen move 118 170",
                 "text corlen change AHHHHH A BELLOQ!",
                 "corlen face right",
-                "delay 130 careful"
+                "wait careful"
             ], "careful": [
                 "text corlen move 118 155",
                 "text corlen change Be careful, Belloq are very dangerous.\nWe should get out of here quickly!",
-                "delay 190 ellipseTalked!"
+                "wait ellipseTalked!"
             ], "ellipseTalked!": [
                 "text create ellipse",
                 "text ellipse change ...",
@@ -206,13 +203,13 @@
                 "text ellipse move 328 170",
                 "text ellipse display",
                 "text corlen hide",
-                "delay 160 itTalked"
+                "wait itTalked"
             ], "itTalked": [
                 "text ellipse hide",
                 "text corlen display",
                 "text corlen move 118 170",
                 "text corlen change It talked!",
-                "delay 90 corlenMove"
+                "wait corlenMove"
             ], "corlenMove": [
                 "text corlen hide",
                 "corlen walk left",
@@ -227,13 +224,13 @@
 
             "moreDots": [
                 "text ellipse display",
-                "delay 160 hmm"
+                "wait hmm"
             ], "hmm": [
                 "text ellipse hide",
                 "text corlen display",
                 "text corlen move 20 170",
                 "text corlen change Hmm...",
-                "delay 140 moveRight"
+                "wait moveRight"
             ], "moveRight": [
                 "text corlen hide",
                 "corlen walk right",
@@ -245,35 +242,35 @@
                 "text corlen move 118 170",
                 "text corlen display",
                 "text corlen change Maybe you aren't a Belloq after all.",
-                "delay 140 oneOfUs"
+                "wait oneOfUs"
             ], "oneOfUs": [
                 "corlen face left",
                 "text corlen change If it can talk, maybe it's one of us!",
-                "delay 150 ellipseSayEllipse"
+                "wait ellipseSayEllipse"
             ], "ellipseSayEllipse": [
                 "corlen face right",
                 "text ellipse display",
                 "text corlen hide",
-                "delay 160 namingEllipse"
+                "wait namingEllipse"
             ], "namingEllipse": [
                 "text ellipse hide",
                 "text corlen display",
                 "text corlen move 118 155",
                 "text corlen change I think I'm going to call\nyou... Ellipse!",
-                "delay 140 greatIdeaRight?"
+                "wait greatIdeaRight?"
             ], "greatIdeaRight?": [
                 "text corlen move 118 170",
                 "text corlen change What a great nickname, right Ellipse?",
-                "delay 140 ellipseResponds"
+                "wait ellipseResponds"
             ], "ellipseResponds": [
                 "text corlen hide",
                 "text ellipse display",
-                "delay 160 youKnowWhat?"
+                "wait youKnowWhat?"
             ], "youKnowWhat?": [
                 "text ellipse hide",
                 "text corlen change You know what?",
                 "text corlen display",
-                "delay 20 switchDirs"
+                "wait switchDirs"
             ], "switchDirs": [
                 "corlen face left",
                 "delay 20 faceyRight"
@@ -282,50 +279,50 @@
                 "delay 40 makeGoodTeam"
             ], "makeGoodTeam": [
                 "text corlen change We could make a good team,",
-                "delay 130 names"
+                "wait names"
             ], "names": [
                 "text corlen change Corlen, Ellipse, and a weird human!",
-                "delay 120 faceLeft"
+                "wait faceLeft"
             ], "faceLeft": [
                 "corlen face left",
                 "delay 30 sickOfHouse"
             ], "sickOfHouse": [
                 "text corlen move 118 155",
                 "text corlen change And I'm sick of staying\nin my house all day.",
-                "delay 160 goOnAdventure"
+                "wait goOnAdventure"
             ], "goOnAdventure": [
                 "corlen face right",
                 "text corlen move 118 170",
                 "text corlen change I want to go on an adventure!",
-                "delay 140 comparisons"
+                "wait comparisons"
             ], "comparisons": [
                 "corlen face left",
                 "text corlen move 118 155",
                 "text corlen change And if a tiny human can survive\na Belloq encounter, I can too!",
-                "delay 160 dootdootdoot"
+                "wait dootdootdoot"
             ], "dootdootdoot": [
                 "text ellipse display",
                 "text corlen hide",
                 "corlen face right",
-                "delay 160 puttingWordsInMouth"
+                "wait puttingWordsInMouth"
             ], "puttingWordsInMouth": [
                 "text corlen display",
                 "text ellipse hide",
-                "text move 118 170",
+                "text corlen move 118 170",
                 "text corlen change See, Ellipse approves!",
                 "corlen face left",
-                "delay 130 mooooreDoots"
+                "wait mooooreDoots"
             ], "mooooreDoots": [
                 "text ellipse display",
                 "text corlen hide",
                 "corlen face right",
-                "delay 130 leadDahWay"
+                "wait leadDahWay"
             ], "leadDahWay": [
                 "corlen face left",
                 "text corlen display",
                 "text ellipse hide",
                 "text corlen change Alright, blue human, lead the way!",
-                "delay 150 finish"
+                "wait finish"
             ], "finish": [
                 "text corlen hide",
                 "corlen face right",
@@ -371,7 +368,7 @@
                 "text corlen display",
                 "text corlen change What is this place?",
                 "corlen walk still",
-                "delay 140 stopTalking"
+                "wait stopTalking"
             ], "stopTalking": ["text corlen hide"],
             
             "ellipseStop": [
@@ -395,22 +392,22 @@
             ], "ellipseSecondRight": [
                 "ellipse face right",
                 "text ellipse hide",
-                "delay 50 thinking"
+                "wait thinking"
             ], "thinking": [
                 "corlen face left",
                 "text corlen display",
                 "text corlen move 68 155",
                 "text corlen change Human, I think\nthis is...",
-                "delay 140 won'tSay"
+                "wait won'tSay"
             ], "won'tSay": [
                 "text corlen move 68 170",
                 "text corlen change No, I won't say it.",
-                "delay 150 continue"
+                "wait continue"
             ], "continue": [
                 "corlen face right",
                 "text corlen change Let's continue.",
                 "player controllable",
-                "delay 130 hideyTexty"
+                "wait hideyTexty"
             ], "hideyTexty": [
                 "text corlen hide"
             ]
@@ -449,7 +446,7 @@
                 "text create ellipse",
                 "text ellipse move 192 175",
 
-                "delay 140 corlenStopSpeaking"
+                "wait corlenStopSpeaking"
             ], "corlenStopSpeaking": [
                 "text corlen hide",
                 "fade 2 res/characters/ellipse/big_head.png",
@@ -464,23 +461,23 @@
             "crystalsCollected": [
                 "text ellipse display",
                 "text ellipse change Keep obtaining the crystals.",
-                "delay 140 secret"
+                "wait secret"
             ],
             
             "secret": [
                 "text ellipse change There is a secret you do not know.",
-                "delay 140 showYou"
+                "wait showYou"
             ],
 
             "crystalsNot": [
                 "text ellipse display",
                 "text ellipse change You do not understand.",
-                "delay 130 showYou"
+                "wait showYou"
             ],
 
             "showYou": [
                 "text ellipse change I shall show you.",
-                "delay 140 backToNormal"
+                "wait backToNormal"
             ], "backToNormal": [
                 "fade clear",
                 "text ellipse hide",
@@ -496,10 +493,10 @@
                 "text corlen move 58 170",
                 "text corlen change Ellipse?",
                 "text corlen display",
-                "delay 100 anotherCorlenQuestion"
+                "wait anotherCorlenQuestion"
             ], "anotherCorlenQuestion": [
                 "text corlen change What was that?",
-                "delay 120 ellipseLeave"
+                "wait ellipseLeave"
             ], "ellipseLeave": [
                 "text corlen hide",
                 "ellipse walk right",
@@ -507,7 +504,7 @@
             ], "corlenDots": [
                 "text corlen change ...",
                 "text corlen display",
-                "delay 80 end"
+                "wait end"
             ], "end": [
                 "text corlen hide",
                 "player controllable",
@@ -547,14 +544,14 @@
                 "text corlen change Wow, that was disturbing.",
                 "text corlen display",
 
-                "delay 130 stopity"
+                "wait stopity"
             ], "stopity": [
                 "text corlen hide",
                 "delay 20 teethy"
             ], "teethy": [
                 "text corlen change Did you see its teeth??",
                 "text corlen display",
-                "delay 130 ellipseDotsss"
+                "wait ellipseDotsss"
             ], "ellipseDotsss": [
                 "text corlen hide",
 
@@ -563,36 +560,36 @@
                 "text ellipse change ...",
                 "text ellipse display",
                 
-                "delay 160 neverAgain"
+                "wait neverAgain"
             ], "neverAgain": [
                 "text corlen change I never want to go there again...",
                 
                 "text corlen display",
                 "text ellipse hide",
 
-                "delay 130 smoahDots"
+                "wait smoahDots"
             ], "smoahDots": [
                 "text ellipse display",
                 "text corlen hide",
 
-                "delay 160 turnRight"
+                "wait turnRight"
             ], "turnRight": [
                 "text ellipse hide",
                 "corlen face right",
                 "text corlen change The next area looks...",
                 "text corlen display",
-                "delay 120 difficult"
+                "wait difficult"
             ], "difficult": [
                 "text corlen change Difficult.",
-                "delay 80 careful"
+                "wait careful"
             ], "careful": [
                 "corlen face left",
                 "text corlen change We should be careful.",
-                "delay 140 never"
+                "wait never"
             ], "never": [
                 "text corlen change I've never been this\nfar from home before.",
                 "text corlen move 134 91",
-                "delay 150 finishUp"
+                "wait finishUp"
             ], "finishUp": [
                 "text corlen hide",
                 "corlen face right",
@@ -632,10 +629,10 @@
                 "text corlen change That area was disturbing.",
                 "text corlen display",
 
-                "delay 130 didYouSee"
+                "wait didYouSee"
             ], "didYouSee": [
                 "text corlen change Did you see all those red-",
-                "delay 100 interuption"
+                "wait interuption"
             ], "interuption": [
                 "text corlen hide",
 
@@ -644,39 +641,39 @@
                 "text ellipse move 110 106",
                 "text ellipse display",
 
-                "delay 160 ?"
+                "wait ?"
             ], "?": [
                 "text corlen change Ellipse?",
                 "text corlen display",
                 "text ellipse hide",
-                "delay 120 ..."
+                "wait ..."
             ], "...": [
                 "text ellipse display",
                 "text corlen hide",
-                "delay 140 whatHappened"
+                "wait whatHappened"
             ], "whatHappened": [
                 "text corlen move 154 91",
                 "text corlen change Human? What happened in\nthe room before the boss?",
                 "text ellipse hide",
                 "text corlen display",
-                "delay 160 doot.doot.doot"
+                "wait doot.doot.doot"
             ], "doot.doot.doot": [
                 "text corlen hide",
                 "text ellipse display",
-                "delay 160 nevahMind"
+                "wait nevahMind"
             ], "nevahMind": [
                 "text corlen move 154 106",
                 "text corlen change Nevermind.",
                 "text corlen display",
                 "text ellipse hide",
-                "delay 100 nextArea"
+                "wait nextArea"
             ], "nextArea": [
                 "corlen face right",
                 "text corlen change The next area looks less...",
-                "delay 130 ominous"
+                "wait ominous"
             ], "ominous": [
                 "text corlen change Ominous. Less ominous.",
-                "delay 130 finish"
+                "wait finish"
             ], "finish": [
                 "text corlen hide",
                 "player controllable"
@@ -729,27 +726,27 @@
                 "text corlen change This could be it.",
                 "text corlen display",
 
-                "delay 130 somethingAhead"
+                "wait somethingAhead"
             ], "somethingAhead": [
                 "corlen face left",
                 "text corlen move 296 107",
                 "text corlen change There's something, or\nseveral somethings up ahead.",
-                "delay 160 turnBack?"
+                "wait turnBack?"
             ], "turnBack?": [
                 "text corlen move 296 122",
                 "text corlen change Should we turn back?",
-                "delay 130 noResponse"
+                "wait noResponse"
             ], "noResponse": [
                 "text corlen hide",
                 "delay 120 oof."
             ], "oof.": [
                 "text corlen change Sigh.",
                 "text corlen display",
-                "delay 80 lastChance"
+                "wait lastChance"
             ], "lastChance": [
                 "text corlen move 296 107",
                 "text corlen change This is our last\nchance to turn back.",
-                "delay 140 emptiness"
+                "wait emptiness"
             ], "emptiness": [
                 "text corlen hide",
                 "delay 120 ellipseTalks"
@@ -758,22 +755,22 @@
                 "text ellipse move 274 122",
                 "text ellipse change ...",
                 "text ellipse display",
-                "delay 160 stillNothing"
+                "wait stillNothing"
             ], "stillNothing": [
                 "text ellipse hide",
                 "text corlen change Still won't say\nanything, huh?",
                 "text corlen display",
-                "delay 130 againDots"
+                "wait againDots"
             ], "againDots": [
                 "text ellipse display",
                 "text corlen hide",
-                "delay 160 thingsNeverChange"
+                "wait thingsNeverChange"
             ], "thingsNeverChange": [
                 "corlen face right",
                 "text ellipse hide",
                 "text corlen change Well, some things\nnever change.",
                 "text corlen display",
-                "delay 140 finish"
+                "wait finish"
             ], "finish": [
                 "player controllable",
                 "text corlen hide"
@@ -817,7 +814,7 @@
                 "delay 40 corlenRight"
             ], "corlenRight": [
                 "corlen face right",
-                "delay 60 ellipseDots"
+                "wait ellipseDots"
             ], "ellipseDots": [
                 "text corlen hide",
 
@@ -826,15 +823,15 @@
                 "text ellipse change ...",
                 "text ellipse display",
 
-                "delay 160 somethingWrong"
+                "wait somethingWrong"
             ], "somethingWrong": [
                 "text ellipse hide",
                 "text corlen change I think we did something wrong.",
                 "text corlen display",
-                "delay 130 nothing"
+                "wait nothing"
             ], "nothing": [
                 "text corlen change There is nothing out here.",
-                "delay 140 waitForIt"
+                "wait waitForIt"
             ], "waitForIt": [
                 "text corlen hide",
                 "delay 60 ellipseFreakOut"
@@ -876,14 +873,14 @@
                 "text ellipse move 192 175",
                 "text ellipse change You have failed...",
                 "text ellipse display",
-                "delay 130 crystals"
+                "wait crystals"
             ], "crystals": [
                 "text ellipse change Collect all crystals...",
-                "delay 150 restarting"
+                "wait restarting"
             ], "restarting": [
                 "text ellipse move 192 160",
                 "text ellipse change It's the only way\nto destroy them...",
-                "delay 130 fadeClear"
+                "wait fadeClear"
             ], "fadeClear": [
                 "fade clear",
                 "text ellipse hide",
@@ -976,7 +973,7 @@
                 "text corlen change What's going on??",
                 "text corlen display",
 
-                "delay 120 ellipseTalk",
+                "wait ellipseTalk",
                 "delay 10 c3Move"
             ], 
             
@@ -988,7 +985,7 @@
                 "text ellipse change ...",
                 "text ellipse display",
 
-                "delay 120 ellipseHide"
+                "wait ellipseHide"
             ], "ellipseHide": [
                 "text ellipse hide"
             ],
@@ -1092,7 +1089,7 @@
                 "text corlen change Did we-",
                 "text corlen display",
 
-                "delay 60 hidey"
+                "wait hidey"
             ], "hidey": [
                 "text corlen hide",
                 "delay 10 didWeJust"
@@ -1100,7 +1097,7 @@
                 "text corlen change Did we just...",
                 "text corlen display",
 
-                "delay 60 anotherHidey"
+                "wait anotherHidey"
             ], "anotherHidey": [
                 "text corlen hide",
                 "delay 10 defeatBelloq"
@@ -1108,33 +1105,33 @@
                 "text corlen move 327 58",
                 "text corlen change Defeat the Belloq??",
                 "text corlen display",
-                "delay 160 ellipseeedot"
+                "wait ellipseeedot"
             ], "ellipseeedot": [
                 "text corlen hide", 
                 "text ellipse display",
-                "delay 160 didIt!"
+                "wait didIt!"
             ], "didIt!": [
                 "text ellipse hide",
                 "text corlen move 335 58",
                 "text corlen change We... We did it!",
                 "text corlen display",
-                "delay 130 ellipseExclamationMark"
+                "wait ellipseExclamationMark"
             ], "ellipseExclamationMark": [
                 "text corlen hide",
                 "text ellipse change ..!",
                 "text ellipse display",
-                "delay 150 wait"
+                "wait wait"
             ], "wait": [
                 "text ellipse hide",
                 "corlen face right",
                 "text corlen move 342 58",
                 "text corlen change Wait,",
                 "text corlen display",
-                "delay 100 whatOutThere"
+                "wait whatOutThere"
             ], "whatOutThere": [
                 "text corlen move 328 58",
                 "text corlen change What's out there?",
-                "delay 140 checky"
+                "wait checky"
             ], "checky": [
                 "text corlen hide",
                 "corlen walk right",
@@ -1154,33 +1151,33 @@
                 "text corlen change There is nothing,\njust an endless void.",
                 "text corlen display",
 
-                "delay 170 dots"
+                "wait dots"
             ], "dots": [
                 "text ellipse change ...",
                 "text corlen hide",
                 "text ellipse display",
                 
-                "delay 140 whatDoNow"
+                "wait whatDoNow"
             ], "whatDoNow": [
                 "text ellipse hide",
                 "text corlen move 330 43",
                 "text corlen change So what should\nwe do now?",
                 "text corlen display",
 
-                "delay 150 moreDots"
+                "wait moreDots"
             ], "moreDots": [
                 "corlen face right",
                 "text corlen hide",
                 "text ellipse display",
 
-                "delay 150 neitherTalk"
+                "wait neitherTalk"
             ], "neitherTalk": [
                 "text ellipse hide",
                 "text corlen move 325 43",
                 "text corlen change Right, I forgot\nneither of you talk.",
                 "text corlen display",
 
-                "delay 150 myPlace"
+                "wait myPlace"
             ], "myPlace": [
                 "text ellipse hide",
                 "corlen face left",
@@ -1188,7 +1185,7 @@
                 "text corlen change I guess we should\njust head back to\nmy place then...",
                 "text corlen display",
 
-                "delay 150 fadeBlack"
+                "wait fadeBlack"
             ], "fadeBlack": [
                 "text corlen hide",
                 "fade 2 0 0 0",
@@ -1295,10 +1292,11 @@
                 "text corlen change That's this\nadventure finished.",
                 "text corlen display",
 
-                "delay 150 Fun"
+                "wait Fun"
             ], "Fun": [
+                "text corlen move 330 170",
                 "text corlen change That was fun!",
-                "delay 130 ELLIPSETALKSWOOWOOWW"
+                "wait ELLIPSETALKSWOOWOOWW"
             ], "ELLIPSETALKSWOOWOOWW": [
                 "text corlen hide",
 
@@ -1306,7 +1304,7 @@
                 "text ellipse change Yeah it was!",
                 "text ellipse display",
 
-                "delay 140 corlenExclamationMarks"
+                "wait corlenExclamationMarks"
             ], "corlenExclamationMarks": [
                 "text ellipse hide",
 
@@ -1314,14 +1312,14 @@
                 "text corlen change !!!",
                 "text corlen display",
 
-                "delay 150 nextOne??"
+                "wait nextOne??"
             ], "nextOne??": [
                 "text corlen hide",
 
                 "text ellipse change Time for the next one...",
                 "text ellipse display",
 
-                "delay 130 fadeGoodbye"
+                "wait fadeGoodbye"
             ], "fadeGoodbye": [
                 "text ellipse hide",
                 "fade 2 0 0 0",

@@ -150,6 +150,7 @@ class Cutscenes():
         self.runningConditionals = [] # These are conditionals that are being checked every frame
         self.onceConditionals = [] # Conditionals run once
         self.delays = {} 
+        self.waitEvents = []
 
         self.screenShake = False 
         self.screen = pygame.Surface(constants.SCREEN_SIZE) # Used for screen shaking
@@ -309,6 +310,9 @@ class Cutscenes():
                 elif comm[0] == "delay": # Starts a delay
                     self.delays[comm[2]] = int(comm[1])
                 
+                elif comm[0] == "wait": # Starts a wait event that runs when the user pressed enter
+                    self.waitEvents.append(comm[1])
+                
                 elif comm[0] in ("end", "restart"): # Ends/restarts
                     return comm[0]
 
@@ -431,13 +435,20 @@ class Cutscenes():
         
         # Updating delays
         for delayName in list(self.delays):
-            if self.delays[delayName] == 0 or inputs["enter"]:
-                # If the delay finished or the user pressed enter to skip it, remove it from the list and add it to the commands to be run
+            if self.delays[delayName] == 0:
+                # If the delay finished remove it from the list and add it to the commands to be run
                 del self.delays[delayName]
                 commandsToBeRun.append(self.cutsceneData["cond_commands"][delayName])
 
             else:
                 self.delays[delayName] -= 1 # Decrementing the delay
+        
+        if inputs["enter"]:
+            # Adds the wait event commands onto the list of commands to be run
+            for event in self.waitEvents:
+                commandsToBeRun.append(self.cutsceneData["cond_commands"][event])
+
+            self.waitEvents.clear() # Clears the wait events
 
         # Running commands in the commands to be run
         for command in commandsToBeRun:

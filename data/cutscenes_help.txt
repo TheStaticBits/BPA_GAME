@@ -88,6 +88,9 @@ music [musicName]
 delay [time] [commandKey]
  - waits the given time (amount of frames), and then looks into the "cond_commands" dictionary, running the corresponding commands
 
+wait [commandKey]
+ - waits until the user presses enter, and then runs the command from the corresponding value in the "cond_commands" dictionary
+
 end
  - ends the cutscene. Player moves onto the next level
 restart
