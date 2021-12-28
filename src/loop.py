@@ -251,7 +251,6 @@ class Loop():
                     self.speedrun = True
                     self.speedrunTime = 0
                     self.restart(save = constants.DEFAULT_SAVE, speedrun = True) # Doesn't wipe save data
-                    self.level = 27
 
                 self.switch_to_new_scene(self.level)
                 self.update()
