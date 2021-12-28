@@ -57,6 +57,7 @@ class MainMenu():
             "speedrun": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Speedrun"), 
             "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, pygame.transform.flip(arrow, True, False)), 
             "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, arrow),
+            "showText": (200, constants.SCREEN_SIZE[1] / 2, "check")
             "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
         }
 
@@ -64,14 +65,23 @@ class MainMenu():
         fontObj = pygame.font.Font(constants.FONT_PATH, 30)
         self.buttons = {}
         for key, value in buttons.items():
-            if isinstance(value[2], str):
+            if isinstance(value[2], str) and value[2] != "check":
+                # Normal text button
                 self.buttons[key] = src.button.Button(
-                    value[0], # x
-                    value[1], # y
+                    value[0], value[1], # x and y
                     fontObj = fontObj,
                     text = value[2],
                     textOffset = 2
                 )
+            
+            elif value[2] == "check":
+                self.buttons[key] = src.button.Button(
+                    value[0], value[1],
+                    imagePath = constants.CHECK_BOX_PATH,
+                    toggle = True, 
+                    toggledImgPath = constants.CHECK_MARK_PATH
+                )
+
             else:
                 self.buttons[key] = src.button.Button(
                     value[0], value[1],
