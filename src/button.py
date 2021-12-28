@@ -17,10 +17,12 @@ class Button:
         fontObj = None, 
         text = None,
         textOffset = None, # Amount rectangle expands backwards behind the text
-        
+
         # If the button is being created from an image
-        imagePath = None, # or
-        image = None
+        imagePath = None, # either this or
+        image = None,
+        toggle = False, # If the button is toggleable
+        toggledImgPath = None
         ):
         """Initiates all general variables, also creating the rectangle used for collision"""
 
@@ -58,6 +60,12 @@ class Button:
                 self.image.get_height()
             ))
 
+            self.toggleable = toggle
+            if toggle: # If specified that it's toggled
+                self.toggled = False
+                # Loading toggle image
+                self.toggleImg = pygame.image.load(toggleImgPath)
+
         self.reset() # Sets up other variables to default states
 
     
@@ -79,6 +87,11 @@ class Button:
             else:
                 if self.clicked:
                     self.reset()
+                    
+                    if self.toggleable:
+                        # Reversing toggle after clicked
+                        self.toggled = not self.toggled
+
                     return True
                     
         else:
@@ -160,3 +173,8 @@ class Button:
                 noBG = self.image.copy() # Copying
                 noBG.set_colorkey(constants.BLACK) # Setting the background to transparent
                 window.blit(noBG, self.rect.topleft)
+
+                # Rendering toggle image if the button is toggled
+                if self.toggleable:
+                    if self.toggled:
+                        window.blit(self.toggleImg, self.rect.topleft)
