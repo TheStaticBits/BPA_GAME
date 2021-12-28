@@ -27,6 +27,8 @@ class Playing(src.base_level.BaseLevel):
         self.tileSurface = pygame.Surface(constants.SCREEN_SIZE)
 
         self.tileRenderer = src.tile_renderer.TileRenderer()
+
+        self.showText = True # Whether or not to show tutorial text
         
         self.load_room() # Drawing the tiles onto the tile surface
 
@@ -37,9 +39,8 @@ class Playing(src.base_level.BaseLevel):
     def setup(self, level, crystals, crystalIndex, entities = "check"):
         """Extends the setup function from the base level class, setting up rendering for text and the room as well"""
         super().setup(level, crystals, crystalIndex, entities)
-        
-        if entities != "check":
-            self.get_text()
+
+        self.showText = (entities == "check") # Doesn't show text when entities aren't being checked (speedrun mode)
         
         self.load_room()
     
@@ -52,7 +53,6 @@ class Playing(src.base_level.BaseLevel):
         if self.currentCrystal: super().reset_crystal(self.level)
         
         super().reset_all()
-        self.get_text()
         self.load_room()
         
 
@@ -60,7 +60,9 @@ class Playing(src.base_level.BaseLevel):
         """Loads the rendered tiles in the room, while also setting up the animated tiles in the tile renderer"""
         self.logger.info("Loading tiles in room")
         
-        self.get_text()
+        if self.showText:
+            self.get_text()
+
         # This is done so that the tile renderer doesn't have to rerender tiles every frame
         # (for performance)
         # Instead, the tiles on screen are saved and rendered from that
@@ -151,7 +153,7 @@ class Playing(src.base_level.BaseLevel):
         super().render_grav_beam(window)
         
         # Drawing text if there is any in the room
-        if self.text is not None:
+        if self.text is not None and self.showText:
             self.textWavX += 0.05
             
             tList = self.text.split("\\n")
