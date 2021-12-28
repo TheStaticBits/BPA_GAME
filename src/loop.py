@@ -240,7 +240,6 @@ class Loop():
             if result is not None:
                 if result == "play": # "Play" button pressed
                     self.level = self.scenes["mainMenu"].lvlsIndex
-                    self.speedrun = False
                 
                 elif result == "newSave": # "Restart" button pressed
                     self.restart()
@@ -251,6 +250,11 @@ class Loop():
                     self.speedrun = True
                     self.speedrunTime = 0
                     self.restart(save = constants.DEFAULT_SAVE, speedrun = True) # Doesn't wipe save data
+                
+                if result != "speedrun": # Resetting save data
+                    if self.speedrun:
+                        self.speedrun = False
+                        self.load_save()
 
                 self.switch_to_new_scene(self.level)
                 self.update()
