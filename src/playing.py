@@ -37,8 +37,10 @@ class Playing(src.base_level.BaseLevel):
     def setup(self, level, crystals, crystalIndex, entities = "check"):
         """Extends the setup function from the base level class, setting up rendering for text and the room as well"""
         super().setup(level, crystals, crystalIndex, entities)
-
-        self.get_text()
+        
+        if entities != "check":
+            self.get_text()
+        
         self.load_room()
     
     
