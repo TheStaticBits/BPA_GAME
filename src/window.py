@@ -25,7 +25,10 @@ class Window:
             self.WINDOW_SIZE[1] / constants.PX_SCALE_FACTOR
         )) # Miniwindow is the window divided by the pixel scale factor
 
+        icon = pygame.image.load(constants.ICON_PATH)
+
         pygame.display.set_caption("There Is Nothing")
+        pygame.display.set_icon(icon)
 
         self.clock = pygame.time.Clock()
 

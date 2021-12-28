@@ -32,6 +32,8 @@ ARROW_PATH = "res/ui/arrow.png"
 
 PAUSE_BUTTON_PATH = "res/ui/pause_button.png"
 
+ICON_PATH = "res/ui/icon.png"
+
 
 # Level editing in normal levels
 LEVEL_EDITING = True
