@@ -80,8 +80,8 @@ ww         ww  ww      w
 www     ^  ww          w
 wwwwwwwww  ww       ^  w
 wwwwwwwww  ww     www   
-wvvvwww    ww  wwwwww   
-w   www    ww  wwwwww   
+wvvvwwww   ww  wwwwww   
+w   wwww   ww  wwwwww   
 w          ww  v cwww  w
 w          ww     www  w
 w          ww     wwwwww
