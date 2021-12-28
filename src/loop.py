@@ -347,7 +347,13 @@ class Loop():
 
                 # Gets the background for the pause menu
                 self.scenes[self.scene].render(self.window.miniWindow)
-                self.scenes["pauseMenu"].update_background(self.window.miniWindow)
+                # Getting level info for pause menu
+                if self.levelsList[self.level] == "Cutscene":
+                    level = "Cutscene"
+                else:
+                    level = f"Level: {self.remove_cutscenes(self.level) + 1}"
+                # Updating pause menu info
+                self.scenes["pauseMenu"].update_info(self.window.miniWindow, level)
                 
                 self.scene = "pauseMenu"
     

@@ -254,7 +254,7 @@ def draw_text_with_border(
     if backgroundText is None:
         bgText = textObj.render(text, False, constants.BLACK)
     
-    textSurf = pygame.Surface((renderText.get_width() + borderWidth * 2, renderText.get_height() + 2), flags = pygame.SRCALPHA) # Creates a surface for the text
+    textSurf = pygame.Surface((renderText.get_width() + borderWidth * 2, renderText.get_height() + borderWidth * 2), flags = pygame.SRCALPHA) # Creates a surface for the text
 
     # Goes in a square around the text's position
     # Drawing the background text, which is the border
@@ -265,9 +265,14 @@ def draw_text_with_border(
     # Drawing normal text on screen above the background text
     textSurf.blit(renderText, (borderWidth, borderWidth))
 
-    if alpha is not None:
+    textBackground = pygame.Surface((textSurf.get_width() + borderWidth * 3, textSurf.get_height() + borderWidth * 3)) # Creates a surface for the text background
+    textBackground.fill(constants.BLACK) # Fills the surface with black
+    textBackground.set_alpha(100) # Sets the alpha of the surface
+
+    if alpha is not None: # Setting alpha if one is given
         textSurf.set_alpha(alpha)
     
+    window.blit(textBackground, (position[0] - borderWidth * 3, position[1] - borderWidth * 2)) # Blits the background
     window.blit(textSurf, (position[0] - borderWidth, position[1] - borderWidth)) # Blits the text to the screen
 
 
