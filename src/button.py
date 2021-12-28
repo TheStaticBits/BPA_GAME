@@ -26,6 +26,8 @@ class Button:
         ):
         """Initiates all general variables, also creating the rectangle used for collision"""
 
+        self.toggleable = toggle
+
         self.isText = text is not None
 
         if self.isText:
@@ -60,11 +62,10 @@ class Button:
                 self.image.get_height()
             ))
 
-            self.toggleable = toggle
             if toggle: # If specified that it's toggled
                 self.toggled = False
                 # Loading toggle image
-                self.toggleImg = pygame.image.load(toggleImgPath)
+                self.toggleImg = pygame.image.load(toggledImgPath)
 
         self.reset() # Sets up other variables to default states
 
