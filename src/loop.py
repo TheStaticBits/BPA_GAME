@@ -70,7 +70,6 @@ class Loop():
             # logging error and opening error box
 
             err = traceback.format_exc()
-            print(err)
             self.logger.critical(f"ERROR WHILE STARTING UP: {err}")
 
             utility.error_box(err)
@@ -126,24 +125,21 @@ class Loop():
 
             self.startupSound.play()
 
-            # Main Loop
-            while not self.window.closeWindow:
-                try:
+            try:
+                # Main Loop
+                while not self.window.closeWindow:
                     self.window.flip()
-
                     self.framerate += 1
 
                     self.update()
                     self.render()
-
-                except Exception:
-                    # handles errors that occured in game
-                    # logging and giving an error popup box
-                    err = traceback.format_exc()
-                    print(err)
-                    self.logger.critical(f"ERROR WHILE PLAYING: {err}")
-
-                    utility.error_box(err)
+            
+            except Exception:
+                # handles errors that occured in game
+                # logging and giving an error popup box
+                err = traceback.format_exc()
+                self.logger.critical(f"ERROR WHILE PLAYING: {err}")
+                utility.error_box(err)
             
             self.save_and_exit()
             

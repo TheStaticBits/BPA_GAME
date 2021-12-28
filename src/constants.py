@@ -5,7 +5,7 @@ import src.utility as utility
 """  File paths for multiple things  """
 SAVE_PATH = "saves/save.db"
 EVENT_LOG_PATH = "saves/events.log"
-CRASH_REPORT_PATH = "saves/crash/crash at "
+CRASH_REPORT_PATH = "saves/crash"
 
 CTM_LOGO_PATH = "res/ui/CTM_logo.png" # Cognitive Thought Media (Company Logo)
 TIN_LOGO_PATH = "res/ui/TIN_logo.png" # There Is Nothing (Game Logo)

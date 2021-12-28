@@ -1190,6 +1190,7 @@
 
                 "delay 150 fadeBlack"
             ], "fadeBlack": [
+                "text corlen hide",
                 "fade 2 0 0 0",
                 "run fadeFinished"
             ],
@@ -1322,6 +1323,7 @@
 
                 "delay 130 fadeGoodbye"
             ], "fadeGoodbye": [
+                "text ellipse hide",
                 "fade 2 0 0 0",
                 "run fadeGoodbyeDone"
             ],
