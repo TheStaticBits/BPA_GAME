@@ -420,14 +420,18 @@ class Loop():
                 level = len(self.levels) - constants.AMOUNT_OF_ENDINGS + int(utility.load_save()["unlockedEnding"]) - 1
 
         if self.speedrun:
+            # Doesn't render entities or text in a speedrun
             entities = False
+            showText = False
         else:
+            # Nomal settings
             entities = "check"
+            showText = True
 
         if self.levelsList[level] == "Normal Level":
             # Sets up normal level
             self.scene = "playing"
-            self.scenes["playing"].setup(level, self.crystals, self.remove_cutscenes(level), entities = entities)
+            self.scenes["playing"].setup(level, self.crystals, self.remove_cutscenes(level), entities = entities, showText = showText)
             self.scenes["playing"].popup(f"Level {self.remove_cutscenes(level) + 1}")
             self.scenes["bossLevel"].music_stopped()
         
