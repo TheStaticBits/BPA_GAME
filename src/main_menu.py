@@ -104,7 +104,7 @@ class MainMenu():
                 )
 
         # For nonbutton text
-        self.otherTextFont = pygame.font.Font(constants.FONT_PATH, 15)
+        self.otherTextFont = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
 
 
     def start_music(self):
