@@ -42,6 +42,9 @@ class PauseMenu():
         )
 
         self.background = None
+        self.level = None
+
+        self.levelFont = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
     
 
     def render_pause_button(self, window):
@@ -54,10 +57,11 @@ class PauseMenu():
         return inputs["esc"] or self.pauseButton.update(mousePos, mouseInputs)
 
     
-    def update_background(self, background):
-        """Changes the background which is rendered behind the pause menu. Pass in a surface with the point at which the game was paused at."""
+    def update_info(self, background, level):
+        """Changes the background which is rendered behind the pause menu. Pass in a surface with the point at which the game was paused at. Also updates the level number shown in the top right corner."""
         self.background = background.copy()
         self.background.set_alpha(100) # Alpha 
+        self.level = level
     
 
     def update(self, inputs, mousePos, mouseInputs) -> str:
@@ -84,3 +88,7 @@ class PauseMenu():
         
         # Rendering logo centered on the x axis
         window.blit(self.logo, (constants.SCREEN_SIZE[0] / 2 - self.logo.get_width() / 2, 15))
+
+        # Rendering level number in the top right corner
+        text = self.levelFont.render(self.level, False, constants.WHITE)
+        window.blit(text, (constants.SCREEN_SIZE[0] - text.get_width() - 10, 10))
