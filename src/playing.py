@@ -37,7 +37,7 @@ class Playing(src.base_level.BaseLevel):
     
     
     def setup(self, level, crystals, crystalIndex, entities = "check"):
-        """Extends the setup function from the base level class, setting up rendering for text and the room as well"""
+        """Extends the setup function from the base level class, setting up the room as well"""
         super().setup(level, crystals, crystalIndex, entities)
 
         self.showText = (entities == "check") # Doesn't show text when entities aren't being checked (speedrun mode)
