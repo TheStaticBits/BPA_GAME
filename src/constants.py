@@ -97,7 +97,7 @@ DEFAULT_SAVE = {
     "level": 0, # Selected level
     "crystals": "00000000000000000000", # Crystals unlocked in normal levels
     "unlockedEnding": -1, # Ending unlocked
-    "speedrunHighscore": "---" # Speedrun highscore!
+    "speedrunHighscore": 0 # Speedrun highscore!
 }
 
 AMOUNT_OF_ENDINGS = 2 # How many endings there are
