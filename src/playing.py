@@ -36,11 +36,11 @@ class Playing(src.base_level.BaseLevel):
         self.placeTile = "w" # Tile to be placed when you click
     
     
-    def setup(self, level, crystals, crystalIndex, entities = "check"):
+    def setup(self, level, crystals, crystalIndex, entities = "check", showText = True):
         """Extends the setup function from the base level class, setting up the room as well"""
         super().setup(level, crystals, crystalIndex, entities)
 
-        self.showText = (entities == "check") # Doesn't show text when entities aren't being checked (speedrun mode)
+        self.showText = showText
         
         self.load_room()
     
