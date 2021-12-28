@@ -78,7 +78,8 @@ class BaseLevel():
             if crystals[crystalIndex]: 
                 self.remove_crystal(level)
 
-        if entities == "check":
+        if entities:
+            # Checks the level data if it wants the entities to be shown
             self.check_entity_rendering()
         else:
             self.showEntities = False

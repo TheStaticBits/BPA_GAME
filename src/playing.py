@@ -36,7 +36,7 @@ class Playing(src.base_level.BaseLevel):
         self.placeTile = "w" # Tile to be placed when you click
     
     
-    def setup(self, level, crystals, crystalIndex, entities = "check", showText = True):
+    def setup(self, level, crystals, crystalIndex, entities = True, showText = True):
         """Extends the setup function from the base level class, setting up the room as well"""
         super().setup(level, crystals, crystalIndex, entities)
 

@@ -175,7 +175,8 @@ class Button:
                 noBG.set_colorkey(constants.BLACK) # Setting the background to transparent
                 window.blit(noBG, self.rect.topleft)
 
-                # Rendering toggle image if the button is toggled
-                if self.toggleable:
-                    if self.toggled:
-                        window.blit(self.toggleImg, self.rect.topleft)
+
+        # Rendering toggle image if the button is toggled
+        if self.toggleable:
+            if self.toggled:
+                window.blit(self.toggleImg, self.rect.topleft)

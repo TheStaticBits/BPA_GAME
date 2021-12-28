@@ -250,6 +250,15 @@ class Loop():
                     self.speedrun = True
                     self.speedrunTime = 0
                     self.restart(save = constants.DEFAULT_SAVE, speedrun = True) # Doesn't wipe save data
+
+                elif result in ("showText", "showCharacters"): # Check box flipped
+                    prev = utility.load_save()[result]
+                    opposite = int(not int(prev)) # Flips the value (which is a string)
+                    # Changing settings in save data
+                    utility.modif_save({result: opposite})
+                    self.logger.info(f"{result}: {opposite}")
+                    
+                    return None # Doesn't let it go into playing the game
                 
                 if result != "speedrun": # Resetting save data
                     if self.speedrun:
@@ -379,6 +388,8 @@ class Loop():
 
     def switch_to_new_scene(self, level):
         """Switches to a new scene based on the level id it's given to switch to"""
+        save = utility.load_save()
+
         self.start_transition()
 
         # If reached the end of the levels or in speedrun mode and reached an ending cutscene
@@ -387,7 +398,7 @@ class Loop():
 
             if self.speedrun:
                 # Setting new highscore if it is higher than the previous score
-                if utility.load_save()["speedrunHighscore"] < self.speedrunTime:
+                if save["speedrunHighscore"] < self.speedrunTime:
                     utility.modif_save({"speedrunHighscore": self.speedrunTime})
 
             # Sets up main menu
@@ -401,7 +412,7 @@ class Loop():
         # Checking if the level is an ending
         if level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
             # If the player hasn't unlocked an ending yet
-            if int(utility.load_save()["unlockedEnding"]) == -1:
+            if int(save["unlockedEnding"]) == -1:
                 # Iterating through from 0 to the amount of endings there are
                 for lvl in range(constants.AMOUNT_OF_ENDINGS):
                     # level being checked
@@ -417,22 +428,19 @@ class Loop():
             
             else:
                 # Setting the level to the ending that was unlocked
-                level = len(self.levels) - constants.AMOUNT_OF_ENDINGS + int(utility.load_save()["unlockedEnding"]) - 1
+                level = len(self.levels) - constants.AMOUNT_OF_ENDINGS + int(save["unlockedEnding"]) - 1
 
-        if self.speedrun:
-            # Doesn't render entities or text in a speedrun
-            entities = False
-            showText = False
-        else:
-            # Nomal settings
-            entities = "check"
-            showText = True
+        # Getting settings for the level
+        entities = int(save["showCharacters"])
+        showText = int(save["showText"])
 
         if self.levelsList[level] == "Normal Level":
             # Sets up normal level
             self.scene = "playing"
             self.scenes["playing"].setup(level, self.crystals, self.remove_cutscenes(level), entities = entities, showText = showText)
+            # Creating the popup saying the level number
             self.scenes["playing"].popup(f"Level {self.remove_cutscenes(level) + 1}")
+            # Other playing scene, telling it that the music has stopped
             self.scenes["bossLevel"].music_stopped()
         
         elif self.levelsList[level] == "Boss Level":

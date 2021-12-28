@@ -55,10 +55,14 @@ class MainMenu():
             "start": (120, constants.SCREEN_SIZE[1] / 2, "Continue"),
             "newSave": (120, constants.SCREEN_SIZE[1] / 2 + 30, "Restart"), 
             "speedrun": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Speedrun"), 
+
+            # Flips the left button arrow to face the left
             "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, pygame.transform.flip(arrow, True, False)), 
             "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, arrow),
-            "showText": (200, constants.SCREEN_SIZE[1] / 2, "check"),
             "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
+
+            "showText": (345, constants.SCREEN_SIZE[1] / 2 - 50, "check"),
+            "showCharacters": (345, constants.SCREEN_SIZE[1] / 2 + 10, "check"),
         }
 
         # Populating the self.buttons dict with buttons created from the data in the buttons variable
@@ -75,14 +79,19 @@ class MainMenu():
                 )
             
             elif value[2] == "check":
+                # Check button
                 self.buttons[key] = src.button.Button(
                     value[0], value[1],
                     imagePath = constants.CHECK_BOX_PATH,
                     toggle = True, 
                     toggledImgPath = constants.CHECK_MARK_PATH
                 )
+                
+                # Updating check box to match the save
+                self.buttons[key].toggled = int(save[key])
 
             else:
+                # Image button
                 self.buttons[key] = src.button.Button(
                     value[0], value[1],
                     image = value[2]
@@ -121,17 +130,18 @@ class MainMenu():
 
     def update(self, mousePos, mouseInputs):
         """Updates buttons, returning a string for the result of which button was pressed"""
+        # Finds the last normal level's id (for some buttons)
+        last_normal_level = max(
+            utility.find_last_item(self.levelsList, "Boss Level"), 
+            utility.find_last_item(self.levelsList, "Normal Level")
+        )
+
         # Iterating through all buttons
         for key, button in self.buttons.items():
             if button.update(mousePos, mouseInputs): # If the button was pressed
-                # Finds the last normal level's id
-                last_normal_level = max(
-                    utility.find_last_item(self.levelsList, "Boss Level"), 
-                    utility.find_last_item(self.levelsList, "Normal Level")
-                )
+                self.logger.info(f"{key} button pressed")
                 
                 if key == "left": # If the button was the left arrow in the level selector
-                    self.logger.info("Left button pressed")
                     # If the level displayed is one of the endings, set it to the last non-ending level
                     if self.lvlsIndex > last_normal_level:
                         self.lvlsIndex = last_normal_level
@@ -147,7 +157,6 @@ class MainMenu():
                                 self.lvlsIndex = last_normal_level + self.ending
                 
                 elif key == "right": # if the button pressed was the right arrow
-                    self.logger.info("Right button pressed")
                     # If the level selected at the time was an ending, set it to the first level
                     if self.lvlsIndex > last_normal_level:
                         self.lvlsIndex = 0
@@ -161,9 +170,8 @@ class MainMenu():
                                 # Setting to the ending the player got
                                 self.lvlsIndex = last_normal_level + self.ending
                     
-                elif key == "play":
+                elif key == "play": # Play button
                     if self.get_status(self.lvlsIndex)[0] != "Locked":
-                        self.logger.info(f"Playing level {self.lvlsIndex}")
                         return key
                 
                 elif key == "speedrun":
@@ -176,9 +184,11 @@ class MainMenu():
 
 
     def render_text(self, window, text, position, color = constants.WHITE):
-        """Renders text centered on the x position"""
-        surf = self.otherTextFont.render(text, False, color) # Rendering to a surface
-        window.blit(surf, (position[0] - surf.get_width() / 2, position[1])) # Centered
+        """Renders text centered on the x position. Also accounts for newlines."""
+        text = text.split("\n")
+        for count, txt in enumerate(text):
+            surf = self.otherTextFont.render(txt, False, color) # Rendering to a surface
+            window.blit(surf, (position[0] - surf.get_width() / 2, position[1] + count * 12)) # Centered
 
     
     def render(self, window):
@@ -206,6 +216,10 @@ class MainMenu():
         if self.buttons["newSave"].selected:
             self.render_text(window, "IRREVERSIBLE!", (120, constants.SCREEN_SIZE[1] / 2 + 53))
 
+        # Check box text for showText button
+        self.render_text(window, "Show\nTutorial\nText", (345, constants.SCREEN_SIZE[1] / 2 - 40))
+        # Check box text for showText button
+        self.render_text(window, "Show\nEllipse\nand\nCorlen", (345, constants.SCREEN_SIZE[1] / 2 + 20))
         
         # Draws the "level selector" text
         self.render_text(window, "Level Selector", (255, constants.SCREEN_SIZE[1] / 2 + 5))

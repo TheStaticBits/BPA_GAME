@@ -38,7 +38,7 @@ class BossLevel(src.base_level.BaseLevel):
         self.bossName = None
 
 
-    def setup(self, boss, level, crystals, crystalIndex, entities = "check"):
+    def setup(self, boss, level, crystals, crystalIndex, entities = True):
         """Extends the "setup" method from the BaseLevel class, setting up bosses as well."""
         super().setup(level, crystals, crystalIndex, entities)
 
