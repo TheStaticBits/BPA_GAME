@@ -347,7 +347,7 @@ class Loop():
 
                 # Gets the background for the pause menu
                 self.scenes[self.scene].render(self.window.miniWindow)
-                self.scenes["pauseMenu"].update_info(self.window.miniWindow, self.level)
+                self.scenes["pauseMenu"].update_background(self.window.miniWindow)
                 
                 self.scene = "pauseMenu"
     
