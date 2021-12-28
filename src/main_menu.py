@@ -191,6 +191,10 @@ class MainMenu():
                 self.render_text(window, "Highscore: " + highscore, (120, constants.SCREEN_SIZE[1] / 2 + 83))
             else:
                 self.render_text(window, "Locked!", (120, constants.SCREEN_SIZE[1] / 2 + 83))
+        
+        # If the mouse is hovering over the Restart button, say that it wipes your data
+        if self.buttons["newSave"].selected:
+            self.render_text(window, "IRREVERSIBLE!", (120, constants.SCREEN_SIZE[1] / 2 + 53))
 
         
         # Draws the "level selector" text
