@@ -703,6 +703,21 @@ eee j e j eeeeeee   eeee
 eee   e   eeeeeee   eeee
 eee   e   eeeeeee       
 eeeeeeeeeeeeeeeee       
+||||||||||||||||||||||||
+eeeeeeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+e            eeeeeeeeeee
+e            eeeeeeeeeee
+e            eeeeeeeeeee
+e       ^^   eeeeeeeeeee
+e    eeeee   eeeeeeeeeee
+ee   eeeee   eeeeeeeeeee
+ee j   eee   eeeeeee    
+e      eee   eeeeeee    
+e      eee g eeeeeee  ee
+e    eeeee   eeeeeee  ee
+     eeeee         v   e
+   eeeeeee      ^     ^e
 ------------------------
 
 background = e
