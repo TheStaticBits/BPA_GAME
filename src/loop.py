@@ -74,7 +74,7 @@ class Loop():
                 "bossLevel": src.boss_level.BossLevel(),
                 "cutscene": src.cutscenes.Cutscenes(self.remove_cutscenes, self.crystals),
                 "mainMenu": src.main_menu.MainMenu(save, self.levelsList, self.levelsCompleted, self.crystals, self.remove_cutscenes),
-                "pauseMenu": src.pause_menu.PauseMenu(self.levels)
+                "pauseMenu": src.pause_menu.PauseMenu()
             }
 
             self.prevScene = self.scene # For the pause menu resuming
