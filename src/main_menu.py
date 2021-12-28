@@ -22,6 +22,7 @@ class MainMenu():
         # Function which takes a level number and removes the cutscenes from it
         self.remove_cutscenes = remove_cutscenes
         self.lvlsIndex = int(save["level"]) # For level selector
+        self.volume = int(save["volume"]) # For audio slider
 
         self.ending = int(save["unlockedEnding"])
 
@@ -61,8 +62,13 @@ class MainMenu():
             "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, arrow),
             "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
 
+            # Check boxes on the right
             "showText": (345, constants.SCREEN_SIZE[1] / 2 - 50, "check"),
             "showCharacters": (345, constants.SCREEN_SIZE[1] / 2 + 10, "check"),
+
+            # Audio level buttons on the left
+            "volumeUp": (39, constants.SCREEN_SIZE[1] / 2 - 5, pygame.transform.rotate(arrow, 90)),
+            "volumeDown": (39, constants.SCREEN_SIZE[1] / 2 + 35, pygame.transform.rotate(arrow, 270)),
         }
 
         # Populating the self.buttons dict with buttons created from the data in the buttons variable
@@ -155,7 +161,6 @@ class MainMenu():
                             else:
                                 # Setting it to the ending the player got
                                 self.lvlsIndex = last_normal_level + self.ending
-                
                 elif key == "right": # if the button pressed was the right arrow
                     # If the level selected at the time was an ending, set it to the first level
                     if self.lvlsIndex > last_normal_level:
@@ -170,6 +175,24 @@ class MainMenu():
                                 # Setting to the ending the player got
                                 self.lvlsIndex = last_normal_level + self.ending
                     
+                elif key == "volumeUp": # Pressed volume up button
+                    # Increasing the volume
+                    self.volume += 5
+                    if self.volume > 100: # Locking to 100 if above
+                        self.volume = 100
+                    self.logger.info(f"Audio level is now {self.volume}")
+                    # Setting volume
+                    pygame.mixer.music.set_volume(self.volume / 100)
+
+                elif key == "volumeDown": # Pressed volume down button
+                    # Decreasing volume level by 5
+                    self.volume -= 5
+                    if self.volume < 0: # Locking to zero if below it
+                        self.volume = 0
+                    self.logger.info(f"Audio level is now {self.volume}")
+                    # Setting volume
+                    pygame.mixer.music.set_volume(self.volume / 100)
+
                 elif key == "play": # Play button
                     if self.get_status(self.lvlsIndex)[0] != "Locked":
                         return key
@@ -220,10 +243,14 @@ class MainMenu():
         self.render_text(window, "Show\nTutorial\nText", (345, constants.SCREEN_SIZE[1] / 2 - 40))
         # Check box text for showText button
         self.render_text(window, "Show\nEllipse\nand\nCorlen", (345, constants.SCREEN_SIZE[1] / 2 + 20))
+
+        # Render the audio text
+        self.render_text(window, "Music\nVolume", (39, constants.SCREEN_SIZE[1] / 2 - 35))
+        # Render the audio level
+        self.render_text(window, f"{self.volume}%", (39, constants.SCREEN_SIZE[1] / 2 + 15))
         
         # Draws the "level selector" text
         self.render_text(window, "Level Selector", (255, constants.SCREEN_SIZE[1] / 2 + 5))
-        
 
         if self.levelsList[self.lvlsIndex] != "Cutscene": # If the selected level isn't a cutscene
             # Level number not including cutscenes (and adding one so it doesn't start at zero)

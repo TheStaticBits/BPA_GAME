@@ -60,6 +60,13 @@ class Loop():
             self.levelsList = self.gen_levels_list()
 
             save = self.load_save()
+            # Setting volume
+            pygame.mixer.music.set_volume(int(save["volume"]) / 100)
+
+            self.settings = {
+                "showCharacters": int(save["showCharacters"]),
+                "showText": int(save["showText"])
+            }
 
             # Setting up scenes
             self.scenes = {
@@ -252,10 +259,10 @@ class Loop():
                     self.restart(save = constants.DEFAULT_SAVE, speedrun = True) # Doesn't wipe save data
 
                 elif result in ("showText", "showCharacters"): # Check box flipped
-                    prev = utility.load_save()[result]
-                    opposite = int(not int(prev)) # Flips the value (which is a string)
-                    # Changing settings in save data
-                    utility.modif_save({result: opposite})
+                    prev = self.settings[result]
+                    opposite = int(not prev) # Flips the booleen number
+                    # Changing settings
+                    self.settings[result] = opposite
                     self.logger.info(f"{result}: {opposite}")
                     
                     return None # Doesn't let it go into playing the game
@@ -431,8 +438,8 @@ class Loop():
                 level = len(self.levels) - constants.AMOUNT_OF_ENDINGS + int(save["unlockedEnding"]) - 1
 
         # Getting settings for the level
-        entities = int(save["showCharacters"])
-        showText = int(save["showText"])
+        entities = self.settings["showCharacters"]
+        showText = self.settings["showText"]
 
         if self.levelsList[level] == "Normal Level":
             # Sets up normal level
@@ -474,7 +481,11 @@ class Loop():
             utility.modif_save({
                 "levels": "".join([str(x) for x in self.levelsCompleted]),
                 "level": self.scenes["playing"].level,
-                "crystals": "".join([str(x) for x in self.crystals])
+                "crystals": "".join([str(x) for x in self.crystals]),
+
+                "showText": self.settings["showText"],
+                "showCharacters": self.settings["showCharacters"],
+                "volume": self.scenes["mainMenu"].volume
             }) 
 
         self.logger.info("Exiting Pygame...")

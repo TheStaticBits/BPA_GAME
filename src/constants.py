@@ -107,7 +107,8 @@ DEFAULT_SAVE = {
 
     # Settings
     "showText": 1, # Shows tutorial text
-    "showCharacters": 1 # Shows characters (Ellipse and Corlen)
+    "showCharacters": 1, # Shows characters (Ellipse and Corlen)
+    "volume": 50 # Volume level (from 1 to 100)
 }
 
 AMOUNT_OF_ENDINGS = 2 # How many endings there are
