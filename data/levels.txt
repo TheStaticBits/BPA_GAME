@@ -1188,65 +1188,65 @@ oooooooooooooooooooooooo
 background = b
 music = Blue
 ------------------------
-o><^v                   
-                        
-  p                     
-  o                     
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^gjoooooooooooooooooo
+ovvvvv      oooooooc  oo
+o           ooooooo     
+o p     oo  ooooooo^    
+oooo    oo  oooooooooooo
+ovvv    oo  oovvvvvooooo
+o       oo  v      ooooo
+o       oo           voo
+o       oo     ^^^    oo
+o       oo     ooo      
+o j     oo     ooo      
+o       oo     ooooooooo
+o       oooooooooooooooo
+oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o>    <ooooooooooooooooo
+o>     ooooooooooooooooo
+       ooooooooooooooooo
+   ^^  oo      ooooooooo
+ooooo  oo      ooooooooo
+o><oo  oo  ^^  oooovvvvv
+o^voo  oo  oo  oo       
+ooooo  oo  oo  vv       
+ooooo  oo  oo      ^^^^^
+   oo  oo  oo      ooooo
+           oo      ooooo
+o          ooooooooooooo
+ooo      ooooooooooooooo
+oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^vgoooooooooooooooooo
+oooooooooooooooooooooooo
+ooooooooooooooooooovvooo
+ooooooooooooooooooo  ooo
+o        oooooooooo  ooo
+v        oo    v        
+     ^   oo             
+   ooo g          ^    ^
+^^^ooo            oooooo
+oooooooooooo  oooooooooo
+oooooooooooo^^oooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^vooooooooooooooooooo
+ooogoooooooooooooooooooo
+oooooooooooooo      oooo
+oooooooooooooo      oooo
+oooooooooooooo  ^^  oooo
+    vooooooooo  oo  oovv
+     ooooooooo  oo      
+^^    g   oooo  oo      
+oooooooo  oooo  oo  oo^^
+oooooooo    oo  oo  oooo
+oooooooo    oo  oo  oooo
+oooooooo        oooooooo
+oooooooo^^^^    oooooooo
+oooooooooooooooooooooooo
 ------------------------
 
 background = b
