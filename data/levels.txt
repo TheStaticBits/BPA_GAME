@@ -278,12 +278,12 @@ ddddddddddd   dd
 v^><wddddddddddddddddddd
 ddddddddddddddddddd     
            dd    dd     
-           dd    dd     
+                        
                         
 ddddd>    dd j  dd j  dd
 ddddd>    dd   ^dd    dd
-ddddd>   <dd   ddd    dd
-ddddd>   <dd   ddd    dd
+ddddd>    dd   ddd    dd
+ddddd    <dd   ddd    dd
 ddddd    <dd   ddd^^^^dd
 ddddd    <dd^^^ddddddddd
           dddddddddddddd
@@ -296,8 +296,8 @@ v^><wp  dddddd       ddd
         dddddd       ddd
         dddddd       ddd
 dd      vvdddd       ddd
-dddddd    vvvd  ddd  ddd
-dddddd       v  ddd  ddd
+dddddd    vvvv  ddd  ddd
+dddddd          ddd  ddd
 dddddd     j    ddd     
 ddddvv          ddd     
 ddvv            vdv     
@@ -314,15 +314,15 @@ ddddddddd
 ddddddddd               
 d      dd               
 d      dd  j  j  j  dddd
-dp     dd           dddd
-ddd    dd           dddd
-ddd    dd           dddd
-ddd    dd    ^^^    dddd
-ddd    dd  ^^ddd^^  v  d
-ddd        ddddddd     d
-ddd        ddddddd     d
-ddd        ddddddd     d
-ddd        ddddddddddddd
+d p    dd           dddd
+dddd   dd           dddd
+dddd   dd           dddd
+dddd   dd    ^^^    dddd
+dddd   dd  ^^ddd^^  v  d
+dddd       ddddddd     d
+dddd       ddddddd     d
+dddd       ddddddd     d
+dddd       ddddddddddddd
 ||||||||||||||||||||||||
 dddddddddddddddddddd><^v
    ddd      dddddd      
@@ -1267,20 +1267,20 @@ oooooooooooooooooooooooo
 background = b
 music = Blue
 ------------------------
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^v o                 
+o     o                 
+o     o                 
+o   p o                 
+o  oooo                 
+o  voov oo              
+o   oo  oo              
+o   oo  oo              
+o   vv  oo              
+o       oo              
+o       oo              
+o^      oo              
+oo^^^^^^oo              
+oooooooooo              
 ||||||||||||||||||||||||
 o><^v                   
                         
