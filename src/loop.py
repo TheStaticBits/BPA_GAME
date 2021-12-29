@@ -351,9 +351,12 @@ class Loop():
                 if self.levelsList[self.level] == "Cutscene":
                     level = "Cutscene"
                 else:
-                    level = f"Level: {self.remove_cutscenes(self.level) + 1}"
+                    level = f"Level {self.remove_cutscenes(self.level) + 1}"
+                # Getting room number and level length for pause menu
+                room = self.scenes[self.scene].room + 1
+                levelLength = len(self.levels[self.level])
                 # Updating pause menu info
-                self.scenes["pauseMenu"].update_info(self.window.miniWindow, level)
+                self.scenes["pauseMenu"].update_info(self.window.miniWindow, level, room, levelLength)
                 
                 self.scene = "pauseMenu"
     

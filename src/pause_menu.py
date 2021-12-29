@@ -57,11 +57,12 @@ class PauseMenu():
         return inputs["esc"] or self.pauseButton.update(mousePos, mouseInputs)
 
     
-    def update_info(self, background, level):
-        """Changes the background which is rendered behind the pause menu. Pass in a surface with the point at which the game was paused at. Also updates the level number shown in the top right corner."""
+    def update_info(self, background, level, room, levelLength):
+        """Changes the background which is rendered behind the pause menu. Pass in a surface with the point at which the game was paused at. Also updates the level and room numbers shown in the top right corner."""
         self.background = background.copy()
         self.background.set_alpha(100) # Alpha 
         self.level = level
+        self.room = f"Room {room}/{levelLength}"
     
 
     def update(self, inputs, mousePos, mouseInputs) -> str:
@@ -92,3 +93,8 @@ class PauseMenu():
         # Rendering level number in the top right corner
         text = self.levelFont.render(self.level, False, constants.WHITE)
         window.blit(text, (constants.SCREEN_SIZE[0] - text.get_width() - 10, 10))
+        
+        if self.level != "Cutscene":
+            # Rendering room number in the top right corner
+            text = self.levelFont.render(self.room, False, constants.WHITE)
+            window.blit(text, (constants.SCREEN_SIZE[0] - text.get_width() - 10, 24))
