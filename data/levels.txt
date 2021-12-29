@@ -1266,36 +1266,37 @@ oooooooooooooooooooooooo
 
 background = b
 music = Blue
+button 0, 10, 8 = -2
 ------------------------
-o><^v o                 
-o     o                 
-o     o                 
-o   p o                 
-o  oooo                 
-o  voov oo              
-o   oo  oo              
-o   oo  oo              
-o   vv  oo              
-o       oo              
-o       oo              
-o^      oo              
-oo^^^^^^oo              
-oooooooooo              
+o><^vooooooooooooooooooo
+ooooooooo    vvooooooooo
+o     ovv      ooooooooo
+o   p o        vvvvooooo
+o  oooo   ^        ooooo
+o  voov ooo          ooo
+o   oo  ooo  oo^^^   ooo
+o   oo  ooo  ooooo g ooo
+o   vv  oom  oojoo   ooo
+o       oo   oogoo   ooo
+o       oo   ooooo      
+o       oo   ooooo      
+o^^^^^^^oo^^^ooooooooooo
+oooooooooooooooooooooooo
 ||||||||||||||||||||||||
 o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
+o                       
+   oo                   
+   oo                   
+ooooo                   
+ooooo                   
 ||||||||||||||||||||||||
 o><^v                   
                         
