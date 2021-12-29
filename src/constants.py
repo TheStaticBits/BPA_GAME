@@ -74,6 +74,8 @@ SCREEN_SIZE = (
 
 PX_SCALE_FACTOR = 3 # This is the scale factor of everything being rendered to the screen
 
+VERTICAL_TEXT_GAP = 12 # Gap between text in places that render multiple lines of text
+
 # These are the separaters in the levels.txt file.
 LEVEL_SEPARATOR = "\n------------------------\n"
 ROOM_SEPARATOR = "\n||||||||||||||||||||||||\n"

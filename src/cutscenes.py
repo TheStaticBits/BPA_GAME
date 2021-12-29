@@ -686,15 +686,17 @@ class Cutscenes():
                     # (Movable text doesn't bob up/down)
                     textYOffset = 0
 
-                fullText = text["text"].split("\n")
+                # Rendering text background
+                utility.draw_text_background(window, text["pos"], self.text, self.textObject, constants.VERTICAL_TEXT_GAP)
 
+                fullText = text["text"].split("\n")
                 # Going through all rows of the text
                 for count, t in enumerate(fullText):
                     # Getting text surface
                     renderText = self.textObject.render(t, False, text["color"])
 
                     # Getting position, centering it on the x position and moving it down by the y if there are multiple lines
-                    position = (text["pos"][0] - renderText.get_width() / 2, text["pos"][1] + textYOffset + count * 12)
+                    position = (text["pos"][0] - renderText.get_width() / 2, text["pos"][1] + textYOffset + count * constants.VERTICAL_TEXT_GAP)
 
                     # Drawing the text 
                     utility.draw_text_with_border(window, position, t, self.textObject, text["color"], renderText = renderText)
