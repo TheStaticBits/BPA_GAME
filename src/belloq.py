@@ -176,6 +176,8 @@ class Belloq:
             eyeballCenter # Starting position
         ))
 
+        self.logger.info(f"Amount of lazers is now {len(self.lazers)}")
+
     
     def update(self, player, playerRoom, amountOfRooms, tilesOffset):
         """Updates everything, moves the boss towards the player, the cooldown for lazers, and updating lazers and removing ones offscreen."""

@@ -92,9 +92,9 @@ class PauseMenu():
 
         # Rendering level number in the top right corner
         text = self.levelFont.render(self.level, False, constants.WHITE)
-        window.blit(text, (constants.SCREEN_SIZE[0] - text.get_width() - 10, 10))
+        window.blit(text, (constants.SCREEN_SIZE[0] - text.get_width() - 1, 12))
         
         if self.level != "Cutscene":
             # Rendering room number in the top right corner
             text = self.levelFont.render(self.room, False, constants.WHITE)
-            window.blit(text, (constants.SCREEN_SIZE[0] - text.get_width() - 10, 24))
+            window.blit(text, (constants.SCREEN_SIZE[0] - text.get_width() - 1, 24))

@@ -14,6 +14,7 @@ import src.tile_renderer
 import src.cutscenes
 import src.boss_level
 import src.main_menu
+import src.settings
 import src.pause_menu
 
 # Initializing Pygame
@@ -31,7 +32,8 @@ class Loop():
         self.logger = logging.getLogger(__name__)
 
         self.scene = "startup"
-        self.framerate = 0
+        self.framerateCounter = 0
+        self.fps = 0
         self.errorSettingUp = False
 
         # Transition variables (transition between scenes)
@@ -42,7 +44,8 @@ class Loop():
         # Speedrun variables
         self.speedrun = False
         self.speedrunTime = 0
-        self.speedrunFont = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE) # Font used for the speedrun timer
+        # Font used for the speedrun timer and the FPS counter
+        self.font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
 
         try:
             self.window = src.window.Window()
@@ -65,7 +68,8 @@ class Loop():
 
             self.settings = {
                 "showCharacters": int(save["showCharacters"]),
-                "showText": int(save["showText"])
+                "showText": int(save["showText"]),
+                "showFPS": int(save["showFPS"])
             }
 
             # Setting up scenes
@@ -74,6 +78,7 @@ class Loop():
                 "bossLevel": src.boss_level.BossLevel(),
                 "cutscene": src.cutscenes.Cutscenes(self.remove_cutscenes, self.crystals),
                 "mainMenu": src.main_menu.MainMenu(save, self.levelsList, self.levelsCompleted, self.crystals, self.remove_cutscenes),
+                "settings": src.settings.Settings(save),
                 "pauseMenu": src.pause_menu.PauseMenu()
             }
 
@@ -123,11 +128,11 @@ class Loop():
 
 
     def run_framerate(self):
-        """Is run in the background. Manages the framerate and prints it out to the console every second."""
+        """Is run in the background. Manages the framerate and updates the framerate variable every second."""
         while not self.window.closeWindow:
-            sleep(1)
-            print(self.framerate, "FPS")
-            self.framerate = 0
+            sleep(1) # Delay a second
+            self.fps = self.framerateCounter # Get the number of frames in the past second
+            self.framerateCounter = 0 # Reset framerateCounter
 
 
     def run_game(self):
@@ -137,16 +142,16 @@ class Loop():
             framerate = threading.Thread(target=self.run_framerate, args=(), daemon=True)
             framerate.start()
 
-            self.startupSound.play()
+            self.startupSound.play() # Playing startup sound
 
             try:
                 # Main Loop
                 while not self.window.closeWindow:
-                    self.window.flip()
-                    self.framerate += 1
+                    self.window.flip() # Display on screen
+                    self.framerateCounter += 1 # Increment framerateCounter
 
-                    self.update()
-                    self.render()
+                    self.update() # Update scene
+                    self.render() # Render scene
             
             except Exception:
                 # handles errors that occured in game
@@ -248,6 +253,10 @@ class Loop():
                 if result == "play": # "Play" button pressed
                     self.level = self.scenes["mainMenu"].lvlsIndex
                 
+                elif result == "start": # "Continue" button pressed
+                    # Sets the level to the last uncompleted level
+                    self.level = utility.find_first_item(self.levelsCompleted, 0)
+                    
                 elif result == "newSave": # "Restart" button pressed
                     self.restart()
                     self.speedrun = False
@@ -257,15 +266,13 @@ class Loop():
                     self.speedrun = True
                     self.speedrunTime = 0
                     self.restart(save = constants.DEFAULT_SAVE, speedrun = True) # Doesn't wipe save data
+                
+                elif result == "settings":
+                    # Switching to the settings scene
+                    self.start_transition()
+                    self.scene = "settings"
 
-                elif result in ("showText", "showCharacters"): # Check box flipped
-                    prev = self.settings[result]
-                    opposite = int(not prev) # Flips the booleen number
-                    # Changing settings
-                    self.settings[result] = opposite
-                    self.logger.info(f"{result}: {opposite}")
-                    
-                    return None # Doesn't let it go into playing the game
+                    return None # Skips the rest
                 
                 if result != "speedrun": # Resetting save data
                     if self.speedrun:
@@ -274,6 +281,22 @@ class Loop():
 
                 self.switch_to_new_scene(self.level)
                 self.update()
+        
+
+        elif self.scene == "settings":
+            result = self.scenes["settings"].update(self.window.mousePos, self.window.mousePressed)
+
+            if result is not None:
+                if result in self.settings: # Check box flipped
+                    prev = self.settings[result]
+                    opposite = int(not prev) # Flips the booleen number
+                    # Changing settings
+                    self.settings[result] = opposite
+                    self.logger.info(f"{result}: {opposite}")
+                
+                elif result == "back":
+                    self.start_transition()
+                    self.scene = "mainMenu"
 
         
         elif self.scene == "pauseMenu": # Updating pause menu
@@ -336,7 +359,7 @@ class Loop():
                     self.switch_to_new_scene(self.level)
 
 
-        if self.scene not in ("startup", "pauseMenu", "mainMenu"): # Scenes without a pause button
+        if self.scene not in ("startup", "pauseMenu", "mainMenu", "settings"): # Scenes without a pause button
             if self.scenes["pauseMenu"].check_for_pause(
                 self.window.inputs, 
                 self.window.mousePos, 
@@ -372,22 +395,19 @@ class Loop():
             else: # Normal scenes
                 self.scenes[self.scene].render(surf)
 
-                if self.scene not in ("mainMenu", "pauseMenu"):
+                if self.scene not in ("mainMenu", "pauseMenu", "settings"):
                     # Rendering pause button
                     self.scenes["pauseMenu"].render_pause_button(surf)
 
                     # Rendering speedrun time
                     if self.speedrun:
-                        time = utility.seconds_to_readable_time(self.speedrunTime)
-                        timeRender = self.speedrunFont.render(time, False, constants.WHITE) # Rendered surface
+                        time = utility.seconds_to_readable_time(self.speedrunTime) # Turning current time into a readable one
+                        timeRender = self.font.render(time, False, constants.WHITE) # Rendered surface
                         # Centered on the x axis
                         timePos = (constants.SCREEN_SIZE[0] / 2 - timeRender.get_width() / 2, 0)
                         # Drawing with a black border
                         utility.draw_text_with_border(
-                            surf, 
-                            timePos, 
-                            time, 
-                            self.speedrunFont, 
+                            surf, timePos, time, self.font, 
                             constants.WHITE, 
                             renderText = timeRender
                         )
@@ -395,6 +415,18 @@ class Loop():
         else: # Render transition
             self.transitionImg.set_alpha(self.transitionAlpha)
             surf.blit(self.transitionImg, (0, 0))
+        
+        # Rendering FPS
+        if self.settings["showFPS"]:
+            fpsRender = self.font.render(f"{self.fps} FPS", False, constants.WHITE)
+            # Locking to the top right corner
+            fpsPos = (constants.SCREEN_SIZE[0] - fpsRender.get_width() - 1, 0)
+            # Drawing with a border
+            utility.draw_text_with_border(
+                surf, fpsPos, f"{self.fps} FPS", self.font,
+                constants.WHITE,
+                renderText = fpsRender
+            )
         
         if draw:
             self.window.miniWindow.blit(surf, (0, 0))
@@ -445,6 +477,7 @@ class Loop():
             else:
                 # Setting the level to the ending that was unlocked
                 level = len(self.levels) - constants.AMOUNT_OF_ENDINGS + int(save["unlockedEnding"]) - 1
+                self.level = level
 
         # Getting settings for the level
         entities = self.settings["showCharacters"]
@@ -494,7 +527,8 @@ class Loop():
 
                 "showText": self.settings["showText"],
                 "showCharacters": self.settings["showCharacters"],
-                "volume": self.scenes["mainMenu"].volume
+                "showFPS": self.settings["showFPS"],
+                "volume": self.scenes["settings"].volume
             }) 
 
         self.logger.info("Exiting Pygame...")

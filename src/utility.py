@@ -75,6 +75,16 @@ def find_last_item(list, item) -> int:
             return i
 
 
+def find_first_item(list, item) -> int:
+    """Finds the first item in a list and returns its index. Returns the last item of a list if the item was not found."""
+
+    for index, i in enumerate(list):
+        if i == item:
+            return index
+
+    return len(list) - 1 
+
+
 def seconds_to_readable_time(time) -> str:
     """Converts seconds into a readable time"""
     days = int(time / 86400)
@@ -234,6 +244,20 @@ def check_between(
     ):
     """Checks if a point is between the given minimum and maximums"""
     return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
+
+
+def render_text(window, text, position, font, color = (255, 255, 255)):
+    """Renders text normally. Does not account for newlines."""
+    rendered = font.render(text, False, color)
+    window.blit(rendered, position)
+
+
+def centered_text(window, text, position, font, color = (255, 255, 255)):
+    """Renders text centered on the x position. Also accounts for newlines."""
+    text = text.split("\n")
+    for count, txt in enumerate(text):
+        surf = font.render(txt, False, color) # Rendering to a surface
+        window.blit(surf, (position[0] - surf.get_width() / 2, position[1] + count * constants.VERTICAL_TEXT_GAP)) # Centered
 
 
 def draw_text_with_border(

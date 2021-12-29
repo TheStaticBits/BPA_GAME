@@ -19,8 +19,6 @@ CUTSCENE_DATA_PATH = "data/cutscenes.json"
 
 MAIN_MENU_LEVEL_PATH = "data/menu_level.txt"
 
-EMAIL_PWD_PATH = "data/emailpassword.txt"
-
 MUSIC_FOLDER = "res/sound/music"
 
 SCREEN_SHADOW_PATH = "res/game/shadow.png"
@@ -32,10 +30,12 @@ CHECK_BOX_PATH = "res/ui/check_box.png"
 CHECK_MARK_PATH = "res/ui/check_mark.png"
 
 ARROW_PATH = "res/ui/arrow.png"
+BACK_PATH = "res/ui/back.png"
 
 PAUSE_BUTTON_PATH = "res/ui/pause_button.png"
 
 ICON_PATH = "res/ui/icon.png"
+COG_PATH = "res/ui/cog.png"
 
 
 # Level editing in normal levels
@@ -111,6 +111,7 @@ DEFAULT_SAVE = {
     # Settings
     "showText": 1, # Shows tutorial text
     "showCharacters": 1, # Shows characters (Ellipse and Corlen)
+    "showFPS": 0, # Whether it displays the FPS (frames per second)
     "volume": 50 # Volume level (from 1 to 100)
 }
 
