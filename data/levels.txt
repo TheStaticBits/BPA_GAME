@@ -91,7 +91,7 @@ wwwwwwwwwwwww     wwwwww
 background = w
 music = ThereIsSomethingV2
 entities = none
-text 3 = \n\n\n\n\n\n\n\n\n\n\nBeware the upcoming boss...\nDon't get zapped by its lazers!
+text 3 = \n\n\n\n\n\n\n\n\n\n\n\n\nBeware the upcoming boss...\nDon't get zapped by its lazers!
 ------------------------
 w^><wwwww           wwww
 wwwwwwwww           wwww
