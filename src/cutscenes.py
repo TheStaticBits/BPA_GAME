@@ -680,14 +680,14 @@ class Cutscenes():
                     text["displayWaveX"] += 0.05
                     # Using the sine wave counter to get the new position of the text
                     # (For bobbing up and down)
-                    textYOffset = math.sin(text["displayWaveX"]) * 5
+                    textYOffset = math.sin(text["displayWaveX"]) * constants.TEXT_BOB_INTENSITY
                 
                 else: # Otherwise, set it to zero
                     # (Movable text doesn't bob up/down)
                     textYOffset = 0
 
                 # Rendering text background
-                utility.draw_text_background(window, text["pos"], self.text, self.textObject, constants.VERTICAL_TEXT_GAP)
+                utility.draw_text_background(window, (text["pos"][0], text["pos"][1] + textYOffset), text["text"], self.textObject, constants.VERTICAL_TEXT_GAP)
 
                 fullText = text["text"].split("\n")
                 # Going through all rows of the text

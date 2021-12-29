@@ -285,20 +285,21 @@ def draw_text_background(window, position, text, textObj, gap):
     width = rendered.get_width() + 2
     height = len(text) * gap + (rendered.get_height() - gap) + 2 # Gap is the height between each text object
 
-    bg = pygame.Surface((width, height)) # Creating surface with width and height
+    bg = pygame.Surface((width, height), flags = pygame.SRCALPHA) # Creating surface with width and height
     bg.fill(constants.BLACK) # Filling with black
-    bg.set_alpha(100) # Semi-transparent
+    bg.set_alpha(150) # Semi-transparent
 
     alphaValues = pygame.surfarray.pixels_alpha(bg) # Used for editting the individual pixel alphas
+
     # Removing the four corners (to look better)
     for y in range(2):
         for x in range(2):
-            alphaValues[x * width, y * height] = 0
+            alphaValues[x * (width - 1), y * (height - 1)] = 0
     
     del alphaValues
 
     # Drawing to the window
-    window.blit(bg, (position[0] - 1, position[1] - 1))
+    window.blit(bg, (position[0] - 1 - width / 2, position[1] - 1))
 
 
 def play_music(musicName) -> bool: # Successful or not

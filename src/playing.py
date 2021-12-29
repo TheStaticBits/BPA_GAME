@@ -165,9 +165,10 @@ class Playing(src.base_level.BaseLevel):
                 if text != "":
                     renderText = self.font.render(text, False, constants.WHITE)
 
+                    # Calculating position of the text, factoring in the sine wave used to bob up and down and the text row
                     position = (
                         constants.SCREEN_SIZE[0] / 2 - renderText.get_width() / 2, # Centering text on screen 
-                        20 + math.sin(self.textWavX) * 5 + count * constants.VERTICAL_TEXT_GAP
+                        20 + math.sin(self.textWavX) * constants.TEXT_BOB_INTENSITY + count * constants.VERTICAL_TEXT_GAP
                     )
 
                     utility.draw_text_with_border(window, position, text, self.font, constants.WHITE, renderText = renderText)
