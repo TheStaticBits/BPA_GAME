@@ -265,15 +265,40 @@ def draw_text_with_border(
     # Drawing normal text on screen above the background text
     textSurf.blit(renderText, (borderWidth, borderWidth))
 
-    textBackground = pygame.Surface((textSurf.get_width() + borderWidth * 3, textSurf.get_height() + borderWidth * 3)) # Creates a surface for the text background
-    textBackground.fill(constants.BLACK) # Fills the surface with black
-    textBackground.set_alpha(100) # Sets the alpha of the surface
-
     if alpha is not None: # Setting alpha if one is given
         textSurf.set_alpha(alpha)
     
-    window.blit(textBackground, (position[0] - borderWidth * 3, position[1] - borderWidth * 2)) # Blits the background
     window.blit(textSurf, (position[0] - borderWidth, position[1] - borderWidth)) # Blits the text to the screen
+
+
+def draw_text_background(window, position, text, textObj, gap):
+    """Draws a semi-transparent background for the given text to make it more readable, accounting for multiple lines of text as well."""
+
+    text = text.split("\n")
+
+    # Getting longest string of text in the rows of text
+    longest = max(text, key = len)
+    # Getting the longest string of text rendered to a Pygame Surface
+    rendered = textObj.render(longest, False, constants.WHITE)
+
+    # Gets the size of the background using the rendered text
+    width = rendered.get_width() + 2
+    height = len(text) * gap + (rendered.get_height() - gap) + 2 # Gap is the height between each text object
+
+    bg = pygame.Surface((width, height)) # Creating surface with width and height
+    bg.fill(constants.BLACK) # Filling with black
+    bg.set_alpha(100) # Semi-transparent
+
+    alphaValues = pygame.surfarray.pixels_alpha(bg) # Used for editting the individual pixel alphas
+    # Removing the four corners (to look better)
+    for y in range(2):
+        for x in range(2):
+            alphaValues[x * width, y * height] = 0
+    
+    del alphaValues
+
+    # Drawing to the window
+    window.blit(bg, (position[0] - 1, position[1] - 1))
 
 
 def play_music(musicName) -> bool: # Successful or not
