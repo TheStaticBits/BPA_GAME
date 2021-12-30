@@ -449,6 +449,8 @@ class Loop():
                 if int(save["speedrunHighscore"]) < self.speedrunTime:
                     # Saving speedrun time
                     utility.modif_save({"speedrunHighscore": self.speedrunTime})
+                    # Updating time shown on the main menu
+                    self.scenes["mainMenu"].speedrunHighscore = self.speedrunTime
 
             # Sets up main menu
             self.scene = "mainMenu"
