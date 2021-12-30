@@ -38,7 +38,7 @@ def setup_loggers():
     rLogger.addHandler(console)
 
 
-def lock_neg1_zero_pos1(number):
+def lock_neg1_zero_pos1(number) -> int:
     """Locks a number to 1, 0, or -1 and returns that number"""
     if number > 0: return 1
     elif number < 0: return -1
@@ -63,7 +63,7 @@ def angle_to(pos1, pos2) -> float:
     return angle
 
 
-def distance_to(pos1, pos2):
+def distance_to(pos1, pos2) -> float:
     """Finds the distance between two points using the Pythagorean Theorem"""
     return math.sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2)
 
@@ -201,7 +201,7 @@ def load_spritesheet(
         width = None, # Width of each image
         frames = None # Frames in the animation
         # Choose either width or frames
-    ): 
+    ) -> list:
     """
     This function assumes the spritesheet is horizontal.
     It returns a list of all the frames of the spritesheet.
@@ -241,7 +241,7 @@ def check_between(
         vect,
         min,
         max
-    ):
+    ) -> bool:
     """Checks if a point is between the given minimum and maximums"""
     return min[0] <= vect[0] < max[0] and min[1] <= vect[1] < max[1]
 
