@@ -176,8 +176,7 @@ class TileRenderer:
         room, roomNum,
         surface, 
         backgroundTile,
-        level = None, # If it needs to be drawn over multiple levels, with the edges and corners being accurate with the other rooms in the level
-        roomNumber = None
+        level = None # If it needs to be drawn over multiple levels, with the edges and corners being accurate with the other rooms in the level
         ):
         """This function renders the SOLID tiles onto a given surface. It's not very efficient, and shouldn't be called every frame."""
         # Setting up background tile
@@ -213,7 +212,7 @@ class TileRenderer:
                         check = self.check_tile(room, x + offset, y) # If the tile being checked in relation to the tile being rendered is on the screen and transparent
 
                         if not check and level is not None:
-                            check = self.check_tile_across_rooms(roomNumber, level, x + offset, y)
+                            check = self.check_tile_across_rooms(roomNum, level, x + offset, y)
                         
                         if check:
                             # Creates the image of the edge with a rotation based on which direction the offset is checking. 
@@ -265,13 +264,13 @@ class TileRenderer:
                                         corner = room[y + offset][x + offset2] in constants.TRANSPARENT_TILES # If the corner tile is transparent
 
                                     elif level is not None:
-                                        corner = self.check_tile_across_rooms(roomNumber, level, x + offset2, y + offset)
+                                        corner = self.check_tile_across_rooms(roomNum, level, x + offset2, y + offset)
 
                                 if utility.check_between((x + offset2, y), (0, 0), constants.SCREEN_TILE_SIZE):
                                     edgeTile2 = room[y][x + offset2] in constants.TRANSPARENT_TILES # If the edge tile in the other direction of the corner is transparent
                                 
                                 elif level is not None:
-                                    edgeTile2 = self.check_tile_across_rooms(roomNumber, level, x + offset2, y)
+                                    edgeTile2 = self.check_tile_across_rooms(roomNum, level, x + offset2, y)
                                 
                                 else:
                                     edgeTile2 = False

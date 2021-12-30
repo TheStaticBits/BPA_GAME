@@ -102,8 +102,7 @@ class BossLevel(src.base_level.BaseLevel):
                 self.levels[self.level][room], room,
                 surf, 
                 self.levelData[self.level]["background"],
-                level = self.levels[self.level],
-                roomNumber = room
+                level = self.levels[self.level]
             )
             self.tileSurfaces.append(surf)
             

@@ -22,8 +22,6 @@ class MainMenu():
         # Function which takes a level number and removes the cutscenes from it
         self.remove_cutscenes = remove_cutscenes
         self.lvlsIndex = int(save["level"]) # For level selector
-        self.volume = int(save["volume"]) # For audio slider
-
         self.ending = int(save["unlockedEnding"])
 
         self.speedrunHighscore = save["speedrunHighscore"]
@@ -32,6 +30,7 @@ class MainMenu():
         self.crystal_x = pygame.image.load(constants.CRYSTAL_X_PATH).convert_alpha()
 
         arrow = pygame.image.load(constants.ARROW_PATH).convert_alpha()
+        cog = pygame.image.load(constants.COG_PATH)
 
         self.screenShadow = pygame.image.load(constants.SCREEN_SHADOW_PATH).convert_alpha()
         self.logo = pygame.image.load(constants.TIN_LOGO_PATH).convert_alpha()
@@ -56,19 +55,12 @@ class MainMenu():
             "start": (120, constants.SCREEN_SIZE[1] / 2, "Continue"),
             "newSave": (120, constants.SCREEN_SIZE[1] / 2 + 30, "Restart"), 
             "speedrun": (120, constants.SCREEN_SIZE[1] / 2 + 60, "Speedrun"), 
+            "settings": (32 + cog.get_width() / 2, constants.SCREEN_SIZE[1] / 2 - cog.get_height() / 2, cog),
 
             # Flips the left button arrow to face the left
             "left": (210, constants.SCREEN_SIZE[1] / 2 + 25, pygame.transform.flip(arrow, True, False)), 
             "right": (300, constants.SCREEN_SIZE[1] / 2 + 25, arrow),
-            "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play"),
-
-            # Check boxes on the right
-            "showText": (345, constants.SCREEN_SIZE[1] / 2 - 50, "check"),
-            "showCharacters": (345, constants.SCREEN_SIZE[1] / 2 + 10, "check"),
-
-            # Audio level buttons on the left
-            "volumeUp": (39, constants.SCREEN_SIZE[1] / 2 - 5, pygame.transform.rotate(arrow, 90)),
-            "volumeDown": (39, constants.SCREEN_SIZE[1] / 2 + 35, pygame.transform.rotate(arrow, 270)),
+            "play": (255, constants.SCREEN_SIZE[1] / 2 + 60, "Play")
         }
 
         # Populating the self.buttons dict with buttons created from the data in the buttons variable
@@ -83,18 +75,6 @@ class MainMenu():
                     text = value[2],
                     textOffset = 2
                 )
-            
-            elif value[2] == "check":
-                # Check button
-                self.buttons[key] = src.button.Button(
-                    value[0], value[1],
-                    imagePath = constants.CHECK_BOX_PATH,
-                    toggle = True, 
-                    toggledImgPath = constants.CHECK_MARK_PATH
-                )
-                
-                # Updating check box to match the save
-                self.buttons[key].toggled = int(save[key])
 
             else:
                 # Image button
@@ -174,24 +154,6 @@ class MainMenu():
                             else:
                                 # Setting to the ending the player got
                                 self.lvlsIndex = last_normal_level + self.ending
-                    
-                elif key == "volumeUp": # Pressed volume up button
-                    # Increasing the volume
-                    self.volume += 5
-                    if self.volume > 100: # Locking to 100 if above
-                        self.volume = 100
-                    self.logger.info(f"Audio level is now {self.volume}")
-                    # Setting volume
-                    pygame.mixer.music.set_volume(self.volume / 100)
-
-                elif key == "volumeDown": # Pressed volume down button
-                    # Decreasing volume level by 5
-                    self.volume -= 5
-                    if self.volume < 0: # Locking to zero if below it
-                        self.volume = 0
-                    self.logger.info(f"Audio level is now {self.volume}")
-                    # Setting volume
-                    pygame.mixer.music.set_volume(self.volume / 100)
 
                 elif key == "play": # Play button
                     if self.get_status(self.lvlsIndex)[0] != "Locked":
@@ -204,14 +166,6 @@ class MainMenu():
 
                 else:
                     return key
-
-
-    def render_text(self, window, text, position, color = constants.WHITE):
-        """Renders text centered on the x position. Also accounts for newlines."""
-        text = text.split("\n")
-        for count, txt in enumerate(text):
-            surf = self.otherTextFont.render(txt, False, color) # Rendering to a surface
-            window.blit(surf, (position[0] - surf.get_width() / 2, position[1] + count * 12)) # Centered
 
     
     def render(self, window):
@@ -231,26 +185,18 @@ class MainMenu():
             if self.ending != -1:
                 # Displaying highscore
                 highscore = utility.seconds_to_readable_time(float(self.speedrunHighscore))
-                self.render_text(window, "Highscore: " + highscore, (120, constants.SCREEN_SIZE[1] / 2 + 83))
+                utility.centered_text(window, "Highscore: " + highscore, (120, constants.SCREEN_SIZE[1] / 2 + 83), self.otherTextFont)
+                # Displaying warning message
+                utility.centered_text(window, "DOESN'T SAVE!", (120, constants.SCREEN_SIZE[1] / 2 + 95), self.otherTextFont)
             else:
-                self.render_text(window, "Locked!", (120, constants.SCREEN_SIZE[1] / 2 + 83))
+                utility.centered_text(window, "Locked!", (120, constants.SCREEN_SIZE[1] / 2 + 83), self.otherTextFont)
         
         # If the mouse is hovering over the Restart button, say that it wipes your data
         if self.buttons["newSave"].selected:
-            self.render_text(window, "IRREVERSIBLE!", (120, constants.SCREEN_SIZE[1] / 2 + 53))
-
-        # Check box text for showText button
-        self.render_text(window, "Show\nTutorial\nText", (345, constants.SCREEN_SIZE[1] / 2 - 40))
-        # Check box text for showText button
-        self.render_text(window, "Show\nEllipse\nand\nCorlen", (345, constants.SCREEN_SIZE[1] / 2 + 20))
-
-        # Render the audio text
-        self.render_text(window, "Music\nVolume", (39, constants.SCREEN_SIZE[1] / 2 - 35))
-        # Render the audio level
-        self.render_text(window, f"{self.volume}%", (39, constants.SCREEN_SIZE[1] / 2 + 15))
+            utility.centered_text(window, "IRREVERSIBLE!", (120, constants.SCREEN_SIZE[1] / 2 + 53), self.otherTextFont)
         
         # Draws the "level selector" text
-        self.render_text(window, "Level Selector", (255, constants.SCREEN_SIZE[1] / 2 + 5))
+        utility.centered_text(window, "Level Selector", (255, constants.SCREEN_SIZE[1] / 2 + 5), self.otherTextFont)
 
         if self.levelsList[self.lvlsIndex] != "Cutscene": # If the selected level isn't a cutscene
             # Level number not including cutscenes (and adding one so it doesn't start at zero)
@@ -258,15 +204,15 @@ class MainMenu():
         else:
             # Getting cutscene name
             text = self.levelData[self.lvlsIndex]["cutscene"]
-        self.render_text(window, text, (255, constants.SCREEN_SIZE[1] / 2 + 20))
+        utility.centered_text(window, text, (255, constants.SCREEN_SIZE[1] / 2 + 20), self.otherTextFont)
 
         # Rendering the type of level
-        self.render_text(window, self.levelsList[self.lvlsIndex], (255, constants.SCREEN_SIZE[1] / 2 + 30))
+        utility.centered_text(window, self.levelsList[self.lvlsIndex], (255, constants.SCREEN_SIZE[1] / 2 + 30), self.otherTextFont)
 
         levelStatus, color = self.get_status(self.lvlsIndex)
         
         # Rendering the status of the level, whether it's completed, unlocked, or locked
-        self.render_text(window, levelStatus, (255, constants.SCREEN_SIZE[1] / 2 + 45), color)
+        utility.centered_text(window, levelStatus, (255, constants.SCREEN_SIZE[1] / 2 + 45), self.otherTextFont, color)
 
         # If the level isn't a cutscene
         if "cutscene" not in self.levelData[self.lvlsIndex]and "crystal moves on" not in self.levelData[self.lvlsIndex]:
