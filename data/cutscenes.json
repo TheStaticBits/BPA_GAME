@@ -11,7 +11,7 @@
                 "ellipse face left",
                 "text create tutorialText",
                 "text tutorialText move 192 20",
-                "text tutorialText change Use W and D or LEFT and RIGHT to move!",
+                "text tutorialText change Use A and D or LEFT and RIGHT to move!",
                 "text tutorialText display",
                 "run testMoved"
             ]
