@@ -1271,7 +1271,7 @@ button 0, 10, 8 = -2
 o><^vooooooooooooooooooo
 ooooooooo    vvooooooooo
 oooo  ovv      ooooooooo
-o   p o        vvvvooo  
+o   p o        vvvvoooc 
 o  oooo   ^        ooo  
 o  voov ooo          ooo
 o   oo  ooo  oo^^^   ooo
@@ -1332,65 +1332,65 @@ oooooooooooooooooooooooo
 background = b
 music = Blue
 ------------------------
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+oooooooooooooooooooooooo
+o       oooooooooooooooo
+o       oo              
+o p     oo              
+oooo    oo    ^^        
+ov^o>  <oo>   oo    j  o
+o><o>  <oo>  <oo>      o
+oooo>  <oo>  <oo>      o
+oooo>  <oo>  <oo>      o
+oooo    vv    ooooo^^^^o
+oooo          oooooooooo
+oooo          oogooooooo
+oooo          oooooooooo
+oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o^v     oo              
+o       oo              
+        oo      oo  oooo
+   ooo  oo      vv  oooo
+   ooo> <ooo          oo
+oooooo> <ooo^^        oo
+oooooo> <ooooo        oo
+ovoooo> <ooooo        oo
+o  <oo   ooooo        oo
+o          vvv        oo
+o                     oo
+o                     oo
+o                     oo
+oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^vooooooooooooooooooo
+    ooo  ooo  ooo  ooooo
+oo  ooo  ooo  ooo  ooooo
+oo  ooo  ooo  ooo  ooooo
+oo  ooo  ooo  ooo  ooooo
+oo  ooo  ooo  ooo  ooooo
+oo  ooo  ooo  ooo  ooooo
+oo  ooo  ooo  ooo  ooooo
+oo  vvv  vov  voo  ooo  
+oo        v    vv  vvv  
+oo                      
+oo                      
+oo                      
+oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+o><^vooooooooooooooooooo
+ooo                     
+ooo                     
+ooo                     
+ooo    oo               
+ooooo  oo           ^^^ 
+ooo o  oo         oooooo
+ooo v  oo^^^   ^^^oooooo
+       ooooo   ooooooooo
+       ooooo   ooooooooo
+ ^^    ooooo   ooooooooo
+ oo    ooooo   ooooooooo
+ oo^^^^ooooo   ooooooooo
+oooooooooooo   ooooooooo
 ------------------------
 
 background = s
