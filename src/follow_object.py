@@ -71,7 +71,7 @@ class FollowObject(src.object_base.ObjectBase):
                 # stay floating in the air, for example. 
 
                 if self.followContinueFrames < self.followDistance:
-                    # If the entity needs to update its y position (because of gravity) or it isn't on a platform
+                    # If the entity's y position is not the same as the player's current y position (because of gravity) or it isn't on a platform
                     if self.rect.y != playerPositions[0][1] or not self.check_below(levels[self.level]):
                         self.followContinueFrames += 1
                 
@@ -109,7 +109,6 @@ class FollowObject(src.object_base.ObjectBase):
                 levels[self.level],
                 -1 # Checking to the left
             )
-
             super().update_x_collision(
                 levels[self.level][self.room],
                 self.room,
