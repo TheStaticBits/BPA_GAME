@@ -274,10 +274,9 @@ class Loop():
 
                     return None # Skips the rest
                 
-                if result != "speedrun": # Resetting save data
-                    if self.speedrun:
-                        self.speedrun = False
-                        self.load_save()
+
+                if result != "speedrun": # If it wasn't the speedrun button pressed, then turn off speedrun mode
+                    self.speedrun = False
 
                 self.switch_to_new_scene(self.level)
                 self.update()
@@ -451,6 +450,8 @@ class Loop():
                     utility.modif_save({"speedrunHighscore": self.speedrunTime})
                     # Updating time shown on the main menu
                     self.scenes["mainMenu"].speedrunHighscore = self.speedrunTime
+
+                self.speedrun = False
 
             # Sets up main menu
             self.scene = "mainMenu"
