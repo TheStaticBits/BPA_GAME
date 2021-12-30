@@ -445,7 +445,7 @@ class Loop():
 
             if self.speedrun:
                 # Setting new highscore if it is higher than the previous score
-                if int(save["speedrunHighscore"]) < self.speedrunTime:
+                if self.speedrunTime < float(save["speedrunHighscore"]):
                     # Saving speedrun time
                     utility.modif_save({"speedrunHighscore": self.speedrunTime})
                     # Updating time shown on the main menu
