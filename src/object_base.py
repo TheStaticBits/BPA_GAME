@@ -239,7 +239,7 @@ class ObjectBase:
                             self.rect.left = result.right
                             self.collisions["left"] = True
                         
-                        break
+                        return specialTiles # Exits
                     
                     elif result is not False:
                         specialTiles[result] = tilePos
