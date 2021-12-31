@@ -163,7 +163,7 @@ wwwvv           wwwwwwww
 wwv               wwwwww
 wv                 wwwww
 w                  www  
-w          ^ p  ^  www  
+w            p     www  
 ww      ww wwwwww  www  
 wwwwww  vv wwwwww  www  
 wwwwww^    vwwwwv  www  
@@ -179,7 +179,7 @@ w                      w
 w                      w
 w                www   w
 w           www  vvv   w
-w   wwwww   vvv        w
+w    www    vvv        w
 v    www         ^^^   w
      www    ^^^  www   w
      www    www  vvv   v
