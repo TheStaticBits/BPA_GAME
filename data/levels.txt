@@ -174,19 +174,19 @@ wwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwww^       
 wwwwwwwwwwwwwwwwww^^^^^^
 ||||||||||||||||||||||||
-wwwwwwwwww  www     wwww
-ww  wwwww             ww
+wwwwwwwwww <www     wwww
+www wwwww             ww
 ww   www               w
 ww               www   w
-ww          www  vvv   w
+ww         <www  vvv   w
 ww   www    vvv        w
 vv   www         ^^^   w
      www    ^^^  www   v
-     <w>    www  vvv    
+     <w>   <www  vvv    
      <w>    vvv         
      <w>         ^^^    
      <w>    ^^^  www    
-     <w>    www  c v    
+     <w>   <www  c v    
 ^^^^^wwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
 wwwwwwwwvvvvvvvvvvvvwwww
