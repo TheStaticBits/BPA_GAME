@@ -588,50 +588,50 @@ background = d
 music = Tunnels
 boss = Big Bite
 ------------------------
-d><^v                   
-                        
-                        
-          p             
-        ddddd           
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+d><^v         dd        
+   dd         dd        
+   dd         dd        
+   dd  p  ^   dd        
+   dddddddd   dd        
+   dddddddd   dd        
+   vvvvvvvv   dd   ^^   
+              vv   dd   
+                   dd   
+                   dd   
+                   dd   
+                   dd   
+                   dd   
+                   dd   
 ||||||||||||||||||||||||
-d><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+d><^v                ddd
+   dd                ddd
+   dd                ddd
+   dd                ddd
+   dd                ddd
+   dd   dd     dd    ddd
+   dd   dd^   ^dd    ddd
+   dd   ddddddddd    ddd
+   dd   ddddddddd    ddd
+   dd   ddddddddd    v  
+          ddddd         
+          ddddd         
+          ddddd         
+          ddddd         
 ||||||||||||||||||||||||
-d><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+d><^v               ddd 
+dd                  ddd 
+dd                  ddd 
+dd       dd         vvv 
+dd      ^dd             
+dd   dddddd             
+dd   dddddd             
+dd   dddddd             
+dd   dddddd             
+ v     dd               
+       dd       ^^^     
+       dd       ddd     
+       dd       ddd     
+       dd       ddd     
 ------------------------
 
 background = d
