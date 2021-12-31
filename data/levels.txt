@@ -642,9 +642,9 @@ dd   dddddd
            ^ ^ ^ ^   ddd
      ddddddv^v^v^v   ddd
      dddddd v v v       
-      dddd              
+      dddd   j j        
 ^^^    dd               
-ddd    dd               
+ddd    dd     c         
 ddd    dd               
 ddd    dd               
 ||||||||||||||||||||||||
@@ -1058,7 +1058,7 @@ eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeee               
 eeeeeeeee    eeeeeeeeeee
 eeeeeeeee    eeeeeeeeeee
-eeeeeeeee       vv   vv 
+eeeeeeeee       vv c vv 
 eeeeeeeee               
 eeeeeeeee               
 eeeeeeeee    eeeeeeeeeee
