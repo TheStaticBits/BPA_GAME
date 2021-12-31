@@ -265,7 +265,6 @@ class Loop():
                     self.speedrun = True
                     self.speedrunTime = 0
                     self.restart(save = constants.DEFAULT_SAVE, speedrun = True) # Doesn't wipe save data
-                    self.level = 27
                 
                 elif result == "settings":
                     # Switching to the settings scene
