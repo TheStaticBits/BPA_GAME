@@ -159,49 +159,49 @@ music = Belloq
 boss = Belloq
 entities = none
 ------------------------
-wwwvv           wwwwwwww
+wwwvv          vvwwwwwww
 wwv               wwwwww
 wv                 wwwww
 w                  www  
-w            p     www  
-ww      ww wwwwww  www  
+w                  www  
+ww  p   ww  wwww   www  
 wwwwww  vv wwwwww  www  
 wwwwww^    vwwwwv  www  
 wwwwwww     vwwv   www  
 wwwwwww^^  ^^ww         
 wwwwwwwww^^wwww^        
-wwwwwwwwwwwwwwww^       
-wwwwwwwwwwwwwwwww^    ^^
-wwwwwwwwwwwwwwwwww^^^^ww
+wwwwwwwwwwwwwwww       
+wwwwwwwwwwwwwwww^      
+wwwwwwwwwwwwwwwwww^^^^^^
 ||||||||||||||||||||||||
-w                      w
-w                      w
-w                      w
+wwwwwwwwww  www  vvvwwww
+ww  wwwww   vvv       ww
+w    www               w
 w                www   w
 w           www  vvv   w
 w    www    vvv        w
 v    www         ^^^   w
      www    ^^^  www   w
-     www    www  vvv   v
-     www    vvv         
-     www         ^^^    
-     www    ^^^  www    
-     www    www  c v    
-     wwwwwwwwwwwwwwwwwww
+     <w>    www  vvv   v
+     <w>    vvv         
+     <w>         ^^^    
+     <w>    ^^^  www    
+     <w>    www  c v    
+^^^^^wwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
-wwww                   w
-wwww                   w
+wwwwwww             wwww
+wwwww                 ww
 wwww                   w
 wwww                   w
 wwww                   w
 wwww   ^^   ww         w
-wwww   wwwwwww    ^^^   
-wwww   wwwww      www   
-   v   wwwww      www  w
-       wwww>      www  w
-       wwww>      www  w
-       wwwwwwwwwwwwwwwww
-       wwwwwwwwwwwwwwwww
+wwww   wwwwwww    ^^^  w
+wwww   wwwwww     www  w
+   v   wwwww      www   
+       wwww>      www   
+       wwww>     ^www^ w
+      wwwwwwwwwwwwwwwwww
+    wwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
 ------------------------
 
