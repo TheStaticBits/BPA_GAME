@@ -259,7 +259,6 @@ class Loop():
                     
                 elif result == "newSave": # "Restart" button pressed
                     self.restart()
-                    self.speedrun = False
                 
                 elif result == "speedrun": # "Speedrun" button pressed
                     # Setting up speedrun
@@ -444,6 +443,8 @@ class Loop():
             self.logger.info("Reached the end of all levels")
 
             if self.speedrun:
+                print(float(save["speedrunHighscore"]))
+                print(self.speedrunTime)
                 # Setting new highscore if it is higher than the previous score
                 if self.speedrunTime < float(save["speedrunHighscore"]):
                     # Saving speedrun time

@@ -21,17 +21,17 @@ wwww                wwww
 background = d
 music = normalDay
 ------------------------
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddddd            dddddd
 dddd                dddd
+ddd                  ddd
 dd                    dd
-d                      d
-d                      d
-                        
-                        
-                        
-                        
-                        
-                        
-d                      d
-d                      d
 dd                    dd
+dd                    dd
+dd                    dd
+ddd                  ddd
 dddd                dddd
+dddddd            dddddd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd

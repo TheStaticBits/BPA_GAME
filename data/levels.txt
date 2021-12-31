@@ -159,49 +159,49 @@ music = Belloq
 boss = Belloq
 entities = none
 ------------------------
-wwwvv           wwwwwwww
+wwwvv          vvwwwwwww
 wwv               wwwwww
 wv                 wwwww
 w                  www  
-w            p     www  
-ww      ww wwwwww  www  
+w                  www  
+ww  p   ww  wwww   www  
 wwwwww  vv wwwwww  www  
 wwwwww^    vwwwwv  www  
 wwwwwww     vwwv   www  
 wwwwwww^^  ^^ww         
 wwwwwwwww^^wwww^        
+wwwwwwwwwwwwwwww        
 wwwwwwwwwwwwwwww^       
-wwwwwwwwwwwwwwwww^    ^^
-wwwwwwwwwwwwwwwwww^^^^ww
+wwwwwwwwwwwwwwwwww^^^^^^
 ||||||||||||||||||||||||
-w                      w
-w                      w
-w                      w
-w                www   w
-w           www  vvv   w
-w    www    vvv        w
-v    www         ^^^   w
-     www    ^^^  www   w
-     www    www  vvv   v
-     www    vvv         
-     www         ^^^    
-     www    ^^^  www    
-     www    www  c v    
-     wwwwwwwwwwwwwwwwwww
+wwwwwwwwww <www     wwww
+www wwwww             ww
+ww   www               w
+ww               www   w
+ww         <www  vvv   w
+ww   www    vvv        w
+vv   www         ^^^   w
+     www    ^^^  www   v
+     <w>   <www  vvv    
+     <w>    vvv         
+     <w>         ^^^    
+     <w>    ^^^  www    
+     <w>   <www  c v    
+^^^^^wwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
-wwww                   w
-wwww                   w
-wwww                   w
-wwww                   w
-wwww                   w
-wwww   ^^   ww         w
-wwww   wwwwwww    ^^^   
-wwww   wwwww      www   
-   v   wwwww      www  w
+wwwwwwwwvvvvvvvvvvvvwwww
+wwwwwwvv              ww
+wwwwwv                 w
+wwwww                  w
+wwwww                  w
+wwwww  ^^   ww         w
+wwwww  wwwwwww    ^^^  w
+wwwwv  wwwwwwv    www  w
+v  v   wwwwwv     www  w
        wwww>      www  w
-       wwww>      www  w
-       wwwwwwwwwwwwwwwww
-       wwwwwwwwwwwwwwwww
+       wwww>      www   
+      wwwww>     ^www^  
+    wwwwwwww^^^^^wwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
 ------------------------
 
