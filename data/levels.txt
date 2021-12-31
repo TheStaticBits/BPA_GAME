@@ -159,50 +159,50 @@ music = Belloq
 boss = Belloq
 entities = none
 ------------------------
-w><^v                   
-                        
-                        
-                        
-      p                 
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+wwwvv           wwwwwwww
+wwv               wwwwww
+wv                 wwwww
+w                  www  
+w          ^ p  ^  www  
+ww      ww wwwwww  www  
+wwwwww  vv wwwwww  www  
+wwwwww^    vwwwwv  www  
+wwwwwww     vwwv   www  
+wwwwwww^^  ^^ww         
+wwwwwwwww^^wwww^        
+wwwwwwwwwwwwwwww^       
+wwwwwwwwwwwwwwwww^    ^^
+wwwwwwwwwwwwwwwwww^^^^ww
 ||||||||||||||||||||||||
-w><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+w                      w
+w                      w
+w                      w
+w                www   w
+w           www  vvv   w
+w   wwwww   vvv        w
+v    www         ^^^   w
+     www    ^^^  www   w
+     www    www  vvv   v
+     www    vvv         
+     www         ^^^    
+     www    ^^^  www    
+     www    www  c v    
+     wwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
-w><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+wwww                   w
+wwww                   w
+wwww                   w
+wwww                   w
+wwww                   w
+wwww   ^^   ww         w
+wwww   wwwwwww    ^^^   
+wwww   wwwww      www   
+   v   wwwww      www  w
+       wwww>      www  w
+       wwww>      www  w
+       wwwwwwwwwwwwwwwww
+       wwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
 ------------------------
 
 background = w
