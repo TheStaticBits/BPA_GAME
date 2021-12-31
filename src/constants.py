@@ -198,8 +198,8 @@ PLAYER_WIDTH = 8 # In pixels
 # The Belloq is the first boss
 # This holds the animations for the Belloq, their paths, frames, and delays
 BELLOQ_ANIMATIONS = utility.load_json("res/characters/belloq/animations.json")
-BELLOQ_SPEED = 0.5 # Pixels moved per frame
-BELLOQ_COOLDOWN = 80 # Frames between lazers
+BELLOQ_SPEED = 0.75 # Pixels moved per frame
+BELLOQ_COOLDOWN = 60 # Frames between lazers
 BELLOQ_LAZER_OFFSET = (33, 17) # Position of the eye in relation to the top left of the sprite
 # Where the lazer fires from
 

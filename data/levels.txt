@@ -588,7 +588,7 @@ background = d
 music = Tunnels
 boss = Big Bite
 ------------------------
-d><^v         dd        
+   dd         dd        
    dd         dd        
    dd         dd        
    dd  p  ^   dd        
@@ -603,7 +603,7 @@ d><^v         dd
                    dd   
                    dd   
 ||||||||||||||||||||||||
-d><^v                ddd
+   dd                ddd
    dd                ddd
    dd                ddd
    dd                ddd
@@ -618,7 +618,7 @@ d><^v                ddd
           ddddd         
           ddddd         
 ||||||||||||||||||||||||
-d><^v               ddd 
+dd                  ddd 
 dd                  ddd 
 dd                  ddd 
 dd       dd         vvv 
@@ -632,6 +632,36 @@ dd   dddddd
        dd       ddd     
        dd       ddd     
        dd       ddd     
+||||||||||||||||||||||||
+     dd              ddd
+     dd              ddd
+     dd              ddd
+     dd              ddd
+                     ddd
+            j   j    ddd
+           ^ ^ ^ ^   ddd
+     ddddddv^v^v^v   ddd
+     dddddd v v v       
+      dddd              
+^^^    dd               
+ddd    dd               
+ddd    dd               
+ddd    dd               
+||||||||||||||||||||||||
+ddddddddd   dd   dd   dd
+ddddddddd   dd   dd   dd
+ddddddddd   dd   dd   dd
+dddddddddddddddddddddddd
+dddddddddddddddddddddddd
+dddd        vv        vv
+dddd g                  
+dddd                    
+       ^^        ^^     
+       ddddddddddddddddd
+       ddddddddddddddddd
+       dd   dd   dd   dd
+       dd   dd   dd   dd
+       dd   dd   dd   dd
 ------------------------
 
 background = d
