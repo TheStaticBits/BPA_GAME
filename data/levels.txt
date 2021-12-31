@@ -190,8 +190,8 @@ vv   www         ^^^   w
 ^^^^^wwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
 wwwwwwwwvvvvvvvvvvvvwwww
-wwwwwwvv            vvww
-wwwwwv                vw
+wwwwwwvv              ww
+wwwwwv                 w
 wwwww                  w
 wwwww                  w
 wwwww  ^^   ww         w
