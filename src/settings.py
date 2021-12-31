@@ -117,7 +117,7 @@ class Settings:
         # Check box text for showCharacters button
         utility.render_text(window, "Show Ellipse and Corlen", (160, constants.SCREEN_SIZE[1] / 2 - 2), self.font)
         # Check box text for showFPS button
-        utility.render_text(window, "Show FPS Counter", (160, constants.SCREEN_SIZE[1] / 2 + 22), self.font)
+        utility.render_text(window, "Show Frames Per Second", (160, constants.SCREEN_SIZE[1] / 2 + 22), self.font)
 
         # Render the audio text
         utility.centered_text(window, "Music\nVolume", (100, constants.SCREEN_SIZE[1] / 2 - 35), self.font)

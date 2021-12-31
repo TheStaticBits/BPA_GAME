@@ -187,9 +187,9 @@ class MainMenu():
                 highscore = utility.seconds_to_readable_time(float(self.speedrunHighscore))
                 utility.centered_text(window, "Highscore: " + highscore, (120, constants.SCREEN_SIZE[1] / 2 + 83), self.otherTextFont)
                 # Displaying warning message
-                utility.centered_text(window, "DOESN'T SAVE!", (120, constants.SCREEN_SIZE[1] / 2 + 95), self.otherTextFont)
+                # utility.centered_text(window, "DOESN'T SAVE!", (120, constants.SCREEN_SIZE[1] / 2 + 95), self.otherTextFont)
             else:
-                utility.centered_text(window, "Locked!", (120, constants.SCREEN_SIZE[1] / 2 + 83), self.otherTextFont)
+                utility.centered_text(window, "Finish the game to\nunlock speedrun mode.", (120, constants.SCREEN_SIZE[1] / 2 + 83), self.otherTextFont)
         
         # If the mouse is hovering over the Restart button, say that it wipes your data
         if self.buttons["newSave"].selected:

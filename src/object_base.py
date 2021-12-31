@@ -239,7 +239,7 @@ class ObjectBase:
                             self.rect.left = result.right
                             self.collisions["left"] = True
                         
-                        break
+                        return specialTiles # Exits
                     
                     elif result is not False:
                         specialTiles[result] = tilePos
@@ -287,7 +287,7 @@ class ObjectBase:
                                 self.rect.bottom = result.top
                                 self.collisions["down"] = True
                             
-                            break
+                            return specialTiles # Ending collision testing
                     
                         else: # If modif was explicitly set to be false
                             if result is not False:
