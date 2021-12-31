@@ -1035,50 +1035,80 @@ background = e
 music = Stairs
 boss = Red Stare
 ------------------------
-e><^v                   
+e><^v            ee     
+eee              ee     
+eee        eee   ee     
+eee       eeee   ee     
+eee      eeeee   ee     
+eee  p  eeeeee   vv   ee
+eeeeeeeeeeeeee        ee
+eeeeeeeeeeeeee        ee
+eeeeeeeeeeeeee        ee
+eeee      eeee        ee
+eee        eee        ee
+ee          ee        ee
+ee          ee        ee
+ee          ee        ee
+||||||||||||||||||||||||
+e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
+ eeeeeeeee   eeeeeeeeeee
+  eeeeeee      v v v v v
                         
-     p                  
-   eeeee                
+eeeeeeeee               
+eeeeeeeee    eeeeeeeeeee
+eeeeeeeee    eeeeeeeeeee
+eeeeeeeee       vv   vv 
+eeeeeeeee               
+eeeeeeeee               
+eeeeeeeee    eeeeeeeeeee
+eeeeeeeee    eeeeeeeeeee
+eeeeeeeee    eeeeeeeeeee
+||||||||||||||||||||||||
+e><^veeeeeeeeeeeeee   ee
+e    eeee      eeee   ee
+e    eeee      eeee   ee
+     eeeeee  eeeeee   ee
+                      ee
+    eeeeeeeeeeeeeeee  ee
+e   eeeeeeeeeeeeeeee  ee
+e   eeeeeeeeeeeeeeee  ee
+    eeeeeeeeeeeeeeee  ee
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+    eeeeeee  eeeeee     
+e   eeeee      eeee     
+e   eeeee      eeee     
+e   eeeeeeeeeeeeeee     
+||||||||||||||||||||||||
+e><^v          eeeeeeeee
+ee             eeeeeeeee
+ee                      
+ee           eeeeeee  ee
+ee           eeeeeee  ee
+ee  eeee                
+ee  eeee   eeeeeeeeeeeee
+ee  eeee   eeeeeeeeeeeee
+ee  eeee                
+    eeee     eeeeeee  ee
+    eeee     eeeeeee  ee
+    eeee                
+    eeee       eeeeeeeee
+    eeee       eeeeeeeee
 ||||||||||||||||||||||||
 e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-e><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+eee                     
+  e                     
+eee                     
+eee     ee              
+        ee    ^  ^  ^   
+eeeeee  ee  eeeeeeeeeeee
+eeeeee  ee  eeeeeeeeeeee
+        ee    v  v  v   
+eee     ee              
+eee                     
+  e                     
+eee                     
+eee                     
 ------------------------
 
 background = e

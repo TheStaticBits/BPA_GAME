@@ -222,7 +222,7 @@ BIG_BITE_ATTACK_DELAY = (5, 40) # The delay between each attack in frames. It is
 RED_STARE_ANIMATIONS = utility.load_json("res/characters/red_stare/animations.json")
 RED_STARE_COOLDOWN = 50 # Frames between each time it pops up from below the screen to throw its mouth
 RED_STARE_POPUP_RANGE = 100 # Pixels in each direction from the player's X that it can popup at (it's random)
-RED_STARE_POPUP_SPEED = 1 # How many pixels it moves to popup per frame
+RED_STARE_POPUP_SPEED = 2 # How many pixels it moves to popup per frame
 RED_STARE_MOUTH_OFFSET = (23, -21) # The offset of the mouth from the top left of the sprite
 RED_STARE_MOUTH_SPEED = 1
 
