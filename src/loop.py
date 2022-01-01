@@ -452,8 +452,8 @@ class Loop():
             self.logger.info("Reached the end of all levels")
 
             if self.speedrun:
-                # Setting new highscore if it is higher than the previous score
-                if self.speedrunTime < float(save["speedrunHighscore"]):
+                # Setting new highscore if it is higher than the previous score or if it's the first time
+                if save["speedrunHighscore"] == "---" or self.speedrunTime < float(save["speedrunHighscore"]):
                     # Saving speedrun time
                     utility.modif_save({"speedrunHighscore": self.speedrunTime})
                     # Updating time shown on the main menu

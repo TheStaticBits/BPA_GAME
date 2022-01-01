@@ -184,7 +184,11 @@ class MainMenu():
         if self.buttons["speedrun"].selected:
             if self.ending != -1:
                 # Displaying highscore
-                highscore = utility.seconds_to_readable_time(float(self.speedrunHighscore))
+                # --- means no highscores have ever been set
+                if self.speedrunHighscore != "---":
+                    highscore = utility.seconds_to_readable_time(float(self.speedrunHighscore))
+                else:
+                    highscore = "---"
                 utility.centered_text(window, "Highscore: " + highscore, (120, constants.SCREEN_SIZE[1] / 2 + 83), self.otherTextFont)
                 # Displaying warning message
                 # utility.centered_text(window, "DOESN'T SAVE!", (120, constants.SCREEN_SIZE[1] / 2 + 95), self.otherTextFont)
