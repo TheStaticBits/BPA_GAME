@@ -1415,7 +1415,7 @@ o       oo
 oooooo> <ooo^^        oo
 oooooo> <ooooo        oo
 ovoooo> <ooooo        oo
-o  <oo   ooooo        oo
+o c<oo   ooooo        oo
 o          vvv        oo
 o                     oo
 o                     oo
@@ -1480,15 +1480,15 @@ crystal moves on = all crystals
 ------------------------
 o><^vooooooooooooooooooo
 oooooooooooooooooooooooo
-o        oooo          o
+o                      o
 o    p   oooo          o
-ooooooo  oooo^^        o
-ooooooo  oooooo    oo  o
-ooooooo  oooooo^^  oo   
+ooooooo  oooo          o
+ooooooo  oooooo         
+ooooooo  oooooo         
 ooooooo    oooooo  ooooo
  ooooo     oooooo  ooooo
-  ooo        oooo  ooooo
-  ooo        oooo  oooo 
+  ooo              ooooo
+  ooo              oooo 
   ooo              ooo  
   ooo              oo   
   ooo              oo   
@@ -1498,7 +1498,7 @@ ooooooo    oooo
 ovvvoo      oo          
 o   oo      oo          
 o   oo      oo          
-o   oo  oo  vv  oo      
+        oo  vv  oo      
         oo      oo^     
 oooooooooo      oooooooo
 oooooooooo      oooooooo
@@ -1528,9 +1528,9 @@ oo
 oo                      
 oooooooooooooooooooooooo
 oooooooooooooooooooooooo
-oo       vv      vv     
-oo g ^^              ^^ 
-oo   oo              oo 
+oo       v        v     
+oo g ^                ^ 
+oo   o                o 
 oo   oo      ^^      oo 
 oo   oooooooooooooooooo 
      oooooooooooooooooo 
