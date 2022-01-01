@@ -1473,16 +1473,16 @@ ssssssssssssssssssssssss
 ssssssssssssssssssssssss
 ------------------------
 
-background = o
+background = b
 music = FINALE
 boss = Belloq, Red Stare, Big Bite
 crystal moves on = all crystals
 ------------------------
 o><^vooooooooooooooooooo
 oooooooooooooooooooooooo
-         oooo          o
-         oooo          o
-oo p oo  oooo^^        o
+o        oooo          o
+o    p   oooo          o
+ooooooo  oooo^^        o
 ooooooo  oooooo    oo  o
 ooooooo  oooooo^^  oo   
 ooooooo    oooooo  ooooo
@@ -1498,8 +1498,8 @@ ooooooo    oooo
 ovvvoo      oo          
 o   oo      oo          
 o   oo      oo          
-o   oo  oo  oo  oo      
-        oo  vv  oo^^   ^
+o   oo  oo  vv  oo      
+        oo      oo^     
 oooooooooo      oooooooo
 oooooooooo      oooooooo
       oooo      ooo     
