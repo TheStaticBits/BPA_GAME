@@ -165,8 +165,15 @@ class Loop():
 
     def increment_index(self):
         """Sets the level to completed and adds one to the current level index"""
-        self.levelsCompleted[self.level] = 1
-        self.level += 1
+        
+        # If the level was already an ending level before incrementing
+        # then set the level beyond the final level to end it
+        if self.level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
+            self.level = len(self.levels)
+        
+        else:
+            self.levelsCompleted[self.level] = 1
+            self.level += 1
 
 
     def remove_cutscenes(self, levelNum):
@@ -218,6 +225,7 @@ class Loop():
         if self.speedrun and self.scene not in ("mainMenu", "pauseMenu"):
             # Adding time to the speedrun timer
             self.speedrunTime += 1/60 # Each frame is 1/60 of a second
+
 
         if self.transitionImg is not None:
             # Updating transition alpha if currently in a transition
@@ -280,7 +288,6 @@ class Loop():
                 self.switch_to_new_scene(self.level)
                 self.update()
         
-
         elif self.scene == "settings":
             result = self.scenes["settings"].update(self.window.mousePos, self.window.mousePressed)
 
@@ -296,7 +303,6 @@ class Loop():
                     self.start_transition()
                     self.scene = "mainMenu"
 
-        
         elif self.scene == "pauseMenu": # Updating pause menu
             result = self.scenes["pauseMenu"].update(
                 self.window.inputs, 
