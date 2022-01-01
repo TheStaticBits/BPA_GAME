@@ -1576,25 +1576,25 @@ WWWWWWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWWWWWW
 ------------------------
 
-background = o, w
+background = b, w
 music = FINALE
 cutscene = True Ending
 ending = all crystals
 ------------------------
-               ooooooooo
-               ooooooooo
-               ooooooooo
-                        
-                        
-                        
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
+  oo           ooooooooo
+  oo           ooooooooo
+ ooo           ooooooooo
+oooo                    
+oooo                    
+  g                     
+oooo           ooooooooo
+oooo           ooooooooo
+oooo           ooooooooo
+oooo           ooooooooo
+ ooo           ooooooooo
+  oo           ooooooooo
+  oo           ooooooooo
+  oo           ooooooooo
 ||||||||||||||||||||||||
                         
                         

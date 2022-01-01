@@ -165,8 +165,15 @@ class Loop():
 
     def increment_index(self):
         """Sets the level to completed and adds one to the current level index"""
-        self.levelsCompleted[self.level] = 1
-        self.level += 1
+        
+        # If the level was already an ending level before incrementing
+        # then set the level beyond the final level to end it
+        if self.level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
+            self.level = len(self.levels)
+        
+        else:
+            self.levelsCompleted[self.level] = 1
+            self.level += 1
 
 
     def remove_cutscenes(self, levelNum):
@@ -219,6 +226,7 @@ class Loop():
             # Adding time to the speedrun timer
             self.speedrunTime += 1/60 # Each frame is 1/60 of a second
 
+
         if self.transitionImg is not None:
             # Updating transition alpha if currently in a transition
             if self.transitionMode == "into": # Fading to black
@@ -250,8 +258,11 @@ class Loop():
             result = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
 
             if result is not None:
+                testEnding = True
+
                 if result == "play": # "Play" button pressed
                     self.level = self.scenes["mainMenu"].lvlsIndex
+                    testEnding = False
                 
                 elif result == "start": # "Continue" button pressed
                     # Sets the level to the last uncompleted level
@@ -277,10 +288,9 @@ class Loop():
                 if result != "speedrun": # If it wasn't the speedrun button pressed, then turn off speedrun mode
                     self.speedrun = False
 
-                self.switch_to_new_scene(self.level)
+                self.switch_to_new_scene(self.level, testEnding)
                 self.update()
         
-
         elif self.scene == "settings":
             result = self.scenes["settings"].update(self.window.mousePos, self.window.mousePressed)
 
@@ -296,7 +306,6 @@ class Loop():
                     self.start_transition()
                     self.scene = "mainMenu"
 
-        
         elif self.scene == "pauseMenu": # Updating pause menu
             result = self.scenes["pauseMenu"].update(
                 self.window.inputs, 
@@ -432,7 +441,7 @@ class Loop():
         return surf
 
 
-    def switch_to_new_scene(self, level):
+    def switch_to_new_scene(self, level, testEnding = True):
         """Switches to a new scene based on the level id it's given to switch to"""
         save = utility.load_save()
 
@@ -443,10 +452,8 @@ class Loop():
             self.logger.info("Reached the end of all levels")
 
             if self.speedrun:
-                print(float(save["speedrunHighscore"]))
-                print(self.speedrunTime)
-                # Setting new highscore if it is higher than the previous score
-                if self.speedrunTime < float(save["speedrunHighscore"]):
+                # Setting new highscore if it is higher than the previous score or if it's the first time
+                if save["speedrunHighscore"] == "---" or self.speedrunTime < float(save["speedrunHighscore"]):
                     # Saving speedrun time
                     utility.modif_save({"speedrunHighscore": self.speedrunTime})
                     # Updating time shown on the main menu
@@ -464,15 +471,14 @@ class Loop():
 
         # Checking if the level is an ending
         if level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
-            # If the player hasn't unlocked an ending yet
-            if int(save["unlockedEnding"]) == -1:
+            if testEnding:
                 # Iterating through from 0 to the amount of endings there are
                 for lvl in range(constants.AMOUNT_OF_ENDINGS):
                     # level being checked
                     levelID = len(self.levels) - constants.AMOUNT_OF_ENDINGS + lvl
                     
                     if self.check_crystals(self.levelData[levelID]["ending"]):
-                        level += lvl # Setting to that ending
+                        level = levelID # Setting to that ending
                         self.level = level
                         self.ending = lvl + 1
                         utility.modif_save({"unlockedEnding": lvl + 1}) # Saving the ending
