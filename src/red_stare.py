@@ -103,7 +103,7 @@ class RedStare:
                 self.mouthPos[0] += math.cos(self.mouthDegree) * velocity
                 self.mouthPos[1] += math.sin(self.mouthDegree) * velocity
 
-                if round(currDis) == 0: # If the mouth reached its end point
+                if currDis < 1.5: # If the mouth reached its end point
                     if not self.mouthGoingBack:
                         self.logger.info("Reversing direction")
                         # If the mouth needs to turn back to the body
