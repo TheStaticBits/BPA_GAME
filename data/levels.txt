@@ -1478,80 +1478,80 @@ music = FINALE
 boss = Belloq, Red Stare, Big Bite
 crystal moves on = all crystals
 ------------------------
-o><^v                   
+o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
+         oooo          o
+         oooo          o
+oo p oo  oooo^^        o
+ooooooo  oooooo    oo  o
+ooooooo  oooooo^^  oo   
+ooooooo    oooooo  ooooo
+ ooooo     oooooo  ooooo
+  ooo        oooo  ooooo
+  ooo        oooo  oooo 
+  ooo              ooo  
+  ooo              oo   
+  ooo              oo   
+||||||||||||||||||||||||
+o><^vooooooooooooooooooo
+ooooooo    oooo         
+ovvvoo      oo          
+o   oo      oo          
+o   oo      oo          
+o   oo  oo  oo  oo      
+        oo  vv  oo^^   ^
+oooooooooo      oooooooo
+oooooooooo      oooooooo
+      oooo      ooo     
+       ooo      oo      
+        oo      oo      
+        ooo    ooo      
+        oooooooooo      
+||||||||||||||||||||||||
+o><^vjgooooooooooooooooo
+                       o
                         
                         
-p                       
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                j       
+ oo   oo   oo       oo  
+^oo^^^oo^^^oo^^^^^^^oo  
+oooooooooooooooooooooo  
+oooooooooooooooooooooo  
+oooo oooo oooo     ooo  
+ oo   oo   oo       oo  
+ oo   oo   oo       oo  
+ oo   oo   oo       oo  
+ oo   oo   oo       oo  
 ||||||||||||||||||||||||
 o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+oo                      
+oo                      
+oooooooooooooooooooooooo
+oooooooooooooooooooooooo
+oo       vv      vv     
+oo g ^^              ^^ 
+oo   oo              oo 
+oo   oo      ^^      oo 
+oo   oooooooooooooooooo 
+     oooooooooooooooooo 
+     ooooo        ooooo 
+     ooo            ooo 
+     oo              oo 
 ||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-o><^v                   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-||||||||||||||||||||||||
-               ooooooooo
-               ooooooooo
-               ooooooooo
-                        
-                   c    
-                        
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
-               ooooooooo
+  oo           ooooooooo
+  oo           ooooooooo
+ ooo           ooooooooo
+oooo                    
+oooo               c    
+  g                     
+oooo           ooooooooo
+oooo           ooooooooo
+oooo           ooooooooo
+oooo           ooooooooo
+ ooo           ooooooooo
+  oo           ooooooooo
+  oo           ooooooooo
+  oo           ooooooooo
 ------------------------
 
 background = W
