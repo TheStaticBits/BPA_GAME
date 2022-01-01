@@ -1415,7 +1415,7 @@ o       oo
 oooooo> <ooo^^        oo
 oooooo> <ooooo        oo
 ovoooo> <ooooo        oo
-o  <oo   ooooo        oo
+o c<oo   ooooo        oo
 o          vvv        oo
 o                     oo
 o                     oo
