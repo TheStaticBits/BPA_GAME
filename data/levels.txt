@@ -1576,7 +1576,7 @@ WWWWWWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWWWWWW
 ------------------------
 
-background = o, w
+background = b, w
 music = FINALE
 cutscene = True Ending
 ending = all crystals
