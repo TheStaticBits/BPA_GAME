@@ -258,8 +258,11 @@ class Loop():
             result = self.scenes["mainMenu"].update(self.window.mousePos, self.window.mousePressed)
 
             if result is not None:
+                testEnding = True
+
                 if result == "play": # "Play" button pressed
                     self.level = self.scenes["mainMenu"].lvlsIndex
+                    testEnding = False
                 
                 elif result == "start": # "Continue" button pressed
                     # Sets the level to the last uncompleted level
@@ -285,7 +288,7 @@ class Loop():
                 if result != "speedrun": # If it wasn't the speedrun button pressed, then turn off speedrun mode
                     self.speedrun = False
 
-                self.switch_to_new_scene(self.level)
+                self.switch_to_new_scene(self.level, testEnding)
                 self.update()
         
         elif self.scene == "settings":
@@ -438,7 +441,7 @@ class Loop():
         return surf
 
 
-    def switch_to_new_scene(self, level):
+    def switch_to_new_scene(self, level, testEnding = True):
         """Switches to a new scene based on the level id it's given to switch to"""
         save = utility.load_save()
 
@@ -449,8 +452,6 @@ class Loop():
             self.logger.info("Reached the end of all levels")
 
             if self.speedrun:
-                print(float(save["speedrunHighscore"]))
-                print(self.speedrunTime)
                 # Setting new highscore if it is higher than the previous score
                 if self.speedrunTime < float(save["speedrunHighscore"]):
                     # Saving speedrun time
@@ -470,15 +471,14 @@ class Loop():
 
         # Checking if the level is an ending
         if level >= len(self.levels) - constants.AMOUNT_OF_ENDINGS:
-            # If the player hasn't unlocked an ending yet
-            if int(save["unlockedEnding"]) == -1:
+            if testEnding:
                 # Iterating through from 0 to the amount of endings there are
                 for lvl in range(constants.AMOUNT_OF_ENDINGS):
                     # level being checked
                     levelID = len(self.levels) - constants.AMOUNT_OF_ENDINGS + lvl
                     
                     if self.check_crystals(self.levelData[levelID]["ending"]):
-                        level += lvl # Setting to that ending
+                        level = levelID # Setting to that ending
                         self.level = level
                         self.ending = lvl + 1
                         utility.modif_save({"unlockedEnding": lvl + 1}) # Saving the ending
