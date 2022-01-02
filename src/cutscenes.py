@@ -367,7 +367,7 @@ class Cutscenes():
             
             # Checks if a tile object has reached its destination
             elif cond[0] in self.tileObjects:
-                if cond[1] == "reachedDestination":
+                if cond[0] == "reachedDestination":
                     if self.tileObjects[cond[0]]["pos"] == self.tileObjects[cond[1]]["moveTo"]:
                         return True
             
