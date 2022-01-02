@@ -341,16 +341,18 @@ class Cutscenes():
                     checking = self.objects[cond[0]]["room"]
                 
                 command = " ".join(cond[2:])
-
+                # Takes the rest of the command and checks it with the new data value
                 return eval(f"{checking} {command}")
             
-            if cond[0] == "room":
+            if cond[0] == "room": # Checks the room number
                 return eval(f"{self.room} {cond[1]} {cond[2]}")
                 
-            elif cond == ["fade", "done"]:
+            elif cond == ["fade", "done"]: # Checks if the fade is done
                 return self.fadeDone
             
             elif cond[0] == "crystals":
+                # Takes whether the player has collected all the crystals in the level up to the cutscene
+                # and runs the rest of the command against it
                 levelWithoutCutscenes = self.remove_cutscenes(self.levelNum)
 
                 result = True
@@ -363,7 +365,14 @@ class Cutscenes():
 
                 return eval(f"{result} {command}")
             
+            # Checks if a tile object has reached its destination
+            elif cond[0] in self.tileObjects:
+                if cond[1] == "reachedDestination":
+                    if self.tileObjects[cond[0]]["pos"] == self.tileObjects[cond[1]]["moveTo"]:
+                        return True
+            
             else:
+                # Oh no! The conditional is invalid!
                 self.logger.error(f"Unknown cutscene conditional {conditional}")
                 utility.warning_box(f"Unknown cutscene conditional {conditional}")
                 return False
