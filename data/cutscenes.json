@@ -948,6 +948,7 @@
             "belloqDoneWalking": "belloq x > 20",
             "bigBiteDoneWalking": "bigBite x > 20",
             "redStareDoneWalking": "redStare x > 20",
+            "crystalsFinished": "c21 reachedDestination",
             "fadeBlueDone": "fade done",
             "corlenOffscreen": "corlen room == 1",
             "corlenBack": "corlen room == 0 and corlen x <= 334",
@@ -987,7 +988,8 @@
 
                 "wait ellipseHide"
             ], "ellipseHide": [
-                "text ellipse hide"
+                "text ellipse hide",
+                "run crystalsFinished"
             ],
             
             "c3Move": [
@@ -1064,12 +1066,10 @@
                 "delay 10 c21Move"
             ], "c21Move": [
                 "c21 teleport 314 80",
-                "c21 moveTo 192 8",
-
-                "delay 100 fadeBlue"
+                "c21 moveTo 192 8"
             ],
 
-            "fadeBlue": [
+            "crystalsFinished": [
                 "fade 3 166 198 255",
                 "run fadeBlueDone"
             ],

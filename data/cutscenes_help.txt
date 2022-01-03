@@ -107,3 +107,6 @@ crystal [operator] [number]
 
 fade done
  - checks if the fade has finished
+
+[tileObject] reachedDestination
+ - checks if the tile object has reached its destination

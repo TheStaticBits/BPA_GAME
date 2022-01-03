@@ -7,6 +7,7 @@ import time
 import math
 import sqlite3
 import os
+import re
 import win32api
 import logging
 import smtplib, ssl
@@ -106,6 +107,18 @@ def seconds_to_readable_time(time) -> str:
         final = f"{hours}:{final}"
     if days > 0:
         final = f"{days}:{final}"
+    
+    # Goes through the readable time and adds a zero in front of the number if there's only one digit
+    # (Does not apply for numbers on the far left)
+    # For example: "1:2:3.2" becomes "1:02:03.02"
+    sep = re.split("\.|\:", final) # Split the string either by a "." or a ":"
+    letterIndex = 0
+    for numIndex, num in enumerate(sep):
+        if numIndex != 0 and len(num) == 1:
+            final = final[:letterIndex] + "0" + final[letterIndex:]
+            letterIndex += 1
+
+        letterIndex += len(num) + 1
 
     return final
 
