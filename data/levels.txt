@@ -57,7 +57,7 @@ wwwwwww        ww
 wwwwwww        ww       
 wwwwwwwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
-v^><wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwww   
 wwwwwwwwwwwwwwwwwwwww   
 wwwwwwwwwwwwwwwwwwwww   
@@ -72,7 +72,7 @@ www   ^^    ww         w
       ww^^^^ww^        w
 wwwwwwwwwwwwwwwwwwwwwwww
 ||||||||||||||||||||||||
-v^><wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
                wwwwwwwww
                ww      w
            ww  ww      w
@@ -93,7 +93,7 @@ music = ThereIsSomethingV2
 entities = none
 text 3 = \n\n\n\n\n\n\n\n\n\n\n\n\nBeware the upcoming boss...\nDon't get zapped by its lazers!
 ------------------------
-w^><wwwww           wwww
+wwwwwwwww           wwww
 wwwwwwwww           wwww
 w     www           wwww
 w     www           wwww
@@ -108,7 +108,7 @@ w
 w^^^^^^^^^^            w
 wwwwwwwwwww            w
 ||||||||||||||||||||||||
-v^><wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwww
@@ -123,10 +123,10 @@ wwwww       ^^^^     www
 ww        wwwwww     www
 ww        wwwwww     www
 ||||||||||||||||||||||||
-w               ww> <ww 
-w               ww> <ww 
-w               ww^^^ww 
-w   ^           wwwwwww 
+ww              ww> <ww 
+ww              ww> <ww 
+ww              ww^^^ww 
+ww  ^           wwwwwww 
 wwwww           wwwwwww 
 wwwww     ^     v v v v 
 wwwww     w             
@@ -138,11 +138,11 @@ wwwwwwww  www   ^ ^ ^ ^
 wwww       w    ww> <ww 
 wwww       w    ww> <ww 
 ||||||||||||||||||||||||
-v^><w          w    wwww
+wwwww          w    wwww
                w    wwww
                w        
-      ww ww   ^w^       
-      ww^ww   www       
+      wwwww   ^w^       
+      wwwww   www       
      wwww     v v   wwww
      wwww           wwww
   wwwwwww         wwwwww
@@ -243,9 +243,9 @@ wwwwwwwwwwwwwwwwwwwwwwww
 background = d
 music = DeepBelow
 text 0 = Jump while touching\nthe orb to JUMP MIDAIR!
-text 1 = Jump orbs also work\nbelow the gravity line!
+text 1 = Double jump orbs also work\nbelow the gravity line!
 ------------------------
-v^><jddddddddddddddddddd
+dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 d            ddddd      
 d             ddd       
@@ -260,7 +260,7 @@ ddddddddddd        ddddd
 ddddddddddd^^^^^^^^ddddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-v^><ddddddd       dddddd
+ddddddddddd       dddddd
 dddddd    v         vddd
             j ^      d  
               dd     d  
@@ -275,7 +275,7 @@ dd      ddd   dd
 dd^^^^^^ddd   dd        
 ddddddddddd   dd        
 ||||||||||||||||||||||||
-v^><wddddddddddddddddddd
+ddddwddddddddddddddddddd
 ddddddddddddddddddd     
            dd    dd     
                         
@@ -290,7 +290,7 @@ ddddd    <dd^^^ddddddddd
           dddddddddddddd
           dddddddddddddd
 ||||||||||||||||||||||||
-v^><wp  dddddd       ddd
+dddddddddddddd       ddd
         dddddd       ddd
         dddddd       ddd
         dddddd       ddd
@@ -309,7 +309,7 @@ vv               d
 background = d
 music = DeepBelow
 ------------------------
-v^><wddddddddddddddddddd
+dddddddddddddddddddddddd
 ddddddddd               
 ddddddddd               
 d      dd               
@@ -324,7 +324,7 @@ dddd       ddddddd     d
 dddd       ddddddd     d
 dddd       ddddddddddddd
 ||||||||||||||||||||||||
-dddddddddddddddddddd><^v
+dddddddddddddddddddddddd
    ddd      dddddd      
    ddd      dddddd      
    ddv      dddddd      
@@ -339,7 +339,7 @@ dddd    dd
 dddd    dd^        ^dddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-dddddjgdddddddd         
+ddddddddddddddd         
                         
                         
                     dddd
@@ -360,10 +360,10 @@ dddddddddddd        dddd
 dd  dd   dd  dd   j   dd
 dd     j dd  dd       dd
 dddd     dd  dd       dd
-dd^d     dd  vv  ^^^  dd
-ddvd     dd      ddd  dd
-dd<d     dd      ddd  dd
-dd>d     dd      ddd    
+dddd     dd  vv  ^^^  dd
+dddd     dd      ddd  dd
+dddd     dd      ddd  dd
+dddd     dd      ddd    
 dddd     dd      ddd    
 dddd   j dd      ddd    
 dddd     dd      ddd    
@@ -373,22 +373,22 @@ dddd     dd      ddd
 background = d
 music = DeepBelow
 ------------------------
-d   j               dddd
+d                   dddd
 d                   dddd
 d                   dddd
 dp    j ^   ^   ^   dddd
 dddd    d   d   dddddddd
 dddd    d   d   dddddddd
 dddd^^^^d   d   dddddddd
-<dddddddd   d   dddddddd
->dddddvvv   d   dddddddd
-^ddddd      d   dddddddd
-v           d   v       
+ddddddddd   d   dddddddd
+ddddddvvv   d   dddddddd
+dddddd      d   dddddddd
+d           d   v       
 d           d           
 d           d           
 ddddddddd   d           
 ||||||||||||||||||||||||
-v^><wp   dd    dd       
+dddddd   dd    dd       
 dd       dd    dd       
 dd       dd    dd    ddd
 ddddd    dd    dd  j ddd
@@ -403,22 +403,22 @@ dd  dd j dd   <ddd   ddd
     dd         ddd   ddd
     dd        <ddd   ddd
 ||||||||||||||||||||||||
-     pdd         dd c dd
+      dd         dd c dd
       dd         dd   dd
 dd    dd                
 dd                      
 dddd                    
-vddd       ^^   ddd   dd
-^ddddddd   dd   ddd   dd
->ddddddd   dd   ddd   dd
-<ddd   v   vv   ddd   dd
+dddd       ^^   ddd   dd
+dddddddd   dd   ddd   dd
+dddddddd   dd   ddd   dd
+dddd   v   vv   ddd   dd
 dddd            ddd   dd
 dddd   j        ddd   dd
 dddd            ddd   dd
 dddd   j              dd
 dddd                  dd
 ||||||||||||||||||||||||
-d    p             ddddd
+d                  ddddd
 d                  ddddd
                    ddddd
   dd  dd  dd  dd   dd   
@@ -466,14 +466,14 @@ d             dddd
 dp     ^^^^     dd   ddd
 ddddddddddd     dd   ddd
 ddddddddddd     dd   ddd
->cjdddd       dddd   ddd
-<dddddd       dddd   ddd
-^dddddd            g ddd
-vdddddd              ddd
+ddddddd       dddd   ddd
+ddddddd       dddd   ddd
+ddddddd            g ddd
+ddddddd              ddd
 ddddddd              ddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-v^><dcjgddd         dddd
+ddddddddddd         dddd
 ddddddddddd         dddd
       ddddd         dddd
       ddddd ddddd   dddd
@@ -488,7 +488,7 @@ d                      d
 d                      d
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-v^><dddddddddddddddddddd
+dddddddddddddddddddddddd
 dddddddd      dddddddddd
 dddddddd      dddddddddd
 dddddddd       ddddddddd
@@ -503,7 +503,7 @@ dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 ddddddddddddddjddddddddd
 ||||||||||||||||||||||||
-v^><dcjgdddddddddddddddd
+dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
@@ -523,7 +523,7 @@ background = d
 music = DeepBelow
 text 0 = Use all of these features to your advantage!
 ------------------------
-v^><dcjgdddddddddd      
+dddddddddddddddddd      
 dddddddddddddddddd      
 d               dd      
 d     ^^ g ^^ g dd     d
@@ -689,7 +689,7 @@ music = Darkened
 button 0, 17, 2 = 6
 text 0 = Press buttons to move the gravity line!
 ------------------------
-egj^><veeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 e                  e    
 e p              m e c  
 eeee   eeeeeeeeeeeeeeeee
@@ -719,7 +719,7 @@ eeee    eeeee     eeeeee
 eeee           eeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeee         eeee
 eeeeeeeeeee    ee g eeee
                ee   eeee
@@ -770,7 +770,7 @@ eeeee   eeeeeeeeee  eeee
 eeeee         eeee  eeee
 eeeee               eeee
 ||||||||||||||||||||||||
-e><^veee      e         
+eeeeeeee      e         
 eeeeeeee      e         
       ee      e         
       ee      e     eeee
@@ -790,18 +790,18 @@ eeeeee              eeee
       ee              ee
 eee   vv              ee
 eee             eee   ee
->ee   ee        eee   ee
-<ee   ee        eee   ee
-^ee   eeeeeeee  eee   ee
-vee   eeeeeeee  eee     
+eee   ee        eee   ee
+eee   ee        eee   ee
+eee   eeeeeeee  eee   ee
+eee   eeeeeeee  eee     
 eee   eeeeeeee  eee     
 eee   eeeeeeee  eee     
 eee   ee m      eeeeeeee
 eee   ee        eeeeeeee
 eee   ee        eeeeeeee
 ||||||||||||||||||||||||
-e><     eeeeeeeeee  eeee
-e^v     eeeeeeeeee  eeee
+eee     eeeeeeeeee  eeee
+eee     eeeeeeeeee  eeee
 eee     eeeeeeeeee  eeee
 eee     eevvvvvvvv  eeee
 eee                 eeee
@@ -825,8 +825,8 @@ eeeeeeeeeeeeeevvvvvvveee
 e      eeeeeee       e  
 e p    eeeeeee       ec 
 eeee   eevvvvv       e  
->^ge           j     eee
-<vje                 eee
+eege           j     eee
+eeee                 eee
 eeee             ^^  eee
 eeee             ee  eee
 eeee     ^^^^^   ee     
@@ -850,7 +850,7 @@ eee^^   ^^  eee  ee^^^ee
         eeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeee       eeeevvveeee
   eeee       vv     eevv
   eeee                  
@@ -865,7 +865,7 @@ eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeee    ee eeeeee    
 eeeeeee    vv eeeeee    
    eeee       eeeeee    
@@ -885,7 +885,7 @@ background = e
 music = Darkened
 button 1, 5, 8 = 3
 ------------------------
-e><^v eeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 e     eee  ^  v   eeeeee
 e p   eee  v      ee    
 eeee  eee         ee    
@@ -900,7 +900,7 @@ eeee  eeeeee^^e       ee
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veee   eeeeeeeeeeeee
+eeeeeeee   eeeeeeeeeeeee
 eeeeeeee   eeeeeeeeeeeee
    v   v      eeeeeeeeee
      g        eeeeeeeeee
@@ -915,7 +915,7 @@ eeeeeeeeeee    eeeeeeeee
 eeeeeeeeeee    eeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeee     v     v    ee
 eeeeee             g  ee
@@ -930,7 +930,7 @@ ee             ee^^^^  e
 eeeeeeeeeee^^^^eeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 e                    eee
 e c          ee      eee
@@ -950,10 +950,10 @@ background = e
 music = Darkened
 button 1, 16, 6 = -1
 ------------------------
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeev    veeeeeeeeee
-e p   ee      ee      ee
 e     ee      ee      ee
+e p   ee      ee      ee
 eeee  ee      ee      ee
 eeee  ee      ee  ee  ee
 eeee  vv      ee  ee  ee
@@ -965,7 +965,7 @@ eeee      ee      eeeeee
 eeee^    ^ee^    ^eeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
@@ -980,7 +980,7 @@ eeeeeeee^^eeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeee   eeee
 eeeeeeeee       e       
 e               e j     
@@ -995,7 +995,7 @@ eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
-e><^eeeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeee    e     e     e   
         e     e     e   
         e     e     e   
@@ -1035,7 +1035,7 @@ background = e
 music = Stairs
 boss = Red Stare
 ------------------------
-e><^v            ee     
+eee              ee     
 eee              ee     
 eee        eee   ee     
 eee       eeee   ee     
@@ -1050,7 +1050,7 @@ ee          ee        ee
 ee          ee        ee
 ee          ee        ee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
  eeeeeeeee   eeeeeeeeeee
   eeeeeee      v v v v v
@@ -1065,22 +1065,22 @@ eeeeeeeee    eeeeeeeeeee
 eeeeeeeee    eeeeeeeeeee
 eeeeeeeee    eeeeeeeeeee
 ||||||||||||||||||||||||
-e><^veeeeeeeeeeeeee   ee
+eeeeeeeeeeeeeeeeeee   ee
 e    eeee      eeee   ee
 e    eeee      eeee   ee
-     eeeeee  eeeeee   ee
+     eeeee    eeeee   ee
                       ee
     eeeeeeeeeeeeeeee  ee
 e   eeeeeeeeeeeeeeee  ee
 e   eeeeeeeeeeeeeeee  ee
     eeeeeeeeeeeeeeee  ee
                         
-    eeeeeee  eeeeee     
+    eeeeee    eeeee     
 e   eeeee      eeee     
 e   eeeee      eeee     
 e   eeeeeeeeeeeeeee     
 ||||||||||||||||||||||||
-e><^v          eeeeeeeee
+ee             eeeeeeeee
 ee             eeeeeeeee
 ee                      
 ee           eeeeeee  ee
@@ -1095,7 +1095,7 @@ ee  eeee
     eeee       eeeeeeeee
     eeee       eeeeeeeee
 ||||||||||||||||||||||||
-e><^v                   
+eee                     
 eee                     
   e                     
 eee                     
@@ -1134,7 +1134,7 @@ eeeeeeeeeeeeeeeeeeeeeeee
 background = b
 music = Blue
 ------------------------
-o><^v    oo       oooooo
+o        oo       oooooo
 o        oo       oooooo
 o        oo       vvvvoo
 o        oo    ^      oo
@@ -1149,7 +1149,7 @@ o            ooooooooooo
 oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^v         oooooooooo
+o             oooooooooo
 o             oooooooooo
 o             oooooooooo
 o     oo      oooooooooo
@@ -1172,14 +1172,14 @@ o                oo
 v    oo  oooooo  oo  ooo
      oo  oooooo  oo  ooo
    oooo  oooooo  oo  ooo
-ooo><oo  oooooo  oo  ooo
-ooo^voo  oooooo  vv  ooo
+ooooooo  oooooo  oo  ooo
+ooooooo  oooooo  vv  ooo
 ooooooo  oooooo      ooo
 o c v    oooooo      ooo
 o        oooooo      ooo
 o        ooooooooooooooo
 ||||||||||||||||||||||||
-o><^vooo        oooooooo
+oooooooo        oooooooo
 oooooooo        oooooooo
       oog   oo   ooooooo
       oo    oo   ooooooo
@@ -1201,8 +1201,8 @@ button 0, 16, 2 = 2
 ------------------------
 oooooooooooooooooooooooo
 o       oooo     ooooooo
-o       o><o    mooooooo
-op      ov^o  oooooooooo
+o       oooo    mooooooo
+op      oooo  oooooooooo
 oooo>  <ooooj    ooooooo
 oooo>   vvvv     ooooooo
 o                ooooooo
@@ -1214,7 +1214,7 @@ o       ooooooo     oooo
 o^^     ooooooo     oooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^vo                oo
+oooooo                oo
 oooooo ooooooooooo    oo
 oooooocooooooooooooo    
 oooooo oooooo     oo j  
@@ -1229,7 +1229,7 @@ ooooo      ooooo      oo
 ooooo      ooooo      oo
 ooooo      ooooo      oo
 ||||||||||||||||||||||||
-o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
 oooooooooooooooooooooooo
    ooooooooooooooooooooo
    ooooooooooooooooooooo
@@ -1244,7 +1244,7 @@ o        oooo        ooo
 o        oooo        ooo
 o        oooo        ooo
 ||||||||||||||||||||||||
-o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 oooooooooooooooooooooooo
@@ -1263,7 +1263,7 @@ oooooooooooooooooooooooo
 background = b
 music = Blue
 ------------------------
-o><^gjoooooooooooooooooo
+oooooooooooooooooooooooo
 ovvvvv      oooooooc  oo
 o           ooooooo     
 o p     oo  ooooooo^    
@@ -1283,8 +1283,8 @@ o>     ooooooooooooooooo
        ooooooooooooooooo
    ^^  oo      ooooooooo
 ooooo  oo      ooooooooo
-o><oo  oo  ^^  oooovvvvv
-o^voo  oo  oo  oo       
+ooooo  oo  ^^  oooovvvvv
+ooooo  oo  oo  oo       
 ooooo  oo  oo  vv       
 ooooo  oo  oo      ^^^^^
    oo  oo  oo      ooooo
@@ -1293,7 +1293,7 @@ o          ooooooooooooo
 ooo      ooooooooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^vgoooooooooooooooooo
+oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 ooooooooooooooooooovvooo
 ooooooooooooooooooo  ooo
@@ -1308,7 +1308,7 @@ oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
 ooogoooooooooooooooooooo
 oooooooooooooo      oooo
 oooooooooooooo      oooo
@@ -1328,7 +1328,7 @@ background = b
 music = Blue
 button 0, 10, 8 = -2
 ------------------------
-o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
 ooooooooo    vvooooooooo
 oooo  ovv      ooooooooo
 o   p o        vvvvoooc 
@@ -1343,7 +1343,7 @@ o       oo   ooooo
 o^^^^^^^oo^^^ooooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o>vvvo^<oooooooooooooooo
+oovvvooooooooooooooooooo
 oo j oooo               
 oo   oooo  ooo   ooooo  
            vvv   vvvoo  
@@ -1358,7 +1358,7 @@ o    oo    oo       oooo
 oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-ooo^v><ooooooooooooooooo
+oooooooooooooooooooooooo
    ooooooooogooooooooooo
    ooooooooo ooooooooooo
      v     v voooovvvooo
@@ -1373,7 +1373,7 @@ oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^voooooooooo         
+ooooooooooooooo         
 oooo      ooooo         
 oooo      ooooo         
 oooo      ooooo    ^^^  
@@ -1397,8 +1397,8 @@ o       oooooooooooooooo
 o       oo              
 o p     oo              
 oooo    oo    ^^        
-ov^o>  <oo>   oo    j  o
-o><o>  <oo>  <oo>      o
+oooo>  <oo>   oo    j  o
+oooo>  <oo>  <oo>      o
 oooo>  <oo>  <oo>      o
 oooo>  <oo>  <oo>      o
 oooo    vv    ooooo^^^^o
@@ -1407,7 +1407,7 @@ oooo          oogooooooo
 oooo          oooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o^v     oo              
+o       oo              
 o       oo              
         oo      oo  oooo
    ooo  oo      vv  oooo
@@ -1422,7 +1422,7 @@ o                     oo
 o                     oo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
     ooo  ooo  ooo  ooooo
 oo  ooo  ooo  ooo  ooooo
 oo  ooo  ooo  ooo  ooooo
@@ -1437,7 +1437,7 @@ oo
 oo                      
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
-o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
 ooo                     
 ooo                     
 ooo                     
@@ -1478,7 +1478,7 @@ music = FINALE
 boss = Belloq, Red Stare, Big Bite
 crystal moves on = all crystals
 ------------------------
-o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 o                      o
 o    p   oooo          o
@@ -1493,7 +1493,7 @@ ooooooo    oooooo  ooooo
   ooo              oo   
   ooo              oo   
 ||||||||||||||||||||||||
-o><^vooooooooooooooooooo
+oooooooooooooooooooooooo
 ooooooo    oooo         
 ovvvoo      oo          
 o   oo      oo          
@@ -1508,7 +1508,7 @@ oooooooooo      oooooooo
         ooo    ooo      
         oooooooooo      
 ||||||||||||||||||||||||
-o><^vjgooooooooooooooooo
+oooooooooooooooooooooooo
                        o
                         
                         
@@ -1523,7 +1523,7 @@ oooo oooo oooo     ooo
  oo   oo   oo       oo  
  oo   oo   oo       oo  
 ||||||||||||||||||||||||
-o><^v                   
+oog                     
 oo                      
 oo                      
 oooooooooooooooooooooooo
