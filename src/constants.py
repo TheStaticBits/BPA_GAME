@@ -105,7 +105,7 @@ DEFAULT_SAVE = {
     "levels": "111111111111111111111111111111", # Levels unlocked
     "level": 0, # Selected level
     "crystals": "00000000000000000000", # Crystals unlocked in normal levels
-    "unlockedEnding": 1, # Ending unlocked
+    "unlockedEnding": -1, # Ending unlocked
     "speedrunHighscore": "---", # Speedrun highscore!
 
     # Settings
