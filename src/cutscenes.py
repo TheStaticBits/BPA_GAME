@@ -400,7 +400,7 @@ class Cutscenes():
 
     def move(self, position, moveTo, speed) -> list:
         """Moves the given position towards the moveTo position at the given speed"""
-        if utility.distance_to(position, moveTo) < 1:
+        if utility.distance_to(position, moveTo) < 2:
             return list(moveTo)
         
         degrees = utility.angle_to(position, moveTo)
