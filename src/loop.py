@@ -454,8 +454,6 @@ class Loop():
             if self.speedrun:
                 # Setting new highscore if it is higher than the previous score or if it's the first time
                 if save["speedrunHighscore"] == "---" or self.speedrunTime < float(save["speedrunHighscore"]):
-                    # Saving speedrun time
-                    utility.modif_save({"speedrunHighscore": self.speedrunTime})
                     # Updating time shown on the main menu
                     self.scenes["mainMenu"].speedrunHighscore = self.speedrunTime
 
@@ -532,14 +530,17 @@ class Loop():
         if not self.speedrun:
             # Saves the game's data
             utility.modif_save({
+                # Game data
                 "levels": "".join([str(x) for x in self.levelsCompleted]),
                 "level": self.scenes["playing"].level,
                 "crystals": "".join([str(x) for x in self.crystals]),
-
+                # Settings
                 "showText": self.settings["showText"],
                 "showCharacters": self.settings["showCharacters"],
                 "showFPS": self.settings["showFPS"],
-                "volume": self.scenes["settings"].volume
+                "volume": self.scenes["settings"].volume,
+                # Saving speedrun time
+                "speedrunHighscore": self.scenes["mainMenu"].speedrunHighscore
             }) 
 
         self.logger.info("Exiting Pygame...")
