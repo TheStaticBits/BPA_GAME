@@ -108,5 +108,5 @@ crystal [operator] [number]
 fade done
  - checks if the fade has finished
 
-[tileObject] reachedDestination
- - checks if the tile object has reached its destination
+[tileObject] [operator] [x] [y]
+ - compares the tile object's x and y to a given x and y position

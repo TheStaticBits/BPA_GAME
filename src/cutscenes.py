@@ -331,7 +331,7 @@ class Cutscenes():
             cond = conditional.split(" ")
 
             # If the command is asking for the data of an entity
-            if len(cond) == 4:
+            if cond[0] in self.objects:
                 if cond[1] == "x":
                     checking = self.objects[cond[0]]["pos"][0]
                 elif cond[1] == "y":
@@ -365,11 +365,18 @@ class Cutscenes():
 
                 return eval(f"{result} {command}")
             
-            # Checks if a tile object has reached its destination
+            # Checks if a tile object's position is equal to a given position
             elif cond[0] in self.tileObjects:
-                if cond[0] == "reachedDestination":
-                    if self.tileObjects[cond[0]]["pos"] == self.tileObjects[cond[1]]["moveTo"]:
-                        return True
+                # Gets the position of the tile object
+                position = f'{self.tileObjects[cond[0]]["pos"][0]} {self.tileObjects[cond[0]]["pos"][1]}'
+                # Gets operator the user wants to use
+                operator = cond[1]
+                # Gets the rest of the command, what the user is checking against
+                checkPos = " ".join(cond[2:])
+                
+                # Checks the position in a string against the checkPos in a string
+                return eval(f"\"{position}\" {operator} \"{checkPos}\"")
+
             
             else:
                 # Oh no! The conditional is invalid!

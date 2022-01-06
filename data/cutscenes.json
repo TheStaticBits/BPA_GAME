@@ -948,7 +948,7 @@
             "belloqDoneWalking": "belloq x > 20",
             "bigBiteDoneWalking": "bigBite x > 20",
             "redStareDoneWalking": "redStare x > 20",
-            "crystalsFinished": "c21 reachedDestination",
+            "crystalsFinished": "c21 == 192 8",
             "fadeBlueDone": "fade done",
             "corlenOffscreen": "corlen room == 1",
             "corlenBack": "corlen room == 0 and corlen x <= 334",
