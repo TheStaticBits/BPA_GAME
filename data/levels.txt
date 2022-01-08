@@ -1336,8 +1336,8 @@ o  oooo   ^        ooo
 o  voov ooo          ooo
 o   oo  ooo  oo^^^   ooo
 o   oo  ooo  ooooo g ooo
-o   vv  oom  oojoo   ooo
-o       oo   oogoo   ooo
+o   vv  oom  ooooo   ooo
+o       oo   ooooo   ooo
 o       oo   ooooo      
 o       oo   ooooo      
 o^^^^^^^oo^^^ooooooooooo
@@ -1346,7 +1346,7 @@ oooooooooooooooooooooooo
 oovvvooooooooooooooooooo
 oo j oooo               
 oo   oooo  ooo   ooooo  
-           vvv   vvvoo  
+           vvv   vvvoooo
                     oooo
 o                   oooo
 o              j    oooo
@@ -1361,7 +1361,7 @@ oooooooooooooooooooooooo
 oooooooooooooooooooooooo
    ooooooooogooooooooooo
    ooooooooo ooooooooooo
-     v     v voooovvvooo
+o    v     v voooovvvooo
 o                     oo
 o                       
 o             oooo^^^   
