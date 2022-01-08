@@ -138,7 +138,7 @@ wwwwwwww  www   ^ ^ ^ ^
 wwww       w    ww> <ww 
 wwww       w    ww> <ww 
 ||||||||||||||||||||||||
-wwwww          w    wwww
+               w    wwww
                w    wwww
                w        
       wwwww   ^w^       
@@ -276,7 +276,7 @@ dd^^^^^^ddd   dd
 ddddddddddd   dd        
 ||||||||||||||||||||||||
 dddddddddddddddddddddddd
-ddddddddddddddddddd     
+dddddddddddddddddddddddd
            dd    dd     
                         
                         
@@ -291,7 +291,7 @@ ddddd    <dd^^^ddddddddd
           dddddddddddddd
 ||||||||||||||||||||||||
 dddddddddddddd       ddd
-        dddddd       ddd
+dddddddddddddd       ddd
         dddddd       ddd
         dddddd       ddd
         dddddd       ddd
@@ -339,7 +339,7 @@ dddd    dd
 dddd    dd^        ^dddd
 dddddddddddddddddddddddd
 ||||||||||||||||||||||||
-ddddddddddddddd         
+dddddddddddddddddddddddd
                         
                         
                     dddd
@@ -354,7 +354,7 @@ ddddd     dd    j   dddd
 d   d^^^^^dd        dddd
 dddddddddddd        dddd
 ||||||||||||||||||||||||
-    dd       dd       dd
+dddddd       dd       dd
     dd       dd       dd
     dd   dd  dd       dd
 dd  dd   dd  dd   j   dd
@@ -388,8 +388,8 @@ d           d
 d           d           
 ddddddddd   d           
 ||||||||||||||||||||||||
-dddddd   dd    dd       
-dd       dd    dd       
+ddddddddddddddddd       
+dd       dddddddd       
 dd       dd    dd    ddd
 ddddd    dd    dd  j ddd
 ddddd    dd    dd    ddd
@@ -825,7 +825,7 @@ eeeeeeeeeeeeeevvvvvvveee
 e      eeeeeee       e  
 e p    eeeeeee       ec 
 eeee   eevvvvv       e  
-eege           j     eee
+eeee           j     eee
 eeee                 eee
 eeee             ^^  eee
 eeee             ee  eee
@@ -1000,7 +1000,7 @@ eeee    e     e     e
         e     e     e   
         e     e     e   
 eeeeee  e  ^  e  ^  e   
-eveeee  e  e  e  e  e  e
+eeeeee  e  e  e  e  e  e
 eeeeee  e  e  e  e  e  e
 eeeeee  v  e  v  e  v  e
 eeeeee     e     e     e
@@ -1309,7 +1309,7 @@ oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
 oooooooooooooooooooooooo
-ooogoooooooooooooooooooo
+oooooooooooooooooooooooo
 oooooooooooooo      oooo
 oooooooooooooo      oooo
 oooooooooooooo  ^^  oooo
