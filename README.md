@@ -1,7 +1,7 @@
 # BPA Adventure Game
 This game was made for the BPA (Business Professionals of America) Software Engineering Team competition.
 
-Development started in October of 2021 and will end in January of 2022.
+Development started in October of 2021 and ended in January of 2022.
 
 ## Team Members:
  - Nolan Kennedy
