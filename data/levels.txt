@@ -427,10 +427,10 @@ dddd          vv   v
 dd                      
 dd                    dd
 dddd          ^^   ^^^dd
-^ddddddddd  dddd   ddddd
-vddddddddd  dddd   ddddd
->dvvvvvvvv         ddddd
-<d                 ddddd
+dddddddddd  dddd   ddddd
+dddddddddd  dddd   ddddd
+ddvvvvvvvv         ddddd
+dd                 ddddd
 dd                 ddddd
 ------------------------
 
@@ -501,7 +501,7 @@ dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
-ddddddddddddddjddddddddd
+dddddddddddddddddddddddd
 ||||||||||||||||||||||||
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
@@ -974,9 +974,9 @@ eeee            ee
 eeee  ee        m       
 eeee  ee      eeee ^^eee
       ee      eeee eeeee
-      ee  ^^^^eeee^ec   
-eeeeeeee  eeeeeeeeee    
-eeeeeeee^^eeeeeeeeeeeeee
+      ee  ^^^^eeee^e    
+eeeeeeee  eeeeeeeeee c  
+eeeeeeee^^eeeeeeeeee   e
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
@@ -1403,7 +1403,7 @@ oooo>  <oo>  <oo>      o
 oooo>  <oo>  <oo>      o
 oooo    vv    ooooo^^^^o
 oooo          oooooooooo
-oooo          oogooooooo
+oooo          oooooooooo
 oooo          oooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
