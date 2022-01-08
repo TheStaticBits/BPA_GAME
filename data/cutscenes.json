@@ -391,9 +391,9 @@
                 "delay 20 ellipseSecondRight"
             ], "ellipseSecondRight": [
                 "ellipse face right",
-                "text ellipse hide",
                 "wait thinking"
             ], "thinking": [
+                "text ellipse hide",
                 "corlen face left",
                 "text corlen display",
                 "text corlen move 68 155",
@@ -576,7 +576,7 @@
             ], "turnRight": [
                 "text ellipse hide",
                 "corlen face right",
-                "text corlen change The next area looks...",
+                "text corlen change The next area looks less...",
                 "text corlen display",
                 "wait difficult"
             ], "difficult": [

@@ -427,10 +427,10 @@ dddd          vv   v
 dd                      
 dd                    dd
 dddd          ^^   ^^^dd
-^ddddddddd  dddd   ddddd
-vddddddddd  dddd   ddddd
->dvvvvvvvv         ddddd
-<d                 ddddd
+dddddddddd  dddd   ddddd
+dddddddddd  dddd   ddddd
+ddvvvvvvvv         ddddd
+dd                 ddddd
 dd                 ddddd
 ------------------------
 
@@ -501,7 +501,7 @@ dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
-ddddddddddddddjddddddddd
+dddddddddddddddddddddddd
 ||||||||||||||||||||||||
 dddddddddddddddddddddddd
 dddddddddddddddddddddddd
@@ -825,7 +825,7 @@ eeeeeeeeeeeeeevvvvvvveee
 e      eeeeeee       e  
 e p    eeeeeee       ec 
 eeee   eevvvvv       e  
-eege           j     eee
+eeee           j     eee
 eeee                 eee
 eeee             ^^  eee
 eeee             ee  eee
@@ -974,9 +974,9 @@ eeee            ee
 eeee  ee        m       
 eeee  ee      eeee ^^eee
       ee      eeee eeeee
-      ee  ^^^^eeee^ec   
-eeeeeeee  eeeeeeeeee    
-eeeeeeee^^eeeeeeeeeeeeee
+      ee  ^^^^eeee^e    
+eeeeeeee  eeeeeeeeee c  
+eeeeeeee^^eeeeeeeeee   e
 eeeeeeeeeeeeeeeeeeeeeeee
 eeeeeeeeeeeeeeeeeeeeeeee
 ||||||||||||||||||||||||
@@ -1000,7 +1000,7 @@ eeee    e     e     e
         e     e     e   
         e     e     e   
 eeeeee  e  ^  e  ^  e   
-eveeee  e  e  e  e  e  e
+eeeeee  e  e  e  e  e  e
 eeeeee  e  e  e  e  e  e
 eeeeee  v  e  v  e  v  e
 eeeeee     e     e     e
@@ -1309,7 +1309,7 @@ oooooooooooooooooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
 oooooooooooooooooooooooo
-ooogoooooooooooooooooooo
+oooooooooooooooooooooooo
 oooooooooooooo      oooo
 oooooooooooooo      oooo
 oooooooooooooo  ^^  oooo
@@ -1336,8 +1336,8 @@ o  oooo   ^        ooo
 o  voov ooo          ooo
 o   oo  ooo  oo^^^   ooo
 o   oo  ooo  ooooo g ooo
-o   vv  oom  oojoo   ooo
-o       oo   oogoo   ooo
+o   vv  oom  ooooo   ooo
+o       oo   ooooo   ooo
 o       oo   ooooo      
 o       oo   ooooo      
 o^^^^^^^oo^^^ooooooooooo
@@ -1403,7 +1403,7 @@ oooo>  <oo>  <oo>      o
 oooo>  <oo>  <oo>      o
 oooo    vv    ooooo^^^^o
 oooo          oooooooooo
-oooo          oogooooooo
+oooo          oooooooooo
 oooo          oooooooooo
 oooooooooooooooooooooooo
 ||||||||||||||||||||||||
