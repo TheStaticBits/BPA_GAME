@@ -39,7 +39,7 @@ COG_PATH = "res/ui/cog.png"
 
 
 # Level editing in normal levels
-LEVEL_EDITING = True
+LEVEL_EDITING = False
 # Controls for level editing in normal levels:
 # Right click: Changes tile the mouse is hovering over to air
 # Middle click: Copies tile the mouse is hovering over, so it places that tile when you left click
