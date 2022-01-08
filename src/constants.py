@@ -102,7 +102,7 @@ MAX_FOLLOW_DISTANCE = 22 # Player positions stored
 # Default save (for the database)
 DEFAULT_SAVE = {
     # Save data
-    "levels": "111111111111111111111111111111", # Levels unlocked
+    "levels": "000000000000000000000000000000", # Levels unlocked
     "level": 0, # Selected level
     "crystals": "00000000000000000000", # Crystals unlocked in normal levels
     "unlockedEnding": -1, # Ending unlocked
