@@ -30,9 +30,5 @@ Development started in October of 2021 and ended in January of 2022.
 
 ## Characters Within the Game:
  - Corlen
-    - A snarky English dog
-    - With a zero dimensional personality
  - Ellipse
-    - A cat that cannot speak (or can she?)
  - The player
-    - An idiot (you)
